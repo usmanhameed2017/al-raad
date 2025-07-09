@@ -36,6 +36,14 @@ const userSchema = new Schema({
         trim:true,
         required:true
     },
+    verificationCode:{
+        type:String
+    },
+    status:{
+        type:String,
+        enum:["Pending", "Approved", "Declined"],
+        default:"Pending"
+    }
 }, { timestamps:true });
 
 // Inject pagination plugin
