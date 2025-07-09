@@ -58,4 +58,22 @@ const signup = async (request, response) => {
     }
 };
 
-module.exports = { signup };
+// Account activation
+const accountActivation = async (request, response) => {
+    const { verificationCode } = request.body;
+    if(verificationCode.trim() === "") throw new ApiError(400, "Activation code is required");
+
+    try 
+    {
+       const user = await User.findOneAndUpdate({ verificationCode }, { status:"Approved" }, { new:true }).select("-password");
+       if(!user) throw new ApiError(404, "Invalid activation code");
+
+       return response.status(200).json(new ApiResponse(200, user, "Your account has been activated successfully!"));
+    } 
+    catch (error) 
+    {
+        throw new ApiError(500, error.message);
+    }
+};
+
+module.exports = { signup, accountActivation };
