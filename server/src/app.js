@@ -15,6 +15,14 @@ app.use(express.json({ limit:"20kb" }));
 app.use(cookieParse());
 app.use("/public", express.static(path.resolve("public")));
 
+
+// ************* ROUTES ************* //
+// Imports
+const userRouter = require("./routes/user");
+
+// Registered routes
+app.use("/api/v1/user", userRouter);
+
 // Error handling middleware
 app.use(errorHandler);
 

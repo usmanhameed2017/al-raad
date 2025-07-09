@@ -70,11 +70,11 @@ userSchema.methods.matchPassword = async function(password) {
     }
 }
 
-// Get user by email
-userSchema.static("getUserByEmail", async function(email) {
+// Get user by email or username
+userSchema.static("getUser", async function(email, username) {
     try 
     {
-        const user = await this.findOne({ email });
+        const user = await this.findOne({ $or:[{ email }, { username }] });
         if(!user) return null;
         return user;
     } 
