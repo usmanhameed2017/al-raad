@@ -1,4 +1,24 @@
 {
+  "name": "al-raad",
+  "version": "1.0.0",
+  "description": "An Islamic web platform to explore Tafseer, download PDFs, read books, watch videos, and get daily Ayat guidance — built with MERN stack.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node --watch src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/usmanhameed2017/al-raad.git"
+  },
+  "keywords": [
+    "Al-Raad",
+    "Tafseer",
+    "Ahadees",
+    "VideoUpload",
+    "Quranic-verses"
+  ],
+  "author": "Usman Hameed",
+  "license": "ISC",  
   "dependencies": {
     "bcrypt": "^6.0.0",
     "cloudinary": "^2.6.1",
