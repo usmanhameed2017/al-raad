@@ -2,6 +2,7 @@ const User = require("../models/user");
 const sendEmail = require("../service/mailer");
 const ApiError = require("../utils/ApiError");
 const ApiResponse = require("../utils/ApiResponse");
+const { isValidObjectId } = require("mongoose");
 const shortid = require("shortid");
 const fs = require("fs");
 const path = require("path");
@@ -157,6 +158,24 @@ const fetchUsers = async (request, response) => {
     }
 };
 
+// Edit user
+const editUser = async (request, response) => {
+    const id = request.query?.id;
+    if(!id) throw new ApiError(404, "User not found");
+    if(!isValidObjectId(id)) throw new ApiError(400, "Invalid MongoDB ID");
+
+    try 
+    {
+        const user = await User.findByIdAndUpdate(id, request.body, { new:true }).select("-password -activationCode");
+        if(!user) throw new ApiError(404, "User not found");
+        return response.status(200).json(new ApiResponse(200, user, "User has been updated successfully"));
+    } 
+    catch (error) 
+    {
+        throw new ApiError(500, error.message);
+    }
+};
+
 // User logout
 const logout = async (request, response) => {
     request.user = null;
@@ -164,4 +183,4 @@ const logout = async (request, response) => {
     .json(new ApiResponse(200, null, "Logout successfully"));
 };
 
-module.exports = { signup, accountActivation, login, fetchUsers, logout };
+module.exports = { signup, accountActivation, login, fetchUsers, editUser, logout };
