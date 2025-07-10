@@ -13,7 +13,7 @@ userRouter.route("/accountActivation").put(accountActivation);
 userRouter.route("/login").get(login);
 
 // Fetch all users
-userRouter.route("fetchAllUsers").get(authentication, authorization(["Admin"]), fetchUsers);
+userRouter.route("/fetchAllUsers").get(authentication, authorization(["Admin"]), fetchUsers);
 
 // Logout
 userRouter.route("/logout").get(authentication, logout);
