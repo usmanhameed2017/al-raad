@@ -154,8 +154,6 @@ const fetchUsers = async (request, response) => {
     {
         throw new ApiError(500, error.message);
     }
-
-    return response
 };
 
 // User logout
