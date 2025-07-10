@@ -12,8 +12,8 @@ userRouter.route("/accountActivation").put(accountActivation);
 // Login
 userRouter.route("/login").get(login);
 
-// Fetch all users
-userRouter.route("/fetchAllUsers").get(authentication, authorization(["Admin"]), fetchUsers);
+// Fetch users
+userRouter.route("/").get(authentication, authorization(["Admin"]), fetchUsers);
 
 // Logout
 userRouter.route("/logout").get(authentication, logout);
