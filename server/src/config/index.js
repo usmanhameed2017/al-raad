@@ -6,4 +6,11 @@ const corsOptions = {
     methods:["GET", "POST", "PUT", "PATCH", "DELETE"]
 };
 
-module.exports = { corsOptions };
+const cookieOptions = {
+    httpOnly:true,
+    secure:false,
+    maxAge: 1000 * 60 * 60 * 7, // 7 hours
+    signed:true
+};
+
+module.exports = { corsOptions, cookieOptions };

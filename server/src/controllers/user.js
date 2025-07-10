@@ -5,18 +5,20 @@ const ApiResponse = require("../utils/ApiResponse");
 const shortid = require("shortid");
 const fs = require("fs");
 const path = require("path");
+const { generateAccessToken } = require("../utils/auth");
+const { cookieOptions } = require("../config");
 
 // User signup
 const signup = async (request, response) => {
     const { name, email, username, password, cpassword } = request.body;
-    if([name, email, username, password, cpassword].some(field => field === "")) throw new ApiError(400, "All fields are required");
+    if([name, email, username, password, cpassword].some(field => !field?.trim())) throw new ApiError(400, "All fields are required");
 
     if(password !== cpassword) throw new ApiError(400, "Password & confirm password must be identical");
 
     const user = await User.getUser(email, username);
     if(user)
     {
-        if(user.status === "Approved") throw new ApiError(400, "The email or username you entered is already exist.");
+        if(user.status === "Approved" || user.status === "Banned") throw new ApiError(400, "The email or username you entered is already exist.");
 
         // Resend code
         if(user.status === "Pending")
@@ -77,7 +79,7 @@ const signup = async (request, response) => {
 // Account activation
 const accountActivation = async (request, response) => {
     const { activationCode } = request.body;
-    if(activationCode.trim() === "") throw new ApiError(400, "Activation code is required");
+    if(!activationCode.trim()) throw new ApiError(400, "Activation code is required");
 
     try 
     {
@@ -92,4 +94,40 @@ const accountActivation = async (request, response) => {
     }
 };
 
-module.exports = { signup, accountActivation };
+// User login
+const login = async (request, response) => {
+    const { username, password } = request.body;
+    if([username, password].some(field => !field?.trim())) throw new ApiError(400, "All fields are required!");
+
+    // Find user
+    const user = await User.getUser(username);
+    if(!user) throw new ApiError(404, "User not found associated with this username");
+
+    // Match password
+    const isMatched = await user.matchPassword(password);
+    if(!isMatched) throw new ApiError(400, "Incorrect password");
+
+    // Check status
+    if(user?.status === "Pending") throw new ApiError(400, "Your account approval is in process. We'll notify you via email once it's activated");
+    if(user?.status === "Banned") throw new ApiError(400, "Your account has been banned and cannot be accessed.");    
+
+    // Generate access token
+    const accessToken = generateAccessToken(user);
+    if(!accessToken) throw new ApiError(400, "Failed to generate access token");
+
+    try 
+    {
+        // Get user specific details
+        const userData = await User.findById(user?._id).select("-password -status -activationCode");
+        if(!userData) throw new ApiError(400, "Invalid user ID");
+        return response.status(200)
+        .cookie("accessToken", accessToken, cookieOptions)
+        .json(new ApiResponse(200, userData, "Login successful"));
+    } 
+    catch(error) 
+    {
+        throw new ApiError(500, error.message);
+    }
+};
+
+module.exports = { signup, accountActivation, login };

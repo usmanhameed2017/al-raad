@@ -41,7 +41,7 @@ const userSchema = new Schema({
     },
     status:{
         type:String,
-        enum:["Pending", "Approved", "Declined"],
+        enum:["Pending", "Approved", "Banned"],
         default:"Pending"
     }
 }, { timestamps:true });
