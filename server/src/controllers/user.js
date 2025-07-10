@@ -137,13 +137,14 @@ const fetchUsers = async (request, response) => {
     // Paging options
     const options = {
         page:parseInt(page),
-        limit:parseInt(limit)
+        limit:parseInt(limit),
+        select: '-password -activationCode'
     };
 
     try 
     {
         // Execute query
-        const result = await User.paginate({}, options).select("-password -activationCode");
+        const result = await User.paginate({}, options);
 
         // If page size is greater than total pages
         if(page > result.totalPages) throw new ApiError(404, "User not found");
