@@ -184,7 +184,7 @@ const deleteUser = async (request, response) => {
 
     try 
     {
-        const user = await User.findByIdAndDelete(id);
+        const user = await User.findByIdAndDelete(id).select("-password -activationCode");
         if(!user) throw new ApiError(404, "User not found");
         return response.status(200).json(new ApiResponse(200, user, "User has been deleted successfully"));
     } 
