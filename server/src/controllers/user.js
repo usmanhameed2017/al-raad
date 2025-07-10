@@ -130,4 +130,11 @@ const login = async (request, response) => {
     }
 };
 
-module.exports = { signup, accountActivation, login };
+// User logout
+const logout = async (request, response) => {
+    request.user = null;
+    return response.status(200).clearCookie("accessToken", cookieOptions)
+    .json(new ApiResponse(200, null, "Logout successfully"));
+};
+
+module.exports = { signup, accountActivation, login, logout };
