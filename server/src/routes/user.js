@@ -1,4 +1,4 @@
-const { signup, accountActivation, login, logout, fetchUsers } = require("../controllers/user");
+const { signup, accountActivation, login, logout, fetchUsers, editUser } = require("../controllers/user");
 const { authentication, authorization } = require("../middlewares/auth");
 
 const userRouter = require("express").Router();
@@ -13,7 +13,9 @@ userRouter.route("/accountActivation").put(accountActivation);
 userRouter.route("/login").get(login);
 
 // Fetch users
-userRouter.route("/").get(authentication, authorization(["Admin"]), fetchUsers);
+userRouter.route("/")
+.get(authentication, authorization(["Admin"]), fetchUsers) // Fetch all user
+.put(authentication, authorization(["Admin"]), editUser);  // Edit user
 
 // Logout
 userRouter.route("/logout").get(authentication, logout);
