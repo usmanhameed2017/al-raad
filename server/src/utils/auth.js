@@ -21,4 +21,18 @@ const generateAccessToken = (user) => {
     }
 };
 
-module.exports = { generateAccessToken };
+// Verify access token
+const verifyAccessToken = (token) => {
+    if(!token) return null;
+    try 
+    {
+        return jwt.verify(token, accessTokenSecret);
+    } 
+    catch(error) 
+    {
+        console.log(`Failed to verify access token ${error.message}`);
+        return null;
+    }
+};
+
+module.exports = { generateAccessToken, verifyAccessToken };
