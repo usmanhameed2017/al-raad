@@ -96,11 +96,11 @@ const accountActivation = async (request, response) => {
 
 // User login
 const login = async (request, response) => {
-    const { username, password } = request.body;
+    const { email="", username, password } = request.body;
     if([username, password].some(field => !field?.trim())) throw new ApiError(400, "All fields are required!");
 
     // Find user
-    const user = await User.getUser(username);
+    const user = await User.getUser(email, username);
     if(!user) throw new ApiError(404, "User not found associated with this username");
 
     // Match password
