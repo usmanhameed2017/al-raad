@@ -12,13 +12,14 @@ const app = express();
 app.use(cors(corsOptions));
 app.use(express.urlencoded({ extended:true, limit:"20kb" }));
 app.use(express.json({ limit:"20kb" }));
-app.use(cookieParse());
+app.use(cookieParse(cookie_parser_secret));
 app.use("/public", express.static(path.resolve("public")));
 
 
 // ************* ROUTES ************* //
 // Imports
 const userRouter = require("./routes/user");
+const { cookie_parser_secret } = require("./constants");
 
 // Registered routes
 app.use("/api/v1/user", userRouter);

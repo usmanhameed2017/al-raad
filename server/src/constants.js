@@ -10,6 +10,9 @@ const dbName = process.env.DB_NAME;
 const accessTokenSecret = process.env.ACCESS_TOKEN_SECRET;
 const accessTokenExpiry = process.env.ACCESS_TOKEN_EXPIRY;
 
+// Cookie parser secret
+const cookie_parser_secret = process.env.COOKIE_PARSER_SECRET;
+
 // Cloudinary
 const cloudinary_cloud_name = process.env.CLOUDINARY_CLOUD_NAME;
 const cloudinary_api_key = process.env.CLOUDINARY_API_KEY;
@@ -25,6 +28,7 @@ module.exports = {
     dbName, 
     accessTokenSecret, 
     accessTokenExpiry,
+    cookie_parser_secret,
     cloudinary_cloud_name,
     cloudinary_api_key,
     cloudinary_api_secret,
