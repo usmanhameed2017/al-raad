@@ -36,7 +36,7 @@ const userSchema = new Schema({
         trim:true,
         required:true
     },
-    verificationCode:{
+    activationCode:{
         type:String
     },
     status:{

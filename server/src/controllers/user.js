@@ -27,8 +27,14 @@ const signup = async (request, response) => {
             // Update verification code
             const updateUser = await User.findByIdAndUpdate(user?._id, { activationCode }, { new:true }).select("-password");
 
-            // Send email
-            const result = sendEmail(email, "Account Activation", `Your account activation code is ${activationCode}`);
+            // Get HTML template
+            const html = fs.readFileSync(path.resolve(__dirname, "../../public/accountActivation.html"), "utf-8");
+
+            // Replace placeholders
+            const filledHtml = html
+            .replace('{{name}}', name)
+            .replace('{{activationCode}}', activationCode);
+            const result = await sendEmail(email, "Account Activation", filledHtml);
             if(!result) throw new ApiError(500, "Unable to send email"); 
 
             return response.status(200)
@@ -57,9 +63,6 @@ const signup = async (request, response) => {
 
         // Send mail
         const result = await sendEmail(email, "Account Activation", filledHtml);      
-
-        // Send email
-        // const result = sendEmail(email, "Account Activation", `Your account activation code is ${activationCode}`);
         if(!result) throw new ApiError(500, "Unable to send email");
 
         return response.status(201)
