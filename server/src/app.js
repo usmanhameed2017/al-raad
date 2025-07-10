@@ -3,6 +3,7 @@ const cors = require("cors");
 const cookieParse = require("cookie-parser");
 const path = require("path");
 const { corsOptions } = require("./config");
+const { cookie_parser_secret } = require("./constants");
 const errorHandler = require("./middlewares/errorHandler");
 
 // Express app
@@ -19,7 +20,6 @@ app.use("/public", express.static(path.resolve("public")));
 // ************* ROUTES ************* //
 // Imports
 const userRouter = require("./routes/user");
-const { cookie_parser_secret } = require("./constants");
 
 // Registered routes
 app.use("/api/v1/user", userRouter);
