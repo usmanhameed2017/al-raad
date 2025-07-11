@@ -12,14 +12,14 @@ userRouter.route("/accountActivation").put(accountActivation);
 // Login
 userRouter.route("/login").get(login);
 
-// Fetch all user
+// Fetch all users
 userRouter.route("/").get(authentication, authorization(["Admin"]), fetchUsers)
 
 // Multi operations
 userRouter.route("/:id")
-.get(authentication, authorization(["Admin"]), fetchSingleUser)  // Fetch single user
-.put(authentication, authorization(["Admin"]), editUser)    // Edit user
-.put(authentication, authorization(["Admin"]), deleteUser); // Delete user
+.get(authentication, authorization(["Admin"]), fetchSingleUser) // Fetch single user
+.put(authentication, authorization(["Admin"]), editUser)        // Edit user
+.put(authentication, authorization(["Admin"]), deleteUser);     // Delete user
 
 // Logout
 userRouter.route("/logout").get(authentication, logout);
