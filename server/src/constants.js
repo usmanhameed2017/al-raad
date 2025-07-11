@@ -11,12 +11,12 @@ const accessTokenSecret = process.env.ACCESS_TOKEN_SECRET;
 const accessTokenExpiry = process.env.ACCESS_TOKEN_EXPIRY;
 
 // Cookie parser secret
-const cookie_parser_secret = process.env.COOKIE_PARSER_SECRET;
+const cookieParserSecret = process.env.COOKIE_PARSER_SECRET;
 
 // Cloudinary
-const cloudinary_cloud_name = process.env.CLOUDINARY_CLOUD_NAME;
-const cloudinary_api_key = process.env.CLOUDINARY_API_KEY;
-const cloudinary_api_secret = process.env.CLOUDINARY_API_SECRET;
+const cloudinaryCloudName = process.env.CLOUDINARY_CLOUD_NAME;
+const cloudinaryApiKey = process.env.CLOUDINARY_API_KEY;
+const cloudinaryApiSecret = process.env.CLOUDINARY_API_SECRET;
 
 const gmail = process.env.GMAIL;
 const gmailAppPassword = process.env.GMAIL_APP_PASSWORD;
@@ -28,10 +28,10 @@ module.exports = {
     dbName, 
     accessTokenSecret, 
     accessTokenExpiry,
-    cookie_parser_secret,
-    cloudinary_cloud_name,
-    cloudinary_api_key,
-    cloudinary_api_secret,
+    cookieParserSecret,
+    cloudinaryCloudName,
+    cloudinaryApiKey,
+    cloudinaryApiSecret,
     gmail,
     gmailAppPassword
 };
