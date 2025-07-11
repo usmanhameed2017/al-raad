@@ -139,6 +139,7 @@ const fetchUsers = async (request, response) => {
     const options = {
         page:parseInt(page),
         limit:parseInt(limit),
+        sort: { createdAt: -1 },
         select: '-password -activationCode'
     };
 
