@@ -154,7 +154,7 @@ const fetchUsers = async (request, response) => {
     } 
     catch(error) 
     {
-        throw new ApiError(500, error.message);
+        throw new ApiError(404, error.message);
     }
 };
 
