@@ -3,7 +3,7 @@ const cors = require("cors");
 const cookieParse = require("cookie-parser");
 const path = require("path");
 const { corsOptions } = require("./config");
-const { cookie_parser_secret } = require("./constants");
+const { cookieParserSecret } = require("./constants");
 const errorHandler = require("./middlewares/errorHandler");
 
 // Express app
@@ -13,7 +13,7 @@ const app = express();
 app.use(cors(corsOptions));
 app.use(express.urlencoded({ extended:true, limit:"20kb" }));
 app.use(express.json({ limit:"20kb" }));
-app.use(cookieParse(cookie_parser_secret));
+app.use(cookieParse(cookieParserSecret));
 app.use("/public", express.static(path.resolve("public")));
 
 
