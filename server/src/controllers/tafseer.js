@@ -16,4 +16,29 @@ const createTafseer = async (request, response) => {
     }
 };
 
-module.exports = { createTafseer };
+// Fetch all tafseers
+const fetchTafseers = async (request, response) => {
+    const { page=1, limit=10 } = request.query;
+
+    // Paging options
+    const options = {
+        page:parseInt(page),
+        limit:parseInt(limit),
+        sort: { createdAt: -1 }
+    };    
+
+    try 
+    {
+        const result = await Tafseer.paginate({}, options);
+        // If page size is greater than total pages
+        if(page > result.totalPages) throw new ApiError(404, "User not found");
+
+        return response.status(200).json(new ApiResponse(200, result, "All tafseers has been fetched successfully"));        
+    } 
+    catch (error) 
+    {
+        throw new ApiError(404, error.message);
+    }
+};
+
+module.exports = { createTafseer, fetchTafseers };
