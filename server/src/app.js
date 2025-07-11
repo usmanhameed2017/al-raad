@@ -20,9 +20,11 @@ app.use("/public", express.static(path.resolve("public")));
 // ************* ROUTES ************* //
 // Imports
 const userRouter = require("./routes/user");
+const tafseerRouter = require("./routes/tafseer");
 
 // Registered routes
 app.use("/api/v1/user", userRouter);
+app.use("/api/v1/tafseer", tafseerRouter);
 
 // Error handling middleware
 app.use(errorHandler);
