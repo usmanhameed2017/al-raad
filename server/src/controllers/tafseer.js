@@ -1,6 +1,7 @@
 const Tafseer = require("../models/tafseer");
 const ApiError = require("../utils/ApiError");
 const ApiResponse = require("../utils/ApiResponse");
+const { isValidObjectId } = require("mongoose");
 
 // Create tafseer
 const createTafseer = async (request, response) => {
@@ -41,4 +42,22 @@ const fetchTafseers = async (request, response) => {
     }
 };
 
-module.exports = { createTafseer, fetchTafseers };
+// Fetch single tafseer
+const fetchSingleTafseer = async (request, response) => {
+    const id = request.params?.id || null;
+    if(!id) throw new ApiError(404, "Tafseer ID is missing");
+    if(!isValidObjectId(id)) throw new ApiError(400, "Invalid mongodb ID");
+
+    try 
+    {
+        const tafseer = await Tafseer.findById(id);
+        if(!tafseer) throw new ApiError(404, "Tafseer not found");
+        return response.status(200).json(new ApiResponse(200, tafseer, "Tafseer has been fetched successfully"));
+    }
+    catch(error) 
+    {
+        throw new ApiError(500, error.message);
+    }
+};
+
+module.exports = { createTafseer, fetchTafseers, fetchSingleTafseer };
