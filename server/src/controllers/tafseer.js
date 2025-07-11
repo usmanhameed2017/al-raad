@@ -60,4 +60,22 @@ const fetchSingleTafseer = async (request, response) => {
     }
 };
 
-module.exports = { createTafseer, fetchTafseers, fetchSingleTafseer };
+// Update tafseer
+const updateTafseer = async (request, response) => {
+    const id = request.params?.id || null;
+    if(!id) throw new ApiError(404, "Tafseer ID is missing");
+    if(!isValidObjectId(id)) throw new ApiError(400, "Invalid mongodb ID");
+
+    try 
+    {
+        const tafseer = await Tafseer.findByIdAndUpdate(id, request.body, { new:true });
+        if(!tafseer) throw new ApiError(404, "Tafseer not found");
+        return response.status(200).json(new ApiResponse(200, tafseer, "Tafseer has been updated successfully"));
+    }
+    catch(error) 
+    {
+        throw new ApiError(500, error.message);
+    }
+};
+
+module.exports = { createTafseer, fetchTafseers, fetchSingleTafseer, updateTafseer };
