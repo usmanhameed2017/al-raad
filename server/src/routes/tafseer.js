@@ -1,11 +1,13 @@
-const { createTafseer, fetchTafseers } = require("../controllers/tafseer");
+const { createTafseer, fetchTafseers, fetchSingleTafseer } = require("../controllers/tafseer");
 const { authentication, authorization } = require("../middlewares/auth");
 
 const tafseerRouter = require("express").Router();
 
-// Create tafseer
 tafseerRouter.route("/")
-.post(authentication, authorization(["Admin"]), createTafseer)
-.get(authentication, authorization(["Admin"]), fetchTafseers);
+.post(authentication, authorization(["Admin"]), createTafseer) // Create tafseer
+.get(authentication, authorization(["Admin"]), fetchTafseers); // Fetch all tafseers
+
+tafseerRouter.route("/:id")
+.get(authentication, authorization(["Admin"]), fetchSingleTafseer)
 
 module.exports = tafseerRouter;
