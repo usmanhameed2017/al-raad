@@ -150,7 +150,7 @@ const fetchUsers = async (request, response) => {
         // If page size is greater than total pages
         if(page > result.totalPages) throw new ApiError(404, "User not found");
 
-        return response.status(200).json(new ApiResponse(200, result, "All users fetched successfully"));
+        return response.status(200).json(new ApiResponse(200, result, "All users has been fetched successfully"));
     } 
     catch(error) 
     {
@@ -158,9 +158,27 @@ const fetchUsers = async (request, response) => {
     }
 };
 
+// Fetch single user
+const fetchSingleUser = async (request, response) => {
+    const id = request.params?.id;
+    if(!id) throw new ApiError(404, "User ID is missing");
+    if(!isValidObjectId(id)) throw new ApiError(400, "Invalid MongoDB ID");
+
+    try 
+    {
+        const user = await User.findById(id).select("-password -activationCode");
+        if(!user) throw new ApiError(404, "User not found");
+        return response.status(200).json(new ApiResponse(200, user, "User has been fetched successfully"));
+    } 
+    catch (error) 
+    {
+        throw new ApiError(404, error.message);
+    }
+};
+
 // Edit user
 const editUser = async (request, response) => {
-    const id = request.query?.id;
+    const id = request.params?.id;
     if(!id) throw new ApiError(404, "User ID is missing");
     if(!isValidObjectId(id)) throw new ApiError(400, "Invalid MongoDB ID");
 
@@ -172,13 +190,13 @@ const editUser = async (request, response) => {
     } 
     catch (error) 
     {
-        throw new ApiError(500, error.message);
+        throw new ApiError(404, error.message);
     }
 };
 
 // Delete user
 const deleteUser = async (request, response) => {
-    const id = request.query?.id;
+    const id = request.params?.id;
     if(!id) throw new ApiError(404, "User ID is missing");
     if(!isValidObjectId(id)) throw new ApiError(400, "Invalid MongoDB ID");
 
@@ -190,7 +208,7 @@ const deleteUser = async (request, response) => {
     } 
     catch (error) 
     {
-        throw new ApiError(500, error.message);
+        throw new ApiError(404, error.message);
     }
 };
 
@@ -201,4 +219,4 @@ const logout = async (request, response) => {
     .json(new ApiResponse(200, null, "Logout successfully"));
 };
 
-module.exports = { signup, accountActivation, login, fetchUsers, editUser, deleteUser, logout };
+module.exports = { signup, accountActivation, login, fetchUsers, fetchSingleUser, editUser, deleteUser, logout };
