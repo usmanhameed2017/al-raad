@@ -38,4 +38,31 @@ const createBook = async (request, response) => {
     }
 };
 
-module.exports = { createBook };
+// Fetch all books
+const fetchBooks = async (request, response) => {
+    const { page = 1, limit = 10 } = request.query;
+
+    // Paging options
+    const options = {
+        page:parseInt(page),
+        limit:parseInt(limit),
+        sort: { createdAt: -1 },
+    };
+
+    try 
+    {
+        // Execute query
+        const result = await Book.paginate({}, options);
+
+        // If page size is greater than total pages
+        if(page > result.totalPages) throw new ApiError(404, "Book not found");
+
+        return response.status(200).json(new ApiResponse(200, result, "All books has been fetched successfully"));
+    } 
+    catch(error) 
+    {
+        throw new ApiError(404, error.message);
+    }
+};
+
+module.exports = { createBook, fetchBooks };
