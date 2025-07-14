@@ -20,13 +20,21 @@ const deleteFromTemp = (...localFilePaths) => {
     });
 };
 
-// Upload
-const uploadOnCloudinary = async (localFilePath, resourceType = "auto") => {
+// Upload file on cloudinary
+const uploadOnCloudinary = async (localFilePath, resourceType, folderName) => {
     if(!localFilePath) return null;
     
     try 
     {
-        const response = await cloudinary.uploader.upload(localFilePath, { resource_type:resourceType });
+        // File options
+        const options = {
+            resource_type:resourceType, 
+            folder:`al-raad/${folderName}`, 
+            unique_filename:false, 
+            access_mode:"public"
+        };
+
+        const response = await cloudinary.uploader.upload(localFilePath, options);
         deleteFromTemp(localFilePath);
         return response.url;
     } 
