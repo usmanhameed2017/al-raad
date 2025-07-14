@@ -24,8 +24,9 @@ const createBook = async (request, response) => {
 
     try 
     {
-        request.body.pdf = await uploadOnCloudinary(pdf, "raw");
-        request.body.coverImage = await uploadOnCloudinary(coverImage);
+        const pdfUrl = await uploadOnCloudinary(pdf, "raw", "pdf");
+        request.body.pdf = pdfUrl.replace("/upload/", "/upload/fl_attachment/"); // Download pdf forcefully
+        request.body.coverImage = await uploadOnCloudinary(coverImage, "image", "images");
 
         const book = await Book.create(request.body);
         return response.status(201).json(new ApiResponse(201, book, "A new book has been created successfully"));
