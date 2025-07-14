@@ -1,6 +1,7 @@
 const Book = require("../models/book");
 const ApiError = require("../utils/ApiError");
 const ApiResponse = require("../utils/ApiResponse");
+const { isValidObjectId } = require("mongoose");
 const { deleteFromTemp, uploadOnCloudinary } = require("../utils/cloudinary");
 
 // Create book
@@ -65,4 +66,22 @@ const fetchBooks = async (request, response) => {
     }
 };
 
-module.exports = { createBook, fetchBooks };
+// Fetch single book
+const fetchSingleBook = async (request, response) => {
+    const id = request.params?.id;
+    if(!id) throw new ApiError(404, "Book ID is missing");
+    if(!isValidObjectId(id)) throw new ApiError(400, "Invalid MongoDB ID");
+
+    try 
+    {
+        const book = await Book.findById(id);
+        if(!book) throw new ApiError(404, "Book not found");
+        return response.status(200).json(new ApiResponse(200, book, "Book has been fetched successfully"));
+    } 
+    catch (error) 
+    {
+        throw new ApiError(404, error.message);
+    }
+};
+
+module.exports = { createBook, fetchBooks, fetchSingleBook };
