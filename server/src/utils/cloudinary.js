@@ -11,20 +11,22 @@ cloudinary.config({
 });
 
 // Delete file from temporary storage (Server)
-const deleteFromTemp = (localFilePath) => {
-    if(localFilePath && fs.existsSync(localFilePath)) 
-    {
-        fs.unlinkSync(localFilePath);
-    }
+const deleteFromTemp = (...localFilePaths) => {
+    localFilePaths.forEach(localFilePath => {
+        if(localFilePath && fs.existsSync(localFilePath)) 
+        {
+            fs.unlinkSync(localFilePath);
+        }
+    });
 };
 
 // Upload
-const uploadOnCloudinary = async (localFilePath) => {
+const uploadOnCloudinary = async (localFilePath, resourceType = "auto") => {
     if(!localFilePath) return null;
     
     try 
     {
-        const response = await cloudinary.uploader.upload(localFilePath, { resource_type:"auto" });
+        const response = await cloudinary.uploader.upload(localFilePath, { resource_type:resourceType });
         deleteFromTemp(localFilePath);
         return response.url;
     } 
@@ -40,7 +42,7 @@ const deleteFromCloudinary = async (url) => {
     if(!url) return null;
     const public_id = path.parse(url).name;
     if(!public_id) return null;
-    
+
     try 
     {
         const response = await cloudinary.uploader.destroy(public_id);
