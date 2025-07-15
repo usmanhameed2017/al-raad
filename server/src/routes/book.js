@@ -1,4 +1,4 @@
-const { createBook, fetchBooks, fetchSingleBook } = require("../controllers/book");
+const { createBook, fetchBooks, fetchSingleBook, editBook } = require("../controllers/book");
 const { authentication, authorization } = require("../middlewares/auth");
 const upload = require("../middlewares/multer");
 
@@ -11,5 +11,6 @@ bookRouter.route("/")
 
 bookRouter.route("/:id")
 .get(fetchSingleBook)
+.put(authentication, authorization(["Admin"]), upload.fields([{ name:"pdf", maxCount:1 }, { name:"coverImage", maxCount:1 }]), editBook);
 
 module.exports = bookRouter;
