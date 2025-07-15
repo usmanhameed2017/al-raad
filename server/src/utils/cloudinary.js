@@ -46,14 +46,22 @@ const uploadOnCloudinary = async (localFilePath, resourceType, folderName) => {
 };
 
 // Delete file from cloudinary
-const deleteFromCloudinary = async (url) => {
-    if(!url) return null;
-    const public_id = path.parse(url).name;
-    if(!public_id) return null;
+const deleteFromCloudinary = async (cloudinaryUrl, resourceType, folderName) => {
+    if(!cloudinaryUrl) return null;
+
+    let public_id;
+    if(resourceType !== "raw")
+    {
+        public_id = `al-raad/${folderName}/${path.parse(cloudinaryUrl).name}`; // Image without extension
+    }
+    else
+    {
+        public_id = `al-raad/${folderName}/${path.parse(cloudinaryUrl).base}`; // Pdf with extension
+    }   
 
     try 
     {
-        const response = await cloudinary.uploader.destroy(public_id);
+        const response = await cloudinary.uploader.destroy(public_id, { resource_type:resourceType });
         return response;
     } 
     catch(error) 
