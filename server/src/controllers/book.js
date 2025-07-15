@@ -154,4 +154,26 @@ const editBook = async (request, response) => {
 
 };
 
-module.exports = { createBook, fetchBooks, fetchSingleBook, editBook };
+const deleteBook = async (request, response) => {
+    const id = request.params?.id;
+    if(!id) throw new ApiError(404, "Book ID is missing");
+    if(!isValidObjectId(id)) throw new ApiError(400, "Invalid MongoDB ID");
+
+    try 
+    {
+        const book = await Book.findByIdAndDelete(id);
+        if(!book) throw new ApiError(404, "Book not found");
+
+        // Delete files from cloudinary
+        await deleteFromCloudinary(book?.coverImage, "image", "images");
+        await deleteFromCloudinary(book?.pdf, "raw", "pdf");
+
+        return response.status(200).json(new ApiResponse(200, book, "Book has been deleted successfully"));
+    } 
+    catch (error) 
+    {
+        throw new ApiError(500, error.message);
+    }
+};
+
+module.exports = { createBook, fetchBooks, fetchSingleBook, editBook, deleteBook };
