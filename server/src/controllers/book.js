@@ -84,8 +84,8 @@ const fetchSingleBook = async (request, response) => {
     }
 };
 
-// Edit book
-const editBook = async (request, response) => {
+// Update book
+const updateBook = async (request, response) => {
     // Get uploaded file's url
     const uploadedPdf = request.files?.pdf?.[0]?.path || "";
     const uploadedCoverImage = request.files?.coverImage?.[0]?.path || "";
@@ -143,8 +143,8 @@ const editBook = async (request, response) => {
         }
 
         // Update book
-        const updateBook = await Book.findByIdAndUpdate(id, request.body, { new:true });
-        return response.status(200).json(new ApiResponse(200, updateBook, "Book has been updated"));
+        const updatedBook = await Book.findByIdAndUpdate(id, request.body, { new:true });
+        return response.status(200).json(new ApiResponse(200, updatedBook, "Book has been updated"));
     } 
     catch (error) 
     {
@@ -176,4 +176,4 @@ const deleteBook = async (request, response) => {
     }
 };
 
-module.exports = { createBook, fetchBooks, fetchSingleBook, editBook, deleteBook };
+module.exports = { createBook, fetchBooks, fetchSingleBook, updateBook, deleteBook };
