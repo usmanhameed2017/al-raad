@@ -1,4 +1,4 @@
-const { createVideo, fetchVideos, fetchSingleVideo } = require("../controllers/video");
+const { createVideo, fetchVideos, fetchSingleVideo, updateVideo } = require("../controllers/video");
 const { authentication, authorization } = require("../middlewares/auth");
 const upload = require("../middlewares/multer");
 
@@ -12,5 +12,6 @@ videoRouter.route("/")
 
 videoRouter.route("/:id")
 .get(fetchSingleVideo)
+.put(authentication, authorization(["Admin"]), upload.single("url"), updateVideo)
 
 module.exports = videoRouter;
