@@ -6,6 +6,8 @@ const { deleteFromTemp, uploadOnCloudinary, deleteFromCloudinary } = require("..
 
 // Create book
 const createBook = async (request, response) => {
+    request.body.uploadedBy = request.user?._id;
+    
     const pdf = request.files?.pdf?.[0]?.path || "";
     const coverImage = request.files?.coverImage?.[0]?.path || "";
 
