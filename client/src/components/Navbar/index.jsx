@@ -1,9 +1,9 @@
 import { useState } from "react";
 import styles from "./style.module.css";
 
-function Navbar() {
-  const [isOpen, setIsOpen] = useState(false);
-
+function Navbar() 
+{
+    const [isOpen, setIsOpen] = useState(false);
     return (
         <nav className={styles.navbar}>
             <div className={styles.logo}> Al-Ra’ad </div>
