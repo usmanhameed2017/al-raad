@@ -1,7 +1,7 @@
 import React from 'react';
 import style from './style.module.css';
 
-function Button01({ children, onClick }) 
+function Button({ children, onClick }) 
 {
     return (
         <button className={style.animatedButton} onClick={onClick}>
@@ -10,4 +10,4 @@ function Button01({ children, onClick })
     );
 }
 
-export default Button01;
+export default Button;
