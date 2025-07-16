@@ -1,12 +1,16 @@
-const { createVideo } = require("../controllers/video");
+const { createVideo, fetchVideos, fetchSingleVideo } = require("../controllers/video");
 const { authentication, authorization } = require("../middlewares/auth");
 const upload = require("../middlewares/multer");
 
 // Video router instance
 const videoRouter = require("express").Router();
 
-// Create video
 videoRouter.route("/")
-.post(authentication, authorization(["Admin"]), upload.single("url"), createVideo);
+.post(authentication, authorization(["Admin"]), upload.single("url"), createVideo) // Create video
+.get(fetchVideos) // Fetch all videos
+
+
+videoRouter.route("/:id")
+.get(fetchSingleVideo)
 
 module.exports = videoRouter;
