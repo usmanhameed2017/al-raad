@@ -1,8 +1,10 @@
+import Hero from "./components/Hero";
+
 function App() 
 {
   return (
     <div>
-      <h2> App </h2>
+      <Hero />
     </div>
   );
 }
