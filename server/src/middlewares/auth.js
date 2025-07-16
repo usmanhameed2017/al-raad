@@ -4,7 +4,7 @@ const { verifyAccessToken } = require("../utils/auth");
 // Verify authentication
 const authentication = (request, response, next) => {
     const token = request.signedCookies?.accessToken || request.headers?.["authorization"]?.split(" ")?.[1] || null;
-    if(!token) throw new ApiError(404, "Access token is missing");
+    if(!token) throw new ApiError(401, "Access token is missing");
 
     const user = verifyAccessToken(token);
     if(!user) throw new ApiError(401, "Unauthenticated");
