@@ -22,11 +22,13 @@ app.use("/public", express.static(path.resolve("public")));
 const userRouter = require("./routes/user");
 const tafseerRouter = require("./routes/tafseer");
 const bookRouter = require("./routes/book");
+const videoRouter = require("./routes/video");
 
 // Registered routes
 app.use("/api/v1/user", userRouter);
 app.use("/api/v1/tafseer", tafseerRouter);
 app.use("/api/v1/book", bookRouter);
+app.use("/api/v1/video", videoRouter);
 
 // Error handling middleware
 app.use(errorHandler);
