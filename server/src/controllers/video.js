@@ -134,4 +134,27 @@ const updateVideo = async (request, response) => {
     }
 };
 
-module.exports = { createVideo, fetchVideos, fetchSingleVideo, updateVideo };
+// Delete video
+const deleteVideo = async (request, response) => {
+    // Validate id
+    const id = request.params?.id;
+    if(!id) throw new ApiError(404, "Video ID is missing");
+    if(!isValidObjectId(id)) throw new ApiError(400, "Invalid MongoDB ID");
+
+    try 
+    {
+        // Delete record
+        const video = await Video.findByIdAndDelete(id);
+        if(!video) throw new ApiError(404, "Video not found");
+
+        // Delete video from cloudinary
+        await deleteFromCloudinary(video?.url, "video", "videos");
+        return response.status(200).json(new ApiResponse(200, video, "Video has been deleted successfully"));
+    } 
+    catch (error) 
+    {
+        throw new ApiError(500, error.message);
+    }    
+};
+
+module.exports = { createVideo, fetchVideos, fetchSingleVideo, updateVideo, deleteVideo };
