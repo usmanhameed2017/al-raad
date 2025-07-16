@@ -78,7 +78,7 @@ const updateTafseer = async (request, response) => {
     }
 };
 
-// Update tafseer
+// Delete tafseer
 const deleteTafseer = async (request, response) => {
     const id = request.params?.id || null;
     if(!id) throw new ApiError(404, "Tafseer ID is missing");
