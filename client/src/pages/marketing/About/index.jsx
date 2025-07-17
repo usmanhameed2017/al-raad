@@ -1,24 +1,17 @@
 import styles from './style.module.css';
 import { motion } from 'framer-motion';
-import {
-  FaBookOpen,
-  FaVideo,
-  FaQuran,
-  FaUsers,
-  FaLightbulb,
-  FaEnvelopeOpenText
-} from 'react-icons/fa';
+import { FaBookOpen, FaBookReader, FaVideo, FaUsers, FaLightbulb, FaEnvelope } from 'react-icons/fa';
 
 const sections = [
   {
-    icon: <FaQuran size={30} />,
+    icon: <FaBookOpen size={30} />,
     title: "Quranic Tafseer",
     text: `We provide in-depth Quranic Tafseer in Urdu and Arabic, offering classical and modern insights for better understanding.
     <br> 
     Our Tafseer is presented with context, language analysis, and practical life applications.`,
   },
   {
-    icon: <FaBookOpen size={30} />,
+    icon: <FaBookReader size={30} />,
     title: "Islamic Books",
     text: `Access a curated digital library of authentic Islamic books, including Fiqh, Aqeedah, Seerah, and Hadith.
     <br> 
@@ -45,7 +38,7 @@ const sections = [
     text: `We are developers, designers, and students of knowledge — collaborating for the sake of Allah ﷻ to make Islamic learning easy and accessible.`,
   },
   {
-    icon: <FaEnvelopeOpenText size={30} />,
+    icon: <FaEnvelope size={30} />,
     title: "Contact Us",
     text: `Have feedback or suggestions? <a href='/contact'>Click here</a> to help improve Al-Ra’ad.`,
   },
