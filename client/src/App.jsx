@@ -8,6 +8,7 @@ import Settings from "./pages/admin/Settings";
 import About from "./pages/marketing/About";
 import Books from "./pages/marketing/Books";
 import Videos from "./pages/marketing/Videos";
+import Login from "./pages/marketing/Login";
 
 function App() 
 {
@@ -22,6 +23,7 @@ function App()
           <Route path="tafseer" element={ <Tafseer /> } />
           <Route path="books" element={ <Books /> } />
           <Route path="videos" element={ <Videos /> } />
+          <Route path="login" element={ <Login /> } />
         </Route>
 
         {/* Admin Layout */}
