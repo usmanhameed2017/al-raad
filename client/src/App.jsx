@@ -5,6 +5,7 @@ import MarketingLayout from "./layout/MarketingLayout";
 import AdminLayout from "./layout/AdminLayout";
 import Dashboard from "./pages/admin/Dashboard";
 import Settings from "./pages/admin/Settings";
+import About from "./pages/marketing/About";
 
 function App() 
 {
@@ -15,6 +16,7 @@ function App()
         <Route path="/" element={ <MarketingLayout /> } >
           <Route index element={ <Home /> } />
           <Route path="home" element={ <Home /> } />
+          <Route path="about" element={ <About /> } />
           <Route path="tafseer" element={ <Tafseer /> } />
         </Route>
 
