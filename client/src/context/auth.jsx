@@ -38,7 +38,7 @@ function AuthProvider({ children })
         try 
         {
             setLoading(true);
-            const response = await axios.get(`${backendURL}/user/login`, user, axiosOptions);
+            const response = await axios.post(`${backendURL}/user/login`, user, axiosOptions);
             const { data, message, success } = ApiResponse(response);
             setUser(data);
             setLoggedIn(success);
@@ -46,12 +46,11 @@ function AuthProvider({ children })
             localStorage.setItem("user", JSON.stringify(data));
 
             action.resetForm();
-            showSuccess("ok");
+            showSuccess(message);
             navigate('/');
         } 
         catch (error) 
         {
-            alert("not ok")
             setLoading(false);
             showError(ApiError(error).message);
         }
