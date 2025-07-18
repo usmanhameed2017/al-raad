@@ -10,6 +10,7 @@ import Books from "./pages/marketing/Books";
 import Videos from "./pages/marketing/Videos";
 import Login from "./pages/marketing/Login";
 import AuthProvider from "./context/auth";
+import ProtectedRoute from "./pages/security/ProtectedRoutes";
 
 function App() 
 {
@@ -29,12 +30,18 @@ function App()
             <Route path="login" element={ <Login /> } />
           </Route>
 
-          {/* Admin Layout */}
-          <Route path="/admin" element={ <AdminLayout /> } >
-            <Route index element={ <Dashboard /> } />
-            <Route path="dashboard" element={ <Dashboard /> } />
-            <Route path="settings" element={ <Settings /> } />
-          </Route>        
+          {/* Protected Routes */}
+          <Route element={ <ProtectedRoute/> }>
+
+            {/* Admin Layout */}
+            <Route path="/admin" element={ <AdminLayout /> } >
+              <Route index element={ <Dashboard /> } />
+              <Route path="dashboard" element={ <Dashboard /> } />
+              <Route path="settings" element={ <Settings /> } />
+            </Route> 
+            
+          </Route>
+       
         </Routes>
       </AuthProvider>
     </>
