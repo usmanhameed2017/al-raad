@@ -11,9 +11,9 @@ const app = express();
 
 // ************* MIDDLEWARES ************* //
 app.use(cors(corsOptions));
+app.use(cookieParse(cookieParserSecret));
 app.use(express.urlencoded({ extended:true, limit:"20kb" }));
 app.use(express.json({ limit:"20kb" }));
-app.use(cookieParse(cookieParserSecret));
 app.use("/public", express.static(path.resolve("public")));
 
 
