@@ -21,7 +21,7 @@ function AuthProvider({ children })
         try 
         {
             setLoading(true);
-            const response = await axios.post(`${backendURL}/user/signup`, user);
+            const response = await axios.post(`${backendURL}/user/signup`, user, axiosOptions);
             action.resetForm();
             setLoading(false);
             showSuccess(ApiResponse(response).message);
@@ -38,7 +38,7 @@ function AuthProvider({ children })
         try 
         {
             setLoading(true);
-            const response = await axios.post(`${backendURL}/user/login`, user);
+            const response = await axios.get(`${backendURL}/user/login`, user, axiosOptions);
             const { data, message, success } = ApiResponse(response);
             setUser(data);
             setLoggedIn(success);
@@ -46,11 +46,12 @@ function AuthProvider({ children })
             localStorage.setItem("user", JSON.stringify(data));
 
             action.resetForm();
-            showSuccess(message);
+            showSuccess("ok");
             navigate('/');
         } 
         catch (error) 
         {
+            alert("not ok")
             setLoading(false);
             showError(ApiError(error).message);
         }
