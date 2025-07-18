@@ -10,7 +10,7 @@ userRouter.route("/signup").post(signup);
 userRouter.route("/accountActivation").put(accountActivation);
 
 // Login
-userRouter.route("/login").get(login);
+userRouter.route("/login").post(login);
 
 // Verify access token
 userRouter.route("/verifyAccessToken").get(authentication, verifyAccessToken);
