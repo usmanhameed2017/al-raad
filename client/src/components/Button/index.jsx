@@ -1,10 +1,10 @@
 import React from 'react';
 import style from './style.module.css';
 
-function Button({ children, onClick }) 
+function Button({ children, type }) 
 {
     return (
-        <button className={style.animatedButton} onClick={onClick}>
+        <button className={style.animatedButton} type={type}>
             {children}
         </button>
     );
