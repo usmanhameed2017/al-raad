@@ -11,6 +11,8 @@ import Videos from "./pages/marketing/Videos";
 import Login from "./pages/marketing/Login";
 import AuthProvider from "./context/auth";
 import ProtectedRoute from "./pages/security/ProtectedRoutes";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() 
 {
@@ -43,6 +45,7 @@ function App()
           </Route>
        
         </Routes>
+        <ToastContainer />
       </AuthProvider>
     </>
   );
