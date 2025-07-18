@@ -10,7 +10,7 @@ import { useAuth } from "../../../context/auth";
 
 function Login() 
 {
-    const { userSignup, userLogin, isLoading } = useAuth();
+    const { userLogin, isLoading } = useAuth();
     const formVariants = {
         hidden: { opacity: 0, y: 50 },
         visible: {
@@ -47,7 +47,7 @@ function Login()
                             initial="hidden"
                             animate="visible"
                         >
-                            <Form in>
+                            <Form>
                                 <div className="form-group">
                                     <label htmlFor="username">Username</label>
                                     <Field type='text' name='username' className='form-control' placeholder="Enter username" />
@@ -66,7 +66,7 @@ function Login()
                                     </Link>
                                 </div>
 
-                                <Button type="submit" className="custom-btn w-100 mt-3" disabled={isLoading===false} >SIGN IN</Button>
+                                <Button type="submit" className="custom-btn w-100 mt-3" disabled={ isLoading === false }>SIGN IN</Button>
                                 <hr />
                             </Form>
                         </motion.div>
