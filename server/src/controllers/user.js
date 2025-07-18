@@ -131,6 +131,12 @@ const login = async (request, response) => {
     }
 };
 
+// Verify access token
+const verifyAccessToken = async (request, response) => {
+    if(!request.user) throw new ApiError(401, "Unauthenticated");
+    return response.status(200).json(new ApiResponse(200, request.user, "Authenticated"));
+};
+
 // Fetch users
 const fetchUsers = async (request, response) => {
     const { page = 1, limit = 10 } = request.query;
@@ -220,4 +226,4 @@ const logout = async (request, response) => {
     .json(new ApiResponse(200, null, "Logout successfully"));
 };
 
-module.exports = { signup, accountActivation, login, fetchUsers, fetchSingleUser, editUser, deleteUser, logout };
+module.exports = { signup, accountActivation, login, verifyAccessToken, fetchUsers, fetchSingleUser, editUser, deleteUser, logout };
