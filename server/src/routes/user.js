@@ -16,15 +16,15 @@ userRouter.route("/login").post(login);
 userRouter.route("/verifyAccessToken").get(authentication, verifyAccessToken);
 
 // Fetch all users
-userRouter.route("/").get(authentication, authorization(["Admin"]), fetchUsers)
+userRouter.route("/").get(authentication, authorization(["Admin"]), fetchUsers);
+
+// Logout
+userRouter.route("/logout").get(authentication, logout);
 
 // Multi operations
 userRouter.route("/:id")
 .get(authentication, authorization(["Admin"]), fetchSingleUser) // Fetch single user
 .put(authentication, authorization(["Admin"]), editUser)        // Edit user
-.put(authentication, authorization(["Admin"]), deleteUser);     // Delete user
-
-// Logout
-userRouter.route("/logout").get(authentication, logout);
+.delete(authentication, authorization(["Admin"]), deleteUser);  // Delete user
 
 module.exports = userRouter;
