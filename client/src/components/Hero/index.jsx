@@ -9,7 +9,7 @@ function Hero()
             {/* Background video */}
             <video 
             className={styles.videoBackground}
-            src="/public/hero-section-video2.mp4"
+            src="/public/hero-section-video.mp4"
             autoPlay
             muted
             loop
