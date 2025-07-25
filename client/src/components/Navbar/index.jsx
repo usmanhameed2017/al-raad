@@ -25,7 +25,7 @@ function NavbarBS()
                         {
                             user ? 
                             (
-                                <NavDropdown title="Account" className={styles.userDropdown}>
+                                <NavDropdown title={user?.name || "Account"} className={styles.userDropdown}>
                                     <NavDropdown.Item as={Link} to="/settings">Settings</NavDropdown.Item>
                                     <NavDropdown.Item onClick={userLogout}>Logout</NavDropdown.Item>
                                 </NavDropdown>
