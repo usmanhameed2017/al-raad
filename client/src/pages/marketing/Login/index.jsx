@@ -63,13 +63,15 @@ function Login()
                                         <span className="text-danger"><ErrorMessage name="password" /></span>
                                     </div>
                                     {/* Forgot password */}
-                                    <div className="form-group">
+                                    <div className="form-group mb-2">
                                         <Link className="text-info" style={{ cursor: "pointer" }} to='/security/forgotPassword'>
                                             Forgot password?
                                         </Link>
                                     </div>
                                     {/* Sign in */}
-                                    <Button type="submit" className="custom-btn w-100 mt-3" disabled={ isLoading === false }>SIGN IN</Button>
+                                    <div className="form-group d-block">
+                                        <Button type="submit" className="w-100" disabled={ isLoading === false }>Signin</Button>
+                                    </div>
                                     <hr />
                                 </Form>
                             </motion.div>
@@ -106,13 +108,13 @@ function Login()
                                         <span className="text-danger"><ErrorMessage name="password" /></span>
                                     </div>
                                     {/* Confirm password */}
-                                    <div className="form-group">
+                                    <div className="form-group mb-2">
                                         <label htmlFor="cpassword">Confirm Password</label>
                                         <Field type='password' name='cpassword' className='form-control' placeholder="Re-enter password" />
                                         <span className="text-danger"><ErrorMessage name="cpassword" /></span>
                                     </div>
                                     {/* Sign up */}
-                                    <Button type="submit" className="custom-btn w-100 mt-3">SIGN UP</Button>
+                                    <Button type="submit" className="custom-btn w-100 mt-3">Signup</Button>
                                 </Form>
                             </motion.div>
                         </FormBS>
