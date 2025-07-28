@@ -24,15 +24,13 @@
 }
 
 .glassCard label,
-.glassCard input,
 .glassCard select,
-.glassCard .text-danger,
-.glassCard .form-control,
-.glassCard .nav,
-.glassCard .nav-link {
-  color: white !important;
+.glassCard .text-danger
+{
+  color: whitesmoke !important;
 }
 
+.glassCard input,
 .glassCard .form-control {
   background: rgba(255, 255, 255, 0.1);
   border: 1px solid rgba(255, 255, 255, 0.3);
