@@ -14,6 +14,7 @@ import ProtectedRoute from "./pages/security/ProtectedRoutes";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import AccountActivation from "./pages/marketing/Login/AccountActivation";
+import Contact from "./pages/marketing/Contact";
 
 function App() 
 {
@@ -27,6 +28,7 @@ function App()
             <Route index element={ <Home /> } />
             <Route path="home" element={ <Home /> } />
             <Route path="about" element={ <About /> } />
+            <Route path="contact" element={ <Contact /> } />
             <Route path="tafseer" element={ <Tafseer /> } />
             <Route path="books" element={ <Books /> } />
             <Route path="videos" element={ <Videos /> } />
