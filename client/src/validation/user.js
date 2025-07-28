@@ -18,7 +18,7 @@ export const loginValidation = Yup.object({
 export const signupValidation = Yup.object({
     name:Yup.string()
     .min(3, "Name must be at least 3 characters long")
-    .max(12, "Name must not be longer than 20 characters")
+    .max(20, "Name must not be longer than 20 characters")
     .required("Name is required"),
 
     email:Yup.string()
