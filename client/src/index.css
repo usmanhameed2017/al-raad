@@ -19,18 +19,18 @@ a{
 }
 
 .form-control {
-  transition: all 0.3s ease;
-  border-radius: 8px;
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(3px);
-  -webkit-backdrop-filter: blur(15px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 14px 20px;
+  border: none;
+  border-radius: 6px;
+  background-color: rgba(255, 255, 255, 0.1);
   color: #fff;
+  font-size: 1rem;
+  outline: none;
 }
 
-.form-control:focus {
-  border-color: rgba(255, 255, 255, 0.1);
-  box-shadow: rgba(255, 255, 255, 0.1);
+.textarea {
+  height: 120px;
+  resize: none;
 }
 
 /* Make inactive tab text gray */
