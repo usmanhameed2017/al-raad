@@ -1,5 +1,6 @@
 import Hero from "../../../components/Hero";
 import About from "../About";
+import Contact from "../Contact";
 
 function Home() 
 {
@@ -13,6 +14,7 @@ function Home()
             enableButton={true}
             buttonText="Get Started"/>
             <About />
+            <Contact />
         </div>
     );
 }
