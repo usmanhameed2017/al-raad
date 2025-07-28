@@ -13,6 +13,7 @@ import AuthProvider from "./context/auth";
 import ProtectedRoute from "./pages/security/ProtectedRoutes";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import AccountActivation from "./pages/marketing/Login/AccountActivation";
 
 function App() 
 {
@@ -30,6 +31,7 @@ function App()
             <Route path="books" element={ <Books /> } />
             <Route path="videos" element={ <Videos /> } />
             <Route path="login" element={ <Login /> } />
+            <Route path="accountActivation" element={ <AccountActivation /> } />
           </Route>
 
           {/* Protected Routes */}
