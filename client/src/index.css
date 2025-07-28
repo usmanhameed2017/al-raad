@@ -32,3 +32,19 @@ a{
   border-color: rgba(255, 255, 255, 0.1);
   box-shadow: rgba(255, 255, 255, 0.1);
 }
+
+/* Make inactive tab text gray */
+#auth-tabs-tab-Signin,
+#auth-tabs-tab-Signup {
+  color: whitesmoke;
+}
+
+/* Active tab text color (when selected) */
+#auth-tabs-tab-Signin.active,
+#auth-tabs-tab-Signup.active {
+  color: whitesmoke;
+  font-weight: bold;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(1px);
+  -webkit-backdrop-filter: blur(15px);
+}
