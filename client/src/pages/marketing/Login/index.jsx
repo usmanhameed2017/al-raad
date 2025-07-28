@@ -83,7 +83,7 @@ function Login()
                                 <Form>
                                     {/* Name */}
                                     <div className="form-group">
-                                        <label htmlFor="fname">Name</label>
+                                        <label htmlFor="name">Name</label>
                                         <Field type='text' name='name' className='form-control' placeholder="Enter name" />
                                         <span className="text-danger"><ErrorMessage name="name" /></span>
                                     </div>
