@@ -25,6 +25,7 @@ function AuthProvider({ children })
             action.resetForm();
             setLoading(false);
             showSuccess(ApiResponse(response).message);
+            navigate("/accountActivation");
         } 
         catch(error) 
         {
