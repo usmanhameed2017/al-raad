@@ -7,7 +7,7 @@ const userRouter = require("express").Router();
 userRouter.route("/signup").post(signup);
 
 // Account activation
-userRouter.route("/accountActivation").put(accountActivation);
+userRouter.route("/accountActivation").patch(accountActivation);
 
 // Login
 userRouter.route("/login").post(login);
