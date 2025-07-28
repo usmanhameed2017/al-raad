@@ -8,4 +8,5 @@ export const signupInitialValues = {
     email:'',
     username:'',
     password:'',
+    cpassword:''
 };
