@@ -26,8 +26,8 @@
 
 .formContainer {
   background-color: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(0.4px);
-  -webkit-backdrop-filter: blur(7px);
+  backdrop-filter: blur(1px);
+  -webkit-backdrop-filter: blur(15px);
   border-radius: 12px;
   padding: 50px;
   max-width: 600px;
@@ -67,6 +67,6 @@
 }
 
 .textarea {
+  height: 150px;
   resize: none;
-  height: 120px;
 }
