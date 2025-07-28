@@ -5,7 +5,7 @@ function FormBS({ children, initialValues, validationSchema, handlerFunction })
 {
     return (
         <div className={styles.formContainer}>
-            <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handlerFunction}>
+            <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handlerFunction} validateOnBlur={true} validateOnChange={true}>
                 { children }
             </Formik>
         </div>
