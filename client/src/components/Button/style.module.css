@@ -1,38 +1,17 @@
-.animatedButton {
-  background: linear-gradient(135deg, #6e8efb, #a777e3);
-  color: white;
-  padding: 12px 30px;
-  font-weight: bold;
+.themeBtn {
+  padding: 0.7rem 1.5rem;
+  background-color: #3a506b; /* Dark bluish button */
+  color: #ffffff;
   border: none;
   border-radius: 30px;
+  font-weight: bold;
   cursor: pointer;
-  outline: none;
-  transition: all 0.3s ease-in-out;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-  position: relative;
-  overflow: hidden;
-  margin-top: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.animatedButton::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 300%;
-  height: 300%;
-  background: rgba(255, 255, 255, 0.1);
-  transform: translate(-50%, -50%) rotate(45deg);
-  transition: all 0.5s ease;
-  border-radius: 50%;
-}
-
-.animatedButton:hover::before {
-  width: 0;
-  height: 0;
-}
-
-.animatedButton:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
+.themeBtn:hover {
+  background-color: #00c2cb; /* Cyan highlight on hover */
+  color: #1e1f26;
+  box-shadow: 0 6px 15px rgba(0,194,203,0.6);
 }
