@@ -27,14 +27,14 @@ function Contact()
                             {/* Name */}
                             <div className={styles.formGroup}>
                                 <label htmlFor="name" className={styles.formLabel}>Name</label>
-                                <Field type='text' name='name' className={`${styles.inputField}`} placeholder="Enter name" />
+                                <Field type='text' name='name' className={`${styles.inputField}`} placeholder="Your Name" />
                                 <span className={styles.textDanger}><ErrorMessage name="name" /></span>
                             </div>
 
                             {/* Email */}
                             <div className={styles.formGroup}>
                                 <label htmlFor="email" className={styles.formLabel}>Email</label>
-                                <Field type='email' name='email' className={styles.inputField} placeholder="Enter email" />
+                                <Field type='email' name='email' className={styles.inputField} placeholder="Your Email" />
                                 <span className={styles.textDanger}><ErrorMessage name="email" /></span>
                             </div>
 
