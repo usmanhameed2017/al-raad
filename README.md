@@ -66,6 +66,10 @@ I created parameterized utility functions for uploading and deleting files from 
 
 This not only cleared the confusion but also made the file management process much more robust.
 
+📅 29th July, 2025
+
+- Successfully designed neat and clean `About` and `Contact` pages. Faced layout issues where the contact form was overlapping with the navbar and footer on smaller screens. Resolved it by applying **media queries** and setting **min-height** to ensure proper spacing and responsiveness.
+
 ---
 
 ### ⚙ Setup Installation
