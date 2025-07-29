@@ -76,8 +76,11 @@ function AccountActivation()
                                 <Field type='text' name='activationCode' className='form-control' placeholder="Enter activation code" />
                                 <span className="text-danger"><ErrorMessage name="activationCode" /></span>
                             </div>
+                            <hr />
                             {/* Confirm */}
-                            <Button type="submit" className="custom-btn w-100 mt-3">Confirm</Button>
+                            <div className="form-group d-grid mt-3">
+                                <Button type="submit" className="custom-btn w-100 mt-3">Confirm</Button>
+                            </div>
                         </Form>
                     </motion.div>
                 </FormBS>
