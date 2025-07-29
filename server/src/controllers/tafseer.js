@@ -32,7 +32,7 @@ const fetchTafseers = async (request, response) => {
     {
         const result = await Tafseer.paginate({}, options);
         // If page size is greater than total pages
-        if(page > result.totalPages) throw new ApiError(404, "User not found");
+        if(page > result.totalPages) throw new ApiError(404, "Tafseer not found");
 
         return response.status(200).json(new ApiResponse(200, result, "All tafseers has been fetched successfully"));        
     } 
