@@ -1,11 +1,25 @@
+import React, { useState, useEffect } from 'react';
 import styles from './style.module.css';
 import { motion } from 'framer-motion';
 import { FaBookOpen } from 'react-icons/fa';
-import { Row, Col, Card } from 'react-bootstrap';
-import Button from '../../../components/Button';
+import { Row, Col } from 'react-bootstrap';
 import CardBS from '../../../components/Card';
+import { fetchTafseer } from '../../../api/tafseer';
 
-function Tafseer() {
+function Tafseer() 
+{
+    const [data, setData] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+
+    // Fetch tafseer on page load
+    useEffect(() => {
+        fetchTafseer(currentPage)
+        .then(response => setData(response))
+        .catch(error => setData(error));
+    }, [currentPage]);
+
+    console.log("Data", data?.docs);
+
     return (
         <div className={styles.tafseerWrapper}>
             <motion.h1
@@ -25,33 +39,25 @@ function Tafseer() {
                         <FaBookOpen size={50} />
                     </motion.div>
                     <h2 className={styles.heroTitle}> Tafseer Al-Qura'an </h2>
-                    <hr />
+                    <hr className='text-secondary' />
                 </span>
             </motion.h1>
 
             <Row className='mt-5'>
-                <Col xs={12} sm={6} md={4} lg={4} xl={4}>
-
-                    {/* <Card className={`shadow ${styles.tafseerCard}`}>
-                        <Card.Header className={styles.cardHeader}>
-                            Surah Al-Asr
-                        </Card.Header>
-
-                        <Card.Body className={styles.cardBody}>
-                            <Card.Title className={styles.cardTitle}>Ayah: 02</Card.Title>
-                            <Card.Text className={styles.cardText}>
-                                Beshak insaan nuksan mein hai — agar woh imaan, achhe amal,
-                                sachai aur sabr par na chale.
-                            </Card.Text>
-                            <div className='d-grid'>
-                                <Button>View Tafseer</Button>
-                            </div>
-                        </Card.Body>
-                    </Card> */}
-
-                    <CardBS heading="Surah Al-Asr" subHeading="Ayah: 02" description="Beshak insaan nuksan mein hai — agar woh imaan, achhe amal, sachai aur sabr par na chale." />                    
-                    
-                </Col>
+            {
+                data.docs && Array.isArray(data.docs) && data.docs.length > 0 ?
+                data.docs.map((tafseer, _) => (
+                    <Col xs={12} sm={6} md={4} lg={4} xl={4} key={tafseer?._id}>
+                        <CardBS 
+                        _id={tafseer?._id}
+                        heading={tafseer?.surahName} 
+                        subHeading={tafseer?.ayah} 
+                        description={tafseer?.tafseer} />                    
+                    </Col>
+                ))
+                :
+                <h2> No Tafseer Found </h2>
+            }
             </Row>
         </div>
     );
