@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { FaBookOpen } from 'react-icons/fa';
 import { Row, Col } from 'react-bootstrap';
 import CardBS from '../../../components/Card';
-import { fetchTafseer } from '../../../api/tafseer';
+import { fetchAllTafseers } from '../../../api/tafseer';
 
 function Tafseer() 
 {
@@ -13,7 +13,7 @@ function Tafseer()
 
     // Fetch tafseer on page load
     useEffect(() => {
-        fetchTafseer(currentPage)
+        fetchAllTafseers(currentPage)
         .then(response => setData(response))
         .catch(error => setData(error));
     }, [currentPage]);
