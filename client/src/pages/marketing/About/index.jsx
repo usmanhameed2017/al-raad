@@ -51,6 +51,7 @@ function About()
     <div className={styles.aboutWrapper}>
       <motion.h1 className={styles.heroTitle} initial={{ opacity: 0, y: -50, scale: 0.9 }}
       animate={{ opacity: 1, y: 0, scale: 1 }} transition={{ duration: 0.8, ease: 'easeOut' }}> About Al-Ra’ad </motion.h1>
+      <hr className='text-secondary' />
 
       <div className={styles.sectionsContainer}>
         <Row>
