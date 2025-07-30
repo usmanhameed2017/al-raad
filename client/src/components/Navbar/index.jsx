@@ -32,7 +32,7 @@ function NavbarBS()
                             )
                             :
                             (
-                                <Nav.Link as={Link} to="/login">Signin/Signup</Nav.Link>
+                                <Nav.Link as={Link} to="/login">Signin</Nav.Link>
                             )
                         }
                     </Nav>
