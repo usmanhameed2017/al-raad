@@ -1,21 +1,32 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import styles from './style.module.css';
 import { motion } from 'framer-motion';
 import { FaBookOpen } from 'react-icons/fa';
 import { Row, Col } from 'react-bootstrap';
 import CardBS from '../../../components/Card';
 import { fetchAllTafseers } from '../../../api/tafseer';
+import { useAuth } from '../../../context/auth';
+import Loading from '../../../components/Loader';
 
 function Tafseer() 
 {
     const [data, setData] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
 
+    const { isLoading, setLoading } = useAuth();
+
     // Fetch tafseer on page load
     useEffect(() => {
+        setLoading(true);
         fetchAllTafseers(currentPage)
-        .then(response => setData(response))
-        .catch(error => setData(error));
+        .then(response => {
+            setLoading(false);
+            setData(response);
+        })
+        .catch(error => {
+            setLoading(false);
+            setData(error)
+        });
     }, [currentPage]);
 
     console.log("Data", data?.docs);
@@ -45,6 +56,7 @@ function Tafseer()
 
             <Row className='mt-5'>
             {
+                isLoading ? (  <Loading text="Loading" /> ) :
                 data.docs && Array.isArray(data.docs) && data.docs.length > 0 ?
                 data.docs.map((tafseer, _) => (
                     <Col xs={12} sm={6} md={4} lg={4} xl={4} key={tafseer?._id}>
