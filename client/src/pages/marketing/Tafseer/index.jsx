@@ -55,7 +55,7 @@ function Tafseer()
                 isLoading ? (  <Loader text="Loading" /> ) :
                 data.docs && Array.isArray(data.docs) && data.docs.length > 0 ?
                 data.docs.map((tafseer, _) => (
-                    <Col xs={12} sm={6} md={4} lg={4} xl={4} key={tafseer?._id} className='mb-3'>
+                    <Col xs={12} sm={12} md={6} lg={4} xl={4} key={tafseer?._id} className='mb-3'>
                         <Animation type="card">
                             <CardBS 
                             _id={tafseer?._id}
