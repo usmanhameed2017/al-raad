@@ -1,7 +1,7 @@
 import { FaSync } from 'react-icons/fa';
 import styles from './style.module.css';
 
-function Loading({ text }) 
+function Loader({ text }) 
 {
     return (
         <h3 className='text-center fw-bold textTheme'> 
@@ -10,4 +10,4 @@ function Loading({ text })
     );
 }
 
-export default Loading;
+export default Loader;
