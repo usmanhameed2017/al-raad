@@ -37,8 +37,6 @@ function Tafseer()
         });
     }, [currentPage]);
 
-    console.log("Data", data);
-
     return (
         <div className={styles.tafseerWrapper}>
             <Animation type="heading">
@@ -50,30 +48,29 @@ function Tafseer()
                     <hr className='text-secondary' />
                 </span>
             </Animation>
-
-            <Animation type="normal">
-                {/* Cards */}
-                <Row className='mt-5'>
-                {
-                    isLoading ? (  <Loader text="Loading" /> ) :
-                    data.docs && Array.isArray(data.docs) && data.docs.length > 0 ?
-                    data.docs.map((tafseer, _) => (
-                            <Col xs={12} sm={6} md={4} lg={4} xl={4} key={tafseer?._id}>
-                                <CardBS 
-                                _id={tafseer?._id}
-                                heading={tafseer?.surahName} 
-                                subHeading={tafseer?.ayah} 
-                                description={tafseer?.tafseer} />                    
-                            </Col>                        
-                        
-                    ))
-                    :
-                    <Col>
-                        <h2 className='fw-bold textTheme'> No Tafseer Found </h2>
-                    </Col>
-                }
-                </Row>
-            </Animation>
+            
+            {/* Cards */}
+            <Row className='mt-5'>
+            {
+                isLoading ? (  <Loader text="Loading" /> ) :
+                data.docs && Array.isArray(data.docs) && data.docs.length > 0 ?
+                data.docs.map((tafseer, _) => (
+                    <Col xs={12} sm={6} md={4} lg={4} xl={4} key={tafseer?._id} className='mb-3'>
+                        <Animation type="card">
+                            <CardBS 
+                            _id={tafseer?._id}
+                            heading={tafseer?.surahName} 
+                            subHeading={tafseer?.ayah} 
+                            description={tafseer?.tafseer} />
+                        </Animation>
+                    </Col>                     
+                ))
+                :
+                <Col>
+                    <h2 className='fw-bold textTheme'> No Tafseer Found </h2>
+                </Col>
+            }
+            </Row>
 
             {/* Pagination */}
             {
