@@ -1,0 +1,33 @@
+.tafseerContainer {
+  min-height: 100vh;
+  border-radius: 12px;
+  padding: 40px 30px;
+  margin: 80px auto 50px auto;
+  max-width: 1200px;
+  color: #ccc;
+  line-height: 1.7;
+  word-break: break-word;
+  text-align: left;
+}
+
+.surahName {
+  font-size: 5rem;
+  color: rgba(9, 204, 188, 0.877);
+  margin-bottom: 20px;
+  text-align: center;
+  word-spacing: 2px;
+  letter-spacing: 1px;
+}
+
+.tafseerText {
+  font-size: 1.2rem;
+  padding: 30px;
+  border-radius: 10px;
+  color: #e0e0e0;
+  margin: 20px 0;
+  word-spacing: 2px;
+  letter-spacing: 0.3px;
+  white-space: pre-line;
+  text-align: justify;
+  line-height: 1.9;
+}
