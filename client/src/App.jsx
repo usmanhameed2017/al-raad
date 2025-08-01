@@ -11,7 +11,7 @@ import Videos from "./pages/marketing/Videos";
 import Login from "./pages/marketing/Login";
 import AuthProvider from "./context/auth";
 import ProtectedRoute from "./pages/security/ProtectedRoutes";
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import AccountActivation from "./pages/marketing/Login/AccountActivation";
 import Contact from "./pages/marketing/Contact";
@@ -30,8 +30,13 @@ function App()
             <Route path="home" element={ <Home /> } />
             <Route path="about" element={ <About /> } />
             <Route path="contact" element={ <Contact /> } />
-            <Route path="tafseer" element={ <Tafseer /> } /> 
-            <Route path="tafseer/:id" element={ <ViewTafseer /> } />  
+
+            {/* Protected Route */}
+            <Route element={ <ProtectedRoute/> }>
+              <Route path="tafseer" element={ <Tafseer /> } /> 
+              <Route path="tafseer/:id" element={ <ViewTafseer /> } />
+            </Route>
+
             <Route path="books" element={ <Books /> } />
             <Route path="videos" element={ <Videos /> } />
             <Route path="login" element={ <Login /> } />
