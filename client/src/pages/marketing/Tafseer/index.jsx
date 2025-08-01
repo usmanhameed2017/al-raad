@@ -8,10 +8,11 @@ import { fetchAllTafseers } from '../../../api/tafseer';
 import { useAuth } from '../../../context/auth';
 import Loading from '../../../components/Loader';
 import { showError } from '../../../utils/toasterMessage';
+import ServerSidePagination from '../../../components/Pagination';
 
 function Tafseer() 
 {
-    const [data, setData] = useState({ docs:[] });
+    const [data, setData] = useState({});
     const [currentPage, setCurrentPage] = useState(1);
 
     const { isLoading, setLoading } = useAuth();
@@ -74,6 +75,13 @@ function Tafseer()
                 :
                 <h2 className='fw-bold textTheme'> No Tafseer Found </h2>
             }
+            </Row>
+
+            {/* Pagination */}
+            <Row className='mt-3'>
+                <Col>
+                    <ServerSidePagination data={data} setCurrentPage={setCurrentPage} />
+                </Col>
             </Row>
         </div>
     );
