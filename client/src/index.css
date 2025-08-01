@@ -94,3 +94,11 @@ a{
   font-weight: bold;
   cursor: default;
 }
+
+.dropdown-menu.show{
+  background-color: #3a404e50;
+}
+
+a.dropdown-item{
+  color: whitesmoke;
+}
