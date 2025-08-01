@@ -17,9 +17,13 @@ function Tafseer()
 
     const { isLoading, setLoading } = useAuth();
 
-    // Fetch tafseer on page load
+    // Enable loader on page load
     useEffect(() => {
         setLoading(true);
+    },[]);    
+
+    // Fetch tafseer on page load
+    useEffect(() => {
         fetchAllTafseers(currentPage)
         .then(response => {
             setLoading(false);
@@ -28,7 +32,7 @@ function Tafseer()
         .catch(error => {
             setLoading(false);
             setData({ docs:[] });
-            showError(error)
+            showError(error);
         });
     }, [currentPage]);
 
@@ -73,16 +77,23 @@ function Tafseer()
                     </Col>
                 ))
                 :
-                <h2 className='fw-bold textTheme'> No Tafseer Found </h2>
+                <Col>
+                    <h2 className='fw-bold textTheme'> No Tafseer Found </h2>
+                </Col>
             }
             </Row>
 
             {/* Pagination */}
-            <Row className='mt-3'>
-                <Col>
-                    <ServerSidePagination data={data} setCurrentPage={setCurrentPage} />
-                </Col>
-            </Row>
+            {
+                isLoading === false && 
+                (
+                    <Row className='mt-3'>
+                        <Col className="d-flex justify-content-center">
+                            <ServerSidePagination data={data} setCurrentPage={setCurrentPage} />
+                        </Col>
+                    </Row>
+                )
+            }
         </div>
     );
 }
