@@ -25,6 +25,6 @@ export const fetchSingleTafseer = async (id) => {
     } 
     catch(error) 
     {
-        return ApiError(error);
+        return ApiError(error).message;
     }
 };
