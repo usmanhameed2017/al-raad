@@ -70,6 +70,18 @@ This not only cleared the confusion but also made the file management process mu
 
 - Successfully designed neat and clean `About` and `Contact` pages. Faced layout issues where the contact form was overlapping with the navbar and footer on smaller screens. Resolved it by applying **media queries** and setting **min-height** to ensure proper spacing and responsiveness.
 
+📅 1st August, 2025
+
+- Completed Tafseer Section - Carefully implemented the full Tafseer section with attention to every edge case for a seamless user experience.
+
+- Created a dedicated Loader component and integrated it based on the loading state during API fetch to ensure a smooth UX.
+
+- Applied isLoading flag strategically around the fetchAllTafseers() call to control when the loader is shown and hidden.
+
+- Developed a modular server-side pagination component that receives paginated data via props from the parent. Configured it to handle navigation based on hasNextPage, hasPrevPage, and page values from the server response.
+
+- Ensured responsive layout and dynamic rendering of Tafseer cards using Framer Motion animations to improve UI feedback and appearance.
+
 ---
 
 ### ⚙ Setup Installation
