@@ -12,7 +12,7 @@ export const fetchAllTafseers = async (currentPage) => {
     } 
     catch(error) 
     {
-        return ApiError(error);
+        return ApiError(error).message;
     }
 };
 
