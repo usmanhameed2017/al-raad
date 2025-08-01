@@ -1,3 +1,4 @@
+import React from 'react';
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedin, FaEnvelope } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
@@ -53,4 +54,4 @@ function Footer()
     );
 }
 
-export default Footer;
+export default React.memo(Footer);
