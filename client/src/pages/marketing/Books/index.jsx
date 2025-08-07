@@ -23,7 +23,7 @@ function Books()
         setLoading(true);
     },[]);    
 
-    // Fetch tafseer on page load
+    // Fetch book on page load
     useEffect(() => {
         fetchAllBooks(currentPage)
         .then(response => {
@@ -54,15 +54,15 @@ function Books()
             {
                 isLoading ? (  <Loader text="Loading" /> ) :
                 data.docs && Array.isArray(data.docs) && data.docs.length > 0 ?
-                data.docs.map((tafseer, _) => (
-                    <Col xs={12} sm={12} md={6} lg={4} xl={4} key={tafseer?._id} className='mb-3'>
+                data.docs.map((book, _) => (
+                    <Col xs={12} sm={12} md={6} lg={4} xl={4} key={book?._id} className='mb-3'>
                         <Animation type="card">
                             <CardBS 
-                            _id={tafseer?._id}
-                            heading={tafseer?.title} 
-                            subHeading={tafseer?.title} 
-                            description={tafseer?.description}
-                            buttonText="View book" />
+                            _id={book?._id}
+                            heading={book?.title} 
+                            description={book?.description}
+                            buttonText="View book"
+                            redirectTo={`/books/${book?._id}`} />
                         </Animation>
                     </Col>                     
                 ))
