@@ -102,3 +102,7 @@ a{
 a.dropdown-item{
   color: whitesmoke;
 }
+
+.link:hover{
+  text-decoration: underline;
+}
