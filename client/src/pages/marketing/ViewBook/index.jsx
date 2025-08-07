@@ -35,8 +35,6 @@ function ViewBook()
             });
     }, [id]);
 
-    console.log(book);
-
     return (
         <div className={styles.bookContainer}>
         {

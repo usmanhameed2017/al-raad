@@ -34,8 +34,6 @@ function ViewTafseer()
             });
     }, [id]);
 
-    console.log(tafseer);
-
     return (
         <div className={styles.tafseerContainer}>
         {
