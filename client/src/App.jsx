@@ -16,6 +16,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import AccountActivation from "./pages/marketing/Login/AccountActivation";
 import Contact from "./pages/marketing/Contact";
 import ViewTafseer from "./pages/marketing/ViewTafseer";
+import ViewBook from "./pages/marketing/ViewBook";
 
 function App() 
 {
@@ -38,6 +39,7 @@ function App()
             </Route>
 
             <Route path="books" element={ <Books /> } />
+            <Route path="books/:id" element={ <ViewBook /> } />
             <Route path="videos" element={ <Videos /> } />
             <Route path="login" element={ <Login /> } />
             <Route path="accountActivation" element={ <AccountActivation /> } />
