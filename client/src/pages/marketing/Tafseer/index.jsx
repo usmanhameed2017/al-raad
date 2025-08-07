@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import styles from './style.module.css';
-import { motion } from 'framer-motion';
 import { FaBookOpen } from 'react-icons/fa';
 import { Row, Col } from 'react-bootstrap';
 import CardBS from '../../../components/Card';
