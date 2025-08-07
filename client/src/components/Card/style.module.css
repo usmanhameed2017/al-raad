@@ -6,6 +6,7 @@
   flex-direction: column;
   height: 350px;
   min-height: 350px;
+  padding: 5px;
 }
 
 .cardHeader {
@@ -22,9 +23,17 @@
   flex-grow: 1;
   padding: 30px;
   margin: 10px 20px;
+  overflow-y: hidden;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  height: 130px;
+  max-height: 130px;
+}
+
+.cardFooter {
+  border: none;
+  padding: 20px;
 }
 
 .cardTitle {
@@ -44,17 +53,20 @@
 
 @media (max-width: 576px) {
   .card {
-    height: 350px;          /* Allow it to grow if needed */
-    min-height: 350px;     /* But never shrink below this */
+    height: 350px;          
+    min-height: 350px;    
   }
 
   .cardBody {
-    margin: 10px 10px;     /* Reduce side margin on small screens */
-    padding: 20px;         /* Slightly smaller padding */
+    margin: 10px 10px;     
+    padding: 20px;    
+    overflow-y: hidden;
+    height: 130px;
+    min-height: 130px;  
   }
 
   .cardHeader {
-    font-size: 1.5rem;     /* Scale down title */
+    font-size: 1.5rem;
   }
 
   .cardTitle {
@@ -63,5 +75,9 @@
 
   .cardText {
     font-size: 0.9rem;
+  }
+  .cardFooter {
+    border: none;
+    padding: 10px;
   }
 }

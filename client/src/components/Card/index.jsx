@@ -10,10 +10,13 @@ function CardBS({ heading, subHeading, description, buttonText, redirectTo, link
     return (
         <>
             <Card className={`shadow ${styles.card}`}>
+            
+                {/* Card Header */}
                 <Card.Header className={styles.cardHeader}>
                     { heading }
                 </Card.Header>
 
+                {/* Card Body */}
                 <Card.Body className={styles.cardBody}>
                     <Card.Title className={styles.cardTitle}> { subHeading } </Card.Title>
                     <Card.Text className={styles.cardText}>
@@ -21,11 +24,20 @@ function CardBS({ heading, subHeading, description, buttonText, redirectTo, link
                             description.length > 90 ? <> { description.substring(0, 90) }... </> : description
                         }
                     </Card.Text>
-                    {
-                        link && ( <Card.Link href={link}> Download </Card.Link> )
-                    }
-                    <Button type="button" onClick={ () => navigate(redirectTo) }> { buttonText } </Button>
                 </Card.Body>
+
+                {/* Card Footer */}
+                <Card.Footer className={styles.cardFooter}>
+                    <div>
+                    {
+                        link && ( <Card.Link href={link} className='link fw-bold'> Download </Card.Link> )
+                    }
+                    </div>
+
+                    <div className='mt-2 d-grid'>
+                        <Button type="button" onClick={ () => navigate(redirectTo) }> { buttonText } </Button>
+                    </div>
+                </Card.Footer>                
             </Card>      
         </>
     );
