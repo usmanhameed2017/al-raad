@@ -61,6 +61,7 @@ function Books()
                             _id={book?._id}
                             heading={book?.title} 
                             description={book?.description}
+                            link={book?.pdf}
                             buttonText="View book"
                             redirectTo={`/books/${book?._id}`} />
                         </Animation>
