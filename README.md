@@ -82,6 +82,26 @@ This not only cleared the confusion but also made the file management process mu
 
 - Ensured responsive layout and dynamic rendering of Tafseer cards using Framer Motion animations to improve UI feedback and appearance.
 
+📅 8th August, 2025
+
+- Today, I worked on implementing Cloudinary’s `upload_large` function to handle large video file uploads.
+
+- Initially, it didn’t work as expected and was returning `undefined`. After some investigation, I discovered that the `upload_large` function doesn’t directly support the **await** syntax out of the box. This was causing the unexpected behavior.
+
+- After extensive debugging and trial and error, I figured out that wrapping the `upload_large` call inside a **Promise** allowed me to properly handle the async behavior. This way, I was able to successfully extract the `secure_url` from the response once the upload was completed, enabling large video uploads without any issues.
+
+- To further improve the frontend experience, I applied Cloudinary transformation parameters:
+
+- **q_auto:good** → for automatic, high-quality compression.
+
+- **br_500k** → to set a target bitrate of `500kbps` for smoother streaming.
+
+- **f_auto** → to automatically deliver the optimal video format for the user’s browser.
+
+- These optimizations ensure that videos on the frontend are fully optimized and compressed, loading instantly and playing smoothly without delays.
+
+- I feel really confident after discovering such complexity in file uploads, especially when uploading to a cloud-based service and having to apply additional optimization for the best user experience.
+
 ---
 
 ### ⚙ Setup Installation
