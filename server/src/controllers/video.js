@@ -23,7 +23,14 @@ const createVideo = async (request, response) => {
     
     try 
     {
-        request.body.url = await uploadOnCloudinary(videoUrl, "video", "videos")
+        const uploadedUrl = await uploadOnCloudinary(videoUrl, "video", "videos");
+        if(!uploadedUrl)
+        {
+            deleteFromTemp(videoUrl);
+            throw new ApiError(400, "Video failed to upload on cloudinary");
+        }
+
+        request.body.url = uploadedUrl;
         const video = await Video.create(request.body);
         
         return response.status(201).json(new ApiResponse(201, video, "A video has been uploaded successfully"));
