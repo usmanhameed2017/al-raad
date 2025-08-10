@@ -1,5 +1,5 @@
 {
-  "name": "blogsphere",
+  "name": "al-raad",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -10,6 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@cloudinary/react": "^1.14.3",
+    "@cloudinary/url-gen": "^1.21.0",
     "axios": "^1.9.0",
     "formik": "^2.4.6",
     "framer-motion": "^12.23.6",
