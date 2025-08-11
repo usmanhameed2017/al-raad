@@ -102,6 +102,32 @@ This not only cleared the confusion but also made the file management process mu
 
 - I feel really confident after discovering such complexity in file uploads, especially when uploading to a cloud-based service and having to apply additional optimization for the best user experience.
 
+📅 11th August, 2025
+
+Today I made a significant refactor to my project.
+
+Previously, I was handling video optimization in the server-side Node.js code. I completely removed that part and instead implemented video compression and optimization directly in the React frontend. For this, I installed Cloudinary’s React SDK, configured cld, and used the AdvancedVideo component.
+
+To transform the videos, I used Cloudinary’s built-in methods such as:
+
+`transcode()` → to set the bitrate
+
+`delivery()` → for quality & format optimization
+
+`format()` & `quality()` → to deliver the best output based on the browser
+
+I also generated an optimized thumbnail using Cloudinary’s transformation features, ensuring fast loading without compromising quality.
+
+This change simplified my backend, reduced processing time, and made the overall video loading much faster on the client side.
+
+Afterwards, I realized that the free plan on Cloudinary comes with limited bandwidth, but it’s actually enough if used smartly with proper optimization.
+
+In the Videos section, which was meant for lecture videos, I observed that audio files are much smaller in size compared to videos and consume significantly less bandwidth. Since the requirement for the lecture section was mostly to display just a thumbnail or some short Ayah transitions with minimal actual video content, I discussed this with my partner and we agreed that video was not really necessary.
+
+So, I decided to refactor the **Videos section** into an **Audio section** instead. I migrated everything — components, pages, models, routes, controllers — from handling video to handling audio, moving the entire flow from server to client for audio delivery.
+
+But to my surprise, Cloudinary still classifies audio files under the video resource type. This means that, technically, they are still processed as videos by the service, even though the actual content is just audio. So I simply call `uploadOnCloudinary()` function by passing same arguments to it as videos except folder name.
+
 ---
 
 ### ⚙ Setup Installation
