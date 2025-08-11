@@ -6,7 +6,6 @@ function ServerSidePagination({ data, setCurrentPage })
     const { totalPages, page, prevPage, nextPage } = data || {};
 
     const renderPageNumbers = () => {
-        console.log("Pagination rendered at", Date.now());
         let items = [];
 
         if(totalPages <= 4) 
