@@ -17,6 +17,7 @@ import AccountActivation from "./pages/marketing/Login/AccountActivation";
 import Contact from "./pages/marketing/Contact";
 import ViewTafseer from "./pages/marketing/ViewTafseer";
 import ViewBook from "./pages/marketing/ViewBook";
+import Audios from "./pages/marketing/Audios";
 
 function App() 
 {
@@ -40,7 +41,8 @@ function App()
 
             <Route path="books" element={ <Books /> } />
             <Route path="books/:id" element={ <ViewBook /> } />
-            <Route path="videos" element={ <Videos /> } />
+            {/* <Route path="videos" element={ <Videos /> } /> */}
+            <Route path="audios" element={ <Audios /> } />
             <Route path="login" element={ <Login /> } />
             <Route path="accountActivation" element={ <AccountActivation /> } />
           </Route>
