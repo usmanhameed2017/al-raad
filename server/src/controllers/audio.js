@@ -44,7 +44,7 @@ const createAudio = async (request, response) => {
 
 // Fetch all audios
 const fetchAudios = async (request, response) => {
-    const { page = 1, limit = 10 } = request.query;
+    const { page = 1, limit = 6 } = request.query;
 
     // Paging options
     const options = {
