@@ -23,7 +23,8 @@ function NavbarBS()
                             user && ( <Nav.Link as={Link} to="/tafseer">Tafseer</Nav.Link> )
                         }
                         <Nav.Link as={Link} to="/books">Books</Nav.Link>
-                        <Nav.Link as={Link} to="/videos">Videos</Nav.Link>
+                        <Nav.Link as={Link} to="/audios">Audios</Nav.Link>
+                        {/* <Nav.Link as={Link} to="/videos">Videos</Nav.Link> */}
                         {
                             user ? 
                             (
