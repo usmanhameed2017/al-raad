@@ -23,7 +23,7 @@ const createAudio = async (request, response) => {
     
     try 
     {
-        const uploadedUrl = await uploadOnCloudinary(audioUrl, "audio", "audios");
+        const uploadedUrl = await uploadOnCloudinary(audioUrl, "video", "audios");
         if(!uploadedUrl)
         {
             deleteFromTemp(audioUrl);
@@ -122,8 +122,8 @@ const updateAudio = async (request, response) => {
         // If new audio uploaded
         if(uploadedAudio)
         {
-            request.body.url = await uploadOnCloudinary(uploadedAudio, "audio", "audios");
-            await deleteFromCloudinary(oldAudio, "audio", "audios");
+            request.body.url = await uploadOnCloudinary(uploadedAudio, "video", "audios");
+            await deleteFromCloudinary(oldAudio, "video", "audios");
         }
         else
         {
@@ -155,7 +155,7 @@ const deleteAudio = async (request, response) => {
         if(!audio) throw new ApiError(404, "Audio not found");
 
         // Delete audio from cloudinary
-        await deleteFromCloudinary(audio?.url, "audio", "audios");
+        await deleteFromCloudinary(audio?.url, "video", "audios");
         return response.status(200).json(new ApiResponse(200, audio, "Audio has been deleted successfully"));
     } 
     catch (error) 
