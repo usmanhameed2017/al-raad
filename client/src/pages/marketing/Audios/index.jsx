@@ -40,7 +40,7 @@ function Audios()
         <div className={styles.audioWrapper}>
             <Animation type="heading">
                 {/* Icon */}
-                <span className={styles.icon}>
+                <span>
                     <div className={styles.icon}> <FaPlayCircle size={50} /> </div>
                     {/* Heading */}
                     <h2 className={styles.heroTitle}> Audio Lectures </h2>
