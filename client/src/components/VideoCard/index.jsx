@@ -1,27 +1,42 @@
 import styles from './style.module.css';
+import { AdvancedVideo } from '@cloudinary/react';
+import { scale } from '@cloudinary/url-gen/actions/resize';
+import { quality, format } from '@cloudinary/url-gen/actions/delivery';
+import { bitRate } from '@cloudinary/url-gen/actions/transcode';
+import { trim } from '@cloudinary/url-gen/actions/videoEdit';
+import cld from '../../utils/cloudinary';
 
 function VideoCard({ url, title }) 
 {
-    // Function to extract thumbnail
-    const thumbnail =  (videoUrl) => {
-        return videoUrl
-        .replace('/upload/', '/upload/so_2/')
-        .replace(/\.(mp4|webm|mov)$/i, '.jpg');
-    }
+    // Extract public ID from URL
+    const publicId = `al-raad/videos/${url.split("/al-raad/videos/").pop().split(".")[0]}`;
+
+    // Main video transformations
+    const video = cld.video(publicId)
+        .resize(scale().width(400))
+        .transcode(bitRate('500k'))
+        .delivery(quality('auto:good'), format('auto'));
+
+    // Thumbnail image (first frame)
+    const thumbnailUrl = cld.video(publicId)
+        .videoEdit(trim().startOffset('0'))     // Take first frame
+        .resize(scale().width(600))             // Resize width to 600px
+        .delivery(format('auto'))               // Auto format for browser
+        .delivery(quality('auto'))              // Auto quality
+        .toURL();
 
     return (
         <div className={styles.videoCard}>
-            <video className={styles.video} controls preload="none" loading="lazy" poster={thumbnail(url)}>
-                <source src={url} type="video/mp4" />
-                Your browser does not support the video tag.
-            </video>
-            { title && <div className={styles.caption}> {title} </div> }
+            <AdvancedVideo cldVid={video}
+                controls
+                preload="none"
+                poster={thumbnailUrl}
+                style={{ width: '100%', borderRadius: '12px' }}
+            />
+            {
+                title && <div className={styles.caption}> { title } </div>
+            }
         </div>
-
-        // <audio controls preload="none">
-        //     <source src={url} type="audio/mp3" />
-        //     Your browser does not support the audio tag.
-        // </audio>
     );
 }
 
