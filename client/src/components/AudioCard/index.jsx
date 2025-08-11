@@ -17,12 +17,15 @@ function AudioCard({ url, title })
 
     return (
         <div className={styles.audioCard}>
+            <div>
+                <h4 className={`${styles.heading}`}> { title } </h4>
+            </div>
             <audio preload='none' controls style={{ width: '100%' }}>
                 <source src={audioUrl} type="audio/mpeg" />
                 Your browser does not support the audio element.
             </audio>
             {
-                title && <div className={`${styles.caption}`}> { title } </div>
+                title && <div className={`${styles.caption}`}> (Ayah: 02 - 07) </div>
             }
         </div>
     );
