@@ -41,9 +41,9 @@ const uploadOnCloudinary = async (localFilePath, resourceType, folderName) => {
         {
             // Wrapper for upload large file
             response = await new Promise((resolve, reject) => {
-                cloudinary.uploader.upload_large(localFilePath, options, (error, result) => {
+                cloudinary.uploader.upload_large(localFilePath, options, (error, data) => {
                     if (error) return reject(error.message);
-                    return resolve(result);
+                    return resolve(data);
                 });
             });
         }
@@ -55,21 +55,7 @@ const uploadOnCloudinary = async (localFilePath, resourceType, folderName) => {
         // Delete file from temporary storage
         deleteFromTemp(localFilePath);
         if (!response.secure_url) return null;
-
-        // Optimize video through video url parameter
-        if (resourceType === "video") 
-        {
-            // For auto quality + auto format + lower bitrate for faster load
-            return response.secure_url.replace('/upload/', '/upload/q_auto:good,f_auto,br_500k/');
-
-            // For conversion from video to audio
-            // return response.secure_url.replace('/upload/', '/upload/f_mp3,q_auto:good/'); 
-        } 
-        else 
-        {
-            // For images, PDFs, etc.
-            return response.secure_url.replace('/upload/', '/upload/q_auto,f_auto/');
-        }
+        return response.secure_url;
     } 
     catch (error) 
     {
