@@ -40,7 +40,7 @@ function Audios()
         <div className={styles.audioWrapper}>
             <Animation type="heading">
                 {/* Icon */}
-                <span className={styles.headingWithIcon}>
+                <span className={styles.icon}>
                     <div className={styles.icon}> <FaPlayCircle size={50} /> </div>
                     {/* Heading */}
                     <h2 className={styles.heroTitle}> Audio Lectures </h2>
@@ -56,7 +56,7 @@ function Audios()
                 data.docs && Array.isArray(data.docs) && data.docs.length > 0 ?
                 data.docs.map((audio, _) => (
                     <Col xs={12} sm={12} md={6} lg={4} xl={4} key={audio?._id} className='mb-3'>
-                        <AudioCard  title={audio?.title} url={audio?.url} />
+                        <AudioCard title={audio?.title} url={audio?.url} />
                     </Col>                     
                 ))
                 :
