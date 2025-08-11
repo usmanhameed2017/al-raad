@@ -56,7 +56,9 @@ function Audios()
                 data.docs && Array.isArray(data.docs) && data.docs.length > 0 ?
                 data.docs.map((audio, _) => (
                     <Col xs={12} sm={12} md={6} lg={4} xl={4} key={audio?._id} className='mb-3'>
-                        <AudioCard title={audio?.title} url={audio?.url} />
+                        <Animation type="normal">
+                            <AudioCard title={audio?.title} url={audio?.url} />
+                        </Animation>
                     </Col>                     
                 ))
                 :
