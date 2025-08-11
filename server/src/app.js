@@ -28,7 +28,7 @@ const videoRouter = require("./routes/video");
 app.use("/api/v1/user", userRouter);
 app.use("/api/v1/tafseer", tafseerRouter);
 app.use("/api/v1/book", bookRouter);
-app.use("/api/v1/video", videoRouter);
+// app.use("/api/v1/video", videoRouter);
 
 // Error handling middleware
 app.use(errorHandler);
