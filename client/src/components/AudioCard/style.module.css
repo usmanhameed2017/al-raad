@@ -1,0 +1,36 @@
+.audioCard {
+  width: 100%;
+  max-width: 650px;
+  margin: 20px auto;
+  padding: 20px 30px;
+  border-radius: 16px;
+  background: #12151d;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.audioCard audio {
+  width: 100%;
+  outline: none;
+}
+
+.heading {
+  margin: 2px;
+  margin-bottom: 10px;
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #0dcdbc;
+  text-wrap: nowrap;
+}
+
+.caption {
+  margin-top: 12px;
+  font-size: 1.2rem;
+  color: #0dcdbc;
+  font-weight: 600;
+  text-align: center;
+  text-wrap: nowrap;
+}
