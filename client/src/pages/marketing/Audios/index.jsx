@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import styles from './style.module.css';
-import { FaAudio } from 'react-icons/fa';
+import { FaPlayCircle } from 'react-icons/fa';
 import { Row, Col } from 'react-bootstrap';
 import { fetchAllAudios } from '../../../api/audio';
 import { useAuth } from '../../../context/auth';
@@ -41,7 +41,7 @@ function Audios()
             <Animation type="heading">
                 {/* Icon */}
                 <span className={styles.headingWithIcon}>
-                    <div className={styles.icon}> <FaAudio size={50} /> </div>
+                    <div className={styles.icon}> <FaPlayCircle size={50} /> </div>
                     {/* Heading */}
                     <h2 className={styles.heroTitle}> Audio Lectures </h2>
                     <hr className='text-secondary' />
