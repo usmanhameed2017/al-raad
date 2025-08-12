@@ -1,7 +1,11 @@
-const { signup, accountActivation, login, logout, fetchUsers, editUser, deleteUser, fetchSingleUser, verifyAccessToken } = require("../controllers/user");
+const { signup, accountActivation, login, logout, fetchUsers, editUser, deleteUser, fetchSingleUser, verifyAccessToken, generateCsrfToken } = require("../controllers/user");
 const { authentication, authorization } = require("../middlewares/auth");
+const csrfProtection = require("../middlewares/csrfToken");
 
 const userRouter = require("express").Router();
+
+// Generate CSRF Token
+userRouter.route("/generateCsrfToken").get(csrfProtection, generateCsrfToken);
 
 // Signup
 userRouter.route("/signup").post(signup);
@@ -10,7 +14,7 @@ userRouter.route("/signup").post(signup);
 userRouter.route("/accountActivation").patch(accountActivation);
 
 // Login
-userRouter.route("/login").post(login);
+userRouter.route("/login").post(csrfProtection, login);
 
 // Verify access token
 userRouter.route("/verifyAccessToken").get(authentication, verifyAccessToken);

@@ -9,6 +9,12 @@ const path = require("path");
 const { generateAccessToken } = require("../utils/auth");
 const { cookieOptions } = require("../config");
 
+// Generate CSRF Token
+const generateCsrfToken = async (request, response) => {
+    return response.status(200)
+    .json(new ApiResponse(200, { csrfToken: request.csrfToken() }, "CSRF Token has been generated successfully"));
+};
+
 // User signup
 const signup = async (request, response) => {
     const { name, email, username, password, cpassword } = request.body;
@@ -226,4 +232,4 @@ const logout = async (request, response) => {
     .json(new ApiResponse(200, null, "Logout successfully"));
 };
 
-module.exports = { signup, accountActivation, login, verifyAccessToken, fetchUsers, fetchSingleUser, editUser, deleteUser, logout };
+module.exports = { generateCsrfToken, signup, accountActivation, login, verifyAccessToken, fetchUsers, fetchSingleUser, editUser, deleteUser, logout };
