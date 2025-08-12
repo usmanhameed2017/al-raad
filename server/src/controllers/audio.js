@@ -9,10 +9,10 @@ const createAudio = async (request, response) => {
     request.body.uploadedBy = request.user?._id;
     const audioUrl = request.file?.path || "";
 
-    if(!request.body.title.trim())
+    if(!request.body.surahName.trim())
     {
         deleteFromTemp(audioUrl);
-        throw new ApiError(400, "Audio title is required");
+        throw new ApiError(400, "Surah name is required");
     }
 
     if(!audioUrl.trim())
@@ -105,6 +105,19 @@ const updateAudio = async (request, response) => {
         deleteFromTemp(uploadedAudio);
         throw new ApiError(400, "Invalid MongoDB ID");
     }
+
+    // Validate required fields
+    if(!request.body.surahName.trim())
+    {
+        deleteFromTemp(audioUrl);
+        throw new ApiError(400, "Surah name is required");
+    }
+
+    if(!audioUrl.trim())
+    {
+        deleteFromTemp(audioUrl);
+        throw new ApiError(400, "Audio is required");
+    }    
 
     try 
     {
