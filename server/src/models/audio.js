@@ -3,13 +3,13 @@ const mongoosePaginate = require("mongoose-paginate-v2");
 
 // Schema
 const audioSchema = new Schema({
-    title:{
+    surahName:{
         type:String,
         trim:true,
         index:true,
         required:true
     },
-    description:{
+    ayah:{
         type:String,
         trim:true
     },
