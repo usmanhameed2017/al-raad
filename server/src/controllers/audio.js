@@ -116,21 +116,15 @@ const updateAudio = async (request, response) => {
     // Validate required fields
     if(!request.body.surahName.trim())
     {
-        deleteFromTemp(audioUrl);
+        deleteFromTemp(uploadedAudio);
         throw new ApiError(400, "Surah name is required");
     }
 
     if(!request.body.ayah.trim())
     {
-        deleteFromTemp(audioUrl);
+        deleteFromTemp(uploadedAudio);
         throw new ApiError(400, "Please specify ayah");
-    }
-    
-    if(!audioUrl.trim())
-    {
-        deleteFromTemp(audioUrl);
-        throw new ApiError(400, "Audio is required");
-    }    
+    }  
 
     try 
     {
