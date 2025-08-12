@@ -3,13 +3,13 @@ const mongoosePaginate = require("mongoose-paginate-v2");
 
 // Schema
 const tafseerSchema = new Schema({
-    ayah:{
+    surahName:{
         type:String,
         trim:true,
         index:true,
         required:true
     },
-    surahName:{
+    ayah:{
         type:String,
         trim:true,
         index:true,
