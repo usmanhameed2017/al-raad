@@ -33,7 +33,7 @@ function AuthProvider({ children })
 
     // Signup
     const userSignup = useCallback(async (user, action) => {
-        if (!csrfToken) returnshowError("CSRF token is missing");
+        if (!csrfToken) return showError("CSRF token is missing");
 
         try 
         {
@@ -53,7 +53,7 @@ function AuthProvider({ children })
 
     // Login
     const userLogin = useCallback(async (user, action) => {
-        if (!csrfToken) returnshowError("CSRF token is missing");
+        if (!csrfToken) return showError("CSRF token is missing");
         
         try 
         {
