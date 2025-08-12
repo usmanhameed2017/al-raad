@@ -3,7 +3,7 @@ import { bitRate } from '@cloudinary/url-gen/actions/transcode';
 import { format, quality } from '@cloudinary/url-gen/actions/delivery';
 import styles from './style.module.css';
 
-function AudioCard({ url, title }) 
+function AudioCard({ title, description, url }) 
 {
     // Extract public ID
     const publicId = `al-raad/audios/${url.split("/al-raad/audios/").pop().split(".")[0]}`;
@@ -25,7 +25,7 @@ function AudioCard({ url, title })
                 Your browser does not support the audio element.
             </audio>
             {
-                title && <div className={`${styles.caption}`}> (Ayah: 02 - 07) </div>
+                title && <div className={`${styles.caption}`}> ({ description }) </div>
             }
         </div>
     );
