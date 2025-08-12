@@ -9,10 +9,17 @@ const createAudio = async (request, response) => {
     request.body.uploadedBy = request.user?._id;
     const audioUrl = request.file?.path || "";
 
+    // Validate required fields
     if(!request.body.surahName.trim())
     {
         deleteFromTemp(audioUrl);
         throw new ApiError(400, "Surah name is required");
+    }
+
+    if(!request.body.ayah.trim())
+    {
+        deleteFromTemp(audioUrl);
+        throw new ApiError(400, "Please specify ayah");
     }
 
     if(!audioUrl.trim())
@@ -113,6 +120,12 @@ const updateAudio = async (request, response) => {
         throw new ApiError(400, "Surah name is required");
     }
 
+    if(!request.body.ayah.trim())
+    {
+        deleteFromTemp(audioUrl);
+        throw new ApiError(400, "Please specify ayah");
+    }
+    
     if(!audioUrl.trim())
     {
         deleteFromTemp(audioUrl);
