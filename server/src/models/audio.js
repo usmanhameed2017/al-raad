@@ -11,7 +11,9 @@ const audioSchema = new Schema({
     },
     ayah:{
         type:String,
-        trim:true
+        trim:true,
+        index:true,
+        required:true
     },
     url:{
         type:String,
