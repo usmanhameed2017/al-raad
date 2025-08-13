@@ -22,6 +22,24 @@ a{
   color: #09ccbc;
 }
 
+
+.themeButton {
+  background-color: #0dcdbc;
+  color: #0e0f16;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 30px;
+  font-size: 1rem;
+  font-weight: 600;
+  width: 100%;
+  transition: background-color 0.3s ease;
+}
+
+.themeButton:hover {
+  background-color: #0bb0a4;
+}
+
+
 .form-control {
   padding: 14px 20px;
   border: none;
