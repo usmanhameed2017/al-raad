@@ -4,10 +4,9 @@ import Tafseer from "./pages/marketing/Tafseer";
 import MarketingLayout from "./layout/MarketingLayout";
 import AdminLayout from "./layout/AdminLayout";
 import Dashboard from "./pages/admin/Dashboard";
-import Settings from "./pages/admin/Settings";
+import AdminSettings from "./pages/admin/Settings";
 import About from "./pages/marketing/About";
 import Books from "./pages/marketing/Books";
-import Videos from "./pages/marketing/Videos";
 import Login from "./pages/marketing/Login";
 import AuthProvider from "./context/auth";
 import ProtectedRoute from "./pages/security/ProtectedRoutes";
@@ -18,6 +17,7 @@ import Contact from "./pages/marketing/Contact";
 import ViewTafseer from "./pages/marketing/ViewTafseer";
 import ViewBook from "./pages/marketing/ViewBook";
 import Audios from "./pages/marketing/Audios";
+import UserSettings from "./pages/marketing/Settings";
 
 function App() 
 {
@@ -37,11 +37,11 @@ function App()
             <Route element={ <ProtectedRoute/> }>
               <Route path="tafseer" element={ <Tafseer /> } /> 
               <Route path="tafseer/:id" element={ <ViewTafseer /> } />
+              <Route path="settings" element={ <UserSettings /> } />
             </Route>
 
             <Route path="books" element={ <Books /> } />
             <Route path="books/:id" element={ <ViewBook /> } />
-            {/* <Route path="videos" element={ <Videos /> } /> */}
             <Route path="audios" element={ <Audios /> } />
             <Route path="login" element={ <Login /> } />
             <Route path="accountActivation" element={ <AccountActivation /> } />
@@ -54,7 +54,7 @@ function App()
             <Route path="/admin" element={ <AdminLayout /> } >
               <Route index element={ <Dashboard /> } />
               <Route path="dashboard" element={ <Dashboard /> } />
-              <Route path="settings" element={ <Settings /> } />
+              <Route path="settings" element={ <AdminSettings /> } />
             </Route> 
             
           </Route>
