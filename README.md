@@ -128,7 +128,7 @@ So, I decided to refactor the **Videos section** into an **Audio section** inste
 
 But to my surprise, Cloudinary still classifies audio files under the video resource type. This means that, technically, they are still processed as videos by the service, even though the actual content is just audio. So I simply call `uploadOnCloudinary()` function by passing same arguments to it as videos except folder name.
 
-📅 10th August, 2025
+📅 13th August, 2025
 
 Today, I focused on form security enhancement by implementing robust CSRF protection across my project.
 
