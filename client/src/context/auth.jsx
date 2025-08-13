@@ -1,11 +1,9 @@
-import axios from 'axios';
 import { useState, useEffect, createContext, useContext, useCallback } from 'react';
-import { axiosOptions, backendURL } from '../constants';
-import { ApiResponse } from '../utils/ApiResponse';
-import { ApiError } from '../utils/ApiError';
-import { useNavigate } from 'react-router-dom'
+import api from '../utils/axios';
+import { useNavigate } from 'react-router-dom';
 import { showError, showSuccess } from '../utils/toasterMessage';
 
+// Create auth context
 const AuthContext = createContext();
 
 function AuthProvider({ children })
@@ -13,66 +11,63 @@ function AuthProvider({ children })
     const [isLoading, setLoading] = useState(false); // Loader
     const [user, setUser] = useState(null); // User payload
     const [isLoggedIn, setLoggedIn] = useState(null); // Login flag
-    const [csrfToken, setCsrfToken] = useState(""); // Csrf token protection from unintended form submission
+    const [csrfToken, setCsrfToken] = useState(""); 
 
     // For navigation
     const navigate = useNavigate();
 
     // Generate CSRF Token
     const generateCsrfToken = useCallback(async () => {
-        try 
+        try
         {
-            const response = await axios.get(`${backendURL}/user/generateCsrfToken`, axiosOptions);
-            setCsrfToken(ApiResponse(response).data.csrfToken);
+            const response = await api.get("/user/generateCsrfToken");
+            localStorage.setItem("csrfToken", response.data);
+            setCsrfToken(response.data);
         } 
-        catch (error) 
+        catch(error) 
         {
-            showError(ApiError(error).message);
+            showError(error.message);
         }
     },[]);
 
     // Signup
     const userSignup = useCallback(async (user, action) => {
         if (!csrfToken) return showError("CSRF token is missing");
-
         try 
         {
             setLoading(true);
-            const response = await axios.post(`${backendURL}/user/signup`, user, { ...axiosOptions, headers:{ 'CSRF-Token': csrfToken }});
+            const response = await api.post("/user/signup", user);
             action.resetForm();
             setLoading(false);
-            showSuccess(ApiResponse(response).message);
+            showSuccess(response.message);
             navigate("/accountActivation");
         } 
         catch(error) 
         {
             setLoading(false);
-            showError(ApiError(error).message);
+            showError(error.message);
         }
     },[csrfToken]);   
 
     // Login
     const userLogin = useCallback(async (user, action) => {
-        if (!csrfToken) return showError("CSRF token is missing");
-        
+        if(!csrfToken) return showError("CSRF token is missing");
         try 
         {
             setLoading(true);
-            const response = await axios.post(`${backendURL}/user/login`, user, { ...axiosOptions, headers:{ 'CSRF-Token': csrfToken }});
-            const { data, message, success } = ApiResponse(response);
-            setUser(data);
-            setLoggedIn(success);
+            const response = await api.post("/user/login", user);
+            setUser(response.data);
+            setLoggedIn(response.success);
             setLoading(false);
-            localStorage.setItem("user", JSON.stringify(data));
-
+            localStorage.setItem("user", JSON.stringify(response.data));
             action.resetForm();
-            showSuccess(message);
+            showSuccess(response.message);
             navigate('/');
         } 
-        catch (error) 
+        catch(error) 
         {
             setLoading(false);
-            showError(ApiError(error).message);
+            showError(error.message);
         }
     },[csrfToken]);
 
@@ -80,7 +75,7 @@ function AuthProvider({ children })
     const userLogout = useCallback(async () => {
         try 
         {
-            await axios.get(`${backendURL}/user/logout`, axiosOptions);
+            await api.get("/user/logout");
             setUser(null);
             setLoggedIn(false);
             localStorage.removeItem("user");
@@ -88,7 +83,7 @@ function AuthProvider({ children })
         } 
         catch(error) 
         {
-            showError(ApiError(error).message);
+            showError(error.message);
         }
     },[]);
 
@@ -96,11 +91,10 @@ function AuthProvider({ children })
     const verifyAccessToken = useCallback(async () => {
         try 
         {
-            const response = await axios.get(`${backendURL}/user/verifyAccessToken`, axiosOptions);
-            const { data, success } = ApiResponse(response);
-            setUser(data); // Plain user object
-            setLoggedIn(success);
-            localStorage.setItem("user", JSON.stringify(data));
+            const response = await api.get("/user/verifyAccessToken");
+            setUser(response.data); // Plain user object
+            setLoggedIn(response.success);
+            localStorage.setItem("user", JSON.stringify(response.data));
         } 
         catch (error) 
         {
@@ -113,6 +107,7 @@ function AuthProvider({ children })
     useEffect(() => {
         verifyAccessToken();
         generateCsrfToken();
+        console.log("CSRF Token", csrfToken);
     },[]);
 
     return(
@@ -122,6 +117,7 @@ function AuthProvider({ children })
     );
 }
 
+// Custom hook
 export const useAuth = () => useContext(AuthContext);
 
 export default AuthProvider;
