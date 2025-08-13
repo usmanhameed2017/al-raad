@@ -8,16 +8,17 @@ const api = axios.create({
     baseURL: backendURL,
     withCredentials: true,
     withXSRFToken: true, 
-    xsrfCookieName: '_csrf', 
+    xsrfCookieName: '_csrf',
     xsrfHeaderName: 'CSRF-Token'
 });
 
 // Request interceptor
 api.interceptors.request.use((request) => {
-    console.log("Data janay se pehle k halaat");
+    const csrfToken = localStorage.getItem("csrfToken");     // Get CSRF-Token
+    if(csrfToken) request.headers["CSRF-Token"] = csrfToken; // Inject token in header
     return request;
 }, (error) => {
-    return Promise.reject(ApiError(error));
+    return Promise.reject(error);
 });
 
 // Response interceptor
