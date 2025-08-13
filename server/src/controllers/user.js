@@ -12,7 +12,7 @@ const { cookieOptions } = require("../config");
 // Generate CSRF Token
 const generateCsrfToken = async (request, response) => {
     return response.status(200)
-    .json(new ApiResponse(200, { csrfToken: request.csrfToken() }, "CSRF Token has been generated successfully"));
+    .json(new ApiResponse(200, request.csrfToken(), "CSRF Token has been generated successfully"));
 };
 
 // User signup
