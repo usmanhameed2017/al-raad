@@ -1,18 +1,15 @@
-import axios from 'axios';
-import { axiosOptions, backendURL } from '../constants';
-import { ApiResponse } from '../utils/ApiResponse';
-import { ApiError } from '../utils/ApiError';
+import client from '../utils/axios';
 
 // Fetch all books
 export const fetchAllBooks = async (currentPage) => {
     try 
     {
-        const response = await axios.get(`${backendURL}/book?page=${currentPage}`, axiosOptions);
-        return ApiResponse(response).data;
+        const response = await client.get(`/book?page=${currentPage}`);
+        return response.data;
     } 
     catch(error) 
     {
-        return ApiError(error).message;
+        return error.message;
     }
 };
 
@@ -20,11 +17,11 @@ export const fetchAllBooks = async (currentPage) => {
 export const fetchSingleBook = async (id) => {
     try 
     {
-        const response = await axios.get(`${backendURL}/book/${id}`, axiosOptions);
-        return ApiResponse(response).data;
+        const response = await client.get(`/book/${id}`);
+        return response.data;
     } 
     catch(error) 
     {
-        return ApiError(error).message;
+        return error.message;
     }
 };

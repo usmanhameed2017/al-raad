@@ -1,18 +1,15 @@
-import axios from 'axios';
-import { axiosOptions, backendURL } from '../constants';
-import { ApiResponse } from '../utils/ApiResponse';
-import { ApiError } from '../utils/ApiError';
+import client from '../utils/axios';
 
 // Fetch all tafseers
 export const fetchAllTafseers = async (currentPage) => {
     try 
     {
-        const response = await axios.get(`${backendURL}/tafseer?page=${currentPage}`, axiosOptions);
-        return ApiResponse(response).data;
+        const response = await client.get(`/tafseer?page=${currentPage}`);
+        return response.data;
     } 
     catch(error) 
     {
-        return ApiError(error).message;
+        return error.message;
     }
 };
 
@@ -20,11 +17,11 @@ export const fetchAllTafseers = async (currentPage) => {
 export const fetchSingleTafseer = async (id) => {
     try 
     {
-        const response = await axios.get(`${backendURL}/tafseer/${id}`, axiosOptions);
-        return ApiResponse(response).data;
+        const response = await client.get(`/tafseer/${id}`);
+        return response.data;
     } 
     catch(error) 
     {
-        return ApiError(error).message;
+        return error.message;
     }
 };

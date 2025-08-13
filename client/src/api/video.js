@@ -1,18 +1,15 @@
-import axios from 'axios';
-import { axiosOptions, backendURL } from '../constants';
-import { ApiResponse } from '../utils/ApiResponse';
-import { ApiError } from '../utils/ApiError';
+import client from '../utils/axios';
 
 // Fetch all videos
 export const fetchAllVideos = async (currentPage) => {
     try 
     {
-        const response = await axios.get(`${backendURL}/video?page=${currentPage}`, axiosOptions);
-        return ApiResponse(response).data;
+        const response = await client.get(`/video?page=${currentPage}`);
+        return response.data;
     } 
     catch(error) 
     {
-        return ApiError(error).message;
+        return error.message;
     }
 };
 
@@ -20,11 +17,11 @@ export const fetchAllVideos = async (currentPage) => {
 export const fetchSingleVideo = async (id) => {
     try 
     {
-        const response = await axios.get(`${backendURL}/video/${id}`, axiosOptions);
-        return ApiResponse(response).data;
+        const response = await client.get(`/video/${id}`);
+        return response.data;
     } 
     catch(error) 
     {
-        return ApiError(error).message;
+        return error.message;
     }
 };
