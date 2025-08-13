@@ -6,11 +6,7 @@ import Button from "../../../components/Button";
 import styles from './style.module.css';
 import { FaLock } from 'react-icons/fa';
 import * as Yup from 'yup';
-import axios from 'axios';
-import { axiosOptions, backendURL } from '../../../constants';
 import { showError, showSuccess } from '../../../utils/toasterMessage';
-import { ApiResponse } from '../../../utils/ApiResponse';
-import { ApiError } from '../../../utils/ApiError';
 import client from '../../../utils/axios';
 
 function AccountActivation() 
