@@ -128,6 +128,30 @@ So, I decided to refactor the **Videos section** into an **Audio section** inste
 
 But to my surprise, Cloudinary still classifies audio files under the video resource type. This means that, technically, they are still processed as videos by the service, even though the actual content is just audio. So I simply call `uploadOnCloudinary()` function by passing same arguments to it as videos except folder name.
 
+📅 10th August, 2025
+
+Today, I focused on form security enhancement by implementing robust CSRF protection across my project.
+
+On the server-side, I:
+
+Injected a CSRF protection middleware.
+
+Applied it to all routes involving form submissions (**POST**, **PUT**, **PATCH**).
+
+Configured the CSRF token cookie with **httpOnly: true**, **secure: true**, and **signed** for maximum security.
+
+On the frontend, I:
+
+Created a `generateCsrfToke` function that calls an API on every page load to generate a fresh token.
+
+Stored the token securely in localStorage.
+
+Added the token to request headers using an **Axios interceptor** so that every authenticated request automatically includes it along with credentials.
+
+Initially, forms were not submitting because I forgot to include **CSRF-Token** in the server’s **allowedHeaders** list — after debugging and adding it, everything worked smoothly.
+
+Additionally, I worked on the User Settings page, allowing users to modify their profile information.
+
 ---
 
 ### ⚙ Setup Installation
