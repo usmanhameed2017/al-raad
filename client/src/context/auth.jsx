@@ -1,5 +1,5 @@
 import { useState, useEffect, createContext, useContext, useCallback } from 'react';
-import api from '../utils/axios';
+import client from '../utils/axios';
 import { useNavigate } from 'react-router-dom';
 import { showError, showSuccess } from '../utils/toasterMessage';
 
@@ -20,7 +20,7 @@ function AuthProvider({ children })
     const generateCsrfToken = useCallback(async () => {
         try
         {
-            const response = await api.get("/user/generateCsrfToken");
+            const response = await client.get("/user/generateCsrfToken");
             localStorage.setItem("csrfToken", response.data);
             setCsrfToken(response.data);
         } 
@@ -36,7 +36,7 @@ function AuthProvider({ children })
         try 
         {
             setLoading(true);
-            const response = await api.post("/user/signup", user);
+            const response = await client.post("/user/signup", user);
             action.resetForm();
             setLoading(false);
             showSuccess(response.message);
@@ -55,7 +55,7 @@ function AuthProvider({ children })
         try 
         {
             setLoading(true);
-            const response = await api.post("/user/login", user);
+            const response = await client.post("/user/login", user);
             setUser(response.data);
             setLoggedIn(response.success);
             setLoading(false);
@@ -75,7 +75,7 @@ function AuthProvider({ children })
     const userLogout = useCallback(async () => {
         try 
         {
-            await api.get("/user/logout");
+            await client.get("/user/logout");
             setUser(null);
             setLoggedIn(false);
             localStorage.removeItem("user");
@@ -91,7 +91,7 @@ function AuthProvider({ children })
     const verifyAccessToken = useCallback(async () => {
         try 
         {
-            const response = await api.get("/user/verifyAccessToken");
+            const response = await client.get("/user/verifyAccessToken");
             setUser(response.data); // Plain user object
             setLoggedIn(response.success);
             localStorage.setItem("user", JSON.stringify(response.data));
@@ -107,7 +107,6 @@ function AuthProvider({ children })
     useEffect(() => {
         verifyAccessToken();
         generateCsrfToken();
-        console.log("CSRF Token", csrfToken);
     },[]);
 
     return(
