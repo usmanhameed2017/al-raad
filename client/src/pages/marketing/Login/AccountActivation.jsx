@@ -11,6 +11,7 @@ import { axiosOptions, backendURL } from '../../../constants';
 import { showError, showSuccess } from '../../../utils/toasterMessage';
 import { ApiResponse } from '../../../utils/ApiResponse';
 import { ApiError } from '../../../utils/ApiError';
+import client from '../../../utils/axios';
 
 function AccountActivation() 
 {
@@ -53,14 +54,14 @@ function AccountActivation()
                 handlerFunction={async (values, action) => {
                     try
                     {
-                        const response = await axios.patch(`${backendURL}/user/accountActivation`, values, axiosOptions);
-                        showSuccess(ApiResponse(response).message);
+                        const response = await client.patch(`/user/accountActivation`, values);
+                        showSuccess(response.message);
                         action.resetForm();
                         navigate("/login");
                     }
                     catch(error)
                     {
-                        showError(ApiError(error).message);
+                        showError(error.message);
                     }
                 }}
                 >
