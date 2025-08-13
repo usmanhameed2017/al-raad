@@ -4,7 +4,7 @@ const corsOptions = {
     origin:origin,
     credentials:true,
     methods:["GET", "POST", "PUT", "PATCH", "DELETE"],
-    allowedHeader:["Content-Type", "Authorization"]
+    allowedHeaders:["Content-Type", "Authorization", "CSRF-Token"]
 };
 
 const cookieOptions = {
