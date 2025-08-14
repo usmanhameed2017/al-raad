@@ -2,13 +2,13 @@ import { useState, useEffect } from 'react';
 import styles from './style.module.css';
 import { FaPlayCircle } from 'react-icons/fa';
 import { Row, Col } from 'react-bootstrap';
-import { fetchAllAudios } from '../../../api/audio';
 import { useAuth } from '../../../context/auth';
 import Loader from '../../../components/Loader';
 import { showError } from '../../../utils/toasterMessage';
 import ServerSidePagination from '../../../components/Pagination';
 import Animation from '../../../components/Animation';
 import AudioCard from '../../../components/AudioCard';
+import { getRequest } from '../../../api/request';
 
 function Audios() 
 {
@@ -24,7 +24,7 @@ function Audios()
 
     // Fetch audio on page load
     useEffect(() => {
-        fetchAllAudios(currentPage)
+        getRequest(`/audio?page=${currentPage}`)
         .then(response => {
             setLoading(false);
             setData(response);
