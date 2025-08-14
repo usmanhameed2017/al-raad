@@ -173,7 +173,7 @@ const fetchUsers = async (request, response) => {
 
 // Fetch single user
 const fetchSingleUser = async (request, response) => {
-    const id = request.params?.id;
+    const id = request.params?.id || request.user?._id || "";
     if(!id) throw new ApiError(404, "User ID is missing");
     if(!isValidObjectId(id)) throw new ApiError(400, "Invalid MongoDB ID");
 
@@ -232,4 +232,15 @@ const logout = async (request, response) => {
     .json(new ApiResponse(200, null, "Logout successfully"));
 };
 
-module.exports = { generateCsrfToken, signup, accountActivation, login, verifyAccessToken, fetchUsers, fetchSingleUser, editUser, deleteUser, logout };
+module.exports = { 
+    generateCsrfToken, 
+    signup, 
+    accountActivation, 
+    login, 
+    verifyAccessToken, 
+    fetchUsers, 
+    fetchSingleUser, 
+    editUser, 
+    deleteUser,
+    logout 
+};
