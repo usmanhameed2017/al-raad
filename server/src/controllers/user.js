@@ -197,23 +197,35 @@ const editUser = async (request, response) => {
 
     try 
     {
-        const user = await User.findByIdAndUpdate(id, request.body, { new:true }).select("-password -activationCode");
+        const user = await User.findById(id).select("-password -activationCode");
         if(!user) throw new ApiError(404, "User not found");
+
+        // Update only the fields sent
+        Object.keys(request.body).forEach((key) => {
+            user[key] = request.body[key];
+        });
+
+        // Save to trigger password hashing
+        await user.save();
+
+        // Exclude password field
+        const userData = user.toObject();
+        delete userData.password;    
 
         // Self modification
         if(!request.params?.id) 
         {
             // Generate new access token
             const accessToken = generateAccessToken(user);
-            if(!accessToken) throw new ApiError(400, "Failed to generate new access token");
+            if(!accessToken) throw new ApiError(400, "Failed to generate new access token");        
 
             return response.status(200)
             .cookie("accessToken", accessToken, cookieOptions)
-            .json(new ApiResponse(200, user, "Your info has been updated successfully"));
+            .json(new ApiResponse(200, userData, "Your info has been updated successfully"));
         }
 
         // Admin updating another user
-        return response.status(200).json(new ApiResponse(200, user, "User has been updated successfully"));
+        return response.status(200).json(new ApiResponse(200, userData, "User has been updated successfully"));
     } 
     catch (error) 
     {
