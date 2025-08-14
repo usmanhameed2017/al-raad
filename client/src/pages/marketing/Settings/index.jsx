@@ -7,6 +7,8 @@ import { userSettingsValidation } from '../../../validation/user';
 import styles from './style.module.css';
 import { Form, Field, ErrorMessage } from 'formik';
 import { getRequest } from '../../../api/request';
+import client from '../../../utils/axios';
+import { showError, showSuccess } from '../../../utils/toasterMessage';
 
 function UserSettings() 
 {
@@ -15,14 +17,12 @@ function UserSettings()
 
     // User object
     const [data, setData] = useState({
-        _id: user?._id || "",
         name: user?.name || "",
         username: user?.username || ""
     });
 
     // Form initial values
     const initialValue = {
-        _id: data._id,
         name: data.name,
         username: data.username,
         password:"",
@@ -31,11 +31,9 @@ function UserSettings()
 
     useEffect(() => {
         getRequest(`/user/me`)
-        .then(response => setData({ ...data, response }))
-        .catch(error => console.log("Error:", error))
+        .then(response => setData(response))
+        .catch(error => showError(error.message));
     },[]);
-
-    console.log("Data", data);
 
     return (
         <div className={styles.settingsWrapper}>
@@ -43,8 +41,37 @@ function UserSettings()
                 <Animation type="normal">
                     <FormBS initialValues={initialValue} validationSchema={userSettingsValidation}
                     handlerFunction={async (user, action) => {
-                        console.log(user);
-                        action.resetForm();
+
+                        // Initialize payload
+                        let payload = {
+                            name: user.name,
+                            username: user.username,
+                        };
+
+                        if(user?.password) payload.password = user.password;
+                        
+                        try
+                        {
+                            const response = await client.put(`/user/me/edit`, payload);
+                            showSuccess(response.message);
+                            localStorage.setItem("user", JSON.stringify(response.data));
+                            setData(response.data);
+
+                            // Reset form values with updated ones
+                            action.resetForm({
+                                values: {
+                                    name: response.data.name,
+                                    username: response.data.username,
+                                    password: "",
+                                    cpassword: ""
+                                }
+                            });
+                        }
+                        catch(error)
+                        {
+                            showError(error.message);
+                        }
+                        
                     }}
                     >
                         <Form>
