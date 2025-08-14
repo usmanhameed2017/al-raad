@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import Animation from '../../../components/Animation';
 import Button from '../../../components/Button';
 import FormBS from '../../../components/Form';
@@ -5,20 +6,36 @@ import { getUser } from '../../../constants';
 import { userSettingsValidation } from '../../../validation/user';
 import styles from './style.module.css';
 import { Form, Field, ErrorMessage } from 'formik';
+import { fetchSingleUser } from '../../../api/user';
 
 function UserSettings() 
 {
     // Extract user properties
     const user = getUser();
 
-    // Form initial values
-    const initialValue = {
+    // User object
+    const [data, setData] = useState({
         _id: user?._id || "",
         name: user?.name || "",
-        username: user?.username || "",
+        username: user?.username || ""
+    });
+
+    // Form initial values
+    const initialValue = {
+        _id: data._id,
+        name: data.name,
+        username: data.username,
         password:"",
         cpassword:""
     };
+
+    useEffect(() => {
+        fetchSingleUser(`/user/me`)
+        .then(response => setData({ ...data, response }))
+        .catch(error => console.log("Error:", error))
+    },[]);
+
+    console.log("Data", data);
 
     return (
         <div className={styles.settingsWrapper}>
