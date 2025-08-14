@@ -3,6 +3,7 @@ fetchSingleUser, verifyAccessToken, generateCsrfToken } = require("../controller
 const { authentication, authorization } = require("../middlewares/auth");
 const csrfProtection = require("../middlewares/csrfToken");
 
+// Router instance
 const userRouter = require("express").Router();
 
 // Generate CSRF Token
@@ -25,6 +26,9 @@ userRouter.route("/").get(authentication, authorization(["Admin"]), fetchUsers);
 
 // Fetch logged-in user data
 userRouter.route("/me").get(authentication, authorization(["Admin", "User"]), fetchSingleUser);
+
+// Self-modification
+userRouter.route("/me/edit").put(authentication, authorization(["Admin", "User"]), editUser);
 
 // Logout
 userRouter.route("/logout").get(authentication, logout);
