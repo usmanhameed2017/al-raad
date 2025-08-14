@@ -2,13 +2,13 @@ import { useState, useEffect } from 'react';
 import styles from './style.module.css';
 import { FaVideo } from 'react-icons/fa';
 import { Row, Col } from 'react-bootstrap';
-import { fetchAllVideos } from '../../../api/video';
 import { useAuth } from '../../../context/auth';
 import Loader from '../../../components/Loader';
 import { showError } from '../../../utils/toasterMessage';
 import ServerSidePagination from '../../../components/Pagination';
 import Animation from '../../../components/Animation';
 import VideoCard from '../../../components/VideoCard';
+import { getRequest } from '../../../api/request';
 
 function Videos() 
 {
@@ -24,7 +24,7 @@ function Videos()
 
     // Fetch video on page load
     useEffect(() => {
-        fetchAllVideos(currentPage)
+        getRequest(`/video?page=${currentPage}`)
         .then(response => {
             setLoading(false);
             setData(response);
@@ -35,8 +35,6 @@ function Videos()
             showError(error);
         });
     }, [currentPage]);
-
-    console.log("My data", data);
 
     return (
         <div className={styles.videoWrapper}>
