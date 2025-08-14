@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { fetchSingleTafseer } from '../../../api/tafseer';
 import styles from './style.module.css';
 import { Row, Col } from 'react-bootstrap';
 import { useAuth } from '../../../context/auth';
@@ -8,6 +7,7 @@ import { showError } from '../../../utils/toasterMessage';
 import Loader from '../../../components/Loader';
 import { getTime } from '../../../utils/getTime';
 import Animation from '../../../components/Animation';
+import { getRequest } from '../../../api/request';
 
 function ViewTafseer() 
 {
@@ -23,7 +23,7 @@ function ViewTafseer()
 
     // FEtch tafseer on page load
     useEffect(() => {
-        fetchSingleTafseer(id)
+        getRequest(`/tafseer/${id}`)
             .then(response => {
                 setLoading(false);
                 setTafseer(response);

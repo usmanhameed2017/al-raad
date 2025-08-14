@@ -3,12 +3,12 @@ import styles from './style.module.css';
 import { FaBookOpen } from 'react-icons/fa';
 import { Row, Col } from 'react-bootstrap';
 import CardBS from '../../../components/Card';
-import { fetchAllTafseers } from '../../../api/tafseer';
 import { useAuth } from '../../../context/auth';
 import Loader from '../../../components/Loader';
 import { showError } from '../../../utils/toasterMessage';
 import ServerSidePagination from '../../../components/Pagination';
 import Animation from '../../../components/Animation';
+import { getRequest } from '../../../api/request';
 
 function Tafseer() 
 {
@@ -24,7 +24,7 @@ function Tafseer()
 
     // Fetch tafseer on page load
     useEffect(() => {
-        fetchAllTafseers(currentPage)
+        getRequest(`/tafseer?page=${currentPage}`)
         .then(response => {
             setLoading(false);
             setData(response);

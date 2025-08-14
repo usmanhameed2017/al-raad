@@ -3,12 +3,12 @@ import styles from './style.module.css';
 import { FaBookOpen } from 'react-icons/fa';
 import { Row, Col } from 'react-bootstrap';
 import CardBS from '../../../components/Card';
-import { fetchAllBooks } from '../../../api/book';
 import { useAuth } from '../../../context/auth';
 import Loader from '../../../components/Loader';
 import { showError } from '../../../utils/toasterMessage';
 import ServerSidePagination from '../../../components/Pagination';
 import Animation from '../../../components/Animation';
+import { getRequest } from '../../../api/request';
 
 function Books() 
 {
@@ -24,7 +24,7 @@ function Books()
 
     // Fetch book on page load
     useEffect(() => {
-        fetchAllBooks(currentPage)
+        getRequest(`/book?page=${currentPage}`)
         .then(response => {
             setLoading(false);
             setData(response);

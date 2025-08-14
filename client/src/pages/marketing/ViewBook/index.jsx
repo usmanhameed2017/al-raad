@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { fetchSingleBook } from '../../../api/book';
 import styles from './style.module.css';
 import { Row, Col } from 'react-bootstrap';
 import { useAuth } from '../../../context/auth';
@@ -9,6 +8,7 @@ import Loader from '../../../components/Loader';
 import { getTime } from '../../../utils/getTime';
 import Animation from '../../../components/Animation';
 import Button from '../../../components/Button';
+import { getRequest } from '../../../api/request';
 
 function ViewBook() 
 {
@@ -24,7 +24,7 @@ function ViewBook()
 
     // Fetch book on page load
     useEffect(() => {
-        fetchSingleBook(id)
+        getRequest(`/book/${id}`)
             .then(response => {
                 setLoading(false);
                 setBook(response);
