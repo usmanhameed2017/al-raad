@@ -6,7 +6,7 @@ import { getUser } from '../../../constants';
 import { userSettingsValidation } from '../../../validation/user';
 import styles from './style.module.css';
 import { Form, Field, ErrorMessage } from 'formik';
-import { fetchSingleUser } from '../../../api/user';
+import { getRequest } from '../../../api/request';
 
 function UserSettings() 
 {
@@ -30,7 +30,7 @@ function UserSettings()
     };
 
     useEffect(() => {
-        fetchSingleUser(`/user/me`)
+        getRequest(`/user/me`)
         .then(response => setData({ ...data, response }))
         .catch(error => console.log("Error:", error))
     },[]);
