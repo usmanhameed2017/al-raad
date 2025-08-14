@@ -191,7 +191,7 @@ const fetchSingleUser = async (request, response) => {
 
 // Edit user
 const editUser = async (request, response) => {
-    const id = request.params?.id;
+    const id = request.params?.id || request.user?._id || "";
     if(!id) throw new ApiError(404, "User ID is missing");
     if(!isValidObjectId(id)) throw new ApiError(400, "Invalid MongoDB ID");
 
@@ -199,6 +199,20 @@ const editUser = async (request, response) => {
     {
         const user = await User.findByIdAndUpdate(id, request.body, { new:true }).select("-password -activationCode");
         if(!user) throw new ApiError(404, "User not found");
+
+        // Self modification
+        if(!request.params?.id) 
+        {
+            // Generate new access token
+            const accessToken = generateAccessToken(user);
+            if(!accessToken) throw new ApiError(400, "Failed to generate new access token");
+
+            return response.status(200)
+            .cookie("accessToken", accessToken, cookieOptions)
+            .json(new ApiResponse(200, user, "Your info has been updated successfully"));
+        }
+
+        // Admin updating another user
         return response.status(200).json(new ApiResponse(200, user, "User has been updated successfully"));
     } 
     catch (error) 
