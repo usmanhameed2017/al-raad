@@ -40,10 +40,10 @@ function Tafseer()
         <div className={styles.tafseerWrapper}>
             <Animation type="heading">
                 {/* Icon */}
-                <span className={styles.headingWithIcon}>
-                    <div className={styles.icon}> <FaBookOpen size={50} /> </div>
+                <span>
+                    <div className="icon"> <FaBookOpen size={50} /> </div>
                     {/* Heading */}
-                    <h2 className={styles.heroTitle}> Tafseer Al-Qura'an </h2>
+                    <h2 className="heroTitle"> Tafseer Al-Qura'an </h2>
                     <hr className='text-secondary' />
                 </span>
             </Animation>

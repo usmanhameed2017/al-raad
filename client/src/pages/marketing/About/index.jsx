@@ -49,7 +49,7 @@ function About()
 {
   return (
     <div className={styles.aboutWrapper}>
-      <motion.h1 className={styles.heroTitle} initial={{ opacity: 0, y: -50, scale: 0.9 }}
+      <motion.h1 className="heroTitle" initial={{ opacity: 0, y: -50, scale: 0.9 }}
       animate={{ opacity: 1, y: 0, scale: 1 }} transition={{ duration: 0.8, ease: 'easeOut' }}> About Al-Ra’ad </motion.h1>
       <hr className='text-secondary' />
 
@@ -67,7 +67,7 @@ function About()
                   viewport={{ once: true, amount: 0.3 }}>
 
                   {/* Section Icon */}
-                  <motion.div className={styles.icon} initial={{ opacity: 0, scale: 0.8 }}
+                  <motion.div className="icon" initial={{ opacity: 0, scale: 0.8 }}
                   whileInView={{ opacity: 1, scale: 1.1 }} transition={{ duration: 1, ease: 'easeOut', delay: 0.2 }}
                   viewport={{ once: true }}> 
                     {section.icon} 

@@ -40,10 +40,10 @@ function Videos()
         <div className={styles.videoWrapper}>
             <Animation type="heading">
                 {/* Icon */}
-                <span className={styles.headingWithIcon}>
-                    <div className={styles.icon}> <FaVideo size={50} /> </div>
+                <span>
+                    <div className="icon"> <FaVideo size={50} /> </div>
                     {/* Heading */}
-                    <h2 className={styles.heroTitle}> Video Lectures </h2>
+                    <h2 className="heroTitle"> Video Lectures </h2>
                     <hr className='text-secondary' />
                 </span>
             </Animation>

@@ -6,14 +6,6 @@
   text-align: center;
 }
 
-.heroTitle {
-  font-size: 7rem;
-  margin-bottom: 60px;
-  font-weight: bold;
-  color: rgba(9, 204, 188, 0.877);
-  position: relative;
-}
-
 .sectionsContainer {
   display: flex;
   flex-wrap: wrap;
@@ -23,54 +15,13 @@
 
 .section {
   max-width: 500px;
-  /* background-color: #2a2b33;
-  border-radius: 12px; */
   padding: 40px 30px;
-  /* box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2); */
   text-align: center;
   position: relative;
   overflow: hidden;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-}
-
-.icon {
-  font-size: 80px;
-  color: #0d9488;
-  margin-bottom: 20px;
-  position: relative;
-  z-index: 1;
-  text-shadow: 0 0 12px rgba(13, 148, 136, 0.8);
-}
-
-.icon::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 150px;
-  height: 150px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(13, 148, 136, 0.6) 0%, transparent 70%);
-  animation: glowPulse 2.5s ease-in-out infinite;
-  z-index: 0;
-}
-
-@keyframes glowPulse {
-  0% {
-    transform: translate(-50%, -50%) scale(0.95);
-    opacity: 0.7;
-  }
-  50% {
-    transform: translate(-50%, -50%) scale(1.2);
-    opacity: 1;
-  }
-  100% {
-    transform: translate(-50%, -50%) scale(0.95);
-    opacity: 0.7;
-  }
 }
 
 .title {

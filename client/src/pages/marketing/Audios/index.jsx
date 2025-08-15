@@ -41,9 +41,9 @@ function Audios()
             <Animation type="heading">
                 {/* Icon */}
                 <span>
-                    <div className={styles.icon}> <FaPlayCircle size={50} /> </div>
+                    <div className="icon"> <FaPlayCircle size={50} /> </div>
                     {/* Heading */}
-                    <h2 className={styles.heroTitle}> Audio Lectures </h2>
+                    <h2 className="heroTitle"> Audio Lectures </h2>
                     <hr className='text-secondary' />
                 </span>
             </Animation>
