@@ -9,22 +9,17 @@ import { Form, Field, ErrorMessage } from 'formik';
 import { getRequest } from '../../../api/request';
 import client from '../../../utils/axios';
 import { showError, showSuccess } from '../../../utils/toasterMessage';
+import { useAuth } from '../../../context/auth';
 
 function UserSettings() 
 {
-    // Extract user properties
-    const user = getUser();
-
-    // User object
-    const [data, setData] = useState({
-        name: user?.name || "",
-        username: user?.username || ""
-    });
+    const { user, setUser } = useAuth();
+    const userData = user || getUser();
 
     // Form initial values
     const initialValue = {
-        name: data.name,
-        username: data.username,
+        name: userData.name || "",
+        username: userData.username || "",
         password:"",
         cpassword:""
     };
@@ -32,7 +27,7 @@ function UserSettings()
     // Fetch user data on page load
     useEffect(() => {
         getRequest(`/user/me`)
-        .then(response => setData(response.data))
+        .then(response => setUser(response.data))
         .catch(error => showError(error.message));
     },[]);
 
@@ -56,7 +51,7 @@ function UserSettings()
                             const response = await client.put(`/user/me/edit`, payload);
                             showSuccess(response.message);
                             localStorage.setItem("user", JSON.stringify(response.data));
-                            setData(response.data);
+                            setUser(response.data);
 
                             // Reset form values with updated ones
                             action.resetForm({
