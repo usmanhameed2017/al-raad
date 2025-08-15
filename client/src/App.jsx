@@ -34,7 +34,7 @@ function App()
             <Route path="contact" element={ <Contact /> } />
 
             {/* Protected Route */}
-            <Route element={ <ProtectedRoute/> }>
+            <Route element={ <ProtectedRoute roles={["Admin", "User"]} /> }>
               <Route path="tafseer" element={ <Tafseer /> } /> 
               <Route path="tafseer/:id" element={ <ViewTafseer /> } />
               <Route path="settings" element={ <UserSettings /> } />
@@ -48,17 +48,14 @@ function App()
           </Route>
 
           {/* Protected Routes */}
-          <Route element={ <ProtectedRoute/> }>
-
+          <Route element={ <ProtectedRoute roles={["Admin"]} /> }>
             {/* Admin Layout */}
             <Route path="/admin" element={ <AdminLayout /> } >
               <Route index element={ <Dashboard /> } />
               <Route path="dashboard" element={ <Dashboard /> } />
               <Route path="settings" element={ <AdminSettings /> } />
             </Route> 
-            
           </Route>
-       
         </Routes>
         <ToastContainer />
       </AuthProvider>
