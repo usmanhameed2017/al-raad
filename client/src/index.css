@@ -39,7 +39,6 @@ a{
   background-color: #0bb0a4;
 }
 
-
 .form-control {
   padding: 14px 20px;
   border: none;
@@ -112,14 +111,18 @@ a{
   cursor: default;
 }
 
-.dropdown-menu.show{
+.dropdown-menu.show {
   background-color: #3a404e50;
 }
 
-a.dropdown-item{
+a.dropdown-item {
   color: whitesmoke;
 }
 
-.link:hover{
+a.dropdown-item:hover {
+  background-color: #00bcd4;
+}
+
+.link:hover {
   text-decoration: underline;
 }
