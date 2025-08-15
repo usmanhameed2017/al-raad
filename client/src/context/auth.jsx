@@ -79,7 +79,7 @@ function AuthProvider({ children })
             setUser(null);
             setLoggedIn(false);
             localStorage.removeItem("user");
-            navigate("/");
+            navigate("/", { replace:true });
         } 
         catch(error) 
         {
