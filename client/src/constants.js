@@ -22,3 +22,9 @@ export const getUser = () => {
         return null;
     }
 };
+
+// Check if array have some data
+export const isArrayHaveData = (arrayData) => {
+    if(arrayData && Array.isArray(arrayData) && arrayData?.length > 0) return true;
+    return false
+};

@@ -9,12 +9,12 @@ import ServerSidePagination from '../../../components/Pagination';
 import Animation from '../../../components/Animation';
 import AudioCard from '../../../components/AudioCard';
 import { getRequest } from '../../../api/request';
+import { isArrayHaveData } from '../../../constants';
 
 function Audios() 
 {
     const [data, setData] = useState({});
     const [currentPage, setCurrentPage] = useState(1);
-
     const { isLoading, setLoading } = useAuth();
 
     // Enable loader on page load
@@ -53,8 +53,8 @@ function Audios()
             <Row className='mt-5'>
             {
                 isLoading ? (  <Loader text="Loading" /> ) :
-                data.docs && Array.isArray(data.docs) && data.docs.length > 0 ?
-                data.docs.map((audio, _) => (
+                isArrayHaveData(data.docs) ?
+                data.docs?.map((audio, _) => (
                     <Col xs={12} sm={12} md={6} lg={4} xl={4} key={audio?._id} className='mb-3'>
                         <Animation type="normal">
                             <AudioCard title={audio?.surahName} description={audio?.ayah} url={audio?.url} />
@@ -70,12 +70,12 @@ function Audios()
 
             {/* Pagination */}
             {
-              isLoading === false && 
+              isArrayHaveData(data.docs) && 
               (
                 <Row className='mt-3'>
-                  <Col className="d-flex justify-content-center">
-                    <ServerSidePagination data={data} setCurrentPage={setCurrentPage} />
-                  </Col>
+                    <Col className="d-flex justify-content-center">
+                        <ServerSidePagination data={data} setCurrentPage={setCurrentPage} />
+                    </Col>
                 </Row>
               )
             }

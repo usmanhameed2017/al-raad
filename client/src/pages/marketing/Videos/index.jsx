@@ -9,12 +9,12 @@ import ServerSidePagination from '../../../components/Pagination';
 import Animation from '../../../components/Animation';
 import VideoCard from '../../../components/VideoCard';
 import { getRequest } from '../../../api/request';
+import { isArrayHaveData } from '../../../constants';
 
 function Videos() 
 {
     const [data, setData] = useState({});
     const [currentPage, setCurrentPage] = useState(1);
-
     const { isLoading, setLoading } = useAuth();
 
     // Enable loader on page load
@@ -53,8 +53,8 @@ function Videos()
             <Row className='mt-5'>
             {
                 isLoading ? (  <Loader text="Loading" /> ) :
-                data.docs && Array.isArray(data.docs) && data.docs.length > 0 ?
-                data.docs.map((video, _) => (
+                isArrayHaveData(data.docs) ?
+                data.docs?.map((video, _) => (
                     <Col xs={12} sm={12} md={6} lg={4} xl={4} key={video?._id} className='mb-3'>
                     <VideoCard  title={video?.title} url={video?.url} />
                     </Col>                     
@@ -68,7 +68,7 @@ function Videos()
 
             {/* Pagination */}
             {
-              isLoading === false && 
+              isArrayHaveData(data.docs) && 
               (
                 <Row className='mt-3'>
                   <Col className="d-flex justify-content-center">

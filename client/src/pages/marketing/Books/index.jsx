@@ -9,12 +9,12 @@ import { showError } from '../../../utils/toasterMessage';
 import ServerSidePagination from '../../../components/Pagination';
 import Animation from '../../../components/Animation';
 import { getRequest } from '../../../api/request';
+import { isArrayHaveData } from '../../../constants';
 
 function Books() 
 {
     const [data, setData] = useState({});
     const [currentPage, setCurrentPage] = useState(1);
-
     const { isLoading, setLoading } = useAuth();
 
     // Enable loader on page load
@@ -52,8 +52,8 @@ function Books()
             <Row className='mt-5'>
             {
                 isLoading ? (  <Loader text="Loading" /> ) :
-                data.docs && Array.isArray(data.docs) && data.docs.length > 0 ?
-                data.docs.map((book, _) => (
+                isArrayHaveData(data.docs) ?
+                data.docs?.map((book, _) => (
                     <Col xs={12} sm={12} md={6} lg={4} xl={4} key={book?._id} className='mb-3'>
                         <Animation type="card">
                             <CardBS 
@@ -75,7 +75,7 @@ function Books()
 
             {/* Pagination */}
             {
-                isLoading === false && 
+                isArrayHaveData(data.docs) && 
                 (
                     <Row className='mt-3'>
                         <Col className="d-flex justify-content-center">
