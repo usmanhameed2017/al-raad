@@ -26,11 +26,11 @@ function ViewTafseer()
         getRequest(`/tafseer/${id}`)
             .then(response => {
                 setLoading(false);
-                setTafseer(response);
+                setTafseer(response.data);
             })
             .catch(error => {
                 setLoading(false);
-                showError(error);
+                showError(error.message);
             });
     }, [id]);
 

@@ -27,12 +27,12 @@ function Videos()
         getRequest(`/video?page=${currentPage}`)
         .then(response => {
             setLoading(false);
-            setData(response);
+            setData(response.data);
         })
         .catch(error => {
             setLoading(false);
             setData({ docs:[] });
-            showError(error);
+            showError(error.message);
         });
     }, [currentPage]);
 

@@ -5,10 +5,10 @@ export const getRequest = async (url) => {
     try 
     {
         const response = await client.get(url);
-        return response.data;
+        return response;
     } 
     catch(error) 
     {
-        return error.message;
+        return error;
     }
-};
+}; 

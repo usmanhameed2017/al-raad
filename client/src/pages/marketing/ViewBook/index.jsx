@@ -27,11 +27,11 @@ function ViewBook()
         getRequest(`/book/${id}`)
             .then(response => {
                 setLoading(false);
-                setBook(response);
+                setBook(response.data);
             })
             .catch(error => {
                 setLoading(false);
-                showError(error);
+                showError(error.message);
             });
     }, [id]);
 

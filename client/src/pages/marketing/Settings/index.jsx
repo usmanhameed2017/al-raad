@@ -29,9 +29,10 @@ function UserSettings()
         cpassword:""
     };
 
+    // Fetch user data on page load
     useEffect(() => {
         getRequest(`/user/me`)
-        .then(response => setData(response))
+        .then(response => setData(response.data))
         .catch(error => showError(error.message));
     },[]);
 
