@@ -9,11 +9,10 @@ import { loginValidation, signupValidation } from "../../../validation/user";
 import { useAuth } from "../../../context/auth";
 import styles from "./style.module.css";
 import { useState } from "react";
-import { getUser } from "../../../constants";
 
 function Login() 
 {
-    const { userLogin, isLoading, userSignup } = useAuth();
+    const { user, userLogin, isLoading, userSignup } = useAuth();
     const [activeTab, setActiveTab] = useState("Signin");
 
     const formVariants = {
@@ -36,7 +35,6 @@ function Login()
         },
     };
 
-    const user = getUser();
     return (
         !user ? (
             <div className={styles.loginPage}>
