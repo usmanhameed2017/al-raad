@@ -103,12 +103,52 @@ const accountActivation = async (request, response) => {
 
 // User login
 const login = async (request, response) => {
-    const { email="", username, password } = request.body;
+    const { email = "", username, password } = request.body;
     if([username, password].some(field => !field?.trim())) throw new ApiError(400, "All fields are required!");
 
     // Find user
     const user = await User.getUser(email, username);
     if(!user) throw new ApiError(404, "User not found associated with this username");
+
+    // Match password
+    const isMatched = await user.matchPassword(password);
+    if(!isMatched) throw new ApiError(400, "Incorrect password");
+
+    // Check status
+    if(user?.status === "Pending") throw new ApiError(400, "Your account approval is in process. We'll notify you via email once it's activated");
+    if(user?.status === "Banned") throw new ApiError(400, "Your account has been banned and cannot be accessed.");    
+
+    // Generate access token
+    const accessToken = generateAccessToken(user);
+    if(!accessToken) throw new ApiError(400, "Failed to generate access token");
+
+    try 
+    {
+        // Get user specific details
+        const userData = await User.findById(user?._id).select("-password -status -activationCode");
+        if(!userData) throw new ApiError(400, "Invalid user ID");
+        return response.status(200)
+        .cookie("accessToken", accessToken, cookieOptions)
+        .json(new ApiResponse(200, userData, "Login successful"));
+    } 
+    catch(error) 
+    {
+        throw new ApiError(500, error.message);
+    }
+};
+
+
+// User login
+const adminLogin = async (request, response) => {
+    const { email = "", username, password } = request.body;
+    if([username, password].some(field => !field?.trim())) throw new ApiError(400, "All fields are required!");
+
+    // Find admin
+    const user = await User.getUser(email, username);
+    if(!user) throw new ApiError(404, "User not found associated with this username");
+
+    // Only admin can login
+    if(user?.role !== "Admin") throw new ApiError(404, "User not found associated with this username");
 
     // Match password
     const isMatched = await user.matchPassword(password);
@@ -263,6 +303,7 @@ module.exports = {
     signup, 
     accountActivation, 
     login, 
+    adminLogin,
     verifyAccessToken, 
     fetchUsers, 
     fetchSingleUser, 
