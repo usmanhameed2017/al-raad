@@ -93,7 +93,7 @@ function AuthProvider({ children })
         }
     },[csrfToken]);    
 
-    // Logout
+    // User Logout
     const userLogout = useCallback(async () => {
         try 
         {
@@ -108,6 +108,22 @@ function AuthProvider({ children })
             showError(error.message);
         }
     },[]);
+
+    // Admin Logout
+    const adminLogout = useCallback(async () => {
+        try 
+        {
+            await client.get("/user/logout");
+            setUser(null);
+            setLoggedIn(false);
+            localStorage.removeItem("user");
+            navigate("/auth");
+        } 
+        catch(error) 
+        {
+            showError(error.message);
+        }
+    },[]);    
 
     // Verify Access Token
     const verifyAccessToken = useCallback(async () => {
@@ -132,7 +148,7 @@ function AuthProvider({ children })
     },[]);
 
     return(
-        <AuthContext.Provider value={{ csrfToken, userSignup, userLogin, adminLogin, userLogout, isLoading, setLoading, isLoggedIn, setLoggedIn, user, setUser }}>
+        <AuthContext.Provider value={{ csrfToken, userSignup, userLogin, adminLogin, userLogout, adminLogout, isLoading, setLoading, isLoggedIn, setLoggedIn, user, setUser }}>
             { children }
         </AuthContext.Provider>
     );
