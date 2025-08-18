@@ -28,6 +28,7 @@ function App()
 
           {/* Marketing Layout */}
           <Route path="/" element={ <MarketingLayout /> } >
+            <Route path="login" element={ <Login /> } />
             <Route index element={ <Home /> } />
             <Route path="home" element={ <Home /> } />
             <Route path="about" element={ <About /> } />
@@ -43,7 +44,6 @@ function App()
             <Route path="books" element={ <Books /> } />
             <Route path="books/:id" element={ <ViewBook /> } />
             <Route path="audios" element={ <Audios /> } />
-            <Route path="login" element={ <Login /> } />
             <Route path="accountActivation" element={ <AccountActivation /> } />
           </Route>
 
