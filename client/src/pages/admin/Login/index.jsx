@@ -3,26 +3,46 @@ import Button from "../../../components/Button";
 import FormBS from "../../../components/Form";
 import styles from "./style.module.css";
 import Animation from "../../../components/Animation";
+import * as Yup from 'yup';
+import { useAuth } from "../../../context/auth";
 
 function AdminLogin() 
 {
+    // Form initial values
+    const initialValues = {
+        username:"",
+        password:""
+    };
+
+    // Validation schema
+    const validationSchema = Yup.object({
+        username:Yup.string()
+        .lowercase()
+        .required('Username is required'),
+
+        password:Yup.string()
+        .required('Password is required'),
+    });
+
+    const { adminLogin } = useAuth();
+
     return (
         <div className={`${styles.form} shadow`}>
-            <FormBS>
+            <FormBS initialValues={initialValues} validationSchema={validationSchema} handlerFunction={adminLogin}>
                 <Animation type="normal">
                     <Form>
                         {/* Username */}
                         <div className="form-group mb-3">
                             <label> Username </label>
-                            <Field type="email" name="email" placeholder="Enter username" className="form-control" />
-                            <ErrorMessage name="email" component="div" className="text-danger small" />
+                            <Field type="text" name="username" placeholder="Enter username" className="form-control" />
+                            <ErrorMessage name="username" component="div" className="text-danger" />
                         </div>
 
                         {/* Password */}
                         <div className="form-group mb-3">
                             <label>Password</label>
                             <Field type="password" name="password" placeholder="Enter password" className="form-control" />
-                            <ErrorMessage name="password" component="div" className="text-danger small" />
+                            <ErrorMessage name="password" component="div" className="text-danger" />
                         </div>
 
                         <hr />
