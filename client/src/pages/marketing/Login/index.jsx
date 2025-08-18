@@ -49,8 +49,8 @@ function Login()
                     padding: "2rem"
                     }}>
                     <Tabs activeKey={activeTab} onSelect={(k) => setActiveTab(k)} id="auth-tabs" className="mb-3">
-                    <Tab eventKey="Signin" title="Signin" />
-                    <Tab eventKey="Signup" title="Signup" />
+                        <Tab eventKey="Signin" title="Signin" />
+                        <Tab eventKey="Signup" title="Signup" />
                     </Tabs>
 
                     <AnimatePresence mode="wait">
