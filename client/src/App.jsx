@@ -18,6 +18,8 @@ import ViewTafseer from "./pages/marketing/ViewTafseer";
 import ViewBook from "./pages/marketing/ViewBook";
 import Audios from "./pages/marketing/Audios";
 import UserSettings from "./pages/marketing/Settings";
+import AuthLayout from "./layout/AuthLayout";
+import AdminLogin from "./pages/admin/Login";
 
 function App() 
 {
@@ -56,6 +58,12 @@ function App()
               <Route path="settings" element={ <AdminSettings /> } />
             </Route> 
           </Route>
+
+          {/* Auth Layout */}
+          <Route path="/auth" element={ <AuthLayout /> }>
+            <Route index element={ <AdminLogin /> } />
+            <Route path="admin" element={ <AdminLogin /> } />
+          </Route>          
         </Routes>
         <ToastContainer />
       </AuthProvider>
