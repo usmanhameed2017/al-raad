@@ -49,7 +49,7 @@ function AuthProvider({ children })
         }
     },[csrfToken]);   
 
-    // Login
+    // User Login
     const userLogin = useCallback(async (user, action) => {
         if(!csrfToken) return showError("CSRF token is missing");
         try 
@@ -70,6 +70,28 @@ function AuthProvider({ children })
             showError(error.message);
         }
     },[csrfToken]);
+
+    // Admin Login
+    const adminLogin = useCallback(async (user, action) => {
+        if(!csrfToken) return showError("CSRF token is missing");
+        try 
+        {
+            setLoading(true);
+            const response = await client.post("/user/admin/login", user);
+            setUser(response.data);
+            setLoggedIn(response.success);
+            setLoading(false);
+            localStorage.setItem("user", JSON.stringify(response.data));
+            action.resetForm();
+            showSuccess(response.message);
+            navigate('/admin');
+        } 
+        catch(error) 
+        {
+            setLoading(false);
+            showError(error.message);
+        }
+    },[csrfToken]);    
 
     // Logout
     const userLogout = useCallback(async () => {
@@ -110,7 +132,7 @@ function AuthProvider({ children })
     },[]);
 
     return(
-        <AuthContext.Provider value={{ csrfToken, userSignup, userLogin, userLogout, isLoading, setLoading, isLoggedIn, setLoggedIn, user, setUser }}>
+        <AuthContext.Provider value={{ csrfToken, userSignup, userLogin, adminLogin, userLogout, isLoading, setLoading, isLoggedIn, setLoggedIn, user, setUser }}>
             { children }
         </AuthContext.Provider>
     );
