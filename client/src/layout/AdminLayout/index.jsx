@@ -6,7 +6,7 @@ import { useAuth } from "../../context/auth";
 
 function AdminLayout() {
     const [isOpen, setIsOpen] = useState(true);
-    const { user, userLogout } = useAuth();
+    const { user, adminLogout } = useAuth();
 
     return (
         <div className={styles.container}>
@@ -35,7 +35,7 @@ function AdminLayout() {
                     </Link>
 
                     {/* Logout */}
-                    <Link onClick={userLogout} className={styles.navItem}>
+                    <Link onClick={adminLogout} className={styles.navItem}>
                         <FaSignOutAlt size={25} /> {isOpen && <span>Logout</span>}
                     </Link>
                 </nav>
