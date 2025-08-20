@@ -32,33 +32,34 @@ function AuthProvider({ children })
 
     // Signup
     const userSignup = useCallback(async (user, action) => {
-        if (!csrfToken) return showError("CSRF token is missing");
+        if(!csrfToken) return showError("CSRF token is missing");
+        setLoading(true);
         try 
         {
-            setLoading(true);
             const response = await client.post("/user/signup", user);
             action.resetForm();
-            setLoading(false);
             showSuccess(response.message);
             navigate("/accountActivation");
         } 
         catch(error) 
         {
-            setLoading(false);
             showError(error.message);
         }
-    },[csrfToken]);   
+        finally 
+        {
+            setLoading(false);
+        }
+    },[csrfToken]);
 
     // User Login
     const userLogin = useCallback(async (user, action) => {
         if(!csrfToken) return showError("CSRF token is missing");
+        setLoading(true);
         try 
         {
-            setLoading(true);
             const response = await client.post("/user/login", user);
             setUser(response.data);
             setLoggedIn(response.success);
-            setLoading(false);
             localStorage.setItem("user", JSON.stringify(response.data));
             action.resetForm();
             showSuccess(response.message);
@@ -66,21 +67,23 @@ function AuthProvider({ children })
         } 
         catch(error) 
         {
-            setLoading(false);
             showError(error.message);
+        }
+        finally
+        {
+            setLoading(false);
         }
     },[csrfToken]);
 
     // Admin Login
     const adminLogin = useCallback(async (user, action) => {
         if(!csrfToken) return showError("CSRF token is missing");
+        setLoading(true);
         try 
         {
-            setLoading(true);
             const response = await client.post("/user/admin/login", user);
             setUser(response.data);
             setLoggedIn(response.success);
-            setLoading(false);
             localStorage.setItem("user", JSON.stringify(response.data));
             action.resetForm();
             showSuccess(response.message);
@@ -88,8 +91,11 @@ function AuthProvider({ children })
         } 
         catch(error) 
         {
-            setLoading(false);
             showError(error.message);
+        }
+        finally
+        {
+            setLoading(false);
         }
     },[csrfToken]);    
 
