@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { getRequest } from '../../../api/request';
 import ReactDataTable from '../../../components/DataTable';
 import Button from '../../../components/Button';
+import { useAuth } from '../../../context/auth';
 
 function Books() 
 {
@@ -11,7 +12,9 @@ function Books()
     const [data, setData] = useState({ docs: [], totalDocs: 0, pagingCounter: 1 });
     const [search, setSearch] = useState("");
     const [debouncedSearch, setDebouncedSearch] = useState("");
-    const [loading, setLoading] = useState(false);
+
+    // Global state loader
+    const { setLoading } = useAuth();
     
     // Debounce technique
     useEffect(() => {
@@ -63,7 +66,6 @@ function Books()
             setSearch={setSearch}
             limit={limit}
             setLimit={setLimit}
-            loading={loading}
             />
         </>
     );
