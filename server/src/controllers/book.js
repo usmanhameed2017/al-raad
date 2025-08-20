@@ -43,7 +43,7 @@ const createBook = async (request, response) => {
 
 // Fetch all books
 const fetchBooks = async (request, response) => {
-    const { page = 1, limit = 10 } = request.query;
+    const { page = 1, limit = 1, search = "" } = request.query;
 
     // Paging options
     const options = {
@@ -54,8 +54,21 @@ const fetchBooks = async (request, response) => {
 
     try 
     {
+        let query = {};
+
+        // If search keyword provided
+        if (search && search.trim() !== "") 
+        {
+            query = {
+                $or: [
+                    { title: { $regex: search, $options: "i" } },
+                    { description: { $regex: search, $options: "i" } }
+                ]
+            };
+        }
+
         // Execute query
-        const result = await Book.paginate({}, options);
+        const result = await Book.paginate(query, options);
 
         // If page size is greater than total pages
         if(page > result.totalPages) throw new ApiError(404, "Book not found");
