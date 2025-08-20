@@ -1,6 +1,6 @@
 import { useAuth } from '../../../context/auth';
 import { Outlet } from 'react-router-dom';
-import styles from './style.module.css';
+import Restricted from '../Restricted';
 
 function ProtectedRoute({ roles = [] }) 
 {
@@ -8,24 +8,10 @@ function ProtectedRoute({ roles = [] })
 
     // Check authentication
     if(isLoggedIn === null) return "";
-    if(isLoggedIn === false) 
-    {
-        return (
-            <div className={styles.wrapper}>
-                <h2> 401 - UNAUTHORIZED </h2>
-            </div>
-        );
-    }
+    if(isLoggedIn === false) return <Restricted statusCode={401} message={`UNAUTHORIZED`} />
 
     // Check role based permissions
-    if(!roles.includes(user?.role))
-    {
-        return (
-            <div className={styles.wrapper}>
-                <h2> 403 - FORBIDDEN </h2>
-            </div>            
-        );
-    }
+    if(!roles.includes(user?.role)) return <Restricted statusCode={403} message={`FORBIDDEN`} />
     
     return <Outlet />;
 }
