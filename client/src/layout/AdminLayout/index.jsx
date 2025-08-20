@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Outlet, Link } from "react-router-dom";
-import { FaTachometerAlt, FaUsers, FaCog, FaSignOutAlt, FaUserAlt } from "react-icons/fa";
+import { FaTachometerAlt, FaUsers, FaCog, FaSignOutAlt, FaUserAlt, FaBook } from "react-icons/fa";
 import styles from "./style.module.css";
 import { useAuth } from "../../context/auth";
 
@@ -21,22 +21,27 @@ function AdminLayout() {
                 <nav className={styles.nav}>
                     {/* Dashboard */}
                     <Link to="/admin/dashboard" className={styles.navItem}>
-                        <FaTachometerAlt size={25} /> {isOpen && <span>Dashboard</span>}
+                        <FaTachometerAlt size={25} /> {isOpen && <span> Dashboard </span>}
                     </Link>
+
+                    {/* Books */}
+                    <Link to="/admin/books" className={styles.navItem}>
+                        <FaBook size={25} /> {isOpen && <span> Books </span>}
+                    </Link>                    
 
                     {/* Users */}
                     <Link to="/admin/users" className={styles.navItem}>
-                        <FaUsers size={25} /> {isOpen && <span>Users</span>}
+                        <FaUsers size={25} /> {isOpen && <span> Users </span>}
                     </Link>
 
                     {/* Settings */}
                     <Link to="/admin/settings" className={styles.navItem}>
-                        <FaCog size={25} /> {isOpen && <span>Settings</span>}
+                        <FaCog size={25} /> {isOpen && <span> Settings </span>}
                     </Link>
 
                     {/* Logout */}
                     <Link onClick={adminLogout} className={styles.navItem}>
-                        <FaSignOutAlt size={25} /> {isOpen && <span>Logout</span>}
+                        <FaSignOutAlt size={25} /> {isOpen && <span> Logout </span>}
                     </Link>
                 </nav>
 
