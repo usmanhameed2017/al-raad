@@ -12,7 +12,8 @@ function ReactDataTable({ title, columns, data, setCurrentPage, search, setSearc
         action: { button: "rgba(13,205,188,0.9)", hover: "rgba(13,205,188,0.08)", disabled: "rgba(255,255,255,0.3)" },
     }, "dark"); 
 
-    const { isLoading } = useAuth();
+    // Extract global state loader
+    // const { isLoading } = useAuth();
 
     return (
         <>
