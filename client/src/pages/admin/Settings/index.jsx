@@ -1,4 +1,4 @@
-function AdminSettings() 
+function Settings() 
 {
     return (
         <div>
@@ -7,4 +7,4 @@ function AdminSettings()
     );
 }
 
-export default AdminSettings;
+export default Settings;

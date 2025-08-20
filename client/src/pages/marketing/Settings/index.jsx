@@ -11,7 +11,7 @@ import client from '../../../utils/axios';
 import { showError, showSuccess } from '../../../utils/toasterMessage';
 import { useAuth } from '../../../context/auth';
 
-function UserSettings() 
+function Settings() 
 {
     const { user, setUser } = useAuth();
     const userData = user || getUser();
@@ -114,4 +114,4 @@ function UserSettings()
     );
 }
 
-export default UserSettings;
+export default Settings;
