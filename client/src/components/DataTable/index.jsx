@@ -1,6 +1,6 @@
 import DataTable, { createTheme } from "react-data-table-component";
 
-function ReactDataTable({ title, columns, data, setCurrentPage }) 
+function ReactDataTable({ title, columns, data, setCurrentPage, loading, search, setSearch }) 
 {
     // Data table theme
     createTheme("alRaad", {
@@ -12,23 +12,40 @@ function ReactDataTable({ title, columns, data, setCurrentPage })
     }, "dark"); 
 
     return (
-        <div style={{ background: "#0e0f16", padding: 12, borderRadius: 12, overflowX: "auto", maxWidth: "100%" }}>
-            <DataTable
-            title={title}
-            theme="alRaad"
-            columns={columns}
-            data={data?.docs}
-            pagination
-            paginationServer
-            paginationPerPage={1}
-            paginationRowsPerPageOptions={[1, 2, 3]}
-            paginationTotalRows={data?.totalDocs || 0}
-            paginationDefaultPage={data?.page || 1}
-            onChangePage={ (page) => setCurrentPage(page) }
-            highlightOnHover
-            striped 
-            />
-        </div>
+        <>
+            {/* Search Field */}
+            <div className="row">
+                <div className="col-md-2 offset-10">
+                    <input type="search" placeholder="Search" className="form-control"
+                    value={search} onChange={ (e) => setSearch(e.target.value) } />
+                </div>
+            </div>
+
+            {/* Data Table */}
+            <div className="row mt-2">
+                <div className="col-md-12">
+                    <div style={{ background: "#0e0f16", padding: 12, borderRadius: 12, overflowX: "auto", maxWidth: "100%" }}>
+                        <DataTable
+                        title={title}
+                        theme="alRaad"
+                        columns={columns}
+                        data={data?.docs}
+                        pagination
+                        paginationServer
+                        paginationPerPage={1}
+                        paginationRowsPerPageOptions={[1, 2, 3]}
+                        paginationTotalRows={data?.totalDocs || 0}
+                        paginationDefaultPage={data?.page || 1}
+                        onChangePage={ (page) => setCurrentPage(page) }
+                        // progressPending={loading}          
+                        highlightOnHover
+                        striped 
+                        persistTableHead
+                        />
+                    </div>                    
+                </div>
+            </div>            
+        </>
     );
 }
 
