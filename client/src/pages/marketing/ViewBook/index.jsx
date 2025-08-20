@@ -14,25 +14,19 @@ function ViewBook()
 {
     const { id } = useParams();
     const [book, setBook] = useState({});
-
     const { isLoading, setLoading } = useAuth();
-
-    // Enable loader on page load
-    useEffect(() => {
-        setLoading(true);
-    },[]);
 
     // Fetch book on page load
     useEffect(() => {
+        setLoading(true);
         getRequest(`/book/${id}`)
-            .then(response => {
-                setLoading(false);
-                setBook(response.data);
-            })
-            .catch(error => {
-                setLoading(false);
-                showError(error.message);
-            });
+        .then(response => {
+            setBook(response.data);
+        })
+        .catch(error => {
+            showError(error.message);
+        })
+        .finally(() => setLoading(false));
     }, [id]);
 
     return (

@@ -26,14 +26,13 @@ function Books()
     useEffect(() => {
         getRequest(`/book?page=${currentPage}`)
         .then(response => {
-            setLoading(false);
             setData(response.data);
         })
         .catch(error => {
-            setLoading(false);
             setData({ docs:[] });
             showError(error.message);
-        });
+        })
+        .finally(() => setLoading(false));
     }, [currentPage]);
 
     return (
