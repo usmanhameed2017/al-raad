@@ -1,6 +1,7 @@
 import DataTable, { createTheme } from "react-data-table-component";
+import { useAuth } from "../../context/auth";
 
-function ReactDataTable({ title, columns, data, setCurrentPage, loading, search, setSearch, limit, setLimit }) 
+function ReactDataTable({ title, columns, data, setCurrentPage, search, setSearch, limit, setLimit }) 
 {
     // Data table theme
     createTheme("alRaad", {
@@ -10,6 +11,8 @@ function ReactDataTable({ title, columns, data, setCurrentPage, loading, search,
         divider: { default: "rgba(13,205,188,0.20)" },
         action: { button: "rgba(13,205,188,0.9)", hover: "rgba(13,205,188,0.08)", disabled: "rgba(255,255,255,0.3)" },
     }, "dark"); 
+
+    const { isLoading } = useAuth();
 
     return (
         <>
@@ -38,7 +41,7 @@ function ReactDataTable({ title, columns, data, setCurrentPage, loading, search,
                         paginationDefaultPage={data?.page || 1}
                         onChangePage={ (page) => setCurrentPage(page) }
                         onChangeRowsPerPage={ (rows) => setLimit(rows) }
-                        // progressPending={loading}          
+                        // progressPending={isLoading}          
                         highlightOnHover
                         striped 
                         persistTableHead
