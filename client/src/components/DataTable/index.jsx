@@ -1,6 +1,6 @@
 import DataTable, { createTheme } from "react-data-table-component";
 
-function ReactDataTable({ title, columns, data, setCurrentPage, loading, search, setSearch }) 
+function ReactDataTable({ title, columns, data, setCurrentPage, loading, search, setSearch, limit, setLimit }) 
 {
     // Data table theme
     createTheme("alRaad", {
@@ -32,11 +32,12 @@ function ReactDataTable({ title, columns, data, setCurrentPage, loading, search,
                         data={data?.docs}
                         pagination
                         paginationServer
-                        paginationPerPage={1}
+                        paginationPerPage={limit}
                         paginationRowsPerPageOptions={[1, 2, 3]}
                         paginationTotalRows={data?.totalDocs || 0}
                         paginationDefaultPage={data?.page || 1}
                         onChangePage={ (page) => setCurrentPage(page) }
+                        onChangeRowsPerPage={ (rows) => setLimit(rows) }
                         // progressPending={loading}          
                         highlightOnHover
                         striped 
