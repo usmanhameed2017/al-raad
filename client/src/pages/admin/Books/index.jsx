@@ -7,7 +7,7 @@ function Books()
 {
     // States
     const [currentPage, setCurrentPage] = useState(1);
-    const [limit, setLimit] = useState(1); // Records per page
+    const [limit, setLimit] = useState(10); // Records per page
     const [data, setData] = useState({ docs: [], totalDocs: 0, pagingCounter: 1 });
     const [search, setSearch] = useState("");
     const [debouncedSearch, setDebouncedSearch] = useState("");
