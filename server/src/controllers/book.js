@@ -43,7 +43,7 @@ const createBook = async (request, response) => {
 
 // Fetch all books
 const fetchBooks = async (request, response) => {
-    const { page = 1, limit = 1, search = "" } = request.query;
+    const { page = 1, limit = 10, search = "" } = request.query;
 
     // Paging options
     const options = {
