@@ -3,6 +3,7 @@ import { getRequest } from '../../../api/request';
 import ReactDataTable from '../../../components/DataTable';
 import Button from '../../../components/Button';
 import { useAuth } from '../../../context/auth';
+import Animation from '../../../components/Animation';
 
 function Books() 
 {
@@ -57,16 +58,18 @@ function Books()
 
     return (
         <>
-            <ReactDataTable 
-            title={`Books`} 
-            columns={columns} 
-            data={data} 
-            setCurrentPage={setCurrentPage}
-            search={search}
-            setSearch={setSearch}
-            limit={limit}
-            setLimit={setLimit}
-            />
+            <Animation type="table">
+                <ReactDataTable 
+                title={`Books`} 
+                columns={columns} 
+                data={data} 
+                setCurrentPage={setCurrentPage}
+                search={search}
+                setSearch={setSearch}
+                limit={limit}
+                setLimit={setLimit}
+                />
+            </Animation>
         </>
     );
 }
