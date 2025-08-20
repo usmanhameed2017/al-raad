@@ -5,6 +5,8 @@ import styles from "./style.module.css";
 import Animation from "../../../components/Animation";
 import * as Yup from 'yup';
 import { useAuth } from "../../../context/auth";
+import { Navigate } from 'react-router-dom';
+import Restricted from "../../security/Restricted";
 
 function AdminLogin() 
 {
@@ -24,37 +26,47 @@ function AdminLogin()
         .required('Password is required'),
     });
 
-    const { adminLogin } = useAuth();
+    const { adminLogin, user } = useAuth();
 
     return (
-        <div className={`${styles.form} shadow`}>
-            <FormBS initialValues={initialValues} validationSchema={validationSchema} handlerFunction={adminLogin}>
-                <Animation type="normal">
-                    <Form>
-                        {/* Username */}
-                        <div className="form-group mb-3">
-                            <label> Username </label>
-                            <Field type="text" name="username" placeholder="Enter username" className="form-control" />
-                            <ErrorMessage name="username" component="div" className="text-danger" />
-                        </div>
+        <>
+        {
+            !user ? 
+            <div className={`${styles.form} shadow`}>
+                <FormBS initialValues={initialValues} validationSchema={validationSchema} handlerFunction={adminLogin}>
+                    <Animation type="normal">
+                        <Form>
+                            {/* Username */}
+                            <div className="form-group mb-3">
+                                <label> Username </label>
+                                <Field type="text" name="username" placeholder="Enter username" className="form-control" />
+                                <ErrorMessage name="username" component="div" className="text-danger" />
+                            </div>
 
-                        {/* Password */}
-                        <div className="form-group mb-3">
-                            <label>Password</label>
-                            <Field type="password" name="password" placeholder="Enter password" className="form-control" />
-                            <ErrorMessage name="password" component="div" className="text-danger" />
-                        </div>
+                            {/* Password */}
+                            <div className="form-group mb-3">
+                                <label>Password</label>
+                                <Field type="password" name="password" placeholder="Enter password" className="form-control" />
+                                <ErrorMessage name="password" component="div" className="text-danger" />
+                            </div>
 
-                        <hr />
-                        
-                        {/* Login Button */}
-                        <div className="form-group d-grid">
-                            <Button type="submit" className="w-100"> Login </Button>
-                        </div>
-                    </Form>                    
-                </Animation>
-            </FormBS>
-        </div>
+                            <hr />
+                            
+                            {/* Login Button */}
+                            <div className="form-group d-grid">
+                                <Button type="submit" className="w-100"> Login </Button>
+                            </div>
+                        </Form>                    
+                    </Animation>
+                </FormBS>
+            </div>     
+            : 
+            user?.role === "Admin" ? 
+            <Navigate to="/admin" /> 
+            : 
+            <Restricted statusCode={403} message={`FORBIDDEN`} />
+        }       
+        </>
     );
 }
 
