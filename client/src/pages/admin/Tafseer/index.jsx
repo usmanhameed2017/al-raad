@@ -40,9 +40,9 @@ function Tafseer()
         { name: "SR.NO", cell: (row, index) => (data?.pagingCounter || 0) + index, sortable: true, width: "120px" },
         { name: "Surah Name", selector: row => row.surahName, sortable: true },
         { name: "Ayah", selector: row => row.ayah, sortable: true },
-        { name: "Tafseer", selector: row => row.tafseer?.substring(0,50) || "", wrap:true },
-        { name: "Language", selector: row => row.language, wrap:true },
-        { name: "Uploaded By", selector: row => row.uploadedBy?.name, wrap:true }
+        { name: "Tafseer", selector: row => row.tafseer?.substring(0,50) || "" },
+        { name: "Language", selector: row => row.language },
+        { name: "Uploaded By", selector: row => row.uploadedBy?.name }
     ];  
 
     return (
