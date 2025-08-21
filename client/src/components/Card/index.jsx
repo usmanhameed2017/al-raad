@@ -4,7 +4,7 @@ import Button from '../Button';
 import { useNavigate } from 'react-router-dom'
 
 
-function CardBS({ heading, subHeading, description, buttonText, redirectTo, link }) 
+function CardBS({ heading, subHeading, description, buttonText, redirectTo, link, icon }) 
 {
     const navigate = useNavigate();
     return (
@@ -35,7 +35,7 @@ function CardBS({ heading, subHeading, description, buttonText, redirectTo, link
                     </div>
 
                     <div className='mt-2 d-grid'>
-                        <Button type="button" onClick={ () => navigate(redirectTo) }> { buttonText } </Button>
+                        <Button type="button" onClick={ () => navigate(redirectTo) }> { icon || "" } { buttonText } </Button>
                     </div>
                 </Card.Footer>                
             </Card>      

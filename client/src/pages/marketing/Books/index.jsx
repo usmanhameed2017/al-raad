@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import styles from './style.module.css';
-import { FaBookOpen } from 'react-icons/fa';
+import { FaBookOpen, FaEye } from 'react-icons/fa';
 import { Row, Col } from 'react-bootstrap';
 import CardBS from '../../../components/Card';
 import { useAuth } from '../../../context/auth';
@@ -61,6 +61,7 @@ function Books()
                             description={book?.description}
                             link={book?.pdf}
                             buttonText="View book"
+                            icon={ <FaEye /> }
                             redirectTo={`/books/${book?._id}`} />
                         </Animation>
                     </Col>                     
