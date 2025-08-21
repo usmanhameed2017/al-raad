@@ -42,7 +42,7 @@ function Tafseer()
         { name: "Ayah", selector: row => row.ayah, sortable: true },
         { name: "Tafseer", selector: row => row.tafseer?.substring(0,50) || "", wrap:true },
         { name: "Language", selector: row => row.language, wrap:true },
-        { name: "Uploaded By", selector: row => row.uploadedBy.name, wrap:true }
+        { name: "Uploaded By", selector: row => row.uploadedBy?.name, wrap:true }
     ];  
 
     return (

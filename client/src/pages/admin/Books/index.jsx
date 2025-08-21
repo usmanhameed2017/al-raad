@@ -39,7 +39,8 @@ function Books()
     const columns = [
         { name: "SR.NO", cell: (row, index) => (data?.pagingCounter || 0) + index, sortable: true, width: "120px" },
         { name: "Title", selector: row => row.title, sortable: true },
-        { name: "Description", selector: row => row.description?.substring(0,50) || "", wrap:true },
+        { name: "Description", selector: row => row.description?.substring(0,50) || "-", wrap:true },
+        { name: "Uploaded By", selector: row => row.uploadedBy?.name || "-", wrap:true },
         { 
             name: "PDFs",
             style:{ marginRight:"12px" },
