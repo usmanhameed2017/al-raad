@@ -42,7 +42,7 @@ function Books()
         { name: "Description", selector: row => row.description?.substring(0,50) || "", wrap:true },
         { 
             name: "PDFs",
-            margin:10,
+            style:{ marginRight:"12px" },
             cell: row => row.pdf ? ( 
                 <a href={row.pdf} download className="py-2"> 
                     <Button> Download </Button>
