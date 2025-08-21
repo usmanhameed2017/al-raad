@@ -21,6 +21,7 @@ import AdminLogin from "./pages/admin/Login";
 import Dashboard from "./pages/admin/Dashboard";
 import SettingsAdmin from "./pages/admin/Settings";
 import BooksAdmin from "./pages/admin/Books";
+import TafseerAdmin from "./pages/admin/Tafseer";
 
 function App() 
 {
@@ -57,6 +58,7 @@ function App()
               <Route index element={ <Dashboard /> } />
               <Route path="dashboard" element={ <Dashboard /> } />
               <Route path="books" element={ <BooksAdmin /> } />
+              <Route path="tafseer" element={ <TafseerAdmin /> } />
               <Route path="settings" element={ <SettingsAdmin /> } />
             </Route> 
           </Route>
