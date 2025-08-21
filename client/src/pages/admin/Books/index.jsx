@@ -4,6 +4,7 @@ import ReactDataTable from '../../../components/DataTable';
 import Button from '../../../components/Button';
 import { useAuth } from '../../../context/auth';
 import Animation from '../../../components/Animation';
+import { FaDownload, FaEdit, FaTrash } from 'react-icons/fa'
 
 function Books() 
 {
@@ -37,24 +38,33 @@ function Books()
 
     // Columns
     const columns = [
-        { name: "SR.NO", cell: (row, index) => (data?.pagingCounter || 0) + index, sortable: true, width: "120px" },
+        { name: "SR.NO", cell: (row, index) => (data?.pagingCounter || 0) + index, sortable: true, width:"120px" },
         { name: "Title", selector: row => row.title, sortable: true },
-        { name: "Description", selector: row => row.description?.substring(0,50) || "-", wrap:true },
-        { name: "Uploaded By", selector: row => row.uploadedBy?.name || "-", wrap:true },
+        { name: "Description", selector: row => row.description?.substring(0,50) || "-" },
+        { name: "Uploaded By", selector: row => row.uploadedBy?.name || "-" },
         { 
             name: "PDFs",
-            style:{ marginRight:"12px" },
+            width:"180px",
             cell: row => row.pdf ? ( 
-                <a href={row.pdf} download className="py-2"> 
-                    <Button> Download </Button>
+                <a href={row.pdf} download> 
+                    <Button> <FaDownload /> Download </Button>
                 </a> 
             )
             : 
             "No PDF",
             ignoreRowClick: true,
             button: true,
-            width: "150px"
-        }
+        },
+        { 
+            name: "Operations",
+            width:"320px",
+            cell: row =>  ( 
+                <div style={{ display:"flex", gap:"8px" }}>
+                    <Button onClick={() => alert(`ID is: ${row?._id}`)}> <FaEdit /> Edit </Button>
+                    <Button onClick={() => alert(`ID is: ${row?._id}`)}> <FaTrash /> Delete </Button>
+                </div>
+            )
+        },
     ];  
 
     return (
