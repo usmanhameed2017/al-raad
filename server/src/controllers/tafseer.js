@@ -19,18 +19,34 @@ const createTafseer = async (request, response) => {
 
 // Fetch all tafseers
 const fetchTafseers = async (request, response) => {
-    const { page=1, limit=10 } = request.query;
+    const { page = 1, limit = 10, search = "" } = request.query;
 
     // Paging options
     const options = {
         page:parseInt(page),
         limit:parseInt(limit),
-        sort: { createdAt: -1 }
+        sort: { createdAt: -1 },
+        populate: { path:"uploadedBy", select:"name" }
     };    
 
     try 
     {
-        const result = await Tafseer.paginate({}, options);
+        let query = {};
+
+        // If search keyword provided
+        if (search && search.trim() !== "") 
+        {
+            query = {
+                $or: [
+                    { surahName: { $regex: search, $options: "i" } },
+                    { ayah: { $regex: search, $options: "i" } }
+                ]
+            };
+        }
+
+        // Execute query
+        const result = await Tafseer.paginate(query, options);
+
         // If page size is greater than total pages
         if(page > result.totalPages) throw new ApiError(404, "Tafseer not found");
 
