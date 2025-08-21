@@ -1,6 +1,6 @@
 import { useState } from "react";
 import styles from "./style.module.css";
-import { FaTachometerAlt, FaUsers, FaCog, FaSignOutAlt, FaUserAlt, FaBook } from "react-icons/fa";
+import { FaTachometerAlt, FaUsers, FaCog, FaSignOutAlt, FaUserAlt, FaBook, FaBookOpen } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../context/auth";
 
@@ -21,6 +21,11 @@ function SideBar()
                 <Link to="/admin/dashboard" className={styles.navItem}>
                     <FaTachometerAlt size={25} /> {isOpen && <span> Dashboard </span>}
                 </Link>
+
+                {/* Tafseer */}
+                <Link to="/admin/tafseer" className={styles.navItem}>
+                    <FaBookOpen size={25} /> {isOpen && <span> Tafseer </span>}
+                </Link>                 
 
                 {/* Books */}
                 <Link to="/admin/books" className={styles.navItem}>
