@@ -12,6 +12,13 @@ function ReactDataTable({ title, columns, data, setCurrentPage, search, setSearc
         action: { button: "rgba(13,205,188,0.9)", hover: "rgba(13,205,188,0.08)", disabled: "rgba(255,255,255,0.3)" },
     }, "dark"); 
 
+    // Custom datatable style
+    const customStyles = {
+        cells: {
+            style: { paddingTop: "12px", paddingBottom: "12px" }
+        }
+    };
+
     // Extract global state loader
     // const { isLoading } = useAuth();
 
@@ -46,6 +53,7 @@ function ReactDataTable({ title, columns, data, setCurrentPage, search, setSearc
                         highlightOnHover
                         striped 
                         persistTableHead
+                        customStyles={customStyles}
                         />
                     </div>                    
                 </div>
