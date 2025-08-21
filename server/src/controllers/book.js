@@ -50,6 +50,7 @@ const fetchBooks = async (request, response) => {
         page:parseInt(page),
         limit:parseInt(limit),
         sort: { createdAt: -1 },
+        populate: { path: "uploadedBy", select: "name" }
     };
 
     try 
