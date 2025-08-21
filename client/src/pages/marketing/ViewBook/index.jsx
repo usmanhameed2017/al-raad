@@ -9,6 +9,7 @@ import { getTime } from '../../../utils/getTime';
 import Animation from '../../../components/Animation';
 import Button from '../../../components/Button';
 import { getRequest } from '../../../api/request';
+import { FaDownload } from 'react-icons/fa';
 
 function ViewBook() 
 {
@@ -42,7 +43,7 @@ function ViewBook()
                                 <Col>
                                     <h2 className={styles.bookName}> {book?.title} </h2>
                                     <a href={book?.pdf} download>
-                                        <Button className='float-end'> Download </Button>
+                                        <Button className='float-end'> <FaDownload /> Download </Button>
                                     </a>
                                     <hr />
                                 </Col>                                
