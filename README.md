@@ -152,6 +152,18 @@ Initially, forms were not submitting because I forgot to include **CSRF-Token** 
 
 Additionally, I worked on the User Settings page, allowing users to modify their profile information.
 
+📅 20th August, 2025
+
+Today, I successfully integrated DataTable into my project using **react-datatable-component** package.
+
+Built a fully scalable and reusable component with clean and optimized code.
+
+Implemented server-side pagination and searching to efficiently handle large datasets.
+
+Added a limit selection feature, so data is dynamically fetched from the API based on the user’s selection.
+
+Used debounce technique for search inputs to reduce unnecessary API calls and ensure optimized performance.
+
 ---
 
 ### ⚙ Setup Installation
