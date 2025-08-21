@@ -39,6 +39,7 @@ function ReactDataTable({ title, columns, data, setCurrentPage, search, setSearc
                         <DataTable
                         title={title}
                         theme="alRaad"
+                        customStyles={customStyles}
                         columns={columns}
                         data={data?.docs}
                         pagination
@@ -53,7 +54,6 @@ function ReactDataTable({ title, columns, data, setCurrentPage, search, setSearc
                         highlightOnHover
                         striped 
                         persistTableHead
-                        customStyles={customStyles}
                         />
                     </div>                    
                 </div>
