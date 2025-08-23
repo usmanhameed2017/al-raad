@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getRequest } from '../../../api/request';
+import { getRequest, postRequest } from '../../../api/request';
 import ReactDataTable from '../../../components/DataTable';
 import Button from '../../../components/Button';
 import { useAuth } from '../../../context/auth';
@@ -11,6 +11,8 @@ import FormBS from '../../../components/Form';
 import { Form, Field, ErrorMessage } from "formik";
 import styles from "./style.module.css";
 import { addBookInitialValues, addBookValidation } from './schema';
+import Loader from '../../../components/Loader';
+import { showError, showSuccess } from '../../../utils/toasterMessage';
 
 
 function Books() 
@@ -25,7 +27,7 @@ function Books()
     const [reloadData, setReloadData] = useState(0);
 
     // Global state loader
-    const { setLoading } = useAuth();
+    const { isLoading, setLoading } = useAuth();
     
     // Debounce technique
     useEffect(() => {
@@ -87,11 +89,17 @@ function Books()
             {/* Create Book */}
             <ModalBS showModal={showModal} setShowModal={setShowModal} modalTitle="Add New Book"> 
                 <FormBS initialValues={addBookInitialValues} validationSchema={addBookValidation}
-                handlerFunction={ (values, action) => {
-                    console.log("Values", values);
-                    action.resetForm();
-                    setShowModal(false);
-                    setReloadData(reloadData + 1);
+                handlerFunction={ async (values, action) => {
+                    setLoading(true);
+                    postRequest("book", values, true)
+                    .then((response) => {
+                        showSuccess(response.message);
+                        action.resetForm();
+                        setShowModal(false);
+                        setReloadData(reloadData + 1);
+                    })
+                    .catch(error => showError(error.message))
+                    .finally(() => setLoading(false));
                 }}
                 >
                 {({ setFieldValue }) => (
@@ -120,8 +128,15 @@ function Books()
 
                         {/* Buttons */}
                         <div className="form-group mt-3 d-flex align-items-center gap-2">
-                            <button type='submit' className='themeButton'> Confirm </button>
+                            <button type='submit' className='themeButton' disabled={isLoading === true}> Confirm </button>
                             <button type='button' className='themeButton' onClick={ () => setShowModal(false) }> Cancel </button>
+                        </div>
+
+                        {/* Loader */}
+                        <div className="form-group mt-1 d-flex align-items-center">
+                        {
+                            isLoading && <Loader text={`Uploading...`} />
+                        }
                         </div>
                     </Form>                        
                 )}
