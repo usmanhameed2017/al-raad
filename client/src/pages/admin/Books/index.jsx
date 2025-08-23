@@ -4,7 +4,13 @@ import ReactDataTable from '../../../components/DataTable';
 import Button from '../../../components/Button';
 import { useAuth } from '../../../context/auth';
 import Animation from '../../../components/Animation';
-import { FaDownload, FaEdit, FaTrash } from 'react-icons/fa'
+import { FaDownload, FaEdit, FaTrash, FaPlus } from 'react-icons/fa';
+import { Row, Col } from 'react-bootstrap';
+import ModalBS from '../../../components/Modal';
+import FormBS from '../../../components/Form';
+import { Form, Field, ErrorMessage } from "formik";
+import styles from "./style.module.css";
+
 
 function Books() 
 {
@@ -14,6 +20,7 @@ function Books()
     const [data, setData] = useState({ docs: [], totalDocs: 0, pagingCounter: 1 });
     const [search, setSearch] = useState("");
     const [debouncedSearch, setDebouncedSearch] = useState("");
+    const [showModal, setShowModal] = useState(false);
 
     // Global state loader
     const { setLoading } = useAuth();
@@ -69,18 +76,40 @@ function Books()
 
     return (
         <>
-            <Animation type="table">
-                <ReactDataTable 
-                title={`Books`} 
-                columns={columns} 
-                data={data} 
-                setCurrentPage={setCurrentPage}
-                search={search}
-                setSearch={setSearch}
-                limit={limit}
-                setLimit={setLimit}
-                />
-            </Animation>
+            <Row className='mb-2'>
+                <Col>
+                    <div className='float-end'> <Button onClick={ () => setShowModal(true) }> <FaPlus /> Add New </Button> </div>
+                </Col>
+            </Row>
+
+            <ModalBS showModal={showModal} setShowModal={setShowModal} modalTitle="Add New Book"> 
+                <FormBS>
+                    <Form>
+                        {/* Title */}
+                        <div className="form-group">
+                            <label htmlFor="title" className={styles.label}> Title </label>
+                            <Field type="text" name="title" className={`${styles.input} form-control`} placeholder="Enter Title" />
+                        </div>
+                    </Form>
+                </FormBS>
+            </ModalBS>
+
+            <Row>
+                <Col>
+                    <Animation type="table">
+                        <ReactDataTable 
+                        title={`Books`} 
+                        columns={columns} 
+                        data={data} 
+                        setCurrentPage={setCurrentPage}
+                        search={search}
+                        setSearch={setSearch}
+                        limit={limit}
+                        setLimit={setLimit}
+                        />
+                    </Animation>
+                </Col>
+            </Row>
         </>
     );
 }
