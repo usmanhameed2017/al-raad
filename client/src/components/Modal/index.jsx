@@ -1,0 +1,24 @@
+import { Modal } from 'react-bootstrap';
+import styles from './style.module.css';
+
+function ModalBS({ children, showModal, setShowModal, modalTitle }) 
+{
+  return (
+        <>
+            {/* Modal */}
+            <Modal animation backdrop="static" scrollable show={showModal} onHide={() => setShowModal(false)} className={styles.customModal}>
+                {/* Modal Header */}
+                <Modal.Header closeButton className={styles.modalHeader}>
+                    <Modal.Title className="ms-auto">
+                        <h2 className={styles.modalTitle}> { modalTitle?.toUpperCase() } </h2> 
+                    </Modal.Title>
+                </Modal.Header>
+
+                {/* Modal Body */}
+                <Modal.Body className={styles.modalBody}> { children } </Modal.Body>
+            </Modal>
+        </>
+    );
+}
+
+export default ModalBS;
