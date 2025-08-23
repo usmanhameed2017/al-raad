@@ -20,6 +20,15 @@
     color: #0dcdbc;
     letter-spacing: 0.3px;
     margin-bottom: 3px;
+    display: block; 
+    text-align: left;    
+}
+
+.errorMessage {
+    color: red;
     display: block;
-    float: inline-start;
+    font-weight: 400;      
+    margin-top: 2px;
+    font-size: 1rem;
+    text-align: left;
 }

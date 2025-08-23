@@ -10,6 +10,7 @@ import ModalBS from '../../../components/Modal';
 import FormBS from '../../../components/Form';
 import { Form, Field, ErrorMessage } from "formik";
 import styles from "./style.module.css";
+import { addBookInitialValues, addBookValidation } from './schema';
 
 
 function Books() 
@@ -21,6 +22,7 @@ function Books()
     const [search, setSearch] = useState("");
     const [debouncedSearch, setDebouncedSearch] = useState("");
     const [showModal, setShowModal] = useState(false);
+    const [reloadData, setReloadData] = useState(0);
 
     // Global state loader
     const { setLoading } = useAuth();
@@ -41,7 +43,7 @@ function Books()
         .then((response) => setData(response.data))
         .catch(error => console.log("Error:", error.message))
         .finally(() => setLoading(false));
-    }, [currentPage, limit, debouncedSearch]);
+    }, [currentPage, limit, debouncedSearch, reloadData]);
 
     // Columns
     const columns = [
@@ -82,15 +84,47 @@ function Books()
                 </Col>
             </Row>
 
+            {/* Create Book */}
             <ModalBS showModal={showModal} setShowModal={setShowModal} modalTitle="Add New Book"> 
-                <FormBS>
+                <FormBS initialValues={addBookInitialValues} validationSchema={addBookValidation}
+                handlerFunction={ (values, action) => {
+                    console.log("Values", values);
+                    action.resetForm();
+                    setShowModal(false);
+                    setReloadData(reloadData + 1);
+                }}
+                >
+                {({ setFieldValue }) => (
                     <Form>
                         {/* Title */}
-                        <div className="form-group">
+                        <div className="form-group mb-3">
                             <label htmlFor="title" className={styles.label}> Title </label>
                             <Field type="text" name="title" className={`${styles.input} form-control`} placeholder="Enter Title" />
+                            <span className={`${styles.errorMessage}`}> <ErrorMessage name='title' /> </span>
                         </div>
-                    </Form>
+
+                        {/* Description */}
+                        <div className="form-group mb-2">
+                            <label htmlFor="description" className={styles.label}> Description </label>
+                            <Field as="textarea" rows="3" name="description" className={`${styles.input} form-control`} placeholder="Enter Description" />
+                            <span className={`${styles.errorMessage}`}> <ErrorMessage name='description' /> </span>
+                        </div> 
+
+                        {/* PDF */}
+                        <div className="form-group mb-2">
+                            <label htmlFor="pdf" className={styles.label}> Upload PDF </label>
+                            <input type="file" name="pdf" className={`${styles.input} form-control`} accept='application/pdf'
+                            onChange={ (e) => setFieldValue("pdf", e.target.files[0]) } />
+                            <span className={`${styles.errorMessage}`}> <ErrorMessage name='pdf' /> </span>
+                        </div> 
+
+                        {/* Buttons */}
+                        <div className="form-group mt-3 d-flex align-items-center gap-2">
+                            <button type='submit' className='themeButton'> Confirm </button>
+                            <button type='button' className='themeButton' onClick={ () => setShowModal(false) }> Cancel </button>
+                        </div>
+                    </Form>                        
+                )}
                 </FormBS>
             </ModalBS>
 
