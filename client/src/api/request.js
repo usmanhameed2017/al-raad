@@ -49,3 +49,35 @@ export const putRequest = async (url, payload, fileAttachment = false, enableSuc
         throw error;
     }
 };
+
+// Patch request
+export const patchRequest = async (url, payload, fileAttachment = false, enableSuccessMessage = true, enableErrorMessage = true) => {
+    try 
+    {
+        let options = {};
+        if(fileAttachment) options = { headers: { "Content-Type": "multipart/form-data" } };
+        const response = await client.patch(url, payload, options);
+        if(enableSuccessMessage) showSuccess(response.message);
+        return response;
+    } 
+    catch(error) 
+    {
+        if(enableErrorMessage) showError(error.message);
+        throw error;
+    }
+};
+
+// Delete request
+export const deleteRequest = async (url, enableSuccessMessage = true, enableErrorMessage = true) => {
+    try 
+    {
+        const response = await client.delete(url);
+        if(enableSuccessMessage) showSuccess(response.message);
+        return response;
+    } 
+    catch(error) 
+    {
+        if(enableErrorMessage) showError(error.message);
+        throw error;
+    }
+};
