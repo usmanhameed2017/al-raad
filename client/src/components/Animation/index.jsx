@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 function Animation({ children, type }) 
 {
     // Heading
-    if(type === "heading") return (
+    if(type.trim().toLowerCase() === "heading") return (
         <motion.h1
             initial={{ opacity: 0, y: -50, scale: 0.9 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -13,7 +13,7 @@ function Animation({ children, type })
     );
     
     // Normal
-    if(type === "normal") return (
+    if(type.trim().toLowerCase() === "normal") return (
         <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -23,7 +23,7 @@ function Animation({ children, type })
     );        
     
     // Card
-    if(type === "card") return (
+    if(type.trim().toLowerCase() === "card") return (
         <motion.div
             initial={{ opacity: 0, y: -30 }}
             animate={{ opacity: 1, y: -10 }}
@@ -31,10 +31,20 @@ function Animation({ children, type })
             whileHover={{ scale: 1.04 }}>
             { children }
         </motion.div>            
-    );        
+    );
+
+    // Button
+    if (type.trim().toLowerCase() === "button") return (
+        <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, ease: 'easeOut' }}>
+            {children}
+        </motion.div>
+    );    
     
     // Table
-    if(type === "table") return (
+    if(type.trim().toLowerCase() === "table") return (
         <motion.div
             initial={{ opacity: 0, rotateX: -15, y: 50, scale: 0.95 }}
             animate={{ opacity: 1, rotateX: 0, y: 0, scale: 1 }}
