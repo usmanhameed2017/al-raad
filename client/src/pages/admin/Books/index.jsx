@@ -133,11 +133,11 @@ function Books()
                         </div>
 
                         {/* Loader */}
-                        <div className="form-group mt-1 d-flex align-items-center">
-                        {
-                            isLoading && <Loader text={`Uploading...`} />
-                        }
-                        </div>
+                        {isLoading && (
+                            <div className="form-group mt-3 d-flex align-items-center">
+                                <Loader text={`Uploading...`} />
+                            </div>
+                        )}
                     </Form>                        
                 )}
                 </FormBS>
