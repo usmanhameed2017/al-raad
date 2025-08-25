@@ -1,7 +1,7 @@
 import { useState, useEffect, createContext, useContext, useCallback } from 'react';
-import client from '../utils/axios';
 import { useNavigate } from 'react-router-dom';
-import { showError, showSuccess } from '../utils/toasterMessage';
+import { showError } from '../utils/toasterMessage';
+import { getRequest, postRequest } from '../api/request';
 
 // Create auth context
 const AuthContext = createContext();
@@ -20,13 +20,13 @@ function AuthProvider({ children })
     const generateCsrfToken = useCallback(async () => {
         try
         {
-            const response = await client.get("/user/generateCsrfToken");
+            const response = await getRequest("/user/generateCsrfToken");
             localStorage.setItem("csrfToken", response.data);
             setCsrfToken(response.data);
         } 
         catch(error) 
         {
-            showError(error.message);
+            return console.log(error.message);
         }
     },[]);
 
@@ -34,16 +34,16 @@ function AuthProvider({ children })
     const userSignup = useCallback(async (user, action) => {
         if(!csrfToken) return showError("CSRF token is missing");
         setLoading(true);
+
         try 
         {
-            const response = await client.post("/user/signup", user);
+            await postRequest("/user/signup", user);
             action.resetForm();
-            showSuccess(response.message);
             navigate("/accountActivation");
         } 
         catch(error) 
         {
-            showError(error.message);
+            return error;
         }
         finally 
         {
@@ -55,23 +55,23 @@ function AuthProvider({ children })
     const userLogin = useCallback(async (user, action) => {
         if(!csrfToken) return showError("CSRF token is missing");
         setLoading(true);
-        try 
+
+        try
         {
-            const response = await client.post("/user/login", user);
+            const response = await postRequest("/user/login", user);
             setUser(response.data);
             setLoggedIn(response.success);
             localStorage.setItem("user", JSON.stringify(response.data));
             action.resetForm();
-            showSuccess(response.message);
             navigate('/');
-        } 
-        catch(error) 
+        }
+        catch(error)
         {
-            showError(error.message);
+            return error;
         }
         finally
         {
-            setLoading(false);
+            setLoading(false)
         }
     },[csrfToken]);
 
@@ -79,23 +79,23 @@ function AuthProvider({ children })
     const adminLogin = useCallback(async (user, action) => {
         if(!csrfToken) return showError("CSRF token is missing");
         setLoading(true);
-        try 
+
+        try
         {
-            const response = await client.post("/user/admin/login", user);
+            const response = await postRequest("/user/admin/login", user);
             setUser(response.data);
             setLoggedIn(response.success);
             localStorage.setItem("user", JSON.stringify(response.data));
             action.resetForm();
-            showSuccess(response.message);
             navigate('/admin');
-        } 
-        catch(error) 
+        }
+        catch(error)
         {
-            showError(error.message);
+            return error;
         }
         finally
         {
-            setLoading(false);
+            setLoading(false)
         }
     },[csrfToken]);    
 
@@ -103,15 +103,15 @@ function AuthProvider({ children })
     const userLogout = useCallback(async () => {
         try 
         {
-            await client.get("/user/logout");
+            await getRequest("/user/logout");
             setUser(null);
             setLoggedIn(false);
             localStorage.removeItem("user");
             navigate("/", { replace:true });
         } 
-        catch(error) 
+        catch (error) 
         {
-            showError(error.message);
+           return error;
         }
     },[]);
 
@@ -119,15 +119,15 @@ function AuthProvider({ children })
     const adminLogout = useCallback(async () => {
         try 
         {
-            await client.get("/user/logout");
+            await getRequest("/user/logout");
             setUser(null);
             setLoggedIn(false);
             localStorage.removeItem("user");
-            navigate("/auth");
+            navigate("/auth", { replace:true });
         } 
-        catch(error) 
+        catch (error) 
         {
-            showError(error.message);
+           return error;
         }
     },[]);    
 
@@ -135,16 +135,17 @@ function AuthProvider({ children })
     const verifyAccessToken = useCallback(async () => {
         try 
         {
-            const response = await client.get("/user/verifyAccessToken");
+            const response = await getRequest("/user/verifyAccessToken");
             setUser(response.data); // Plain user object
             setLoggedIn(response.success);
-            localStorage.setItem("user", JSON.stringify(response.data));
+            localStorage.setItem("user", JSON.stringify(response.data));             
         } 
-        catch (error) 
+        catch(error) 
         {
             setUser(null);
             setLoggedIn(false);
-            localStorage.removeItem("user");
+            localStorage.removeItem("user"); 
+            return error;
         }
     },[]);
 
