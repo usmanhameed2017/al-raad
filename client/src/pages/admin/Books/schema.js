@@ -34,5 +34,4 @@ export const addBookValidation = Yup.object({
     pdf:Yup.mixed()
     .test('type', "Invalid file format! Only PDF is allowed", fileTypeChecker)
     .test('size', "PDF size must not be larger than 9MB", fileSizeChecker)
-    .required("PDF is required")
 });
