@@ -51,7 +51,7 @@ function Videos()
             
             <Row className='mt-5'>
             {
-                isLoading ? (  <Loader text="Loading" /> ) :
+                isLoading ? (  <Loader size='big' text="Loading" /> ) :
                 isArrayHaveData(data.docs) ?
                 data.docs?.map((video, _) => (
                     <Col xs={12} sm={12} md={6} lg={4} xl={4} key={video?._id} className='mb-3'>

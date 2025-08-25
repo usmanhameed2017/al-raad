@@ -50,7 +50,7 @@ function Tafseer()
             {/* Cards */}
             <Row className='mt-5'>
             {
-                isLoading ? (  <Loader text="Loading" /> ) :
+                isLoading ? (  <Loader size='big' text="Loading" /> ) :
                 isArrayHaveData(data.docs) ?
                 data.docs?.map((tafseer, _) => (
                     <Col xs={12} sm={6} md={6} lg={4} xl={4} key={tafseer?._id} className='mb-3'>

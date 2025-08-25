@@ -135,7 +135,7 @@ function Books()
                         {/* Loader */}
                         {isLoading && (
                             <div className="form-group mt-3 d-flex align-items-center">
-                                <Loader text={`Uploading...`} />
+                                <Loader size='small' text={`Uploading...`} />
                             </div>
                         )}
                     </Form>                        

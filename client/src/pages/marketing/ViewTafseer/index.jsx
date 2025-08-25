@@ -78,7 +78,7 @@ function ViewTafseer()
             (
                 <>
                     <Row style={{ marginTop:"200px" }}>
-                        <Col> <Loader text="Loading" /> </Col>
+                        <Col> <Loader size='big' text="Loading" /> </Col>
                     </Row>
                 </>
             )
