@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { getRequest, postRequest } from '../../../api/request';
+import { useCallback, useEffect, useState } from 'react';
+import { deleteRequest, getRequest, postRequest, putRequest } from '../../../api/request';
 import ReactDataTable from '../../../components/DataTable';
 import Button from '../../../components/Button';
 import { useAuth } from '../../../context/auth';
@@ -10,10 +10,8 @@ import ModalBS from '../../../components/Modal';
 import FormBS from '../../../components/Form';
 import { Form, Field, ErrorMessage } from "formik";
 import styles from "./style.module.css";
-import { addBookInitialValues, addBookValidation } from './schema';
+import { addBookValidation } from './schema';
 import Loader from '../../../components/Loader';
-import { showError, showSuccess } from '../../../utils/toasterMessage';
-
 
 function Books() 
 {
@@ -24,10 +22,20 @@ function Books()
     const [search, setSearch] = useState("");
     const [debouncedSearch, setDebouncedSearch] = useState("");
     const [showModal, setShowModal] = useState(false);
+    const [editFormValues, setEditFormValues] = useState(null);
+    const [formType, setFormType] = useState("");
     const [reloadData, setReloadData] = useState(0);
 
     // Global state loader
     const { isLoading, setLoading } = useAuth();
+
+    // Form Initial values
+    const initialValues = {
+        _id: editFormValues?._id || "",
+        title: editFormValues?.title || "",
+        description: editFormValues?.description || "",
+        pdf: editFormValues?.pdf || "",
+    };
     
     // Debounce technique
     useEffect(() => {
@@ -40,12 +48,55 @@ function Books()
     
     // Fetch data on page load and on search
     useEffect(() => {
-        setLoading(true);
-        getRequest(`/book?page=${currentPage}&limit=${limit}&search=${debouncedSearch}`)
-        .then((response) => setData(response.data))
-        .catch(error => console.log("Error:", error.message))
-        .finally(() => setLoading(false));
+        (async () => {
+            setLoading(true);
+            try 
+            {
+                const response = await getRequest(`/book?page=${currentPage}&limit=${limit}&search=${debouncedSearch}`);
+                setData(response.data);
+            }
+            catch (error) 
+            {
+                return error;
+            }
+            finally
+            {
+                setLoading(false);
+            }
+        })();
     }, [currentPage, limit, debouncedSearch, reloadData]);
+
+    // Launch Modal
+    const launchModal = useCallback(() => {
+        setFormType("create");
+        setEditFormValues(null);
+        setShowModal(true);
+    },[]);
+
+    // Edit
+    const edit = useCallback((data) => {
+        setFormType("edit")
+        setEditFormValues({ ...data, pdf: "" }); // Keep pdf empty initially
+        setShowModal(true);
+    },[]);
+
+    // Delete
+    const drop = useCallback(async (_id) => {
+        setLoading(true);
+        try 
+        {
+            await deleteRequest(`/book/${_id}`);
+            setReloadData(reloadData + 1);
+        } 
+        catch (error) 
+        {
+            return error;
+        }
+        finally
+        {
+            setLoading(false);
+        }
+    },[]);
 
     // Columns
     const columns = [
@@ -55,7 +106,7 @@ function Books()
         { name: "Uploaded By", selector: row => row.uploadedBy?.name || "-" },
         { 
             name: "PDFs",
-            width:"180px",
+            width:"205px",
             cell: row => row.pdf ? ( 
                 <a href={row.pdf} download> 
                     <Button> <FaDownload /> Download </Button>
@@ -63,16 +114,15 @@ function Books()
             )
             : 
             "No PDF",
-            ignoreRowClick: true,
-            button: true,
+            ignoreRowClick: true
         },
         { 
             name: "Operations",
             width:"320px",
             cell: row =>  ( 
                 <div style={{ display:"flex", gap:"8px" }}>
-                    <Button onClick={() => alert(`ID is: ${row?._id}`)}> <FaEdit /> Edit </Button>
-                    <Button onClick={() => alert(`ID is: ${row?._id}`)}> <FaTrash /> Delete </Button>
+                    <Button onClick={() => edit(row)}> <FaEdit /> Edit </Button>
+                    <Button onClick={() => drop(row?._id)}> <FaTrash /> Delete </Button>
                 </div>
             )
         },
@@ -80,26 +130,57 @@ function Books()
 
     return (
         <>
-            <Row className='mb-2'>
+            {/* Modal Launcher */}
+            <Row className='mb-3'>
                 <Col>
-                    <div className='float-end'> <Button onClick={ () => setShowModal(true) }> <FaPlus /> Add New </Button> </div>
+                    <Animation type="button">
+                        <div className='float-end'> 
+                            <Button onClick={launchModal}> <FaPlus /> Add New </Button> 
+                        </div>
+                    </Animation>
                 </Col>
             </Row>
 
-            {/* Create Book */}
-            <ModalBS showModal={showModal} setShowModal={setShowModal} modalTitle="Add New Book"> 
-                <FormBS initialValues={addBookInitialValues} validationSchema={addBookValidation}
+            {/* Data Table */}
+            <Row>
+                <Col>
+                    <Animation type="table">
+                        <ReactDataTable 
+                        title={`Books`} 
+                        columns={columns} 
+                        data={data} 
+                        setCurrentPage={setCurrentPage}
+                        search={search}
+                        setSearch={setSearch}
+                        limit={limit}
+                        setLimit={setLimit}
+                        />
+                    </Animation>
+                </Col>
+            </Row>            
+
+            {/* Modal */}
+            <ModalBS showModal={showModal} setShowModal={setShowModal} modalTitle={ formType === "create" ? "ADD NEW BOOK" : "EDIT BOOK" }>
+                {/* Form */}
+                <FormBS initialValues={initialValues} validationSchema={addBookValidation}
                 handlerFunction={ async (values, action) => {
                     setLoading(true);
-                    postRequest("book", values, true)
-                    .then((response) => {
-                        showSuccess(response.message);
+                    try
+                    {
+                        if(formType === "create") delete values?._id;
+                        formType === "create" ? await postRequest("/book", values, true) : await putRequest(`/book/${values?._id}`, values, true);
                         action.resetForm();
                         setShowModal(false);
                         setReloadData(reloadData + 1);
-                    })
-                    .catch(error => showError(error.message))
-                    .finally(() => setLoading(false));
+                    }
+                    catch(error)
+                    {
+                        return error;
+                    }
+                    finally
+                    {
+                        setLoading(false);
+                    }
                 }}
                 >
                 {({ setFieldValue }) => (
@@ -121,7 +202,8 @@ function Books()
                         {/* PDF */}
                         <div className="form-group mb-2">
                             <label htmlFor="pdf" className={styles.label}> Upload PDF </label>
-                            <input type="file" name="pdf" className={`${styles.input} form-control`} accept='application/pdf'
+                            <input type="file" name="pdf" className={`${styles.input} form-control`} 
+                            accept='application/pdf' required={formType==="create"}
                             onChange={ (e) => setFieldValue("pdf", e.target.files[0]) } />
                             <span className={`${styles.errorMessage}`}> <ErrorMessage name='pdf' /> </span>
                         </div> 
@@ -142,23 +224,6 @@ function Books()
                 )}
                 </FormBS>
             </ModalBS>
-
-            <Row>
-                <Col>
-                    <Animation type="table">
-                        <ReactDataTable 
-                        title={`Books`} 
-                        columns={columns} 
-                        data={data} 
-                        setCurrentPage={setCurrentPage}
-                        search={search}
-                        setSearch={setSearch}
-                        limit={limit}
-                        setLimit={setLimit}
-                        />
-                    </Animation>
-                </Col>
-            </Row>
         </>
     );
 }
