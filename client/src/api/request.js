@@ -2,14 +2,16 @@ import client from '../utils/axios';
 import { showSuccess, showError } from '../utils/toasterMessage';
 
 // Get request
-export const getRequest = async (url) => {
+export const getRequest = async (url, enableSuccessMessage = false, enableErrorMessage = false) => {
     try 
     {
         const response = await client.get(url);
+        if(enableSuccessMessage) showSuccess(response.message);
         return response;
     } 
     catch(error) 
     {
+        if(enableErrorMessage) showError(error.message);
         throw error;
     }
 };
