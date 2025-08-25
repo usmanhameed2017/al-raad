@@ -7,9 +7,9 @@ function Loader({ size = "small", text })
     if(size.trim().toLowerCase() === "big")
     {
         return (
-            <h2 className='text-center fw-bold textTheme'> 
+            <h3 className='text-center fw-bold textTheme'> 
                 <FaSync className={styles.spin} size={30} /> { text } 
-            </h2>
+            </h3>
         );
     }
 
