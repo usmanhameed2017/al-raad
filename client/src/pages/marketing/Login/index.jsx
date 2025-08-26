@@ -78,7 +78,7 @@ function Login()
                                     <hr />
                                     {/* Signin Button */}
                                     <div className="form-group d-grid">
-                                        <Button type="submit" className="w-100" disabled={isLoading === false}>Signin</Button>
+                                        <Button type="submit" className="w-100" disabled={isLoading === true}>Signin</Button>
                                     </div>
                                 </Form>
                             </FormBS>
@@ -129,7 +129,7 @@ function Login()
                                     <hr />
                                     {/* Signup */}
                                     <div className="form-group d-grid">
-                                        <Button type="submit" className="w-100 mt-2"> Signup </Button>
+                                        <Button type="submit" className="w-100 mt-2" disabled={isLoading === true}> Signup </Button>
                                     </div>
                                 </Form>
                             </FormBS>
