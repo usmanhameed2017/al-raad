@@ -12,6 +12,7 @@ import { Form, Field, ErrorMessage } from "formik";
 import styles from "./style.module.css";
 import { addBookValidation } from './schema';
 import Loader from '../../../components/Loader';
+import swal from "sweetalert2";
 
 function Books() 
 {
@@ -82,21 +83,36 @@ function Books()
 
     // Delete
     const drop = useCallback(async (_id) => {
-        setLoading(true);
-        try 
-        {
-            await deleteRequest(`/book/${_id}`);
-            setReloadData(reloadData + 1);
-        } 
-        catch (error) 
-        {
-            return error;
-        }
-        finally
-        {
-            setLoading(false);
-        }
-    },[]);
+        swal.fire({
+            title: "Are you sure?",
+            text: "This action will permanently delete the record.",
+            icon: "question",
+            showCloseButton:true,
+            showCancelButton: true,
+            confirmButtonText: "Yes, delete it!",
+            cancelButtonText: "Cancel",
+            allowOutsideClick:false
+        })
+        .then(async (result) => {
+            if(result.isConfirmed) 
+            {
+                setLoading(true);
+                try 
+                {
+                    await deleteRequest(`/book/${_id}`);
+                    setReloadData(reloadData + 1);
+                } 
+                catch (error) 
+                {
+                    return error;
+                } 
+                finally 
+                {
+                    setLoading(false);
+                }
+            }
+        });
+    },[reloadData]);
 
     // Columns
     const columns = [
