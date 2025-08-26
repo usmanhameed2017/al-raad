@@ -7,6 +7,16 @@
   border: 5px solid #00bcd4;
 }
 
+.swal2-success-ring {
+  color: #00bcd4 !important;
+  border: 5px solid #00bcd4 !important;
+}
+
+.swal2-success-line-tip, .swal2-success-line-long {
+  color: #00bcd4 !important;
+  background-color: #00bcd4 !important;
+}
+
 #swal2-title {
   color: #00bcd4;
   font-weight: 700;
