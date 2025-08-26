@@ -35,7 +35,7 @@ function AccountActivation()
                 handlerFunction={async (values, action) => {
                     try
                     {
-                        patchRequest(`/user/accountActivation`, values);
+                        await patchRequest(`/user/accountActivation`, values);
                         action.resetForm();
                         navigate("/login");
                     }
