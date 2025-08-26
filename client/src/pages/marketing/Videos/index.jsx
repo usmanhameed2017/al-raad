@@ -12,65 +12,67 @@ import { isArrayHaveData } from '../../../constants';
 
 function Videos() 
 {
-    const [data, setData] = useState({});
-    const [currentPage, setCurrentPage] = useState(1);
-    const { isLoading, setLoading } = useAuth();
+  const [data, setData] = useState({});
+  const [currentPage, setCurrentPage] = useState(1);
+  const [message, setMessage] = useState("");
+  const { isLoading, setLoading } = useAuth();
 
-    // Enable loader on page load
-    useEffect(() => {
-        setLoading(true);
-    },[]);    
+  useEffect(() => {
+    setLoading(true); // Enable loader on page load
+    let timer;
+    if(!isArrayHaveData(data?.docs)) 
+    {
+        timer = setTimeout(() => setMessage("No Video Found"), 700);
+    }
+    return () => clearTimeout(timer);
+  },[]);  
 
-    // Fetch video on page load
-    useEffect(() => {
-        getRequest(`/video?page=${currentPage}`)
-        .then(response => setData(response.data))
-        .catch(() => setData({ docs:[] }))
-        .finally(() => setLoading(false));
-    }, [currentPage]);
+  // Fetch video on page load
+  useEffect(() => {
+    getRequest(`/video?page=${currentPage}`)
+    .then(response => setData(response.data))
+    .catch(() => setData({ docs:[] }))
+    .finally(() => setLoading(false));
+  },[currentPage]);
 
     return (
-        <div className={styles.videoWrapper}>
-            <Animation type="heading">
-                <span>
-                    {/* Icon */}
-                    <div className="icon"> <FaVideo size={50} /> </div>
-                    {/* Heading */}
-                    <h2 className="heroTitle"> Video Lectures </h2>
-                    <hr className='text-secondary' />
-                </span>
-            </Animation>
+      <div className={styles.videoWrapper}>
+        <Animation type="heading">
+          <span>
+            {/* Icon */}
+            <div className="icon"> <FaVideo size={50} /> </div>
+            {/* Heading */}
+            <h2 className="heroTitle"> Video Lectures </h2>
+            <hr className='text-secondary' />
+          </span>
+        </Animation>
 
-            {/* Videos */}
-            
-            <Row className='mt-5'>
-            {
-                isLoading ? (  <Loader size='big' text="Loading" /> ) :
-                isArrayHaveData(data.docs) ?
-                data.docs?.map((video, _) => (
-                    <Col xs={12} sm={12} md={6} lg={4} xl={4} key={video?._id} className='mb-3'>
-                    <VideoCard  title={video?.title} url={video?.url} />
-                    </Col>                     
-                ))
-                :
-                <Col>
-                  <h2 className='fw-bold textTheme'> No Video Found </h2>
-                </Col>
-            }
-            </Row>
+        {/* Videos */}
+        <Row className='mt-5'>
+        {
+          isLoading ? (  <Loader size='big' text="Loading" /> ) :
+          isArrayHaveData(data.docs) ?
+          data.docs?.map((video, _) => (
+              <Col xs={12} sm={12} md={6} lg={4} xl={4} key={video?._id} className='mb-3'>
+              <VideoCard  title={video?.title} url={video?.url} />
+              </Col>                     
+          ))
+          :
+          <Col>
+            <h2 className='fw-bold textTheme'> { message } </h2>
+          </Col>
+        }
+        </Row>
 
-            {/* Pagination */}
-            {
-              isArrayHaveData(data.docs) && 
-              (
-                <Row className='mt-3'>
-                  <Col className="d-flex justify-content-center">
-                    <ServerSidePagination data={data} setCurrentPage={setCurrentPage} />
-                  </Col>
-                </Row>
-              )
-            }
-        </div>
+        {/* Pagination */}
+        <Row>
+          <Col className="d-flex justify-content-center">
+          {!isLoading && isArrayHaveData(data.docs) && (
+            <ServerSidePagination data={data} setCurrentPage={setCurrentPage} />                    
+          )}
+          </Col>
+        </Row>
+      </div>
     );
 }
 

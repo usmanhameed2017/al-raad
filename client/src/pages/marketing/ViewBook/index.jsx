@@ -14,7 +14,15 @@ function ViewBook()
 {
     const { id } = useParams();
     const [book, setBook] = useState({});
+    const [message, setMessage] = useState("");
     const { isLoading, setLoading } = useAuth();
+
+    // For better UX
+    useEffect(() => {
+        let timer;
+        if(!id) timer = setTimeout(() => setMessage("404 - Book Not Found"), 700);
+        return () => clearTimeout(timer);
+    },[]);
 
     // Fetch book on page load
     useEffect(() => {
@@ -28,7 +36,7 @@ function ViewBook()
     return (
         <div className={styles.bookContainer}>
         {
-            isLoading === false ? 
+            !isLoading ? 
                 book?._id ?
                 (
                     <>
@@ -68,7 +76,7 @@ function ViewBook()
                 (
                     <Row className="mt-3">
                         <Col>
-                            <h1 className='textTheme fw-bold text-center'> 404 - Book Not Found </h1>
+                            <h1 className='textTheme fw-bold text-center'> { message } </h1>
                         </Col>
                     </Row>   
                 ) 

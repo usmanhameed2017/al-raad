@@ -12,7 +12,15 @@ function ViewTafseer()
 {
     const { id } = useParams();
     const [tafseer, setTafseer] = useState({});
+    const [message, setMessage] = useState("");
     const { isLoading, setLoading } = useAuth();
+
+    // For better UX
+    useEffect(() => {
+        let timer;
+        if(!id) timer = setTimeout(() => setMessage("404 - Tafseer Not Found"), 700);
+        return () => clearTimeout(timer);
+    },[]);
 
     // Fetch tafseer on page load
     useEffect(() => {
@@ -65,7 +73,7 @@ function ViewTafseer()
                 (
                     <Row className="mt-3">
                         <Col>
-                            <h1 className='textTheme fw-bold text-center'> 404 - Tafseer Not Found </h1>
+                            <h1 className='textTheme fw-bold text-center'> { message } </h1>
                         </Col>
                     </Row>   
                 ) 

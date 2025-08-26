@@ -14,12 +14,18 @@ function Books()
 {
     const [data, setData] = useState({});
     const [currentPage, setCurrentPage] = useState(1);
+    const [message, setMessage] = useState("");
     const { isLoading, setLoading } = useAuth();
 
-    // Enable loader on page load
     useEffect(() => {
-        setLoading(true);
-    },[]);    
+        setLoading(true); // Enable loader on page load
+        let timer;
+        if(!isArrayHaveData(data?.docs)) 
+        {
+            timer = setTimeout(() => setMessage("No Book Found"), 700);
+        }
+        return () => clearTimeout(timer);
+    },[]);
 
     // Fetch book on page load
     useEffect(() => {
@@ -62,22 +68,19 @@ function Books()
                 ))
                 :
                 <Col>
-                    <h2 className='fw-bold textTheme'> No Book Found </h2>
+                    <h2 className='fw-bold textTheme'> { message } </h2>
                 </Col>
             }
             </Row>
 
             {/* Pagination */}
-            {
-                isArrayHaveData(data.docs) && 
-                (
-                    <Row className='mt-3'>
-                        <Col className="d-flex justify-content-center">
-                            <ServerSidePagination data={data} setCurrentPage={setCurrentPage} />
-                        </Col>
-                    </Row>
-                )
-            }
+            <Row>
+                <Col className="d-flex justify-content-center">
+                    {!isLoading && isArrayHaveData(data.docs) && (
+                        <ServerSidePagination data={data} setCurrentPage={setCurrentPage} />                    
+                    )}
+                </Col>
+            </Row>
         </div>
     );
 }
