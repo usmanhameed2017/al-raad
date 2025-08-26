@@ -3,7 +3,6 @@ import { useParams } from 'react-router-dom';
 import styles from './style.module.css';
 import { Row, Col } from 'react-bootstrap';
 import { useAuth } from '../../../context/auth';
-import { showError } from '../../../utils/toasterMessage';
 import Loader from '../../../components/Loader';
 import { getTime } from '../../../utils/getTime';
 import Animation from '../../../components/Animation';
@@ -19,12 +18,8 @@ function ViewTafseer()
     useEffect(() => {
         setLoading(true);
         getRequest(`/tafseer/${id}`)
-        .then(response => {
-            setTafseer(response.data);
-        })
-        .catch(error => {
-            showError(error.message);
-        })
+        .then(response => setTafseer(response.data))
+        .catch(() => setTafseer({}))
         .finally(() => setLoading(false));
     }, [id]);
 

@@ -3,7 +3,6 @@ import { useParams } from 'react-router-dom';
 import styles from './style.module.css';
 import { Row, Col } from 'react-bootstrap';
 import { useAuth } from '../../../context/auth';
-import { showError } from '../../../utils/toasterMessage';
 import Loader from '../../../components/Loader';
 import { getTime } from '../../../utils/getTime';
 import Animation from '../../../components/Animation';
@@ -21,12 +20,8 @@ function ViewBook()
     useEffect(() => {
         setLoading(true);
         getRequest(`/book/${id}`)
-        .then(response => {
-            setBook(response.data);
-        })
-        .catch(error => {
-            showError(error.message);
-        })
+        .then(response => setBook(response.data))
+        .catch(() => setBook({}))
         .finally(() => setLoading(false));
     }, [id]);
 

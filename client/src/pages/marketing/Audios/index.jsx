@@ -4,7 +4,6 @@ import { FaPlayCircle } from 'react-icons/fa';
 import { Row, Col } from 'react-bootstrap';
 import { useAuth } from '../../../context/auth';
 import Loader from '../../../components/Loader';
-import { showError } from '../../../utils/toasterMessage';
 import ServerSidePagination from '../../../components/Pagination';
 import Animation from '../../../components/Animation';
 import AudioCard from '../../../components/AudioCard';
@@ -25,21 +24,16 @@ function Audios()
     // Fetch audio on page load
     useEffect(() => {
         getRequest(`/audio?page=${currentPage}`)
-        .then(response => {
-            setData(response.data);
-        })
-        .catch(error => {
-            setData({ docs:[] });
-            showError(error.message);
-        })
+        .then(response => setData(response.data))
+        .catch(() => setData({ docs:[] }))
         .finally(() => setLoading(false));
     }, [currentPage]);
 
     return (
         <div className={styles.audioWrapper}>
             <Animation type="heading">
-                {/* Icon */}
                 <span>
+                    {/* Icon */}
                     <div className="icon"> <FaPlayCircle size={50} /> </div>
                     {/* Heading */}
                     <h2 className="heroTitle"> Audio Lectures </h2>

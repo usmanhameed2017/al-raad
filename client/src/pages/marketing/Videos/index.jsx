@@ -4,7 +4,6 @@ import { FaVideo } from 'react-icons/fa';
 import { Row, Col } from 'react-bootstrap';
 import { useAuth } from '../../../context/auth';
 import Loader from '../../../components/Loader';
-import { showError } from '../../../utils/toasterMessage';
 import ServerSidePagination from '../../../components/Pagination';
 import Animation from '../../../components/Animation';
 import VideoCard from '../../../components/VideoCard';
@@ -25,21 +24,16 @@ function Videos()
     // Fetch video on page load
     useEffect(() => {
         getRequest(`/video?page=${currentPage}`)
-        .then(response => {
-            setData(response.data);
-        })
-        .catch(error => {
-            setData({ docs:[] });
-            showError(error.message);
-        })
+        .then(response => setData(response.data))
+        .catch(() => setData({ docs:[] }))
         .finally(() => setLoading(false));
     }, [currentPage]);
 
     return (
         <div className={styles.videoWrapper}>
             <Animation type="heading">
-                {/* Icon */}
                 <span>
+                    {/* Icon */}
                     <div className="icon"> <FaVideo size={50} /> </div>
                     {/* Heading */}
                     <h2 className="heroTitle"> Video Lectures </h2>

@@ -5,7 +5,6 @@ import { Row, Col } from 'react-bootstrap';
 import CardBS from '../../../components/Card';
 import { useAuth } from '../../../context/auth';
 import Loader from '../../../components/Loader';
-import { showError } from '../../../utils/toasterMessage';
 import ServerSidePagination from '../../../components/Pagination';
 import Animation from '../../../components/Animation';
 import { getRequest } from '../../../api/request';
@@ -25,21 +24,16 @@ function Books()
     // Fetch book on page load
     useEffect(() => {
         getRequest(`/book?page=${currentPage}`)
-        .then(response => {
-            setData(response.data);
-        })
-        .catch(error => {
-            setData({ docs:[] });
-            showError(error.message);
-        })
+        .then(response => setData(response.data))
+        .catch(() => setData({ docs:[] }))
         .finally(() => setLoading(false));
     }, [currentPage]);
 
     return (
         <div className={styles.bookWrapper}>
             <Animation type="heading">
-                {/* Icon */}
                 <span>
+                    {/* Icon */}
                     <div className="icon"> <FaBookOpen size={50} /> </div>
                     {/* Heading */}
                     <h2 className="heroTitle"> Books & Articles </h2>
