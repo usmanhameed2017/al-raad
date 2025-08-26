@@ -213,8 +213,8 @@ function Books()
 
                         {/* Buttons */}
                         <div className="form-group mt-3 d-flex align-items-center gap-2">
-                            <button type='submit' className='themeButton' disabled={isLoading === true}> Confirm </button>
-                            <button type='button' className='themeButton' onClick={ () => setShowModal(false) }> Cancel </button>
+                            <Button type="submit" disabled={isLoading === true}> Confirm </Button>
+                            <Button type="button" onClick={ () => setShowModal(false) }> Cancel </Button>
                         </div>
 
                         {/* Loader */}
