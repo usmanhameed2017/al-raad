@@ -1,16 +1,16 @@
 import { Modal } from 'react-bootstrap';
 import styles from './style.module.css';
 
-function ModalBS({ children, showModal, setShowModal, modalTitle }) 
+function ModalBS({ children, showModal, setShowModal, modalTitle, modalSize = "md" }) 
 {
   return (
         <>
             {/* Modal */}
-            <Modal animation backdrop="static" scrollable show={showModal} onHide={() => setShowModal(false)} className={styles.customModal}>
+            <Modal animation backdrop="static" scrollable size={modalSize} show={showModal} onHide={() => setShowModal(false)} className={styles.modal}>
                 {/* Modal Header */}
                 <Modal.Header closeButton className={styles.modalHeader}>
                     <Modal.Title className="ms-auto">
-                        <h2 className={styles.modalTitle}> { modalTitle?.toUpperCase() } </h2> 
+                        <h2 className={styles.modalTitle}> { modalTitle?.toUpperCase() } </h2>
                     </Modal.Title>
                 </Modal.Header>
 
