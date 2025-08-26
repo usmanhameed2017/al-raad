@@ -1,5 +1,6 @@
 import React from "react";
 import { Pagination } from "react-bootstrap";
+import "./style.css";
 
 function ServerSidePagination({ data, setCurrentPage }) 
 {
