@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import Animation from '../../../components/Animation';
 import Button from '../../../components/Button';
 import FormBS from '../../../components/Form';
@@ -6,36 +6,35 @@ import { getUser } from '../../../constants';
 import { userSettingsValidation } from '../../../validation/user';
 import styles from './style.module.css';
 import { Form, Field, ErrorMessage } from 'formik';
-import { getRequest } from '../../../api/request';
-import client from '../../../utils/axios';
-import { showError, showSuccess } from '../../../utils/toasterMessage';
+import { getRequest, putRequest } from '../../../api/request';
 import { useAuth } from '../../../context/auth';
+import Loader from '../../../components/Loader';
 
 function Settings() 
 {
-    const { user, setUser } = useAuth();
-    const userData = user || getUser();
+    const { user, setUser, isLoading, setLoading } = useAuth();
+    const userData = user || getUser() || {};
 
     // Form initial values
-    const initialValue = {
+    const initialValues = {
         name: userData.name || "",
         username: userData.username || "",
-        password:"",
-        cpassword:""
+        password: "",
+        cpassword: ""
     };
 
     // Fetch user data on page load
     useEffect(() => {
         getRequest(`/user/me`)
         .then(response => setUser(response.data))
-        .catch(error => showError(error.message));
+        .catch(() => setUser({}));
     },[]);
 
     return (
         <div className={styles.settingsWrapper}>
             <div className={styles.settingsCard}>
                 <Animation type="normal">
-                    <FormBS initialValues={initialValue} validationSchema={userSettingsValidation}
+                    <FormBS initialValues={initialValues} validationSchema={userSettingsValidation}
                     handlerFunction={async (user, action) => {
 
                         // Initialize payload
@@ -44,12 +43,13 @@ function Settings()
                             username: user.username,
                         };
 
+                        // If user update bio with password
                         if(user?.password) payload.password = user.password;
                         
+                        setLoading(true);
                         try
                         {
-                            const response = await client.put(`/user/me/edit`, payload);
-                            showSuccess(response.message);
+                            const response = await putRequest(`/user/me/edit`, payload);
                             localStorage.setItem("user", JSON.stringify(response.data));
                             setUser(response.data);
 
@@ -65,9 +65,12 @@ function Settings()
                         }
                         catch(error)
                         {
-                            showError(error.message);
+                            return error;
                         }
-                        
+                        finally
+                        {
+                            setLoading(false);
+                        }
                     }}
                     >
                         <Form>
@@ -104,7 +107,14 @@ function Settings()
 
                             {/* Save Changes */}
                             <div className='d-grid mt-2'>
-                                <Button type="submit"> Save Changes </Button>
+                                <Button type="submit" disabled={isLoading===true}> Save Changes </Button>
+                            </div>
+
+                            {/* Loader */}
+                            <div className='mt-4'>
+                            {isLoading && (
+                                <Loader text={`Saving changes...`} size='small' />
+                            )}
                             </div>
                         </Form>
                     </FormBS>
