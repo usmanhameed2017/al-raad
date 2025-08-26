@@ -1,4 +1,4 @@
-.customModal :global(.modal-content) {
+.modal :global(.modal-content) {
   background-color: #12151d !important;
   color: #e5e7eb !important;
   border-radius: 12px !important;
