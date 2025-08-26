@@ -12,7 +12,7 @@ import { Form, Field, ErrorMessage } from "formik";
 import styles from "./style.module.css";
 import { addBookValidation } from './schema';
 import Loader from '../../../components/Loader';
-import { confirmAlert } from '../../../utils/sweetAlert2';
+import { sweetAlert } from '../../../utils/sweetAlert2';
 
 function Books() 
 {
@@ -83,7 +83,7 @@ function Books()
 
     // Delete
     const drop = useCallback(async (_id) => {
-        confirmAlert("Are you sure?", "This action will permanently delete the record.", async () => {
+        sweetAlert("Are you sure?", "This action will permanently delete the record.", "confirm", "Yes, delete it!", null, async () => {
             setLoading(true);
             try 
             {
