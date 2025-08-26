@@ -4,6 +4,7 @@ import NavbarBS from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import styles from './style.module.css';
 import { useLocation } from "react-router-dom";
+import Animation from '../../components/Animation';
 
 function MarketingLayout() 
 {
@@ -17,7 +18,9 @@ function MarketingLayout()
             <NavbarBS />
 
             <main className={styles.mainContent}>
-                <Outlet />
+                <Animation type="page">
+                    <Outlet />
+                </Animation>
             </main>
 
             <Footer />
