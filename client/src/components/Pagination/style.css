@@ -1,0 +1,40 @@
+/* Pagination container styling */
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+/* Pagination buttons basic styling */
+.pagination .page-item {
+  margin: 5px;
+  cursor: pointer;
+}
+
+/* Normal page item */
+.pagination .page-item .page-link {
+  color: #00bcd4;
+  border: 1px solid #00bcd4;
+  padding: 10px 15px;
+  border-radius: 4px;
+  user-select: none;
+  transition: all 0.3s ease;
+  background-color: #121212;
+  width: 50px;
+}
+
+/* Hover effect */
+.pagination .page-item .page-link:hover {
+  background-color: #00bcd4;
+  color: white;
+  border-color: #00bcd4;
+}
+
+/* Active page item */
+.pagination .page-item.active .page-link {
+  background-color: #00bcd4;
+  color: white;
+  border-color: #00bcd4;
+  font-weight: bold;
+  cursor: default;
+}
