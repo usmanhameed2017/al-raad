@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom';
 
 function Animation({ children, type }) 
 {
+    // Get page location
     const location = useLocation();
 
     // Page
