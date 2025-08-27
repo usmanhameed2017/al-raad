@@ -3,8 +3,8 @@ import { startLoading, startSaving, stopLoading, stopSaving } from '../utils/loa
 import { showSuccess, showError } from '../utils/toasterMessage';
 
 // Get request
-export const getRequest = async (url, enableSuccessMessage = false, enableErrorMessage = false) => {
-    startLoading();
+export const getRequest = async (url, activateLoader = true, enableSuccessMessage = false, enableErrorMessage = false) => {
+    if(activateLoader) startLoading();
     try 
     {
         const response = await client.get(url);
@@ -18,13 +18,13 @@ export const getRequest = async (url, enableSuccessMessage = false, enableErrorM
     }
     finally
     {
-        stopLoading();
+        if(activateLoader) stopLoading();
     }
 };
 
 // Post request
-export const postRequest = async (url, payload, fileAttachment = false, enableSuccessMessage = true, enableErrorMessage = true) => {
-    startSaving();
+export const postRequest = async (url, payload, fileAttachment = false, activateLoader = true, enableSuccessMessage = true, enableErrorMessage = true) => {
+    if(activateLoader) startSaving();
     try 
     {
         let options = {};
@@ -40,13 +40,13 @@ export const postRequest = async (url, payload, fileAttachment = false, enableSu
     }
     finally
     {
-        stopSaving();
+        if(activateLoader) stopSaving();
     }
 };
 
 // Put request
-export const putRequest = async (url, payload, fileAttachment = false, enableSuccessMessage = true, enableErrorMessage = true) => {
-    startSaving();
+export const putRequest = async (url, payload, fileAttachment = false, activateLoader, enableSuccessMessage = true, enableErrorMessage = true) => {
+    if(activateLoader) startSaving();
     try 
     {
         let options = {};
@@ -62,13 +62,13 @@ export const putRequest = async (url, payload, fileAttachment = false, enableSuc
     }
     finally
     {
-        stopSaving();
+        if(activateLoader) stopSaving();
     }
 };
 
 // Patch request
-export const patchRequest = async (url, payload, fileAttachment = false, enableSuccessMessage = true, enableErrorMessage = true) => {
-    startSaving();
+export const patchRequest = async (url, payload, fileAttachment = false, activateLoader, enableSuccessMessage = true, enableErrorMessage = true) => {
+    if(activateLoader) startSaving();
     try 
     {
         let options = {};
@@ -84,13 +84,13 @@ export const patchRequest = async (url, payload, fileAttachment = false, enableS
     }
     finally
     {
-        stopSaving();
+        if(activateLoader) stopSaving();
     }
 };
 
 // Delete request
-export const deleteRequest = async (url, enableSuccessMessage = true, enableErrorMessage = true) => {
-    startSaving();
+export const deleteRequest = async (url, activateLoader, enableSuccessMessage = true, enableErrorMessage = true) => {
+    if(activateLoader) startSaving();
     try 
     {
         const response = await client.delete(url);
@@ -104,6 +104,6 @@ export const deleteRequest = async (url, enableSuccessMessage = true, enableErro
     }
     finally
     {
-        stopSaving();
+        if(activateLoader) stopSaving();
     }
 };
