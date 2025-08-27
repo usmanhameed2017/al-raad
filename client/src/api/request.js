@@ -46,6 +46,7 @@ export const postRequest = async (url, payload, fileAttachment = false, enableSu
 
 // Put request
 export const putRequest = async (url, payload, fileAttachment = false, enableSuccessMessage = true, enableErrorMessage = true) => {
+    startSaving();
     try 
     {
         let options = {};
@@ -59,10 +60,15 @@ export const putRequest = async (url, payload, fileAttachment = false, enableSuc
         if(enableErrorMessage) showError(error.message);
         throw error;
     }
+    finally
+    {
+        stopSaving();
+    }
 };
 
 // Patch request
 export const patchRequest = async (url, payload, fileAttachment = false, enableSuccessMessage = true, enableErrorMessage = true) => {
+    startSaving();
     try 
     {
         let options = {};
@@ -76,10 +82,15 @@ export const patchRequest = async (url, payload, fileAttachment = false, enableS
         if(enableErrorMessage) showError(error.message);
         throw error;
     }
+    finally
+    {
+        stopSaving();
+    }
 };
 
 // Delete request
 export const deleteRequest = async (url, enableSuccessMessage = true, enableErrorMessage = true) => {
+    startSaving();
     try 
     {
         const response = await client.delete(url);
@@ -90,5 +101,9 @@ export const deleteRequest = async (url, enableSuccessMessage = true, enableErro
     {
         if(enableErrorMessage) showError(error.message);
         throw error;
+    }
+    finally
+    {
+        stopSaving();
     }
 };
