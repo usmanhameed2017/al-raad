@@ -11,9 +11,9 @@ function Animation({ children, type })
         <AnimatePresence mode="wait">
             <motion.div
                 key={location.pathname}
-                initial={{ opacity: 0, x: 120, scale: 0.95 }}
-                animate={{ opacity: 1, x: 0, scale: 1 }}
-                transition={{ duration: 0.5, ease: [0.25, 0.8, 0.25, 1] }}
+                initial={{ opacity: 0, y: 100 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
                 style={{ minHeight: "100vh" }}>
                 {children}
             </motion.div>
