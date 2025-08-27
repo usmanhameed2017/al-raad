@@ -28,7 +28,7 @@ function Books()
     const [reloadData, setReloadData] = useState(0);
 
     // Global state loader
-    const { loading, setLoading } = useAuth();
+    const { savingChanges } = useAuth();
 
     // Form Initial values
     const initialValues = {
@@ -71,7 +71,6 @@ function Books()
     // Delete
     const drop = useCallback(async (_id) => {
         sweetAlert("Are you sure?", "This action will permanently delete the record.", "confirm", "Yes, delete it!", null, async () => {
-            setLoading(true);
             try 
             {
                 await deleteRequest(`/book/${_id}`);
@@ -81,10 +80,6 @@ function Books()
             {
                 return error;
             } 
-            finally 
-            {
-                setLoading(false);
-            }
         })
     },[reloadData]);
 
@@ -156,10 +151,17 @@ function Books()
                 handlerFunction={ async (values, action) => {
                     try
                     {
-                        if(formType === "create") delete values?._id;
-                        formType === "create" ? await postRequest("/book", values, true) : await putRequest(`/book/${values?._id}`, values, true);
-                        action.resetForm();
-                        // setShowModal(false);
+                        if(formType === "create")
+                        {
+                            delete values?._id;
+                            await postRequest("/book", values, true);
+                            action.resetForm();
+                        }
+                        else
+                        {
+                            await putRequest(`/book/${values?._id}`, values, true);
+                        }
+                        setShowModal(false);
                         setReloadData(reloadData + 1);
                     }
                     catch(error)
@@ -195,14 +197,14 @@ function Books()
 
                         {/* Buttons */}
                         <div className="form-group mt-3 d-flex align-items-center gap-2">
-                            <Button type="submit" disabled={loading === true}> Confirm </Button>
+                            <Button type="submit" disabled={savingChanges === true}> Confirm </Button>
                             <Button type="button" onClick={ () => setShowModal(false) }> Cancel </Button>
                         </div>
 
                         {/* Loader */}
-                        {loading && (
+                        {savingChanges && (
                             <div className="form-group mt-3 d-flex align-items-center">
-                                <Loader size='small' text={`Uploading...`} />
+                                <Loader size='small' text={`Saving changes...`} />
                             </div>
                         )}
                     </Form>                        
