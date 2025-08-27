@@ -39,34 +39,3 @@ export const resetPasswordValidation = Yup.object({
     .oneOf([Yup.ref('newPassword'), null], "New password & confirm password must be identical")
     .required('Confirm password is required'),
 });
-
-// User setting validation
-export const userSettingsValidation = Yup.object({
-    name: Yup.string()
-    .min(3, "Name must be at least 3 characters long")
-    .max(20, "Name must not be longer than 20 characters")
-    .required("Name is required"),
-
-    username: Yup.string()
-    .lowercase()
-    .required("Username is required"),
-
-    password: Yup.string()
-    .nullable()
-    .test("is-strong-password","Enter strong password", (value) => {
-            if (!value) return true; // empty allowed
-            return /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/.test(value);
-        }
-    ),
-
-    cpassword: Yup.string()
-    .nullable()
-    .when("password", {
-        is: (val) => val && val.length > 0,
-        then: (schema) =>
-            schema
-            .required("Confirm password is required")
-            .oneOf([Yup.ref("password")], "Password & confirm password must be identical"),
-        otherwise: (schema) => schema.notRequired(),
-    }),
-});
