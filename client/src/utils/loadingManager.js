@@ -26,5 +26,5 @@ export const startSaving = () => {
 };
 
 export const stopSaving = () => {
-    if(setSavingFn) setLoadingFn(false);
+    if(setSavingFn) setSavingFn(false);
 };
