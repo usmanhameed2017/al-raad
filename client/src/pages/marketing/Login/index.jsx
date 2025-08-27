@@ -12,7 +12,7 @@ import { useState } from "react";
 
 function Login() 
 {
-    const { user, userLogin, loading, userSignup } = useAuth();
+    const { user, userLogin, savingChanges, userSignup } = useAuth();
     const [activeTab, setActiveTab] = useState("Signin");
 
     const formVariants = {
@@ -78,7 +78,7 @@ function Login()
                                     <hr />
                                     {/* Signin Button */}
                                     <div className="form-group d-grid">
-                                        <Button type="submit" className="w-100" disabled={loading === true}>Signin</Button>
+                                        <Button type="submit" className="w-100" disabled={savingChanges === true}>Signin</Button>
                                     </div>
                                 </Form>
                             </FormBS>
@@ -129,7 +129,7 @@ function Login()
                                     <hr />
                                     {/* Signup */}
                                     <div className="form-group d-grid">
-                                        <Button type="submit" className="w-100 mt-2" disabled={loading === true}> Signup </Button>
+                                        <Button type="submit" className="w-100 mt-2" disabled={savingChanges === true}> Signup </Button>
                                     </div>
                                 </Form>
                             </FormBS>
