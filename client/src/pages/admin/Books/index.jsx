@@ -138,8 +138,7 @@ function Books()
                         search={search}
                         setSearch={setSearch}
                         limit={limit}
-                        setLimit={setLimit}
-                        />
+                        setLimit={setLimit} />
                     </Animation>
                 </Col>
             </Row>            
@@ -197,7 +196,7 @@ function Books()
 
                         {/* Buttons */}
                         <div className="form-group mt-3 d-flex align-items-center gap-2">
-                            <Button type="submit" disabled={savingChanges === true}> Confirm </Button>
+                            <Button type="submit" disabled={savingChanges === true}> Save Changes </Button>
                             <Button type="button" onClick={ () => setShowModal(false) }> Cancel </Button>
                         </div>
 
