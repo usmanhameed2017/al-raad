@@ -49,22 +49,9 @@ function Books()
     
     // Fetch data on page load and on search
     useEffect(() => {
-        (async () => {
-            setLoading(true);
-            try 
-            {
-                const response = await getRequest(`/book?page=${currentPage}&limit=${limit}&search=${debouncedSearch}`);
-                setData(response.data);
-            }
-            catch (error) 
-            {
-                return error;
-            }
-            finally
-            {
-                setLoading(false);
-            }
-        })();
+        getRequest(`/book?page=${currentPage}&limit=${limit}&search=${debouncedSearch}`)
+        .then(response => setData(response.data))
+        .catch(error => console.log(error.message));
     }, [currentPage, limit, debouncedSearch, reloadData]);
 
     // Launch Modal
@@ -167,22 +154,17 @@ function Books()
                 {/* Form */}
                 <FormBS initialValues={initialValues} validationSchema={addBookValidation}
                 handlerFunction={ async (values, action) => {
-                    setLoading(true);
                     try
                     {
                         if(formType === "create") delete values?._id;
                         formType === "create" ? await postRequest("/book", values, true) : await putRequest(`/book/${values?._id}`, values, true);
                         action.resetForm();
-                        setShowModal(false);
+                        // setShowModal(false);
                         setReloadData(reloadData + 1);
                     }
                     catch(error)
                     {
                         return error;
-                    }
-                    finally
-                    {
-                        setLoading(false);
                     }
                 }}
                 >
