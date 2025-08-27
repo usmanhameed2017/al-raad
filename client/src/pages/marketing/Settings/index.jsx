@@ -12,7 +12,7 @@ import Loader from '../../../components/Loader';
 
 function Settings() 
 {
-    const { user, setUser, loading, setLoading } = useAuth();
+    const { user, setUser, savingChanges } = useAuth();
     const userData = user || getUser() || {};
 
     // Form initial values
@@ -45,8 +45,6 @@ function Settings()
 
                         // If user update bio with password
                         if(user?.password) payload.password = user.password;
-                        
-                        setLoading(true);
                         try
                         {
                             const response = await putRequest(`/user/me/edit`, payload);
@@ -66,10 +64,6 @@ function Settings()
                         catch(error)
                         {
                             return error;
-                        }
-                        finally
-                        {
-                            setLoading(false);
                         }
                     }}
                     >
@@ -107,12 +101,12 @@ function Settings()
 
                             {/* Save Changes */}
                             <div className='d-grid mt-2'>
-                                <Button type="submit" disabled={loading===true}> Save Changes </Button>
+                                <Button type="submit" disabled={savingChanges===true}> Save Changes </Button>
                             </div>
 
                             {/* Loader */}
                             <div className='mt-4'>
-                            {loading && (
+                            {savingChanges && (
                                 <Loader text={`Saving changes...`} size='small' />
                             )}
                             </div>
