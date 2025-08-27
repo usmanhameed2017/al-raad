@@ -8,9 +8,9 @@ import { FaDownload, FaEdit, FaTrash, FaPlus } from 'react-icons/fa';
 import { Row, Col } from 'react-bootstrap';
 import ModalBS from '../../../components/Modal';
 import FormBS from '../../../components/Form';
+import * as Yup from "yup";
 import { Form, Field, ErrorMessage } from "formik";
 import styles from "./style.module.css";
-import { addBookValidation } from './schema';
 import { sweetAlert } from '../../../utils/sweetAlert2';
 import Loader from '../../../components/Loader';
 
@@ -29,14 +29,6 @@ function Books()
 
     // Global state loader
     const { savingChanges } = useAuth();
-
-    // Form Initial values
-    const initialValues = {
-        _id: editFormValues?._id || "",
-        title: editFormValues?.title || "",
-        description: editFormValues?.description || "",
-        pdf: editFormValues?.pdf || "",
-    };
     
     // Debounce technique
     useEffect(() => {
@@ -113,6 +105,42 @@ function Books()
         },
     ];  
 
+    // Form Initial values
+    const initialValues = {
+        _id: editFormValues?._id || "",
+        title: editFormValues?.title || "",
+        description: editFormValues?.description || "",
+        pdf: editFormValues?.pdf || "",
+    }; 
+    
+    // Allowed file type (only PDF)
+    const allowedFileTypes = ["application/pdf"];    
+
+    // Validation schema
+    const validationSchema = Yup.object({
+        // Title
+        title: Yup.string()
+        .min(3, "Title must be at least 3 characters long")
+        .max(30, "Title must not be longer than 30 characters")
+        .required("Title is required"),
+
+        // Description
+        description: Yup.string()
+        .min(3, "Description must be at least 3 characters long")
+        .max(500, "Description must not be longer than 500 characters")
+        .required("Description is required"),
+        
+        // PDF
+        pdf:Yup.mixed()
+        .nullable()
+        .test('type', "Invalid file format! Only PDF is allowed", (file) => {
+            return !file || allowedFileTypes.includes(file?.type);
+        })
+        .test('size', "PDF size must not be larger than 9MB", (file) => {
+            return !file || file?.size <= 9000000;
+        })
+});    
+
     return (
         <>
             {/* Modal Launcher */}
@@ -146,7 +174,7 @@ function Books()
             {/* Modal */}
             <ModalBS showModal={showModal} setShowModal={setShowModal} modalTitle={ formType === "create" ? "ADD NEW BOOK" : "EDIT BOOK" }>
                 {/* Form */}
-                <FormBS initialValues={initialValues} validationSchema={addBookValidation}
+                <FormBS initialValues={initialValues} validationSchema={validationSchema}
                 handlerFunction={ async (values, action) => {
                     try
                     {
