@@ -49,7 +49,7 @@ function Books()
             {/* Cards */}
             <Row className='mt-5'>
                 {/* Loader */}
-                <Loader size='big' text="Loading" />
+                { loading && ( <Loader size='big' text="Loading" /> ) }
             {
                 isArrayHaveData(data.docs) ?
                 data.docs?.map((book, _) => (

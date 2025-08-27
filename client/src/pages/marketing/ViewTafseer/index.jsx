@@ -6,12 +6,14 @@ import Loader from '../../../components/Loader';
 import { getTime } from '../../../utils/getTime';
 import Animation from '../../../components/Animation';
 import { getRequest } from '../../../api/request';
+import { useAuth } from '../../../context/auth';
 
 function ViewTafseer() 
 {
     const { id } = useParams();
     const [tafseer, setTafseer] = useState({});
     const [message, setMessage] = useState("");
+    const { loading } = useAuth();
 
     // For better UX
     useEffect(() => {
@@ -30,7 +32,7 @@ function ViewTafseer()
     return (
         <div className={styles.tafseerContainer}>
             {/* Loader */}
-            <Loader size='big' text="Loading" /> 
+            { loading && ( <div style={{ marginTop:"100px" }}> <Loader size='big' text="Loading" /> </div> ) } 
         {
             tafseer?._id ?
             (

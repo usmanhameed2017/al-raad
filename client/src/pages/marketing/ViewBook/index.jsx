@@ -8,12 +8,14 @@ import Animation from '../../../components/Animation';
 import Button from '../../../components/Button';
 import { getRequest } from '../../../api/request';
 import { FaDownload } from 'react-icons/fa';
+import { useAuth } from '../../../context/auth';
 
 function ViewBook() 
 {
     const { id } = useParams();
     const [book, setBook] = useState({});
     const [message, setMessage] = useState("");
+    const { loading } = useAuth();
 
     // For better UX
     useEffect(() => {
@@ -32,10 +34,8 @@ function ViewBook()
     return (
         <div className={styles.bookContainer}>
             {/* Loader */}
-            <Loader size='big' text="Loading" />
-        {
-            book?._id ?
-            (
+            { loading && ( <div style={{ marginTop:"200px" }}> <Loader size='big' text="Loading" /> </div> ) } 
+            { book?._id ? (
                 <>            
                     {/* Surah & Ayat */}
                     <Row>

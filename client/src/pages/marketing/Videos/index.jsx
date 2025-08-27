@@ -49,12 +49,12 @@ function Videos()
         {/* Videos */}
         <Row className='mt-5'>
           {/* Loader */}
-          <Loader size='big' text="Loading" />        
+          { loading && ( <Loader size='big' text="Loading" /> ) }      
         {
           isArrayHaveData(data.docs) ?
           data.docs?.map((video, _) => (
             <Col xs={12} sm={12} md={6} lg={4} xl={4} key={video?._id} className='mb-3'>
-              <VideoCard  title={video?.title} url={video?.url} />
+              <VideoCard title={video?.title} url={video?.url} />
             </Col>                     
           ))
           :

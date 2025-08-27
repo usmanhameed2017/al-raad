@@ -8,7 +8,7 @@ import styles from './style.module.css';
 import { Form, Field, ErrorMessage } from 'formik';
 import { getRequest, putRequest } from '../../../api/request';
 import { useAuth } from '../../../context/auth';
-import SavingChanges from '../../../components/SavingChanges';
+import Loader from '../../../components/Loader';
 
 function Settings() 
 {
@@ -105,9 +105,12 @@ function Settings()
                             </div>
 
                             {/* Loader */}
-                            <div className='mt-4'>
-                                <SavingChanges text={`Saving changes...`} size='small' />
-                            </div>
+                            {savingChanges && (
+                                <div className='mt-4 float-start'>
+                                    <Loader text={`Saving changes...`} size='small' />
+                                </div>
+                            )}
+
                         </Form>
                     </FormBS>
                 </Animation>
