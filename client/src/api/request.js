@@ -1,8 +1,10 @@
 import client from '../utils/axios';
+import { startLoading, stopLoading } from '../utils/loadingManager';
 import { showSuccess, showError } from '../utils/toasterMessage';
 
 // Get request
 export const getRequest = async (url, enableSuccessMessage = false, enableErrorMessage = false) => {
+    startLoading();
     try 
     {
         const response = await client.get(url);
@@ -13,6 +15,10 @@ export const getRequest = async (url, enableSuccessMessage = false, enableErrorM
     {
         if(enableErrorMessage) showError(error.message);
         throw error;
+    }
+    finally
+    {
+        stopLoading();
     }
 };
 
