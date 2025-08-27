@@ -16,7 +16,7 @@ function Loader({ size = "small", text })
                 <div className={styles.container}>
                     <h3 className='text-center fw-bold textTheme'> 
                         <FaSync className={styles.spin} size={30} /> { text } 
-                    </h3>                    
+                    </h3>
                 </div>
             );
         }
@@ -28,7 +28,7 @@ function Loader({ size = "small", text })
                 <div className={styles.container}>
                     <h4 className='text-center fw-bold textTheme'> 
                         <FaSync className={styles.spin} size={30} /> { text } 
-                    </h4>                    
+                    </h4>
                 </div>
             );
         }
@@ -40,7 +40,7 @@ function Loader({ size = "small", text })
                 <div className={styles.container}>
                     <h6 className='text-center fw-bold textTheme'> 
                         <FaSync className={styles.spin} size={30} /> { text } 
-                    </h6>                    
+                    </h6>
                 </div>
             );
         } 
