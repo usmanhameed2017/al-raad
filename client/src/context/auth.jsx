@@ -2,7 +2,7 @@ import { useState, useEffect, createContext, useContext, useCallback } from 'rea
 import { useNavigate } from 'react-router-dom';
 import { showError } from '../utils/toasterMessage';
 import { getRequest, postRequest } from '../api/request';
-import { setLoadingFunction } from '../utils/loadingManager';
+import { setLoadingFunction, setSavingFunction } from '../utils/loadingManager';
 
 // Create auth context
 const AuthContext = createContext();
@@ -155,6 +155,7 @@ function AuthProvider({ children })
         verifyAccessToken();
         generateCsrfToken();
         setLoadingFunction(setLoading);
+        setSavingFunction(setSavingChanges);
     },[]);
 
     return(
