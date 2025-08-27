@@ -33,51 +33,50 @@ function ViewBook()
 
     return (
         <div className={styles.bookContainer}>
-            {/* Loader */}
-            { loading && ( <div style={{ marginTop:"200px" }}> <Loader size='big' text="Loading" /> </div> ) } 
-            { book?._id ? (
-                <>            
-                    {/* Surah & Ayat */}
-                    <Row>
-                        <Animation type="heading">
-                            <Col>
-                                <h2 className={styles.bookName}> {book?.title} </h2>
-                                <a href={book?.pdf} download>
-                                    <Button className='float-end'> <FaDownload /> Download </Button>
-                                </a>
-                                <hr />
-                            </Col>                                
-                        </Animation>
-                    </Row>
+        {/* Loader */}
+        { loading && ( <div style={{ marginTop:"200px" }}> <Loader size='big' text="Loading" /> </div> ) } 
+        { book?._id ? (
+            <>            
+                {/* Surah & Ayat */}
+                <Row>
+                    <Animation type="heading">
+                        <Col>
+                            <h2 className={styles.bookName}> {book?.title} </h2>
+                            <a href={book?.pdf} download>
+                                <Button className='float-end'> <FaDownload /> Download </Button>
+                            </a>
+                            <hr />
+                        </Col>                                
+                    </Animation>
+                </Row>
 
-                    {/* Description */}
-                    <Row className="mt-3">
-                        <Animation type="normal">
-                            <Col>
-                                <p className={styles.bookDescription}> {book?.description} </p>
-                            </Col>                                
-                        </Animation>
-                    </Row> 
-
-                    {/* Uploaded Date */}
-                    <Row className='mt-5'>
-                        <Animation type="normal">
-                            <Col md={{ span:"3", offset:"9" }}> 
-                                <p className='text-secondary'> Posted at: { getTime(book?.createdAt) } </p>
-                            </Col>                                
-                        </Animation>
-                    </Row>
-                </>                    
-            )
-            :
-            (
+                {/* Description */}
                 <Row className="mt-3">
-                    <Col>
-                        <h1 className='textTheme fw-bold text-center'> { message } </h1>
-                    </Col>
-                </Row>   
-            ) 
-        }
+                    <Animation type="normal">
+                        <Col>
+                            <p className={styles.bookDescription}> {book?.description} </p>
+                        </Col>                                
+                    </Animation>
+                </Row> 
+
+                {/* Uploaded Date */}
+                <Row className='mt-5'>
+                    <Animation type="normal">
+                        <Col md={{ span:"3", offset:"9" }}> 
+                            <p className='text-secondary'> Posted at: { getTime(book?.createdAt) } </p>
+                        </Col>                                
+                    </Animation>
+                </Row>
+            </>                    
+        )
+        :
+        (
+            <Row className="mt-3">
+                <Col>
+                    <h1 className='textTheme fw-bold text-center'> { message } </h1>
+                </Col>
+            </Row>   
+        )}
         </div>
     );
 }
