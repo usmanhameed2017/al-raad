@@ -1,37 +1,44 @@
 import { FaSync } from 'react-icons/fa';
 import styles from './style.module.css';
+import { useAuth } from '../../context/auth';
 
 function Loader({ size = "small", text }) 
 {
-    // Big
-    if(size.trim().toLowerCase() === "big")
+    // Extract global state loader
+    const { loading } = useAuth();
+    
+    if(loading)
     {
-        return (
-            <h3 className='text-center fw-bold textTheme'> 
-                <FaSync className={styles.spin} size={30} /> &nbsp; { text } 
-            </h3>
-        );
-    }
+        // Big
+        if(size.trim().toLowerCase() === "big")
+        {
+            return (
+                <h3 className='text-center fw-bold textTheme'> 
+                    <FaSync className={styles.spin} size={30} /> &nbsp; { text } 
+                </h3>
+            );
+        }
 
-    // Medium
-    if(size.trim().toLowerCase() === "medium")
-    {
-        return (
-            <h4 className='text-center fw-bold textTheme'> 
-                <FaSync className={styles.spin} size={30} /> &nbsp; { text } 
-            </h4>
-        );
-    }
+        // Medium
+        if(size.trim().toLowerCase() === "medium")
+        {
+            return (
+                <h4 className='text-center fw-bold textTheme'> 
+                    <FaSync className={styles.spin} size={30} /> &nbsp; { text } 
+                </h4>
+            );
+        }
 
-    // Small
-    if(size.trim().toLowerCase() === "small")
-    {
-        return (
-            <h6 className='text-center fw-bold textTheme'> 
-                <FaSync className={styles.spin} size={30} /> &nbsp; { text } 
-            </h6>
-        );
-    }    
+        // Small
+        if(size.trim().toLowerCase() === "small")
+        {
+            return (
+                <h6 className='text-center fw-bold textTheme'> 
+                    <FaSync className={styles.spin} size={30} /> &nbsp; { text } 
+                </h6>
+            );
+        } 
+    }
 }
 
 export default Loader;
