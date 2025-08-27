@@ -13,9 +13,11 @@ function Loader({ size = "small", text })
         if(size.trim().toLowerCase() === "big")
         {
             return (
-                <h3 className='text-center fw-bold textTheme'> 
-                    <FaSync className={styles.spin} size={30} /> { text } 
-                </h3>
+                <div className={styles.container}>
+                    <h3 className='text-center fw-bold textTheme'> 
+                        <FaSync className={styles.spin} size={30} /> { text } 
+                    </h3>                    
+                </div>
             );
         }
 
@@ -23,9 +25,11 @@ function Loader({ size = "small", text })
         if(size.trim().toLowerCase() === "medium")
         {
             return (
-                <h4 className='text-center fw-bold textTheme'> 
-                    <FaSync className={styles.spin} size={30} /> { text } 
-                </h4>
+                <div className={styles.container}>
+                    <h4 className='text-center fw-bold textTheme'> 
+                        <FaSync className={styles.spin} size={30} /> { text } 
+                    </h4>                    
+                </div>
             );
         }
 
@@ -33,9 +37,11 @@ function Loader({ size = "small", text })
         if(size.trim().toLowerCase() === "small")
         {
             return (
-                <h6 className='text-center fw-bold textTheme'> 
-                    <FaSync className={styles.spin} size={30} /> { text } 
-                </h6>
+                <div className={styles.container}>
+                    <h6 className='text-center fw-bold textTheme'> 
+                        <FaSync className={styles.spin} size={30} /> { text } 
+                    </h6>                    
+                </div>
             );
         } 
     }
