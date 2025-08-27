@@ -18,7 +18,7 @@ export const getRequest = async (url, activateLoader = true, enableSuccessMessag
     }
     finally
     {
-        if(activateLoader) stopLoading();
+        stopLoading();
     }
 };
 
@@ -40,7 +40,7 @@ export const postRequest = async (url, payload, fileAttachment = false, activate
     }
     finally
     {
-        if(activateLoader) stopSaving();
+        stopSaving();
     }
 };
 
@@ -62,7 +62,7 @@ export const putRequest = async (url, payload, fileAttachment = false, activateL
     }
     finally
     {
-        if(activateLoader) stopSaving();
+        stopSaving();
     }
 };
 
@@ -84,7 +84,7 @@ export const patchRequest = async (url, payload, fileAttachment = false, activat
     }
     finally
     {
-        if(activateLoader) stopSaving();
+        stopSaving();
     }
 };
 
@@ -104,6 +104,6 @@ export const deleteRequest = async (url, activateLoader, enableSuccessMessage = 
     }
     finally
     {
-        if(activateLoader) stopSaving();
+        stopSaving();
     }
 };
