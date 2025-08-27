@@ -1,5 +1,5 @@
 import client from '../utils/axios';
-import { startLoading, stopLoading } from '../utils/loadingManager';
+import { startLoading, startSaving, stopLoading, stopSaving } from '../utils/loadingManager';
 import { showSuccess, showError } from '../utils/toasterMessage';
 
 // Get request
@@ -24,6 +24,7 @@ export const getRequest = async (url, enableSuccessMessage = false, enableErrorM
 
 // Post request
 export const postRequest = async (url, payload, fileAttachment = false, enableSuccessMessage = true, enableErrorMessage = true) => {
+    startSaving();
     try 
     {
         let options = {};
@@ -36,6 +37,10 @@ export const postRequest = async (url, payload, fileAttachment = false, enableSu
     {
         if(enableErrorMessage) showError(error.message);
         throw error;
+    }
+    finally
+    {
+        stopSaving();
     }
 };
 
