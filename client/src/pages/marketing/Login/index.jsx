@@ -1,11 +1,10 @@
 import { Tabs, Tab } from "react-bootstrap";
 import { Form, Field, ErrorMessage } from "formik";
+import * as Yup from 'yup';
 import { Link, Navigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import FormBS from "../../../components/Form";
 import Button from "../../../components/Button";
-import { loginInitialValues, signupInitialValues } from "../../../schema/user";
-import { loginValidation, signupValidation } from "../../../validation/user";
 import { useAuth } from "../../../context/auth";
 import styles from "./style.module.css";
 import { useState } from "react";
@@ -34,6 +33,55 @@ function Login()
             },
         },
     };
+
+    // Login initial values
+    const loginInitialValues = {
+        username:'',
+        password:''
+    };
+
+    // Signup initial values
+    const signupInitialValues = {
+        name:'',
+        email:'',
+        username:'',
+        password:'',
+        cpassword:''
+    };
+
+    // Login validation
+    const loginValidation = Yup.object({
+        username:Yup.string()
+        .required('Username is required'),
+
+        password:Yup.string()
+        .required('Password is required')
+    });
+
+    // Signup validation
+    const signupValidation = Yup.object({
+        name:Yup.string()
+        .min(3, "Name must be at least 3 characters long")
+        .max(20, "Name must not be longer than 20 characters")
+        .required("Name is required"),
+
+        email:Yup.string()
+        .lowercase()
+        .email('Invalid email')
+        .required("Email is required"),
+
+        username:Yup.string()
+        .lowercase()
+        .required('Username is required'),
+
+        password:Yup.string()
+        .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/, "Enter strong password")
+        .required('Password is required'),
+
+        cpassword:Yup.string()
+        .oneOf([Yup.ref('password'), null], "Password & confirm password must be identical")
+        .required('Confirm password is required'),
+    });
 
     return (
         !user ? (
