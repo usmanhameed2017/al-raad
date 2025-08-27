@@ -18,7 +18,7 @@ function Books()
     const { loading, setLoading } = useAuth();
 
     useEffect(() => {
-        setLoading(true); // Forcefully enable loader on page load
+        setLoading(true); // Enable loader on page load
         let timer;
         if(!isArrayHaveData(data?.docs)) 
         {
@@ -29,7 +29,7 @@ function Books()
 
     // Fetch book on page load
     useEffect(() => {
-        getRequest(`/book?page=${currentPage}&limit=${3}`, false)
+        getRequest(`/book?page=${currentPage}&limit=${6}`, false)
         .then(response => setData(response.data))
         .catch(() => setData({ docs:[] }));
     }, [currentPage]);
@@ -48,8 +48,9 @@ function Books()
             
             {/* Cards */}
             <Row className='mt-5'>
+                {/* Loader */}
+                <Loader size='big' text="Loading" />
             {
-                loading ? (  <Loader size='big' text="Loading" /> ) :
                 isArrayHaveData(data.docs) ?
                 data.docs?.map((book, _) => (
                     <Col xs={12} sm={12} md={6} lg={4} xl={4} key={book?._id} className='mb-3'>

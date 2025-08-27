@@ -29,7 +29,7 @@ function Videos()
 
   // Fetch video on page load
   useEffect(() => {
-    getRequest(`/video?page=${currentPage}`)
+    getRequest(`/video?page=${currentPage}&limit=${6}`, false)
     .then(response => setData(response.data))
     .catch(() => setData({ docs:[] }));
   },[currentPage]);
@@ -48,13 +48,14 @@ function Videos()
 
         {/* Videos */}
         <Row className='mt-5'>
+          {/* Loader */}
+          <Loader size='big' text="Loading" />        
         {
-          loading ? (  <Loader size='big' text="Loading" /> ) :
           isArrayHaveData(data.docs) ?
           data.docs?.map((video, _) => (
-              <Col xs={12} sm={12} md={6} lg={4} xl={4} key={video?._id} className='mb-3'>
+            <Col xs={12} sm={12} md={6} lg={4} xl={4} key={video?._id} className='mb-3'>
               <VideoCard  title={video?.title} url={video?.url} />
-              </Col>                     
+            </Col>                     
           ))
           :
           <Col>

@@ -29,7 +29,7 @@ function Tafseer()
 
     // Fetch tafseer on page load
     useEffect(() => {
-        getRequest(`/tafseer?page=${currentPage}`)
+        getRequest(`/tafseer?page=${currentPage}&limit=${6}`, false)
         .then(response => setData(response.data))
         .catch(() => setData({ docs:[] }));
     }, [currentPage]);
@@ -48,8 +48,9 @@ function Tafseer()
             
             {/* Cards */}
             <Row className='mt-5'>
+                {/* Loader */}
+                <Loader size='big' text="Loading" />
             {
-                loading ? (  <Loader size='big' text="Loading" /> ) :
                 isArrayHaveData(data.docs) ?
                 data.docs?.map((tafseer, _) => (
                     <Col xs={12} sm={6} md={6} lg={4} xl={4} key={tafseer?._id} className='mb-3'>
