@@ -2,16 +2,18 @@ import { useState, useEffect, createContext, useContext, useCallback } from 'rea
 import { useNavigate } from 'react-router-dom';
 import { showError } from '../utils/toasterMessage';
 import { getRequest, postRequest } from '../api/request';
+import { setLoadingFunction } from '../utils/loadingManager';
 
 // Create auth context
 const AuthContext = createContext();
 
 function AuthProvider({ children })
 {
-    const [loading, setLoading] = useState(false);
     const [user, setUser] = useState(null);
     const [isLoggedIn, setLoggedIn] = useState(null);
     const [csrfToken, setCsrfToken] = useState(""); 
+    const [loading, setLoading] = useState(false);
+    const [savingChanges, setSavingChanges] = useState(false);
 
     // For navigation
     const navigate = useNavigate();
@@ -152,10 +154,12 @@ function AuthProvider({ children })
     useEffect(() => {
         verifyAccessToken();
         generateCsrfToken();
+        setLoadingFunction(setLoading);
     },[]);
 
     return(
-        <AuthContext.Provider value={{ csrfToken, userSignup, userLogin, adminLogin, userLogout, adminLogout, loading, setLoading, isLoggedIn, setLoggedIn, user, setUser }}>
+        <AuthContext.Provider value={{ csrfToken, userSignup, userLogin, adminLogin, userLogout, adminLogout, 
+        loading, setLoading, savingChanges, setSavingChanges, isLoggedIn, setLoggedIn, user, setUser }}>
             { children }
         </AuthContext.Provider>
     );
