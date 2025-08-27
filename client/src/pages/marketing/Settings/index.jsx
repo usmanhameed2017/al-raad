@@ -12,7 +12,7 @@ import Loader from '../../../components/Loader';
 
 function Settings() 
 {
-    const { user, setUser, isLoading, setLoading } = useAuth();
+    const { user, setUser, loading, setLoading } = useAuth();
     const userData = user || getUser() || {};
 
     // Form initial values
@@ -107,12 +107,12 @@ function Settings()
 
                             {/* Save Changes */}
                             <div className='d-grid mt-2'>
-                                <Button type="submit" disabled={isLoading===true}> Save Changes </Button>
+                                <Button type="submit" disabled={loading===true}> Save Changes </Button>
                             </div>
 
                             {/* Loader */}
                             <div className='mt-4'>
-                            {isLoading && (
+                            {loading && (
                                 <Loader text={`Saving changes...`} size='small' />
                             )}
                             </div>

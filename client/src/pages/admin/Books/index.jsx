@@ -28,7 +28,7 @@ function Books()
     const [reloadData, setReloadData] = useState(0);
 
     // Global state loader
-    const { isLoading, setLoading } = useAuth();
+    const { loading, setLoading } = useAuth();
 
     // Form Initial values
     const initialValues = {
@@ -213,12 +213,12 @@ function Books()
 
                         {/* Buttons */}
                         <div className="form-group mt-3 d-flex align-items-center gap-2">
-                            <Button type="submit" disabled={isLoading === true}> Confirm </Button>
+                            <Button type="submit" disabled={loading === true}> Confirm </Button>
                             <Button type="button" onClick={ () => setShowModal(false) }> Cancel </Button>
                         </div>
 
                         {/* Loader */}
-                        {isLoading && (
+                        {loading && (
                             <div className="form-group mt-3 d-flex align-items-center">
                                 <Loader size='small' text={`Uploading...`} />
                             </div>

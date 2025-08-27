@@ -15,7 +15,7 @@ function Audios()
     const [data, setData] = useState({});
     const [currentPage, setCurrentPage] = useState(1);
     const [message, setMessage] = useState("");
-    const { isLoading, setLoading } = useAuth();
+    const { loading, setLoading } = useAuth();
 
     useEffect(() => {
         setLoading(true); // Enable loader on page load
@@ -51,7 +51,7 @@ function Audios()
             
             <Row className='mt-5'>
             {
-                isLoading ? (  <Loader size='big' text="Loading" /> ) :
+                loading ? (  <Loader size='big' text="Loading" /> ) :
                 isArrayHaveData(data.docs) ?
                 data.docs?.map((audio, _) => (
                     <Col xs={12} sm={12} md={6} lg={4} xl={4} key={audio?._id} className='mb-3'>
@@ -70,7 +70,7 @@ function Audios()
             {/* Pagination */}
             <Row>
                 <Col className="d-flex justify-content-center">
-                    {!isLoading && isArrayHaveData(data.docs) && (
+                    {!loading && isArrayHaveData(data.docs) && (
                         <ServerSidePagination data={data} setCurrentPage={setCurrentPage} />                    
                     )}
                 </Col>

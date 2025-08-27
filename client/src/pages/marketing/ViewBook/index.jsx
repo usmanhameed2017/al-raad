@@ -15,7 +15,7 @@ function ViewBook()
     const { id } = useParams();
     const [book, setBook] = useState({});
     const [message, setMessage] = useState("");
-    const { isLoading, setLoading } = useAuth();
+    const { loading, setLoading } = useAuth();
 
     // For better UX
     useEffect(() => {
@@ -36,7 +36,7 @@ function ViewBook()
     return (
         <div className={styles.bookContainer}>
         {
-            !isLoading ? 
+            !loading ? 
                 book?._id ?
                 (
                     <>

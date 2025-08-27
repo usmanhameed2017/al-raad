@@ -8,9 +8,9 @@ const AuthContext = createContext();
 
 function AuthProvider({ children })
 {
-    const [isLoading, setLoading] = useState(false); // Loader
-    const [user, setUser] = useState(null); // User payload
-    const [isLoggedIn, setLoggedIn] = useState(null); // Login flag
+    const [loading, setLoading] = useState(false);
+    const [user, setUser] = useState(null);
+    const [isLoggedIn, setLoggedIn] = useState(null);
     const [csrfToken, setCsrfToken] = useState(""); 
 
     // For navigation
@@ -155,7 +155,7 @@ function AuthProvider({ children })
     },[]);
 
     return(
-        <AuthContext.Provider value={{ csrfToken, userSignup, userLogin, adminLogin, userLogout, adminLogout, isLoading, setLoading, isLoggedIn, setLoggedIn, user, setUser }}>
+        <AuthContext.Provider value={{ csrfToken, userSignup, userLogin, adminLogin, userLogout, adminLogout, loading, setLoading, isLoggedIn, setLoggedIn, user, setUser }}>
             { children }
         </AuthContext.Provider>
     );

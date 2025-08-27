@@ -13,7 +13,7 @@ function ViewTafseer()
     const { id } = useParams();
     const [tafseer, setTafseer] = useState({});
     const [message, setMessage] = useState("");
-    const { isLoading, setLoading } = useAuth();
+    const { loading, setLoading } = useAuth();
 
     // For better UX
     useEffect(() => {
@@ -34,7 +34,7 @@ function ViewTafseer()
     return (
         <div className={styles.tafseerContainer}>
         {
-            isLoading === false ? 
+            loading === false ? 
                 tafseer?._id ?
                 (
                     <>
