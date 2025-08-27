@@ -14,7 +14,7 @@ function Animation({ children, type })
                 initial={{ opacity: 0, y: 100 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
-                style={{ minHeight: "100vh" }}>
+                style={{ minHeight: location.pathname.includes("/admin") ? "auto" : "100vh" }}>
                 {children}
             </motion.div>
         </AnimatePresence>
