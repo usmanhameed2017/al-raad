@@ -45,7 +45,7 @@ export const postRequest = async (url, payload, fileAttachment = false, activate
 };
 
 // Put request
-export const putRequest = async (url, payload, fileAttachment = false, activateLoader, enableSuccessMessage = true, enableErrorMessage = true) => {
+export const putRequest = async (url, payload, fileAttachment = false, activateLoader = true, enableSuccessMessage = true, enableErrorMessage = true) => {
     if(activateLoader) startSaving();
     try 
     {
@@ -67,7 +67,7 @@ export const putRequest = async (url, payload, fileAttachment = false, activateL
 };
 
 // Patch request
-export const patchRequest = async (url, payload, fileAttachment = false, activateLoader, enableSuccessMessage = true, enableErrorMessage = true) => {
+export const patchRequest = async (url, payload, fileAttachment = false, activateLoader = true, enableSuccessMessage = true, enableErrorMessage = true) => {
     if(activateLoader) startSaving();
     try 
     {
@@ -89,7 +89,7 @@ export const patchRequest = async (url, payload, fileAttachment = false, activat
 };
 
 // Delete request
-export const deleteRequest = async (url, activateLoader, enableSuccessMessage = true, enableErrorMessage = true) => {
+export const deleteRequest = async (url, activateLoader = true, enableSuccessMessage = true, enableErrorMessage = true) => {
     if(activateLoader) startSaving();
     try 
     {
