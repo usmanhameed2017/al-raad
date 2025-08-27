@@ -1,3 +1,4 @@
+// For Fetching Loader
 let setLoadingFn = null;
 
 export const setLoadingFunction = (fn) => {
@@ -10,4 +11,20 @@ export const startLoading = () => {
 
 export const stopLoading = () => {
     if(setLoadingFn) setLoadingFn(false);
+};
+
+
+// For Uploading Loader
+let setSavingFn = null;
+
+export const setSavingFunction = (fn) => {
+    setSavingFn = fn;
+};
+
+export const startSaving = () => {
+    if(setSavingFn) setSavingFn(true);
+};
+
+export const stopSaving = () => {
+    if(setSavingFn) setLoadingFn(false);
 };
