@@ -11,8 +11,8 @@ import FormBS from '../../../components/Form';
 import { Form, Field, ErrorMessage } from "formik";
 import styles from "./style.module.css";
 import { addBookValidation } from './schema';
-import Loader from '../../../components/Loader';
 import { sweetAlert } from '../../../utils/sweetAlert2';
+import SavingChanges from '../../../components/SavingChanges';
 
 function Books() 
 {
@@ -202,11 +202,9 @@ function Books()
                         </div>
 
                         {/* Loader */}
-                        {savingChanges && (
-                            <div className="form-group mt-3 d-flex align-items-center">
-                                <Loader size='small' text={`Saving changes...`} />
-                            </div>
-                        )}
+                        <div className="form-group mt-3 d-flex align-items-center">
+                            <SavingChanges size='small' text={`Saving changes...`} />
+                        </div>
                     </Form>                        
                 )}
                 </FormBS>
