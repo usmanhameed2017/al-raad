@@ -18,11 +18,11 @@ function Videos()
   const { loading, setLoading } = useAuth();
 
   useEffect(() => {
-    setLoading(true); // Enable loader on page load
+    setLoading(true); // Forcefully enable loader on page load
     let timer;
     if(!isArrayHaveData(data?.docs)) 
     {
-        timer = setTimeout(() => setMessage("No Video Found"), 700);
+      timer = setTimeout(() => setMessage("No Video Found"), 700);
     }
     return () => clearTimeout(timer);
   },[]);  
@@ -31,8 +31,7 @@ function Videos()
   useEffect(() => {
     getRequest(`/video?page=${currentPage}`)
     .then(response => setData(response.data))
-    .catch(() => setData({ docs:[] }))
-    .finally(() => setLoading(false));
+    .catch(() => setData({ docs:[] }));
   },[currentPage]);
 
     return (

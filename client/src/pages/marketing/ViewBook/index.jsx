@@ -15,7 +15,7 @@ function ViewBook()
     const { id } = useParams();
     const [book, setBook] = useState({});
     const [message, setMessage] = useState("");
-    const { loading, setLoading } = useAuth();
+    const { loading } = useAuth();
 
     // For better UX
     useEffect(() => {
@@ -26,11 +26,9 @@ function ViewBook()
 
     // Fetch book on page load
     useEffect(() => {
-        setLoading(true);
         getRequest(`/book/${id}`)
         .then(response => setBook(response.data))
-        .catch(() => setBook({}))
-        .finally(() => setLoading(false));
+        .catch(() => setBook({}));
     }, [id]);
 
     return (

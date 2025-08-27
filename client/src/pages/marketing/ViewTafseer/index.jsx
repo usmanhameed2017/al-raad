@@ -13,7 +13,7 @@ function ViewTafseer()
     const { id } = useParams();
     const [tafseer, setTafseer] = useState({});
     const [message, setMessage] = useState("");
-    const { loading, setLoading } = useAuth();
+    const { loading } = useAuth();
 
     // For better UX
     useEffect(() => {
@@ -24,11 +24,9 @@ function ViewTafseer()
 
     // Fetch tafseer on page load
     useEffect(() => {
-        setLoading(true);
         getRequest(`/tafseer/${id}`)
         .then(response => setTafseer(response.data))
-        .catch(() => setTafseer({}))
-        .finally(() => setLoading(false));
+        .catch(() => setTafseer({}));
     }, [id]);
 
     return (
