@@ -43,7 +43,7 @@ function ViewBook()
                         <Col>
                             <h2 className={styles.bookName}> {book?.title} </h2>
                             <a href={book?.pdf} download>
-                                <Button className='float-end'> <FaDownload /> Download </Button>
+                                <Button className='float-end' title="Download Book"> <FaDownload /> Download </Button>
                             </a>
                             <hr />
                         </Col>                                
