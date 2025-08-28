@@ -10,7 +10,7 @@ import ModalBS from '../../../components/Modal';
 import FormBS from '../../../components/Form';
 import * as Yup from "yup";
 import { Form, Field, ErrorMessage } from "formik";
-import styles from "./style.module.css";
+import styles from "../PanelStyling/style.module.css";
 import { sweetAlert } from '../../../utils/sweetAlert2';
 import Loader from '../../../components/Loader';
 
