@@ -138,7 +138,7 @@ const login = async (request, response) => {
 };
 
 
-// User login
+// Admin login
 const adminLogin = async (request, response) => {
     const { email = "", username, password } = request.body;
     if([username, password].some(field => !field?.trim())) throw new ApiError(400, "All fields are required!");
@@ -181,6 +181,31 @@ const adminLogin = async (request, response) => {
 const verifyAccessToken = async (request, response) => {
     if(!request.user) throw new ApiError(401, "Unauthenticated");
     return response.status(200).json(new ApiResponse(200, request.user, "Authenticated"));
+};
+
+// Create user (Created by admin)
+const createUser = async (request, response) => {
+    const { name, email, username, role, password, cpassword } = request.body;
+    if([name, email, username, role, password, cpassword].some(field => !field?.trim())) throw new ApiError(400, "All fields are required");
+
+    if(password !== cpassword) throw new ApiError(400, "Password & confirm password must be identical");
+
+    const user = await User.getUser(email, username);
+    if(user) throw new ApiError(400, "The email or username you entered is already exist.");
+    request.body.status = "Approved";
+
+    try 
+    {
+        // Create user
+        const createUser = await User.create(request.body);
+        const userData = createUser.toObject();
+        delete userData.password; // Exclude password
+        return response.status(201).json(new ApiResponse(201, userData, `User has been created successfully`));
+    } 
+    catch (error) 
+    {
+        throw new ApiError(500, error.message);
+    }
 };
 
 // Fetch users
@@ -299,15 +324,16 @@ const logout = async (request, response) => {
 };
 
 module.exports = { 
-    generateCsrfToken, 
-    signup, 
-    accountActivation, 
-    login, 
+    generateCsrfToken,
+    signup,
+    accountActivation,
+    login,
     adminLogin,
-    verifyAccessToken, 
+    verifyAccessToken,
+    createUser,
     fetchUsers, 
-    fetchSingleUser, 
-    editUser, 
+    fetchSingleUser,
+    editUser,
     deleteUser,
-    logout 
+    logout
 };
