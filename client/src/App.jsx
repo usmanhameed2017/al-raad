@@ -23,6 +23,7 @@ import SettingsAdmin from "./pages/admin/Settings";
 import BooksAdmin from "./pages/admin/Books";
 import TafseerAdmin from "./pages/admin/Tafseer";
 import AudiosAdmin from "./pages/admin/Audios";
+import Users from "./pages/admin/Users";
 
 function App() 
 {
@@ -61,6 +62,7 @@ function App()
               <Route path="books" element={ <BooksAdmin /> } />
               <Route path="tafseer" element={ <TafseerAdmin /> } />
               <Route path="audios" element={ <AudiosAdmin /> } />
+              <Route path="Users" element={ <Users /> } />
               <Route path="settings" element={ <SettingsAdmin /> } />
             </Route> 
           </Route>
