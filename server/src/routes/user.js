@@ -1,6 +1,5 @@
 const { signup, accountActivation, login, logout, fetchUsers, editUser, deleteUser, 
-fetchSingleUser, verifyAccessToken, generateCsrfToken, 
-adminLogin} = require("../controllers/user");
+fetchSingleUser, verifyAccessToken, generateCsrfToken, adminLogin, createUser } = require("../controllers/user");
 const { authentication, authorization } = require("../middlewares/auth");
 const csrfProtection = require("../middlewares/csrfToken");
 
@@ -24,6 +23,9 @@ userRouter.route("/admin/login").post(csrfProtection, adminLogin);
 
 // Verify access token
 userRouter.route("/verifyAccessToken").get(authentication, verifyAccessToken);
+
+// Create user (Created by admin)
+userRouter.route("/create").post(csrfProtection, authentication, authorization(["Admin"]), createUser)
 
 // Fetch all users
 userRouter.route("/").get(authentication, authorization(["Admin"]), fetchUsers);
