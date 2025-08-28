@@ -2,6 +2,7 @@ import axios from "axios";
 import { backendURL } from "../constants";
 import { ApiError } from "./ApiError";
 import { ApiResponse } from "./ApiResponse";
+import { csrfToken } from "./token";
 
 // Create instance
 const client = axios.create({
@@ -13,8 +14,7 @@ const client = axios.create({
 });
 
 // Request interceptor
-client.interceptors.request.use((request) => {
-    const csrfToken = localStorage.getItem("csrfToken");     // Get CSRF-Token
+client.interceptors.request.use(async (request) => {
     if(csrfToken) request.headers["CSRF-Token"] = csrfToken; // Inject token in header
     return request;
 }, (error) => {
