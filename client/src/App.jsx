@@ -22,6 +22,7 @@ import Dashboard from "./pages/admin/Dashboard";
 import SettingsAdmin from "./pages/admin/Settings";
 import BooksAdmin from "./pages/admin/Books";
 import TafseerAdmin from "./pages/admin/Tafseer";
+import AudiosAdmin from "./pages/admin/Audios";
 
 function App() 
 {
@@ -59,6 +60,7 @@ function App()
               <Route path="dashboard" element={ <Dashboard /> } />
               <Route path="books" element={ <BooksAdmin /> } />
               <Route path="tafseer" element={ <TafseerAdmin /> } />
+              <Route path="audios" element={ <AudiosAdmin /> } />
               <Route path="settings" element={ <SettingsAdmin /> } />
             </Route> 
           </Route>
