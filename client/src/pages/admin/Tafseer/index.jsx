@@ -162,7 +162,7 @@ function Tafseer()
 
             {/* Modal */}
             <ModalBS showModal={showModal} setShowModal={setShowModal} 
-            modalTitle={ formType === "create" ? `ADD NEW ${pageName.toUpperCase()}` : `EDIT TAFSEER ${pageName.toUpperCase()}` }>
+            modalTitle={ formType === "create" ? `ADD NEW ${pageName.toUpperCase()}` : `EDIT ${pageName.toUpperCase()}` }>
                 {/* Form */}
                 <FormBS initialValues={initialValues} validationSchema={validationSchema}
                 handlerFunction={ async (values, action) => {
