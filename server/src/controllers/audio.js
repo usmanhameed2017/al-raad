@@ -51,19 +51,33 @@ const createAudio = async (request, response) => {
 
 // Fetch all audios
 const fetchAudios = async (request, response) => {
-    const { page = 1, limit = 6 } = request.query;
+    const { page = 1, limit = 10, search = "" } = request.query;
 
     // Paging options
     const options = {
         page:parseInt(page),
         limit:parseInt(limit),
         sort: { createdAt: -1 },
+        populate: { path: "uploadedBy", select: "name" }
     };
 
     try 
     {
+        let query = {};
+
+        // If search keyword provided
+        if (search && search.trim() !== "") 
+        {
+            query = {
+                $or: [
+                    { surahName: { $regex: search, $options: "i" } },
+                    { ayah: { $regex: search, $options: "i" } }
+                ]
+            };
+        }       
+
         // Execute query
-        const result = await Audio.paginate({}, options);
+        const result = await Audio.paginate(query, options);
 
         // If page size is greater than total pages
         if(page > result.totalPages) throw new ApiError(404, "Audio not found");
