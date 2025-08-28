@@ -1,9 +1,9 @@
 import style from './style.module.css';
 
-function Button({ children, type, onClick, disabled }) 
+function Button({ children, type, onClick, title, disabled }) 
 {
     return (
-        <button className={style.themeBtn} type={type} onClick={onClick} disabled={disabled}>
+        <button className={style.themeBtn} type={type} onClick={onClick} title={title} disabled={disabled}>
             {children}
         </button>
     );
