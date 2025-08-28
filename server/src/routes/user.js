@@ -32,7 +32,7 @@ userRouter.route("/").get(authentication, authorization(["Admin"]), fetchUsers);
 userRouter.route("/me").get(authentication, authorization(["Admin", "User"]), fetchSingleUser);
 
 // Self-modification
-userRouter.route("/me/edit").put(authentication, authorization(["Admin", "User"]), editUser);
+userRouter.route("/me/edit").put(csrfProtection, authentication, authorization(["Admin", "User"]), editUser);
 
 // Logout
 userRouter.route("/logout").get(authentication, logout);
