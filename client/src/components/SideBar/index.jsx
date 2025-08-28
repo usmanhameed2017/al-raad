@@ -33,7 +33,7 @@ function SideBar()
                 </Link>
 
                 {/* Audio Lectures */}
-                <Link to="/admin/audio" className={styles.navItem} title={!isOpen ? "Audio lectures" : ""}>
+                <Link to="/admin/audios" className={styles.navItem} title={!isOpen ? "Audio lectures" : ""}>
                     <FaPlayCircle size={25} /> {isOpen && <span> Lectures </span>}
                 </Link>                  
 
