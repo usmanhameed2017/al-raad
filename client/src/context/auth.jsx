@@ -3,15 +3,16 @@ import { useNavigate } from 'react-router-dom';
 import { showError } from '../utils/toasterMessage';
 import { getRequest, postRequest } from '../api/request';
 import { setLoadingFunction, setSavingFunction } from '../utils/loadingManager';
+import { getCsrfToken, csrfToken } from '../utils/token';
 
 // Create auth context
 const AuthContext = createContext();
 
 function AuthProvider({ children })
 {
+    // Global states
     const [user, setUser] = useState(null);
-    const [isLoggedIn, setLoggedIn] = useState(null);
-    const [csrfToken, setCsrfToken] = useState(""); 
+    const [isLoggedIn, setLoggedIn] = useState(null); 
     const [loading, setLoading] = useState(false);
     const [savingChanges, setSavingChanges] = useState(false);
 
@@ -23,8 +24,7 @@ function AuthProvider({ children })
         try
         {
             const response = await getRequest("/user/generateCsrfToken");
-            localStorage.setItem("csrfToken", response.data);
-            setCsrfToken(response.data);
+            getCsrfToken(response.data);
         } 
         catch(error) 
         {
@@ -51,7 +51,7 @@ function AuthProvider({ children })
         {
             setLoading(false);
         }
-    },[csrfToken]);
+    },[]);
 
     // User Login
     const userLogin = useCallback(async (user, action) => {
@@ -75,7 +75,7 @@ function AuthProvider({ children })
         {
             setLoading(false)
         }
-    },[csrfToken]);
+    },[]);
 
     // Admin Login
     const adminLogin = useCallback(async (user, action) => {
@@ -99,7 +99,7 @@ function AuthProvider({ children })
         {
             setLoading(false)
         }
-    },[csrfToken]);    
+    },[]);    
 
     // User Logout
     const userLogout = useCallback(async () => {
