@@ -40,7 +40,7 @@ function ViewTafseer()
                 <Row>
                     <Animation type="heading">
                         <Col>
-                            <h2 className={styles.surahName}> {tafseer?.surahName} </h2>
+                            <h2 className={styles.surahName}> Surah {tafseer?.surahName} </h2>
                             <h4 className='text-center p-1' style={{ letterSpacing:"4px" }}> ({ tafseer?.ayah }) </h4>
                             <hr />
                         </Col>                                

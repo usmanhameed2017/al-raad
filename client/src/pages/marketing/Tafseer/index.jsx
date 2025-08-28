@@ -57,7 +57,7 @@ function Tafseer()
                         <Animation type="card">
                             <CardBS 
                             _id={tafseer?._id}
-                            heading={tafseer?.surahName} 
+                            heading={`Surah ${tafseer?.surahName}`} 
                             subHeading={tafseer?.ayah} 
                             description={tafseer?.tafseer}
                             buttonText="View tafseer"
