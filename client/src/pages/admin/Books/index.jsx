@@ -78,14 +78,14 @@ function Books()
     // Columns
     const columns = [
         { name: "SR.NO", cell: (row, index) => (data?.pagingCounter || 0) + index, sortable: true, width:"120px" },
-        { name: "Title", selector: row => row.title, sortable: true },
-        { name: "Description", selector: row => row.description?.substring(0,50) || "-" },
-        { name: "Uploaded By", selector: row => row.uploadedBy?.name || "-" },
+        { name: "Title", selector: row => row?.title, sortable: true },
+        { name: "Description", selector: row => row?.description?.substring(0,50) || "-" },
+        { name: "Uploaded By", selector: row => row?.uploadedBy?.name || "-" },
         { 
             name: "PDFs",
             width:"205px",
-            cell: row => row.pdf ? ( 
-                <a href={row.pdf} download> 
+            cell: row => row?.pdf ? ( 
+                <a href={row?.pdf} download> 
                     <Button> <FaDownload /> Download </Button>
                 </a> 
             )
@@ -102,7 +102,7 @@ function Books()
                     <Button onClick={() => drop(row?._id)}> <FaTrash /> Delete </Button>
                 </div>
             )
-        },
+        }
     ];  
 
     // Initial values
