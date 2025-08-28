@@ -29,6 +29,9 @@ function Books()
 
     // Global state loader
     const { savingChanges } = useAuth();
+
+    // Page name
+    const pageName = "Book";
     
     // Debounce technique
     useEffect(() => {
@@ -41,7 +44,7 @@ function Books()
     
     // Fetch data on page load and on search
     useEffect(() => {
-        getRequest(`/book?page=${currentPage}&limit=${limit}&search=${debouncedSearch}`)
+        getRequest(`/${pageName.toLowerCase()}?page=${currentPage}&limit=${limit}&search=${debouncedSearch}`)
         .then(response => setData(response.data))
         .catch(error => console.log(error.message));
     }, [currentPage, limit, debouncedSearch, reloadData]);
@@ -65,7 +68,7 @@ function Books()
         sweetAlert("Are you sure?", "This action will permanently delete the record.", "confirm", "Yes, delete it!", null, async () => {
             try 
             {
-                await deleteRequest(`/book/${_id}`);
+                await deleteRequest(`/${pageName.toLowerCase()}/${_id}`);
                 setReloadData(reloadData + 1);
             } 
             catch (error) 
@@ -159,7 +162,7 @@ function Books()
                 <Col>
                     <Animation type="table">
                         <ReactDataTable 
-                        title={`Books`} 
+                        title={`${pageName}s`} 
                         columns={columns} 
                         data={data} 
                         setCurrentPage={setCurrentPage}
@@ -172,7 +175,8 @@ function Books()
             </Row>            
 
             {/* Modal */}
-            <ModalBS showModal={showModal} setShowModal={setShowModal} modalTitle={ formType === "create" ? "ADD NEW BOOK" : "EDIT BOOK" }>
+            <ModalBS showModal={showModal} setShowModal={setShowModal} 
+            modalTitle={ formType === "create" ? `ADD NEW ${pageName.toUpperCase()}` : `EDIT ${pageName.toUpperCase()}` }>
                 {/* Form */}
                 <FormBS initialValues={initialValues} validationSchema={validationSchema}
                 handlerFunction={ async (values, action) => {
@@ -181,12 +185,12 @@ function Books()
                         if(formType === "create")
                         {
                             delete values?._id;
-                            await postRequest("/book", values, true);
+                            await postRequest(`/${pageName.toLowerCase()}`, values, true);
                             action.resetForm();
                         }
                         else
                         {
-                            await putRequest(`/book/${values?._id}`, values, true);
+                            await putRequest(`/${pageName.toLowerCase()}/${values?._id}`, values, true);
                         }
                         setShowModal(false);
                         setReloadData(reloadData + 1);
