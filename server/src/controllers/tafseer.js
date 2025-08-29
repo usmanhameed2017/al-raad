@@ -38,8 +38,8 @@ const fetchTafseers = async (request, response) => {
         {
             query = {
                 $or: [
-                    { surahName: { $regex: search, $options: "i" } },
-                    { ayah: { $regex: search, $options: "i" } }
+                    { surahName: { $regex: search.trim(), $options: "i" } },
+                    { ayah: { $regex: search.trim(), $options: "i" } }
                 ]
             };
         }

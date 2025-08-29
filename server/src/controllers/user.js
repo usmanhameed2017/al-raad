@@ -229,8 +229,8 @@ const fetchUsers = async (request, response) => {
         {
             query = {
                 $or: [
-                    { name: { $regex: search, $options: "i" } },
-                    { username: { $regex: search, $options: "i" } }
+                    { name: { $regex: search.trim(), $options: "i" } },
+                    { username: { $regex: search.trim(), $options: "i" } }
                 ]
             };
         }

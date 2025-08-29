@@ -62,8 +62,8 @@ const fetchBooks = async (request, response) => {
         {
             query = {
                 $or: [
-                    { title: { $regex: search, $options: "i" } },
-                    { description: { $regex: search, $options: "i" } }
+                    { title: { $regex: search.trim(), $options: "i" } },
+                    { description: { $regex: search.trim(), $options: "i" } }
                 ]
             };
         }
