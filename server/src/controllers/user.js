@@ -210,7 +210,7 @@ const createUser = async (request, response) => {
 
 // Fetch users
 const fetchUsers = async (request, response) => {
-    const { page = 1, limit = 10 } = request.query;
+    const { page = 1, limit = 10, search = "" } = request.query;
 
     // Paging options
     const options = {
@@ -222,8 +222,21 @@ const fetchUsers = async (request, response) => {
 
     try 
     {
+        let query = {};
+
+        // If search keyword provided
+        if (search && search.trim() !== "") 
+        {
+            query = {
+                $or: [
+                    { name: { $regex: search, $options: "i" } },
+                    { username: { $regex: search, $options: "i" } }
+                ]
+            };
+        }
+
         // Execute query
-        const result = await User.paginate({}, options);
+        const result = await User.paginate(query, options);
 
         // If page size is greater than total pages
         if(page > result.totalPages) throw new ApiError(404, "User not found");
