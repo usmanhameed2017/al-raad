@@ -14,6 +14,7 @@ import styles from "../PanelStyling/style.module.css";
 import { sweetAlert } from '../../../utils/sweetAlert2';
 import Loader from '../../../components/Loader';
 import { surahList } from '../../../constants';
+import { generateOptimizedUrl } from '../../../utils/cloudinary';
 
 function Audios() 
 {
@@ -89,8 +90,8 @@ function Audios()
             name: "Audios",
             width:"350px",
             cell: row => row?.url ? ( 
-                <audio controls style={{ width: "350px" }}>
-                    <source src={row?.url} type="audio/mpeg" />
+                <audio preload='none' controls style={{ width: "350px" }}>
+                    <source src={generateOptimizedUrl(row?.url)} type="audio/mpeg" />
                     Your browser does not support the audio element.
                 </audio>
             ) : "No Audio",
