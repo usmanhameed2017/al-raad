@@ -1,20 +1,10 @@
-import cld from '../../utils/cloudinary';
-import { bitRate } from '@cloudinary/url-gen/actions/transcode';
-import { format, quality } from '@cloudinary/url-gen/actions/delivery';
+import { getOptimized } from '../../utils/cloudinary';
 import styles from './style.module.css';
 
 function AudioCard({ title, description, url }) 
 {
-    // Extract public ID
-    const publicId = `al-raad/audios/${url.split("/al-raad/audios/").pop().split(".")[0]}`;
-
-    // Cloudinary treats audio as video resource
-    const audio = cld.video(publicId)
-    .transcode(bitRate('128k'))
-    .delivery(format('mp3'), quality('auto'));
-
-    const audioUrl = audio.toURL();
-
+    // Generate optimized url to make audio optimized
+    const audioUrl = getOptimized(url);
     return (
         <div className={styles.audioCard}>
             <div>
