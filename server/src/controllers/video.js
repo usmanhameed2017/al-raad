@@ -44,19 +44,33 @@ const createVideo = async (request, response) => {
 
 // Fetch all videos
 const fetchVideos = async (request, response) => {
-    const { page = 1, limit = 10 } = request.query;
+    const { page = 1, limit = 10, search = "" } = request.query;
 
     // Paging options
     const options = {
         page:parseInt(page),
         limit:parseInt(limit),
         sort: { createdAt: -1 },
+        populate: { path: "uploadedBy", select: "name" }
     };
 
     try 
     {
+        let query = {};
+
+        // If search keyword provided
+        if (search && search.trim() !== "") 
+        {
+            query = {
+                $or: [
+                    { title: { $regex: search.trim(), $options: "i" } },
+                    { description: { $regex: search.trim(), $options: "i" } }
+                ]
+            };
+        }
+
         // Execute query
-        const result = await Video.paginate({}, options);
+        const result = await Video.paginate(query, options);
 
         // If page size is greater than total pages
         if(page > result.totalPages) throw new ApiError(404, "Video not found");
