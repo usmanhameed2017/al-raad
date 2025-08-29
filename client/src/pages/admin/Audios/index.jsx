@@ -91,7 +91,7 @@ function Audios()
             width:"350px",
             cell: row => row?.url ? ( 
                 <audio preload='none' controls style={{ width: "350px" }}>
-                    <source src={generateOptimizedUrl(row?.url)} type="audio/mpeg" />
+                    <source src={generateOptimizedUrl(row?.url, "audio")} type="audio/mpeg" />
                     Your browser does not support the audio element.
                 </audio>
             ) : "No Audio",
