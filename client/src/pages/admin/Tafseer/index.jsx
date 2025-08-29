@@ -14,6 +14,7 @@ import styles from "../PanelStyling/style.module.css";
 import { sweetAlert } from '../../../utils/sweetAlert2';
 import Loader from '../../../components/Loader';
 import { surahList } from '../../../constants';
+import { getTime } from '../../../utils/getTime';
 
 function Tafseer() 
 {
@@ -85,8 +86,9 @@ function Tafseer()
         { name: "Surah Name", selector: row => row?.surahName, sortable: true },
         { name: "Ayah No", selector: row => row?.ayah?.substring(0,50) || "-" },
         { name: "Tafseer", selector: row => row?.tafseer?.substring(0,50) || "-" },
-        { name: "Language", selector: row => row?.language || "-" },
+        { name: "Language", selector: row => row?.language || "-", width:"100px" },
         { name: "Uploaded By", selector: row => row?.uploadedBy?.name || "-" },
+        { name: "Created At", selector: row => getTime(row?.createdAt) || "-" },
         { 
             name: "Operations",
             width:"320px",
