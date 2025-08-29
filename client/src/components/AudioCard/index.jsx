@@ -1,10 +1,10 @@
-import { getOptimized } from '../../utils/cloudinary';
+import { generateOptimizedUrl } from '../../utils/cloudinary';
 import styles from './style.module.css';
 
 function AudioCard({ title, description, url }) 
 {
     // Generate optimized url to make audio optimized
-    const audioUrl = getOptimized(url);
+    const audioUrl = generateOptimizedUrl(url, "audio");
     return (
         <div className={styles.audioCard}>
             <div>
