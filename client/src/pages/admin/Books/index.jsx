@@ -123,15 +123,14 @@ function Books()
     const validationSchema = Yup.object({
         // Title
         title: Yup.string()
-        .min(3, "Title must be at least 3 characters long")
+        .min(5, "Title must be at least 5 characters long")
         .max(30, "Title must not be longer than 30 characters")
         .required("Title is required"),
 
         // Description
         description: Yup.string()
-        .min(3, "Description must be at least 3 characters long")
-        .max(500, "Description must not be longer than 500 characters")
-        .required("Description is required"),
+        .min(10, "Description must be at least 10 characters long")
+        .max(500, "Description must not be longer than 500 characters"),
         
         // PDF
         pdf:Yup.mixed()
