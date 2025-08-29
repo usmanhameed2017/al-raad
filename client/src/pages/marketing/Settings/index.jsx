@@ -32,13 +32,17 @@ function Settings()
 
     // Validation schema
     const validationSchema = Yup.object({
+        // Name
         name: Yup.string()
         .min(3, "Name must be at least 3 characters long")
-        .max(20, "Name must not be longer than 20 characters")
+        .max(30, "Name must not be longer than 30 characters")
         .required("Name is required"),
 
+        // Username
         username: Yup.string()
-        .lowercase()
+        .matches(/^[a-z0-9_@]+$/, "Username can only contain lowercase letters, underscore (_) and @")
+        .min(6, "Username must be at least 6 characters long")
+        .max(20, "Username must not be longer than 20 characters")
         .required("Username is required"),
 
         password: Yup.string()
