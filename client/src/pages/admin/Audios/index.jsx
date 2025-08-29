@@ -83,7 +83,7 @@ function Audios()
     const columns = [
         { name: "SR.NO", cell: (row, index) => (data?.pagingCounter || 0) + index, sortable: true, width:"120px" },
         { name: "Surah Name", selector: row => row?.surahName, sortable: true },
-        { name: "Ayah", selector: row => row?.ayah?.substring(0,50) || "-" },
+        { name: "Ayah No", selector: row => row?.ayah?.substring(0,50) || "-" },
         { name: "Uploaded By", selector: row => row?.uploadedBy?.name || "-" },
         { 
             name: "Audios",
@@ -215,8 +215,8 @@ function Audios()
 
                         {/* Ayah */}
                         <div className="form-group mb-3">
-                            <label htmlFor="ayah" className={styles.label}> Ayah </label>
-                            <Field type="text" name="ayah" className={`${styles.input} form-control`} placeholder="Enter Ayah" />
+                            <label htmlFor="ayah" className={styles.label}> Ayat Reference </label>
+                            <Field type="text" name="ayah" className={`${styles.input} form-control`} placeholder="Enter Ayah No (eg: Ayah:02 - Ayah:04)" />
                             <span className={`${styles.errorMessage}`}> <ErrorMessage name='ayah' /> </span>
                         </div>
 
