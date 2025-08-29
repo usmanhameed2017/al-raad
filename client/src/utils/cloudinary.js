@@ -10,6 +10,8 @@ const cld = new Cloudinary({
 
 // Generate Optimized url
 export const generateOptimizedUrl = (url, type = "image") => {
+    if(!url) return null;
+
     if(type === "audio")
     {
         // Extract public ID
@@ -20,8 +22,9 @@ export const generateOptimizedUrl = (url, type = "image") => {
         .transcode(bitRate('128k'))
         .delivery(format('mp3'), quality('auto'));
 
-        return audio.toURL();        
+        return audio.toURL();
     }
+    return null;
 }
 
 export default cld;
