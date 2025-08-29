@@ -87,12 +87,13 @@ function Audios()
         { name: "Uploaded By", selector: row => row?.uploadedBy?.name || "-" },
         { 
             name: "Audios",
-            width:"205px",
+            width:"350px",
             cell: row => row?.url ? ( 
-                <audio src={row?.url}> </audio>
-            )
-            : 
-            "No PDF",
+                <audio controls style={{ width: "350px" }}>
+                    <source src={row?.url} type="audio/mpeg" />
+                    Your browser does not support the audio element.
+                </audio>
+            ) : "No Audio",
             ignoreRowClick: true
         },
         { 
