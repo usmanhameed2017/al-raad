@@ -60,24 +60,34 @@ function Login()
 
     // Signup validation
     const signupValidation = Yup.object({
+        // Name
         name:Yup.string()
         .min(3, "Name must be at least 3 characters long")
-        .max(20, "Name must not be longer than 20 characters")
+        .max(30, "Name must not be longer than 30 characters")
         .required("Name is required"),
 
-        email:Yup.string()
-        .lowercase()
-        .email('Invalid email')
+        // Email
+        email: Yup.string()
+        .strict(true)
+        .lowercase("Email must contain lowercase letters")
+        .min(6, "Email must be at least 6 characters long")
+        .max(30, "Email must not be longer than 30 characters")
+        .email("Invalid email")
         .required("Email is required"),
 
-        username:Yup.string()
-        .lowercase()
-        .required('Username is required'),
+        // Username
+        username: Yup.string()
+        .matches(/^[a-z0-9_@]+$/, "Username can only contain lowercase letters, underscore (_) and @")
+        .min(6, "Username must be at least 6 characters long")
+        .max(20, "Username must not be longer than 20 characters")
+        .required("Username is required"),
 
+        // Password
         password:Yup.string()
         .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/, "Enter strong password")
         .required('Password is required'),
 
+        // Confirm Password
         cpassword:Yup.string()
         .oneOf([Yup.ref('password'), null], "Password & confirm password must be identical")
         .required('Confirm password is required'),
