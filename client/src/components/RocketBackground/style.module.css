@@ -1,0 +1,38 @@
+.rocket {
+  position: absolute;
+  top: -10%;
+  width: 2px;
+  height: 40px;
+  background: linear-gradient(to bottom, #0dcdbc, transparent);
+  border-radius: 50%;
+  opacity: 0.1;
+  animation: fly 7s linear infinite;
+}
+
+/* Har rocket alag X-offset ke sath chale */
+.rocket:nth-child(1) { left: 10%; animation-delay: 0s; }
+.rocket:nth-child(2) { left: 15%; animation-delay: 0.1s; }
+.rocket:nth-child(3) { left: 20%; animation-delay: 0.2s; }
+.rocket:nth-child(4) { left: 15%; animation-delay: 0.3s; }
+.rocket:nth-child(5) { left: 10%; animation-delay: 0.4s; }
+.rocket:nth-child(6) { left: 20%; animation-delay: 0.5s; }
+.rocket:nth-child(7) { left: 15%; animation-delay: 0.3s; }
+.rocket:nth-child(8) { left: 10%; animation-delay: 0.4s; }
+.rocket:nth-child(9) { left: 20%; animation-delay: 0.5s; }
+.rocket:nth-child(3) { left: 20%; animation-delay: 0.2s; }
+.rocket:nth-child(4) { left: 15%; animation-delay: 0.3s; }
+.rocket:nth-child(5) { left: 10%; animation-delay: 0.4s; }
+.rocket:nth-child(7) { left: 15%; animation-delay: 0.3s; }
+.rocket:nth-child(8) { left: 10%; animation-delay: 0.4s; }
+.rocket:nth-child(9) { left: 20%; animation-delay: 0.5s; }
+
+@keyframes fly {
+  0% {
+    transform: translate(0, 0) rotate(120deg) scaleY(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(120vw, 120vh) rotate(120deg) scaleY(4);
+    opacity: 0.5;
+  }
+}
