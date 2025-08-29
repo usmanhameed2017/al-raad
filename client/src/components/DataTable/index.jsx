@@ -1,4 +1,5 @@
 import DataTable, { createTheme } from "react-data-table-component";
+import styles from "./style.module.css";
 import { useAuth } from "../../context/auth";
 
 function ReactDataTable({ title, columns, data, setCurrentPage, search, setSearch, limit, setLimit }) 
@@ -27,13 +28,13 @@ function ReactDataTable({ title, columns, data, setCurrentPage, search, setSearc
             {/* Search Field */}
             <div className="row">
                 <div className="col-md-2 offset-10">
-                    <input type="search" placeholder="Search" className="form-control"
+                    <input type="search" placeholder="Search" className={`form-control ${styles.input}`}
                     value={search} onChange={ (e) => setSearch(e.target.value) } />
                 </div>
             </div>
 
             {/* Data Table */}
-            <div className="row mt-2">
+            <div className="row mt-3">
                 <div className="col-md-12">
                     <div style={{ background: "#0e0f16", padding: 12, borderRadius: 12, overflowX: "auto", maxWidth: "100%" }}>
                         <DataTable
