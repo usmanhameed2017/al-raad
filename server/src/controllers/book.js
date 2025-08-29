@@ -73,7 +73,6 @@ const fetchBooks = async (request, response) => {
 
         // If page size is greater than total pages
         if(page > result.totalPages) throw new ApiError(404, "Book not found");
-
         return response.status(200).json(new ApiResponse(200, result, "All books has been fetched successfully"));
     } 
     catch(error) 
@@ -122,7 +121,6 @@ const updateBook = async (request, response) => {
 
     try 
     {
-        
         const book = await Book.findById(id);
         if(!book)
         {
@@ -167,9 +165,9 @@ const updateBook = async (request, response) => {
         deleteFromTemp(uploadedPdf, uploadedCoverImage);
         throw new ApiError(404, error.message);
     }
-
 };
 
+// Delete book
 const deleteBook = async (request, response) => {
     const id = request.params?.id;
     if(!id) throw new ApiError(404, "Book ID is missing");
@@ -183,7 +181,6 @@ const deleteBook = async (request, response) => {
         // Delete files from cloudinary
         await deleteFromCloudinary(book?.coverImage, "image", "images");
         await deleteFromCloudinary(book?.pdf, "raw", "pdf");
-
         return response.status(200).json(new ApiResponse(200, book, "Book has been deleted successfully"));
     } 
     catch (error) 
