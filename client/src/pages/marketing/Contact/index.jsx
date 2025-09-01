@@ -10,7 +10,9 @@ import Loader from '../../../components/Loader';
 
 function Contact() 
 {
+    // Global loader
     const { savingChanges } = useAuth();
+
     // Initial values
     const initialValues = {
         subject:"",
