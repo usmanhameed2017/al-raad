@@ -4,9 +4,13 @@ import Button from '../../../components/Button';
 import FormBS from '../../../components/Form';
 import { ErrorMessage, Field, Form } from 'formik';
 import * as Yup from "yup";
+import { postRequest } from '../../../api/request';
+import { useAuth } from '../../../context/auth';
+import Loader from '../../../components/Loader';
 
 function Contact() 
 {
+    const { savingChanges } = useAuth();
     // Initial values
     const initialValues = {
         subject:"",
@@ -43,8 +47,15 @@ function Contact()
                     </p>
 
                     <FormBS initialValues={initialValues} validationSchema={validationSchema}
-                    handlerFunction={(values, action) => {
-                        console.log(values);
+                    handlerFunction={async (values, action) => {
+                        try
+                        {
+                            await postRequest("/mail", values);
+                        }
+                        catch(error)
+                        {
+                            console.log(error.message);
+                        }
                         action.resetForm();
                     }}>
                         <Form className={styles.contactForm}>
@@ -69,7 +80,12 @@ function Contact()
                             </div>
 
                             {/* Submit */}
-                            <Button type="submit" className="w-100">Send Message</Button>
+                            <Button type="submit" className="w-100" disabled={savingChanges === true}>Send Message</Button>
+
+                            {/* Loader */}
+                            <div className="mt-3">
+                            {savingChanges && <Loader text="Sending mail..." /> }
+                            </div>
                         </Form>
                     </FormBS>
                 </motion.div>
