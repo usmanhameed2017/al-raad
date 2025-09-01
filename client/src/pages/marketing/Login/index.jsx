@@ -8,6 +8,7 @@ import Button from "../../../components/Button";
 import { useAuth } from "../../../context/auth";
 import styles from "./style.module.css";
 import { useState } from "react";
+import Loader from "../../../components/Loader";
 
 function Login() 
 {
@@ -188,6 +189,10 @@ function Login()
                                     {/* Signup */}
                                     <div className="form-group d-grid">
                                         <Button type="submit" className="w-100 mt-2" disabled={savingChanges === true}> Signup </Button>
+                                    </div>
+                                    {/* Loader */}
+                                    <div className="form-group mt-3">
+                                        { savingChanges && <Loader text="Creating account..." /> }
                                     </div>
                                 </Form>
                             </FormBS>
