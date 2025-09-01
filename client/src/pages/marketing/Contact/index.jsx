@@ -53,12 +53,12 @@ function Contact()
                         try
                         {
                             await postRequest("/mail", values);
+                            action.resetForm();
                         }
                         catch(error)
                         {
-                            console.log(error.message);
+                            return error;
                         }
-                        action.resetForm();
                     }}>
                         <Form className={styles.contactForm}>
                             {/* Subject Options */}
