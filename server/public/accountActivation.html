@@ -4,25 +4,48 @@
   <meta charset="UTF-8" />
   <title>Account Activation</title>
 </head>
-    <body style="font-family: Arial, sans-serif; color: #333;">
-        <div style="max-width: 600px; margin: auto; padding: 20px;">
-            <h2 style="color: #4CAF50;">Welcome to Al-Raad!</h2>
-            <p>Hi {{name}},</p>
-            <p>Thank you for registering with us.</p>
-            <p>Here is your account activation code:</p>
+    <body style="margin:0; padding:0; font-family: Segoe UI, Tahoma, Geneva, Verdana, sans-serif">
 
-            <div style="background: #f2f2f2; padding: 15px; font-size: 20px; letter-spacing: 2px; text-align: center; border-radius: 5px;">
-                <strong> {{activationCode}} </strong>
+        <div style="max-width:600px; margin:40px auto; padding:20px; background:#121212; border-radius: 15px; box-shadow:0 4px 15px rgba(0,0,0,0.5); color:#e0e0e0;">
+            <!-- Header -->
+            <h2 style="color:#09ccbc; text-align:center; margin-bottom:20px;">
+                Welcome to Al-Ra'ad 🚀
+            </h2>
+
+            <!-- Greeting -->
+            <p style="font-size:16px; line-height:1.6; margin-bottom:10px;">
+                Hi <strong style="color:#fff;">{{name}}</strong>,
+            </p>
+            <p style="font-size:15px; line-height:1.6;">
+                Thank you for registering with us. Here is your account activation code:
+            </p>
+
+            <!-- Activation Code Box -->
+            <div style="background:#1e1e1e; padding:10px; font-size:20px; letter-spacing:2px; text-align:center; border-radius: 15px;">
+                <span style="font-size:22px; letter-spacing:3px; color:#09ccbc; font-weight:bold;">
+                    {{activationCode}}
+                </span>
             </div>
 
-            <p style="margin-top: 20px;"> Please enter this code on the verification page to activate your account. </p>
+            <!-- Instructions -->
+            <p style="font-size:15px; line-height:1.6;">
+                Please enter this code on the verification page to activate your account.
+            </p>
+            <p style="font-size:15px; line-height:1.6;">
+                If you did not create an account, please ignore this email.
+            </p>
 
-            <p>If you did not create an account, please ignore this email.</p>
+            <!-- Signature -->
+            <p style="margin-top:25px;">
+                Thanks, <br> <span style="color:#09ccbc;"> The Al-Raad Team </span>
+            </p>
 
-            <p>Thanks,<br>The Team</p>
-
-            <hr style="margin: 30px 0; border: none; border-top: 1px solid #ddd;">
-            <p style="font-size: 12px; color: #777;"> If you have any questions, reply to this email — we're happy to help. </p>
+            <!-- Footer -->
+            <hr style="margin:30px 0; border:none; border-top:1px solid #333;">
+            <p style="font-size:12px; color:#999; text-align:center;">
+                If you have any questions, reply to this email — we're happy to help.
+            </p>
         </div>
+
     </body>
 </html>
