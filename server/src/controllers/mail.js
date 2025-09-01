@@ -2,6 +2,9 @@ const Mail = require("../models/mail");
 const ApiError = require("../utils/ApiError");
 const ApiResponse = require("../utils/ApiResponse");
 const { isValidObjectId } = require("mongoose");
+const sendEmail = require("../service/mailer");
+const fs = require("fs");
+const path = require("path");
 
 // Send mail
 const sendMail = async (request, response) => {
@@ -10,8 +13,22 @@ const sendMail = async (request, response) => {
         request.body.name = request.user?.name;
         request.body.email = request.user?.email;
         request.body.mailedBy = request.user?._id;
-        // const mail = await Mail.create(request.body);
-        // return response.status(201).json(new ApiResponse(201, mail, "Email has been sent successfully"));
+        const mail = await Mail.create(request.body);
+
+        // Get HTML template
+        const html = fs.readFileSync(path.resolve(__dirname, "../../public/contactus.html"), "utf-8");
+
+        // Replace placeholders
+        const filledHtml = html
+        .replaceAll('{{name}}', mail?.name)
+        .replaceAll('{{email}}', mail?.email)
+        .replaceAll('{{subject}}', mail?.subject)
+        .replaceAll('{{message}}', mail?.message)
+
+        // Send mail
+        const result = await sendEmail("usmanhameed1790@gmail.com", `📬 Contact us - ${mail?.subject}`, filledHtml);      
+        if(!result) throw new ApiError(500, "Unable to send email");        
+        return response.status(201).json(new ApiResponse(201, mail, "Email has been sent successfully"));
     } 
     catch (error) 
     {
