@@ -13,6 +13,9 @@ dist
 dist-ssr
 *.local
 
+public/admin-panel-background.mp4
+public/hero-section-video.mp4
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
