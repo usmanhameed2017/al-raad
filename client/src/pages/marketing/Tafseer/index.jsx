@@ -14,10 +14,17 @@ function Tafseer()
 {
     const [data, setData] = useState({});
     const [currentPage, setCurrentPage] = useState(1);
+    const [message, setMessage] = useState("");
     const { loading, setLoading } = useAuth();
 
     useEffect(() => {
         setLoading(true); // Forcefully enable loader on page load
+        let timer;
+        if(!isArrayHaveData(data?.docs)) 
+        {
+            timer = setTimeout(() => setMessage("No Tafseer Found"), 700);
+        }
+        return () => clearTimeout(timer);
     },[]);
 
     // Fetch tafseer on page load
@@ -61,10 +68,8 @@ function Tafseer()
                 ))
                 :
                 <Col>
-                {/* No data found */}
-                {!loading && (
-                    <h2 className='fw-bold textTheme'> No Tafseer Found </h2>
-                )}
+                    {/* No data found */}
+                    {!loading && <h2 className='fw-bold textTheme'> { message } </h2> }
                 </Col>
             }
             </Row>

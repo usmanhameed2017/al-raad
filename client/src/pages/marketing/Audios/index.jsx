@@ -14,10 +14,17 @@ function Audios()
 {
     const [data, setData] = useState({});
     const [currentPage, setCurrentPage] = useState(1);
+    const [message, setMessage] = useState("");
     const { loading, setLoading } = useAuth();
 
     useEffect(() => {
         setLoading(true); // Forcefully enable loader on page load
+        let timer;
+        if(!isArrayHaveData(data?.docs)) 
+        {
+            timer = setTimeout(() => setMessage("No Audio Found"), 700);
+        }
+        return () => clearTimeout(timer);
     },[]);   
 
     // Fetch audio on page load
@@ -54,10 +61,8 @@ function Audios()
                 ))
                 :
                 <Col>
-                {/* No data found */}
-                {!loading && (
-                    <h2 className='fw-bold textTheme'> No Audio Found </h2>
-                )}
+                    {/* No data found */}
+                    {!loading && <h2 className='fw-bold textTheme'> { message } </h2> }
                 </Col>
             }
             </Row>

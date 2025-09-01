@@ -14,10 +14,17 @@ function Videos()
 {
   const [data, setData] = useState({});
   const [currentPage, setCurrentPage] = useState(1);
+  const [message, setMessage] = useState("");
   const { loading, setLoading } = useAuth();
 
   useEffect(() => {
     setLoading(true); // Forcefully enable loader on page load
+    let timer;
+    if(!isArrayHaveData(data?.docs)) 
+    {
+      timer = setTimeout(() => setMessage("No Video Found"), 700);
+    }
+    return () => clearTimeout(timer);
   },[]);  
 
   // Fetch video on page load
@@ -52,10 +59,8 @@ function Videos()
           ))
           :
           <Col>
-          {/* No data found */}
-          {!loading && (
-              <h2 className='fw-bold textTheme'> No Video Found </h2>
-          )}
+            {/* No data found */}
+            {!loading && <h2 className='fw-bold textTheme'> { message } </h2> }
           </Col>
         }
         </Row>

@@ -14,10 +14,17 @@ function Books()
 {
     const [data, setData] = useState({});
     const [currentPage, setCurrentPage] = useState(1);
+    const [message, setMessage] = useState("");
     const { loading, setLoading } = useAuth();
 
     useEffect(() => {
         setLoading(true); // Enable loader on page load
+        let timer;
+        if(!isArrayHaveData(data?.docs)) 
+        {
+            timer = setTimeout(() => setMessage("No Book Found"), 700);
+        }
+        return () => clearTimeout(timer);
     },[]);
 
     // Fetch book on page load
@@ -61,10 +68,8 @@ function Books()
                 ))
                 :
                 <Col>
-                {/* No data found */}
-                {!loading && (
-                    <h2 className='fw-bold textTheme'> No Book Found </h2>
-                )}
+                    {/* No data found */}
+                    {!loading && <h2 className='fw-bold textTheme'> { message } </h2> }
                 </Col>
             }
             </Row>
