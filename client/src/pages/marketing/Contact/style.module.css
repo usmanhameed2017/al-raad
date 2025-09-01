@@ -76,27 +76,27 @@
 }
 
 .textarea {
-    min-height: 120px;
-    resize: vertical;
-    height: 150px;
-    resize: none;
+  min-height: 120px;
+  resize: vertical;
+  height: 150px;
+  resize: none;
 }
 
 .formGroup {
-    margin-bottom: 8px;
-    text-align: left;
+  margin-bottom: 8px;
+  text-align: left;
 }
 
 .formLabel {
-    display: block;
-    margin-bottom: 6px;
-    font-weight: 500;
-    color: #fff; /* optional if using dark background */
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 500;
+  color: #fff; /* optional if using dark background */
 }
 
 .textDanger {
-    color: red;
-    font-size: 0.85rem;
-    margin-top: 5px;
-    display: block;
+  color: red;
+  font-size: 20px;
+  margin-top: 5px;
+  display: block;
 }
