@@ -95,6 +95,22 @@ a{
   outline: none;
 }
 
+.input {
+  background-color: white;
+  border: 1px solid #2c2f3a;
+  color: #2c2f3a;
+  padding: 10px 12px;
+  border-radius: 8px;
+  width: 100%;
+}
+
+.input:focus {
+  border: 2px solid #0dcdbc;
+  box-shadow: 0 0 5px rgba(13,205,188,0.5);
+  color: #0dcdbc;
+  outline: none;
+}
+
 .textarea {
   height: 120px;
   resize: none;
