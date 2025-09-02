@@ -84,7 +84,7 @@ function Tafseer()
     const columns = [
         { name: "SR.NO", cell: (row, index) => (data?.pagingCounter || 0) + index, sortable: true, width:"120px" },
         { name: "Surah Name", selector: row => row?.surahName, sortable: true },
-        { name: "Ayah No", selector: row => row?.ayah?.substring(0,50) || "-" },
+        { name: "Ayah No", selector: row => `Ayah: ${row?.ayah?.substring(0,50)}` || "-" },
         { name: "Tafseer", selector: row => row?.tafseer?.substring(0,50) || "-" },
         { name: "Language", selector: row => row?.language || "-" },
         { name: "Uploaded By", selector: row => row?.uploadedBy?.name || "-" },
