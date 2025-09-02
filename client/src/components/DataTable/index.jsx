@@ -37,7 +37,7 @@ function ReactDataTable({ title, columns, data, setCurrentPage, search, setSearc
             {/* Data Table */}
             <Row className="mt-3">
                 <Col>
-                    <div style={{ background: "#0e0f16", padding: 12, borderRadius: 12, overflowX: "auto", maxWidth: "100%" }}>
+                    <div className={styles.dataTableContainer}>
                         <DataTable
                         title={title}
                         theme="alRaad"
