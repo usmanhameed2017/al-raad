@@ -1,4 +1,4 @@
-const { sendMail, fetchMails, fetchSingleMail, deleteMail } = require("../controllers/mail");
+const { sendMail, replyToUser, fetchMails, fetchSingleMail, deleteMail } = require("../controllers/mail");
 const { authentication, authorization } = require("../middlewares/auth");
 const csrfProtection = require("../middlewares/csrfToken");
 
@@ -12,5 +12,8 @@ mailRouter.route("/")
 mailRouter.route("/:id")
 .get(authentication, authorization(["Admin"]), fetchSingleMail) // Fetch single mail
 .delete(authentication, authorization(["Admin"]), deleteMail); // Delete mail
+
+// Reply to user
+mailRouter.route("/replyToUser").post(csrfProtection, authentication, authorization(["Admin"]), replyToUser);
 
 module.exports = mailRouter;
