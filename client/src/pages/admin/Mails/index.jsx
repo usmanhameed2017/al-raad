@@ -165,7 +165,7 @@ function Mails()
                         {/* Message */}
                         <div className="form-group mb-3">
                             <label htmlFor="message" className={styles.label}> Message </label>
-                            <Field as="textarea" name="message" className={`${styles.input} form-control`} placeholder="Enter Mail" rows="8" />
+                            <Field as="textarea" name="message" className={`${styles.input} form-control`} placeholder="Write Your Message" rows="8" />
                             <span className={`${styles.errorMessage}`}> <ErrorMessage name='message' /> </span>
                         </div>                         
 
@@ -178,7 +178,7 @@ function Mails()
                         {/* Loader */}
                         {savingChanges && (
                             <div className="form-group mt-3 d-flex align-items-center">
-                                <Loader size='small' text={`Saving changes...`} />
+                                <Loader size='small' text={`Sending mail...`} />
                             </div>
                         )}
                     </Form>                        
