@@ -84,7 +84,7 @@ function Audios()
     const columns = [
         { name: "SR.NO", cell: (row, index) => (data?.pagingCounter || 0) + index, sortable: true, width:"120px" },
         { name: "Surah Name", selector: row => row?.surahName, sortable: true },
-        { name: "Ayah No", selector: row => row?.ayah?.substring(0,50) || "-" },
+        { name: "Ayah No", selector: row => `Ayah: ${row?.ayah?.substring(0,50)}` || "-" },
         { name: "Uploaded By", selector: row => row?.uploadedBy?.name || "-" },
         { 
             name: "Audios",
@@ -128,6 +128,7 @@ function Audios()
 
         // Ayah
         ayah: Yup.string()
+        .matches(/^\d+(-\d+)?$/, "Ayah must be a number or a range like 02-04")
         .max(30, "Ayah must not be longer than 30 characters")
         .required("Ayah is required"),
         
@@ -218,7 +219,7 @@ function Audios()
                         {/* Ayah */}
                         <div className="form-group mb-3">
                             <label htmlFor="ayah" className={styles.label}> Ayat Reference </label>
-                            <Field type="text" name="ayah" className={`${styles.input} form-control`} placeholder="Enter Ayah No (eg: Ayah:02 - Ayah:04)" />
+                            <Field type="text" name="ayah" className={`${styles.input} form-control`} placeholder="Enter Ayah No (eg: 02-04)" />
                             <span className={`${styles.errorMessage}`}> <ErrorMessage name='ayah' /> </span>
                         </div>
 

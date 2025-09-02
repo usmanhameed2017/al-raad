@@ -119,7 +119,8 @@ function Tafseer()
 
         // Ayah
         ayah: Yup.string()
-        .max(40, "Ayah reference must not be longer than 40 characters")
+        .matches(/^\d+(-\d+)?$/, "Ayah must be a number or a range like 02-04")
+        .max(30, "Ayah must not be longer than 30 characters")
         .required("Ayah is required"),
 
         // Tafseer
@@ -207,7 +208,7 @@ function Tafseer()
                         {/* Ayah */}
                         <div className="form-group mb-3">
                             <label htmlFor="ayah" className={styles.label}> Ayat Reference </label>
-                            <Field type="text" name="ayah" className={`${styles.input} form-control`} placeholder="Enter Ayah No (eg: Ayah:02 - Ayah:04)" />
+                            <Field type="text" name="ayah" className={`${styles.input} form-control`} placeholder="Enter Ayah No (eg: 02-04)" />
                             <span className={`${styles.errorMessage}`}> <ErrorMessage name='ayah' /> </span>
                         </div>
 
