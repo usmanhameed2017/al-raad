@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styles from "./style.module.css";
 import { FaTachometerAlt, FaUsers, FaCog, FaSignOutAlt, FaUserAlt, FaBook, FaBookOpen, FaPlayCircle, FaEnvelope } from "react-icons/fa";
-import { NavLink, Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { useAuth } from "../../context/auth";
 
 function SideBar() 
