@@ -1,6 +1,6 @@
 import { useState } from "react";
 import styles from "./style.module.css";
-import { FaTachometerAlt, FaUsers, FaCog, FaSignOutAlt, FaUserAlt, FaBook, FaBookOpen, FaPlayCircle } from "react-icons/fa";
+import { FaTachometerAlt, FaUsers, FaCog, FaSignOutAlt, FaUserAlt, FaBook, FaBookOpen, FaPlayCircle, FaEnvelope } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../context/auth";
 
@@ -35,7 +35,12 @@ function SideBar()
                 {/* Audio Lectures */}
                 <Link to="/admin/audios" className={styles.navItem} title={!isOpen ? "Audio lectures" : ""}>
                     <FaPlayCircle size={25} /> {isOpen && <span> Lectures </span>}
-                </Link>                  
+                </Link> 
+
+                {/* Mails */}
+                <Link to="/admin/mails" className={styles.navItem} title={!isOpen ? "Mails" : ""}>
+                    <FaEnvelope size={25} /> {isOpen && <span> Mails </span>}
+                </Link>                                  
 
                 {/* Users */}
                 <Link to="/admin/users" className={styles.navItem} title={!isOpen ? "Users" : ""}>
