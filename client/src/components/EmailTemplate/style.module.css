@@ -1,0 +1,109 @@
+.wrapper {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 25px;
+  background: #121212;
+  border-radius: 15px;
+  box-shadow: 2px 5px 22px #0dcdbc;
+  color: #e0e0e0;
+  width: 900px;
+  min-width: 900px;
+}
+
+/* Header */
+.header {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.title {
+  color: #09ccbc;
+  margin: 0;
+  font-size: 2.7rem;
+}
+
+.subtitle {
+  font-size: 18px;
+  color: #aaa;
+  margin-top: 5px;
+}
+
+/* User Details */
+.userBox {
+  background: #1e1e1e;
+  padding: 20px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+}
+
+.sectionTitle {
+  color: #09ccbc;
+  font-size: 18px;
+  margin-bottom: 15px;
+  font-size: 24px;
+}
+
+.detail {
+  margin: 8px 0;
+  font-size: 18px;
+}
+
+.highlight {
+  color: #09ccbc;
+}
+
+/* Message Box */
+.messageBox {
+  background: #1a1a1a;
+  padding: 20px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  border-left: 4px solid #09ccbc;
+  max-height: 400px;
+  overflow-y: auto;
+  /* Firefox */
+  scrollbar-width: thick;
+  scrollbar-color: #09ccbc #1a1a1a;
+}
+
+/* Chrome, Edge, Safari */
+.messageBox::-webkit-scrollbar {
+  width: 20px;
+}
+
+.messageBox::-webkit-scrollbar-track {
+  background: #1a1a1a;
+  border-radius: 12px;
+}
+
+.messageBox::-webkit-scrollbar-thumb {
+  background-color: #09ccbc;
+  border-radius: 12px;
+  border: 2px solid #1a1a1a;
+}
+
+.messageBox::-webkit-scrollbar-thumb:hover {
+  background-color: #06a399;
+}
+
+/* Message */
+.message {
+  font-size: 18px;
+  line-height: 1.6;
+  color: #e0e0e0;
+  white-space: pre-line;
+}
+
+/* Footer */
+.divider {
+  margin: 25px 0;
+  border: none;
+  border-top: 1px solid #333;
+}
+
+.footer {
+  font-size: 18px;
+  color: #888;
+  text-align: center;
+  line-height: 1.5;
+}
