@@ -15,6 +15,8 @@ function Tafseer()
     const [data, setData] = useState({});
     const [currentPage, setCurrentPage] = useState(1);
     const [message, setMessage] = useState("");
+    const [search, setSearch] = useState("");
+    const [debouncedSearch, setDebouncedSearch] = useState("");
     const { loading, setLoading } = useAuth();
 
     useEffect(() => {
@@ -27,12 +29,21 @@ function Tafseer()
         return () => clearTimeout(timer);
     },[]);
 
+    // Debounce technique
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setDebouncedSearch(search);
+            setCurrentPage(1);
+        }, 500);
+        return () => clearTimeout(timer);
+    }, [search]); 
+
     // Fetch tafseer on page load
     useEffect(() => {
-        getRequest(`/tafseer?page=${currentPage}&limit=${6}`, false)
+        getRequest(`/tafseer?page=${currentPage}&limit=${6}&search=${debouncedSearch}`, false)
         .then(response => setData(response.data))
         .catch(() => setData({ docs:[] }));
-    }, [currentPage]);
+    }, [currentPage, debouncedSearch]);
 
     return (
         <div className={styles.tafseerWrapper}>
@@ -45,6 +56,14 @@ function Tafseer()
                     <hr className='text-secondary' />
                 </span>
             </Animation>
+
+            {/* Search */}
+            <Row className='mb-2'>
+                <Col xl="3" lg="4" md="6" sm="12" xs="12" className='ms-auto'>
+                    <input type="search" placeholder='Search' className='input'
+                    value={search} onChange={ (e) => setSearch(e.target.value) } />
+                </Col>
+            </Row>
             
             {/* Cards */}
             <Row className='mt-5'>
@@ -58,7 +77,7 @@ function Tafseer()
                             <CardBS 
                             _id={tafseer?._id}
                             heading={`Surah ${tafseer?.surahName}`} 
-                            subHeading={tafseer?.ayah} 
+                            subHeading={`Ayah: ${tafseer?.ayah}`} 
                             description={tafseer?.tafseer}
                             buttonText="View tafseer"
                             icon={ <FaEye /> }
