@@ -12,9 +12,12 @@ import { isArrayHaveData } from '../../../constants';
 
 function Books() 
 {
+    // States
     const [data, setData] = useState({});
     const [currentPage, setCurrentPage] = useState(1);
     const [message, setMessage] = useState("");
+    const [search, setSearch] = useState("");
+    const [debouncedSearch, setDebouncedSearch] = useState("");
     const { loading, setLoading } = useAuth();
 
     useEffect(() => {
@@ -27,12 +30,21 @@ function Books()
         return () => clearTimeout(timer);
     },[]);
 
+    // Debounce technique
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setDebouncedSearch(search);
+            setCurrentPage(1);
+        }, 500);
+        return () => clearTimeout(timer);
+    }, [search]);     
+
     // Fetch book on page load
     useEffect(() => {
-        getRequest(`/book?page=${currentPage}&limit=${6}`, false)
+        getRequest(`/book?page=${currentPage}&limit=${6}&search=${debouncedSearch}`, false)
         .then(response => setData(response.data))
         .catch(() => setData({ docs:[] }));
-    }, [currentPage]);
+    }, [currentPage, debouncedSearch]);
 
     return (
         <div className={styles.bookWrapper}>
@@ -45,6 +57,14 @@ function Books()
                     <hr className='text-secondary' />
                 </span>
             </Animation>
+
+            {/* Search */}
+            <Row>
+                <Col xl="3" lg="4" md="6" sm="12" xs="12" className='ms-auto'>
+                    <input type="search" placeholder='Search' className='input'
+                    value={search} onChange={ (e) => setSearch(e.target.value) } />
+                </Col>
+            </Row>            
             
             {/* Cards */}
             <Row className='mt-5'>

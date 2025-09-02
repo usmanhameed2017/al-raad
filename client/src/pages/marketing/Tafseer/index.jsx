@@ -59,7 +59,7 @@ function Tafseer()
             </Animation>
 
             {/* Search */}
-            <Row className='mb-2'>
+            <Row>
                 <Col xl="3" lg="4" md="6" sm="12" xs="12" className='ms-auto'>
                     <input type="search" placeholder='Search' className='input'
                     value={search} onChange={ (e) => setSearch(e.target.value) } />
