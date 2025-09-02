@@ -25,6 +25,7 @@ import TafseerAdmin from "./pages/admin/Tafseer";
 import AudiosAdmin from "./pages/admin/Audios";
 import Users from "./pages/admin/Users";
 import Mails from "./pages/admin/Mails";
+import ViewMail from "./pages/admin/ViewMail";
 
 function App() 
 {
@@ -64,6 +65,7 @@ function App()
               <Route path="tafseer" element={ <TafseerAdmin /> } />
               <Route path="audios" element={ <AudiosAdmin /> } />
               <Route path="mails" element={ <Mails /> } />
+              <Route path="mails/:id" element={ <ViewMail /> } />
               <Route path="Users" element={ <Users /> } />
               <Route path="settings" element={ <SettingsAdmin /> } />
             </Route> 
