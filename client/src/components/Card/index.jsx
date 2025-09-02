@@ -8,7 +8,7 @@ function CardBS({ heading, subHeading, description, buttonText, redirectTo, link
 {
     const navigate = useNavigate();
     return (
-        <div style={{ borderRadius:"15px", boxShadow:"1px 1px 17px #0dcdbc", marginLeft:"10px" }}>
+        <div className={styles.cardWrapper}>
             <Card className={`shadow ${styles.card}`}>
             
                 {/* Card Header */}

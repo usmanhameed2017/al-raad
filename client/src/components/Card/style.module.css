@@ -1,3 +1,9 @@
+.cardWrapper {
+  box-shadow: 1px 1px 17px #0dcdbc;
+  border-radius: 15px;
+  margin-left: 10px;
+}
+
 .card {
   background-color: #12151d;
   border: none;
