@@ -12,6 +12,7 @@ import { isArrayHaveData } from '../../../constants';
 
 function Tafseer() 
 {
+    // States
     const [data, setData] = useState({});
     const [currentPage, setCurrentPage] = useState(1);
     const [message, setMessage] = useState("");
