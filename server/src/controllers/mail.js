@@ -23,12 +23,34 @@ const sendMail = async (request, response) => {
         .replaceAll('{{name}}', mail?.name)
         .replaceAll('{{email}}', mail?.email)
         .replaceAll('{{subject}}', mail?.subject)
-        .replaceAll('{{message}}', mail?.message)
+        .replaceAll('{{message}}', mail?.message);
 
         // Send mail
         const result = await sendEmail("usmanhameed1790@gmail.com", `📬 Contact us - ${mail?.subject}`, filledHtml);      
         if(!result) throw new ApiError(500, "Unable to send email");        
         return response.status(201).json(new ApiResponse(201, mail, "Email has been sent successfully"));
+    } 
+    catch (error) 
+    {
+        throw new ApiError(500, error.message);
+    }
+};
+
+// Reply to user's mail
+const replyToUser = async (request, response) => {
+    const { email, subject, message } = request.body;
+    try 
+    {
+        // Get HTML template
+        const html = fs.readFileSync(path.resolve(__dirname, "../../public/mailReply.html"), "utf-8");
+
+        // Replace placeholders
+        const filledHtml = html.replaceAll('{{message}}', message);
+
+        // Send mail
+        const result = await sendEmail(email, subject, filledHtml);      
+        if(!result) throw new ApiError(500, "Unable to send email");         
+        return response.status(201).json(new ApiResponse(200, request.body, "Email has been sent successfully"));        
     } 
     catch (error) 
     {
@@ -113,4 +135,4 @@ const deleteMail = async (request, response) => {
     }
 };
 
-module.exports = { sendMail, fetchMails, fetchSingleMail, deleteMail };
+module.exports = { sendMail, replyToUser, fetchMails, fetchSingleMail, deleteMail };
