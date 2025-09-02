@@ -79,7 +79,7 @@ function Mails()
     const columns = [
         { name: "SR.NO", cell: (row, index) => (data?.pagingCounter || 0) + index, sortable: true, width:"120px" },
         { name: "Full Name", selector: row => row?.name, sortable: true },
-        { name: "Email", selector: row => row?.email },
+        { name: "Email", selector: row => row?.email, width:"370px" },
         { name: "Subject", selector: row => row?.subject },
         { name: "Message", selector: row => `${row?.message?.substring(0, 40)}...`, width:"450px" },
         { 
