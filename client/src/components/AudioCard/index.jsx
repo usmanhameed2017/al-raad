@@ -6,7 +6,7 @@ function AudioCard({ title, description, url })
     // Generate optimized url to make audio optimized
     const audioUrl = generateOptimizedUrl(url, "audio");
     return (
-        <div className={styles.audioCard}>
+        <div className={styles.audioCard} style={{ boxShadow:"0 3px 15px #0dcdbc" }}>
             <div>
                 <h4 className={`${styles.heading}`}> { title } </h4>
             </div>
