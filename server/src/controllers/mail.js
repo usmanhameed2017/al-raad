@@ -50,7 +50,7 @@ const replyToUser = async (request, response) => {
         // Send mail
         const result = await sendEmail(email, subject, filledHtml);      
         if(!result) throw new ApiError(500, "Unable to send email");         
-        return response.status(201).json(new ApiResponse(200, request.body, "Email has been sent successfully"));        
+        return response.status(201).json(new ApiResponse(200, null, "Email has been sent successfully"));        
     } 
     catch (error) 
     {
