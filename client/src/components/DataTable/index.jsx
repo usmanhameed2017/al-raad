@@ -1,5 +1,6 @@
 import DataTable, { createTheme } from "react-data-table-component";
 import styles from "./style.module.css";
+import { Row, Col } from 'react-bootstrap';
 import { useAuth } from "../../context/auth";
 
 function ReactDataTable({ title, columns, data, setCurrentPage, search, setSearch, limit, setLimit }) 
@@ -26,16 +27,16 @@ function ReactDataTable({ title, columns, data, setCurrentPage, search, setSearc
     return (
         <>
             {/* Search Field */}
-            <div className="row">
-                <div className="col-xl-2 offset-xl-10 col-lg-4 offset-lg-8 col-md-6 offset-md-6 col-sm-8 offset-sm-4 col-xs-12">
+            <Row>
+                <Col xl="2" lg="4" md="6" sm="12" xs="12" className='ms-auto'>
                     <input type="search" placeholder="Search" className={`form-control ${styles.input}`}
                     value={search} onChange={ (e) => setSearch(e.target.value) } />
-                </div>
-            </div>
+                </Col>
+            </Row>
 
             {/* Data Table */}
-            <div className="row mt-3">
-                <div className="col-md-12">
+            <Row className="mt-3">
+                <Col>
                     <div style={{ background: "#0e0f16", padding: 12, borderRadius: 12, overflowX: "auto", maxWidth: "100%" }}>
                         <DataTable
                         title={title}
@@ -57,8 +58,8 @@ function ReactDataTable({ title, columns, data, setCurrentPage, search, setSearc
                         persistTableHead
                         />
                     </div>                    
-                </div>
-            </div>            
+                </Col>
+            </Row>            
         </>
     );
 }
