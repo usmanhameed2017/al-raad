@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import styles from './style.module.css';
 import { Row, Col } from 'react-bootstrap';
 import Loader from '../../../components/Loader';
@@ -16,6 +16,7 @@ function ViewBook()
     const [book, setBook] = useState({});
     const [message, setMessage] = useState("");
     const { loading } = useAuth();
+    const navigate = useNavigate();
 
     // For better UX
     useEffect(() => {
@@ -28,7 +29,10 @@ function ViewBook()
     useEffect(() => {
         getRequest(`/book/${id}`)
         .then(response => setBook(response.data))
-        .catch(() => setBook({}));
+        .catch(() => {
+            setBook({});
+            navigate("/books");
+        });
     }, [id]);
 
     return (

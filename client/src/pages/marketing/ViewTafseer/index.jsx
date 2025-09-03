@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import styles from './style.module.css';
 import { Row, Col } from 'react-bootstrap';
 import Loader from '../../../components/Loader';
@@ -14,6 +14,7 @@ function ViewTafseer()
     const [tafseer, setTafseer] = useState({});
     const [message, setMessage] = useState("");
     const { loading } = useAuth();
+    const navigate = useNavigate();
 
     // For better UX
     useEffect(() => {
@@ -26,7 +27,10 @@ function ViewTafseer()
     useEffect(() => {
         getRequest(`/tafseer/${id}`)
         .then(response => setTafseer(response.data))
-        .catch(() => setTafseer({}));
+        .catch(() => {
+            setTafseer({});
+            navigate("/tafseer");
+        });
     }, [id]);
 
     return (
