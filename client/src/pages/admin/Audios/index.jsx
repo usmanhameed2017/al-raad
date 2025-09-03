@@ -159,7 +159,7 @@ function Audios()
             {/* Data Table */}
             <Row>
                 <Col>
-                    <Animation type="table">
+                    <Animation type="3d">
                         <ReactDataTable 
                         title={`Lectures`} 
                         columns={columns} 

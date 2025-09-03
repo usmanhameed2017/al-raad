@@ -123,7 +123,7 @@ function Mails()
             {/* Data Table */}
             <Row>
                 <Col>
-                    <Animation type="table">
+                    <Animation type="3d">
                         <ReactDataTable 
                         title={`${pageName}s`} 
                         columns={columns} 
