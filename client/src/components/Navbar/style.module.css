@@ -2,7 +2,6 @@
   background: rgba(0, 0, 0, 0.3);
   backdrop-filter: blur(8px);
   padding: 1rem 2rem;
-  transition: background 0.3s ease;
   z-index: 999;
 }
 
@@ -13,10 +12,25 @@
   letter-spacing: 2px;
 }
 
-.navbar .nav-link {
-  color: #fff !important;
-  font-size: 1rem;
+.navbar :global(.nav-link) {
+  color: whitesmoke;
+  font-size: 1.2rem;
+  font-weight: 500;
   position: relative;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease-in-out;
+}
+
+.navbar :global(.nav-link:hover) {
+  color: #0dcdbc;
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+.navbar :global(.nav-link.active) {
+  color: #0dcdbc;
+  font-size: 1.2rem;
+  font-weight: 500;
 }
 
 .navbar .nav-link::after {
