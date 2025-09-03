@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Animation from '../../../components/Animation';
 import Button from '../../../components/Button';
 import FormBS from '../../../components/Form';
@@ -9,11 +9,14 @@ import { Form, Field, ErrorMessage } from 'formik';
 import { getRequest, putRequest } from '../../../api/request';
 import { useAuth } from '../../../context/auth';
 import Loader from '../../../components/Loader';
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+import PasswordField from '../../../components/PasswordField';
 
 function Settings() 
 {
     const { user, setUser, savingChanges } = useAuth();
     const userData = user || getUser() || {};
+    const [showPassword, setShowPassword] = useState(false);
 
     // Fetch user data on page load
     useEffect(() => {
@@ -119,15 +122,15 @@ function Settings()
 
                             {/* Password */}
                             <div className="form-group mb-3">
-                                <label htmlFor="password" className={styles.label}> Password </label>
-                                <Field type="password" name="password" className={`form-control ${styles.input}`} placeholder="Enter Password" />
+                            <label htmlFor="password" className={styles.label}> Password </label>
+                                <PasswordField name="password" className={`form-control ${styles.input}`} placeholder="Enter Password" />
                                 <span className={styles.errorMsg}> <ErrorMessage name="password" /> </span>
-                            </div>              
+                            </div>
 
                             {/* Confirm Password */}
                             <div className="form-group mb-3">
                                 <label htmlFor="cpassword" className={styles.label}> Confirm Password </label>
-                                <Field type="password" name="cpassword" className={`form-control ${styles.input}`} placeholder="Re-Enter Password" />
+                                <PasswordField name="cpassword" className={`form-control ${styles.input}`} placeholder="Re-Enter Password" />
                                 <span className={styles.errorMsg}> <ErrorMessage name="cpassword" /> </span>
                             </div>
 
