@@ -9,7 +9,6 @@ import { Form, Field, ErrorMessage } from 'formik';
 import { getRequest, putRequest } from '../../../api/request';
 import { useAuth } from '../../../context/auth';
 import Loader from '../../../components/Loader';
-import { FaEye, FaEyeSlash } from "react-icons/fa";
 import PasswordField from '../../../components/PasswordField';
 
 function Settings() 
