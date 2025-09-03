@@ -61,8 +61,8 @@ function Animation({ children, type })
         </motion.div>
     );    
     
-    // Table
-    if(type.trim().toLowerCase() === "table") return (
+    // 3D
+    if(type.trim().toLowerCase() === "3d") return (
         <motion.div
             initial={{ opacity: 0, rotateX: -15, y: 50, scale: 0.95 }}
             animate={{ opacity: 1, rotateX: 0, y: 0, scale: 1 }}
