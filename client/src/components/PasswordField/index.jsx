@@ -14,7 +14,7 @@ function PasswordField({ name, className, placeholder })
 
             {/* Icon */}
             <span className={styles.icon} onClick={() => setShowPassword(!showPassword)}>
-                {showPassword ? <FaEyeSlash size={22} title='Hide' /> : <FaEye size={22} title='Show' />}
+                {showPassword ? <FaEyeSlash size={22} /> : <FaEye size={22} />}
             </span>
         </div>
     );
