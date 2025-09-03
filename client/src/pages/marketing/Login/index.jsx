@@ -9,6 +9,7 @@ import { useAuth } from "../../../context/auth";
 import styles from "./style.module.css";
 import { useState } from "react";
 import Loader from "../../../components/Loader";
+import PasswordField from "../../../components/PasswordField";
 
 function Login() 
 {
@@ -124,16 +125,19 @@ function Login()
                                         <Field type="text" name="username" className="form-control" placeholder="Enter username" />
                                         <span className="text-danger"> <ErrorMessage name="username" /> </span>
                                     </div>
+
                                     {/* Password */}
                                     <div className="form-group">
                                         <label htmlFor="password">Password</label>
-                                        <Field type="password" name="password" className="form-control" placeholder="Enter password"/>
+                                        <PasswordField name="password" className="form-control" placeholder="Enter password" />
                                         <span className="text-danger"> <ErrorMessage name="password" /> </span>
                                     </div>
+
                                     {/* Forgot Password */}
                                     <div className="form-group mb-2">
                                         <Link className="text-info" to="/security/forgotPassword"> Forgot password? </Link>
                                     </div>
+
                                     <hr />
                                     {/* Signin Button */}
                                     <div className="form-group d-grid">
@@ -161,35 +165,41 @@ function Login()
                                         <Field type="text" name="name" className="form-control" placeholder="Enter name"/>
                                         <span className="text-danger"> <ErrorMessage name="name" /> </span>
                                     </div>
+
                                     {/* Email */}
                                     <div className="form-group">
                                         <label htmlFor="email">Email</label>
                                         <Field type="text" name="email" className="form-control" placeholder="Enter email" />
                                         <span className="text-danger"> <ErrorMessage name="email" /> </span>
                                     </div>
+
                                     {/* Username */}
                                     <div className="form-group">
                                         <label htmlFor="username">Username</label>
                                         <Field type="text" name="username" className="form-control" placeholder="Enter username" />
                                         <span className="text-danger"> <ErrorMessage name="username" /> </span>
                                     </div>
+
                                     {/* Password */}
                                     <div className="form-group">
                                         <label htmlFor="password">Password</label>
-                                        <Field type="password" name="password" className="form-control" placeholder="Enter password" />
+                                        <PasswordField name="password" className="form-control" placeholder="Enter password" />
                                         <span className="text-danger"> <ErrorMessage name="password" /> </span>
                                     </div>
+
                                     {/* Confirm Password */}
                                     <div className="form-group mb-2">
                                         <label htmlFor="cpassword">Confirm Password</label>
-                                        <Field type="password" name="cpassword" className="form-control" placeholder="Re-enter password"/>
+                                        <PasswordField name="cpassword" className="form-control" placeholder="Re-enter password" />
                                         <span className="text-danger"> <ErrorMessage name="cpassword" /> </span>
                                     </div>
+
                                     <hr />
                                     {/* Signup */}
                                     <div className="form-group d-grid">
                                         <Button type="submit" className="w-100 mt-2" disabled={savingChanges === true}> Signup </Button>
                                     </div>
+
                                     {/* Loader */}
                                     <div className="form-group mt-3">
                                         { savingChanges && <Loader text="Creating account..." /> }
