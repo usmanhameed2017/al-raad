@@ -2,6 +2,8 @@ import DataTable, { createTheme } from "react-data-table-component";
 import styles from "./style.module.css";
 import { Row, Col } from 'react-bootstrap';
 import { useAuth } from "../../context/auth";
+import Animation from "../Animation";
+import Loader from "../Loader";
 
 function ReactDataTable({ title, columns, data, setCurrentPage, search, setSearch, limit, setLimit }) 
 {
@@ -22,7 +24,7 @@ function ReactDataTable({ title, columns, data, setCurrentPage, search, setSearc
     };
 
     // Extract global state loader
-    // const { isLoading } = useAuth();
+    const { loading } = useAuth();
 
     return (
         <>
@@ -34,30 +36,36 @@ function ReactDataTable({ title, columns, data, setCurrentPage, search, setSearc
                 </Col>
             </Row>
 
+            {/* Loader */}
+            { loading && ( <div style={{ marginTop:"100px" }}> <Loader size='big' text="Loading" /> </div> ) }
+
             {/* Data Table */}
             <Row className="mt-3">
                 <Col>
-                    <div className={styles.dataTableContainer}>
-                        <DataTable
-                        title={title}
-                        theme="alRaad"
-                        customStyles={customStyles}
-                        columns={columns}
-                        data={data?.docs}
-                        pagination
-                        paginationServer
-                        paginationPerPage={limit}
-                        paginationRowsPerPageOptions={[10, 25, 50, 100]}
-                        paginationTotalRows={data?.totalDocs || 0}
-                        paginationDefaultPage={data?.page || 1}
-                        onChangePage={ (page) => setCurrentPage(page) }
-                        onChangeRowsPerPage={ (rows) => setLimit(rows) }
-                        // progressPending={isLoading}          
-                        highlightOnHover
-                        striped 
-                        persistTableHead
-                        />
-                    </div>                    
+                {!loading && (
+                    <Animation type="3d">
+                        <div className={styles.dataTableContainer}>
+                            <DataTable
+                            title={title}
+                            theme="alRaad"
+                            customStyles={customStyles}
+                            columns={columns}
+                            data={data?.docs}
+                            pagination
+                            paginationServer
+                            paginationPerPage={limit}
+                            paginationRowsPerPageOptions={[10, 25, 50, 100]}
+                            paginationTotalRows={data?.totalDocs || 0}
+                            paginationDefaultPage={data?.page || 1}
+                            onChangePage={ (page) => setCurrentPage(page) }
+                            onChangeRowsPerPage={ (rows) => setLimit(rows) }
+                            // progressPending={loading === true} 
+                            highlightOnHover
+                            striped 
+                            persistTableHead />
+                        </div>
+                    </Animation>                        
+                )}
                 </Col>
             </Row>            
         </>
