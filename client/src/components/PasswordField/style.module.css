@@ -1,0 +1,14 @@
+.fieldWrapper {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.icon {
+    position: absolute;
+    right: 15px;
+    bottom: 12.5px;
+    cursor: pointer;
+    color: #0dcdbc;
+    font-size: 1.1rem;
+}
