@@ -28,8 +28,8 @@ function Mails()
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
 
-    // Global state loader
-    const { savingChanges } = useAuth();
+    // Global state loaders
+    const { loading, savingChanges } = useAuth();
 
     // Navigator
     const navigate = useNavigate();
@@ -120,22 +120,28 @@ function Mails()
 
     return (
         <>
-            {/* Data Table */}
-            <Row>
-                <Col>
-                    <Animation type="3d">
-                        <ReactDataTable 
-                        title={`${pageName}s`} 
-                        columns={columns} 
-                        data={data} 
-                        setCurrentPage={setCurrentPage}
-                        search={search}
-                        setSearch={setSearch}
-                        limit={limit}
-                        setLimit={setLimit} />
-                    </Animation>
-                </Col>
-            </Row>            
+            {/* Loader */}
+            { loading && ( <div style={{ marginTop:"300px" }}> <Loader size='big' text="Loading" /> </div> ) }
+            {!loading && (
+                <>
+                    {/* Data Table */}
+                    <Row>
+                        <Col>
+                            <Animation type="3d">
+                                <ReactDataTable 
+                                title={`${pageName}s`} 
+                                columns={columns} 
+                                data={data} 
+                                setCurrentPage={setCurrentPage}
+                                search={search}
+                                setSearch={setSearch}
+                                limit={limit}
+                                setLimit={setLimit} />
+                            </Animation>
+                        </Col>
+                    </Row>                      
+                </>
+            )}            
 
             {/* Modal */}
             <ModalBS showModal={showModal} setShowModal={setShowModal} modalTitle={`REPLY TO MAIL`} modalSize='lg'>

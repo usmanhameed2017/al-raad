@@ -29,8 +29,8 @@ function Tafseer()
     const [formType, setFormType] = useState("");
     const [reloadData, setReloadData] = useState(0);
 
-    // Global state loader
-    const { savingChanges } = useAuth();
+    // Global state loaders
+    const { loading, savingChanges } = useAuth();
 
     // Page name
     const pageName = "Tafseer";
@@ -136,33 +136,39 @@ function Tafseer()
 
     return (
         <>
-            {/* Modal Launcher */}
-            <Row className='mb-3'>
-                <Col>
-                    <Animation type="button">
-                        <div className='float-end'> 
-                            <Button onClick={launchModal}> <FaPlus /> Add New </Button> 
-                        </div>
-                    </Animation>
-                </Col>
-            </Row>
+            {/* Loader */}
+            { loading && ( <div style={{ marginTop:"300px" }}> <Loader size='big' text="Loading" /> </div> ) }
+            {!loading && (
+                <>
+                    {/* Modal Launcher */}
+                    <Row className='mb-3'>
+                        <Col>
+                            <Animation type="button">
+                                <div className='float-end'> 
+                                    <Button onClick={launchModal}> <FaPlus /> Add New </Button> 
+                                </div>
+                            </Animation>
+                        </Col>
+                    </Row>
 
-            {/* Data Table */}
-            <Row>
-                <Col>
-                    <Animation type="3d">
-                        <ReactDataTable 
-                        title={`${pageName}s`} 
-                        columns={columns} 
-                        data={data} 
-                        setCurrentPage={setCurrentPage}
-                        search={search}
-                        setSearch={setSearch}
-                        limit={limit}
-                        setLimit={setLimit} />
-                    </Animation>
-                </Col>
-            </Row>            
+                    {/* Data Table */}
+                    <Row>
+                        <Col>
+                            <Animation type="3d">
+                                <ReactDataTable 
+                                title={`${pageName}s`} 
+                                columns={columns} 
+                                data={data} 
+                                setCurrentPage={setCurrentPage}
+                                search={search}
+                                setSearch={setSearch}
+                                limit={limit}
+                                setLimit={setLimit} />
+                            </Animation>
+                        </Col>
+                    </Row>                      
+                </>
+            )}            
 
             {/* Modal */}
             <ModalBS showModal={showModal} setShowModal={setShowModal} 
