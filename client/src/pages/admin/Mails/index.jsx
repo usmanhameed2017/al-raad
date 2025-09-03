@@ -3,7 +3,6 @@ import { deleteRequest, getRequest, postRequest } from '../../../api/request';
 import ReactDataTable from '../../../components/DataTable';
 import Button from '../../../components/Button';
 import { useAuth } from '../../../context/auth';
-import Animation from '../../../components/Animation';
 import { FaTrash, FaReply, FaEye } from 'react-icons/fa';
 import { Row, Col } from 'react-bootstrap';
 import ModalBS from '../../../components/Modal';
@@ -28,8 +27,8 @@ function Mails()
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
 
-    // Global state loaders
-    const { loading, savingChanges } = useAuth();
+    // Global state loader
+    const { savingChanges } = useAuth();
 
     // Navigator
     const navigate = useNavigate();
@@ -120,28 +119,20 @@ function Mails()
 
     return (
         <>
-            {/* Loader */}
-            { loading && ( <div style={{ marginTop:"300px" }}> <Loader size='big' text="Loading" /> </div> ) }
-            {!loading && (
-                <>
-                    {/* Data Table */}
-                    <Row>
-                        <Col>
-                            <Animation type="3d">
-                                <ReactDataTable 
-                                title={`${pageName}s`} 
-                                columns={columns} 
-                                data={data} 
-                                setCurrentPage={setCurrentPage}
-                                search={search}
-                                setSearch={setSearch}
-                                limit={limit}
-                                setLimit={setLimit} />
-                            </Animation>
-                        </Col>
-                    </Row>                      
-                </>
-            )}            
+            {/* Data Table */}
+            <Row>
+                <Col>
+                    <ReactDataTable 
+                    title={`${pageName}s`} 
+                    columns={columns} 
+                    data={data} 
+                    setCurrentPage={setCurrentPage}
+                    search={search}
+                    setSearch={setSearch}
+                    limit={limit}
+                    setLimit={setLimit} />
+                </Col>
+            </Row>          
 
             {/* Modal */}
             <ModalBS showModal={showModal} setShowModal={setShowModal} modalTitle={`REPLY TO MAIL`} modalSize='lg'>
