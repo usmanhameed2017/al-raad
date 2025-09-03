@@ -198,7 +198,7 @@ function Tafseer()
                 }}>
                     <Form>
                         {/* Surah Name */}
-                        <div className="form-group mb-3">
+                        <div className="form-group mb-2">
                             <label htmlFor="surahName" className={styles.label}> Surah Name </label>
                             <Field type="text" name="surahName" list="surahOptions" className={`${styles.input} form-control`} placeholder="Select Surah" />
 
@@ -212,21 +212,21 @@ function Tafseer()
                         </div>
 
                         {/* Ayah */}
-                        <div className="form-group mb-3">
+                        <div className="form-group mb-2">
                             <label htmlFor="ayah" className={styles.label}> Ayat Reference </label>
                             <Field type="text" name="ayah" className={`${styles.input} form-control`} placeholder="Enter Ayah No (eg: 02-04)" />
                             <span className={`${styles.errorMessage}`}> <ErrorMessage name='ayah' /> </span>
                         </div>
 
                         {/* Tafseer */}
-                        <div className="form-group mb-3">
+                        <div className="form-group mb-2">
                             <label htmlFor="tafseer" className={styles.label}> Tafseer </label>
                             <Field as="textarea" name="tafseer" rows="5" className={`${styles.input} form-control`} placeholder="Enter Tafseer" />
                             <span className={`${styles.errorMessage}`}> <ErrorMessage name='tafseer' /> </span>
                         </div>  
 
                         {/* Language */}
-                        <div className="form-group mb-3">
+                        <div className="form-group mb-2">
                             <label htmlFor="language" className={styles.label}> Language </label>
                             <Field as="select" name="language" rows="5" className={`${styles.input} form-control`}> 
                                 <option value=""> Select Language </option>

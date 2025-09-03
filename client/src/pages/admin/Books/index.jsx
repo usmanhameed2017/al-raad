@@ -209,7 +209,7 @@ function Books()
                 {({ setFieldValue }) => (
                     <Form>
                         {/* Title */}
-                        <div className="form-group mb-3">
+                        <div className="form-group mb-2">
                             <label htmlFor="title" className={styles.label}> Title </label>
                             <Field type="text" name="title" className={`${styles.input} form-control`} placeholder="Enter Title" />
                             <span className={`${styles.errorMessage}`}> <ErrorMessage name='title' /> </span>

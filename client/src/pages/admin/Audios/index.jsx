@@ -209,7 +209,7 @@ function Audios()
                 {({ setFieldValue }) => (
                     <Form>
                         {/* Surah Name */}
-                        <div className="form-group mb-3">
+                        <div className="form-group mb-2">
                             <label htmlFor="surahName" className={styles.label}> Surah Name </label>
                             <Field type="text" name="surahName" list="surahOptions" className={`${styles.input} form-control`} placeholder="Select Surah" />
 
@@ -223,7 +223,7 @@ function Audios()
                         </div>
 
                         {/* Ayah */}
-                        <div className="form-group mb-3">
+                        <div className="form-group mb-2">
                             <label htmlFor="ayah" className={styles.label}> Ayat Reference </label>
                             <Field type="text" name="ayah" className={`${styles.input} form-control`} placeholder="Enter Ayah No (eg: 02-04)" />
                             <span className={`${styles.errorMessage}`}> <ErrorMessage name='ayah' /> </span>

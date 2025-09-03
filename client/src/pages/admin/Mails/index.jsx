@@ -162,14 +162,14 @@ function Mails()
                 }}>
                     <Form>
                         {/* Subject */}
-                        <div className="form-group mb-3">
+                        <div className="form-group mb-2">
                             <label htmlFor="subject" className={styles.label}> Subject </label>
                             <Field type="text" name="subject" className={`${styles.input} form-control`} placeholder="Enter Subject" />
                             <span className={`${styles.errorMessage}`}> <ErrorMessage name='subject' /> </span>
                         </div>
 
                         {/* Message */}
-                        <div className="form-group mb-3">
+                        <div className="form-group mb-2">
                             <label htmlFor="message" className={styles.label}> Message </label>
                             <Field as="textarea" name="message" className={`${styles.input} form-control`} placeholder="Write Your Message" rows="8" />
                             <span className={`${styles.errorMessage}`}> <ErrorMessage name='message' /> </span>

@@ -207,7 +207,7 @@ function Users()
             )}            
 
             {/* Modal */}
-            <ModalBS showModal={showModal} setShowModal={setShowModal} 
+            <ModalBS showModal={showModal} setShowModal={setShowModal}  modalSize='md'
             modalTitle={ formType === "create" ? `ADD NEW ${pageName.toUpperCase()}` : `EDIT ${pageName.toUpperCase()}` }>
                 {/* Form */}
                 <FormBS initialValues={initialValues} validationSchema={validationSchema}
@@ -243,42 +243,28 @@ function Users()
                 }}>
                     <Form>
                         {/* Name */}
-                        <div className="form-group mb-3">
+                        <div className="form-group mb-2">
                             <label htmlFor="name" className={styles.label}> Name </label>
                             <Field type="text" name="name" className={`${styles.input} form-control`} placeholder="Enter Name" />
                             <span className={`${styles.errorMessage}`}> <ErrorMessage name='name' /> </span>
                         </div>
 
                         {/* Username */}
-                        <div className="form-group mb-3">
+                        <div className="form-group mb-2">
                             <label htmlFor="username" className={styles.label}> Username </label>
                             <Field type="text" name="username" className={`${styles.input} form-control`} placeholder="Enter Username" />
                             <span className={`${styles.errorMessage}`}> <ErrorMessage name='username' /> </span>
                         </div>
 
                         {/* Email */}
-                        <div className="form-group mb-3">
+                        <div className="form-group mb-2">
                             <label htmlFor="email" className={styles.label}> Email </label>
                             <Field type="text" name="email" className={`${styles.input} form-control`} placeholder="Enter Email" />
                             <span className={`${styles.errorMessage}`}> <ErrorMessage name='email' /> </span>
-                        </div>  
-
-                        {/* Password */}
-                        <div className="form-group mb-3">
-                            <label htmlFor="password" className={styles.label}> Password </label>
-                            <Field type="password" name="password" className={`${styles.input} form-control`} placeholder="Enter Password" />
-                            <span className={`${styles.errorMessage}`}> <ErrorMessage name='password' /> </span>
-                        </div>  
-
-                        {/* Confirm Password */}
-                        <div className="form-group mb-3">
-                            <label htmlFor="cpassword" className={styles.label}> Confirm Password </label>
-                            <Field type="password" name="cpassword" className={`${styles.input} form-control`} placeholder="Re-Enter Password" />
-                            <span className={`${styles.errorMessage}`}> <ErrorMessage name='cpassword' /> </span>
-                        </div>  
+                        </div>                       
 
                         {/* Role */}
-                        <div className="form-group mb-3">
+                        <div className="form-group mb-2">
                             <label htmlFor="role" className={styles.label}> Role </label>
                             <Field as="select" name="role" className={`${styles.input} form-control`}> 
                                 <option value=""> Select Role </option>
@@ -286,7 +272,28 @@ function Users()
                                 <option value="User"> User </option>
                             </Field>
                             <span className={`${styles.errorMessage}`}> <ErrorMessage name='role' /> </span>
-                        </div>                        
+                        </div>
+
+                        {/* Password */}
+                        <div className="form-group mb-2">
+                            <label htmlFor="password" className={styles.label}> Password </label>
+                            <Field type="password" name="password" className={`${styles.input} form-control`} placeholder="Enter Password" />
+                            <span className={`${styles.errorMessage}`}> <ErrorMessage name='password' /> </span>
+                        </div>
+
+                        {/* Confirm Password */}
+                        <div className="form-group mb-2">
+                            <label htmlFor="cpassword" className={styles.label}> Confirm Password </label>
+                            <Field type="password" name="cpassword" className={`${styles.input} form-control`} placeholder="Re-Enter Password" />
+                            <span className={`${styles.errorMessage}`}> <ErrorMessage name='cpassword' /> </span>
+                        </div>
+
+                        {formType === "edit" && (
+                            <>
+                                <hr />
+                                <i className='text-secondary mb-3 ms-1'>  Note: Leave the password fields blank to keep your current password. </i>
+                            </>
+                        )}
 
                         {/* Buttons */}
                         <div className="form-group mt-3 d-flex align-items-center gap-2">

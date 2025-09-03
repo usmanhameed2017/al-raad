@@ -37,14 +37,14 @@ function AdminLogin()
                     <Animation type="normal">
                         <Form>
                             {/* Username */}
-                            <div className="form-group mb-3">
+                            <div className="form-group mb-2">
                                 <label> Username </label>
                                 <Field type="text" name="username" placeholder="Enter username" className="form-control" />
                                 <ErrorMessage name="username" component="div" className="text-danger" />
                             </div>
 
                             {/* Password */}
-                            <div className="form-group mb-3">
+                            <div className="form-group mb-2">
                                 <label>Password</label>
                                 <Field type="password" name="password" placeholder="Enter password" className="form-control" />
                                 <ErrorMessage name="password" component="div" className="text-danger" />
