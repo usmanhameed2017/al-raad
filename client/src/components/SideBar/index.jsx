@@ -4,7 +4,7 @@ import { FaTachometerAlt, FaUsers, FaCog, FaSignOutAlt, FaUserAlt, FaBook, FaBoo
 import { NavLink } from "react-router-dom";
 import { useAuth } from "../../context/auth";
 
-function SideBar() 
+function Sidebar() 
 {
     const [isOpen, setIsOpen] = useState(true);
     const { user, adminLogout } = useAuth();
@@ -67,4 +67,4 @@ function SideBar()
     );
 }
 
-export default SideBar;
+export default Sidebar;
