@@ -28,7 +28,7 @@
   font-size: 2.2rem;
   font-weight: 700;
   margin: 20px 0 15px;
-  color: rgba(9, 204, 188, 0.877);
+  color: #00bcd4;
   z-index: 1;
   position: relative;
   text-shadow: 0 0 6px rgba(255, 255, 255, 0.1);
@@ -46,4 +46,4 @@
   z-index: 1;
   text-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
   flex-grow: 1; /* push footer down if added later */
-}
+} 
