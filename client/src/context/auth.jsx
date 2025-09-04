@@ -41,7 +41,7 @@ function AuthProvider({ children })
         {
             await postRequest("/user/signup", user);
             action.resetForm();
-            navigate("/accountActivation");
+            navigate("/accountActivation", { state:{ redirectionFromSignup:true } });
         } 
         catch(error) 
         {
