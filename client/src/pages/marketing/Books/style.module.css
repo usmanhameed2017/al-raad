@@ -5,27 +5,3 @@
   margin-top: 100px;
   text-align: center;
 }
-
-.title {
-  font-size: 2.2rem;
-  font-weight: 700;
-  margin: 20px 0 15px;
-  color: rgba(9, 204, 188, 0.877);
-  z-index: 1;
-  position: relative;
-  text-shadow: 0 0 6px rgba(255, 255, 255, 0.1);
-  min-height: 60px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-}
-
-.description {
-  font-size: 1.2rem;
-  line-height: 1.8;
-  color: #d1d5db;
-  z-index: 1;
-  text-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
-  flex-grow: 1;
-}

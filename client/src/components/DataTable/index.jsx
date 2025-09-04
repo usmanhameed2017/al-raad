@@ -11,9 +11,9 @@ function ReactDataTable({ title, columns, data, setCurrentPage, search, setSearc
     createTheme("alRaad", {
         text: { primary: "#e5e7eb", secondary: "#cbd5e1" },
         background: { default: "#0e0f16" },
-        context: { background: "#0dcdbc", text: "#0e0f16" },
-        divider: { default: "rgba(13,205,188,0.20)" },
-        action: { button: "rgba(13,205,188,0.9)", hover: "rgba(13,205,188,0.08)", disabled: "rgba(255,255,255,0.3)" },
+        context: { background: "#00bcd4", text: "#0e0f16" },
+        divider: { default: "#00bbd481" },
+        action: { button: "#00bcd4", hover: "#00bcd4", disabled: "rgba(255,255,255,0.3)" },
     }, "dark"); 
 
     // Custom datatable style

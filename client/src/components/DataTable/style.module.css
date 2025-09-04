@@ -15,8 +15,8 @@
 }
 
 .input:focus {
-    border: 2px solid #0dcdbc;
-    box-shadow: 0 0 5px rgba(13,205,188,0.5);
-    color: #0dcdbc;
+    border: 2px solid #00bcd4;
+    box-shadow: 0 0 5px #00bcd4;
+    color: #00bcd4;
     outline: none;
 }
