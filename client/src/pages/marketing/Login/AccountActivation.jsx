@@ -1,15 +1,17 @@
 import { Form, Field, ErrorMessage } from 'formik';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation, Navigate } from "react-router-dom";
 import FormBS from "../../../components/Form";
 import Button from "../../../components/Button";
 import styles from './style.module.css';
-import { FaLock } from 'react-icons/fa';
 import * as Yup from 'yup';
 import { patchRequest } from '../../../api/request';
 import Animation from '../../../components/Animation';
 
 function AccountActivation() 
 {
+    // Get redirection state
+    const location = useLocation().state;
+
     // Navigator
     const navigate = useNavigate();
 
@@ -25,6 +27,9 @@ function AccountActivation()
         .max(12, "Activation code must not be longer than 12 characters")
         .required("Activation code is required")
     });
+
+    // If user is not redirected from signup form
+    if(!location) return <Navigate to={`/Login`} replace />
 
     return (
         <div className={styles.loginPage}>
@@ -47,7 +52,7 @@ function AccountActivation()
                     <Animation type="normal">
                         <Form>
                             <div>
-                                <h2> <FaLock size={25} /> Account Activation </h2> 
+                                <h2 className='text-center'> Account Activation </h2> 
                                 <hr />
                             </div>
                             {/* Activation code */}
