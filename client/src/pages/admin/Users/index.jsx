@@ -13,6 +13,7 @@ import { Form, Field, ErrorMessage } from "formik";
 import styles from "../PanelStyling/style.module.css";
 import { sweetAlert } from '../../../utils/sweetAlert2';
 import Loader from '../../../components/Loader';
+import PasswordField from '../../../components/PasswordField';
 
 function Users() 
 {
@@ -269,14 +270,14 @@ function Users()
                         {/* Password */}
                         <div className="form-group mb-2">
                             <label htmlFor="password" className={styles.label}> Password </label>
-                            <Field type="password" name="password" className={`${styles.input} form-control`} placeholder="Enter Password" />
+                            <PasswordField name="password" className={`${styles.input} form-control`} placeholder="Enter Password" />
                             <span className={`${styles.errorMessage}`}> <ErrorMessage name='password' /> </span>
                         </div>
 
                         {/* Confirm Password */}
                         <div className="form-group mb-2">
                             <label htmlFor="cpassword" className={styles.label}> Confirm Password </label>
-                            <Field type="password" name="cpassword" className={`${styles.input} form-control`} placeholder="Re-Enter Password" />
+                            <PasswordField name="cpassword" className={`${styles.input} form-control`} placeholder="Re-Enter Password" />
                             <span className={`${styles.errorMessage}`}> <ErrorMessage name='cpassword' /> </span>
                         </div>
 
