@@ -7,6 +7,7 @@ import { getTime } from '../../../utils/getTime';
 import Animation from '../../../components/Animation';
 import { getRequest } from '../../../api/request';
 import { useAuth } from '../../../context/auth';
+import { FaBookOpen, FaPenAlt } from 'react-icons/fa'
 
 function ViewTafseer() 
 {
@@ -34,52 +35,71 @@ function ViewTafseer()
     }, [id]);
 
     return (
-        <div className={styles.tafseerContainer}>
-        {/* Loader */}
-        { loading && ( <div style={{ marginTop:"100px" }}> <Loader size='big' text="Loading" /> </div> ) } 
+        <>
+            {/* Loader */}
+            { loading && ( <div style={{ marginTop:"200px" }}> <Loader size='big' text="Loading" /> </div> ) } 
+            {
+                tafseer?._id ? 
+                (
+                    // Mail
+                    <Row>
+                        <Animation type={`3d`}>
+                            <Col>
+                                {/* Wrapper */}
+                                <div className={styles.wrapper}>
+                                
+                                    {/* Header */}
+                                    <div className={styles.header}>
+                                        <h1 className={styles.title}> <FaBookOpen size={50} /> Tafseer Al-Qura’an</h1>
+                                        <p className={styles.subtitle}>
+                                            This Tafseer is provided for learning and reflection purposes. <br/>
+                                            May it help you understand the Qur’an better.
+                                        </p>
+                                    </div>
 
-        {tafseer?._id ? (
-            <>
-                {/* Surah & Ayat */}
-                <Row>
-                    <Animation type="heading">
+                                    {/* Details */}
+                                    <div className={styles.detailBox}>
+                                        <h2 className={styles.sectionTitle}> <FaPenAlt /> Tafseer Details </h2>
+                                        
+                                        <p className={styles.detail}>
+                                            <strong className={styles.highlight}>Surah Name:</strong> { tafseer?.surahName }
+                                        </p>
+                                        <p className={styles.detail}>
+                                            <strong className={styles.highlight}>Ayah Reference:</strong> { tafseer?.ayah }
+                                        </p>
+                                        <p className={styles.detail}>
+                                            <strong className={styles.highlight}>Posted at:</strong> { getTime(tafseer?.createdAt) } 
+                                        </p>
+                                    </div>
+
+                                    {/* Tafseer */}
+                                    <div className={styles.messageBox}>
+                                        <h2 className={styles.sectionTitle}> <FaBookOpen /> Tafseer</h2>
+                                        <p className={styles.message}> { tafseer?.tafseer } </p>
+                                    </div>
+
+                                    {/* Footer */}
+                                    <hr className={styles.divider} />
+                                    <p className={styles.footer}>
+                                        Tafseer brings us closer to the true message of the Qur’an.
+                                        Reflect and share the knowledge.
+                                    </p>
+                                </div>  
+                            </Col>                        
+                        </Animation>
+                    </Row>
+                )
+                :
+                ( 
+                    // No mail found
+                    <Row>
                         <Col>
-                            <h2 className={styles.surahName}> Surah {tafseer?.surahName} </h2>
-                            <h4 className='text-center p-1' style={{ letterSpacing:"4px" }}> (Ayah: { tafseer?.ayah }) </h4>
-                            <hr />
-                        </Col>                                
-                    </Animation>
-                </Row>
-
-                {/* Tafseer */}
-                <Row className="mt-3">
-                    <Animation type="normal">
-                        <Col>
-                            <p className={styles.tafseerText}> {tafseer?.tafseer} </p>
-                        </Col>                                
-                    </Animation>
-                </Row> 
-
-                {/* Uploaded Date */}
-                <Row className='mt-5'>
-                    <Animation type="normal">
-                        <Col md={{ span:"3", offset:"9" }}> 
-                            <p className='text-secondary'> Posted at: { getTime(tafseer?.createdAt) } </p>
-                            <p className='text-secondary'> Language: { tafseer?.language } </p>
-                        </Col>                                
-                    </Animation>
-                </Row>
-            </>                    
-        )
-        :
-        (
-            <Row className="mt-3">
-                <Col>
-                    <h1 className='textTheme fw-bold text-center'> { message } </h1>
-                </Col>
-            </Row>   
-        )}
-        </div>
+                            <h1 className='textTheme fw-bold text-center mt-5'> { message } </h1> 
+                        </Col>
+                    </Row>
+                )
+            }          
+        </>
     );
 }
 
