@@ -7,6 +7,7 @@ import * as Yup from 'yup';
 import { useAuth } from "../../../context/auth";
 import { Navigate } from 'react-router-dom';
 import Restricted from "../../security/Restricted";
+import PasswordField from "../../../components/PasswordField";
 
 function AdminLogin() 
 {
@@ -46,7 +47,7 @@ function AdminLogin()
                             {/* Password */}
                             <div className="form-group mb-2">
                                 <label>Password</label>
-                                <Field type="password" name="password" placeholder="Enter password" className="form-control" />
+                                <PasswordField name="password" placeholder="Enter password" className="form-control" />
                                 <ErrorMessage name="password" component="div" className="text-danger" />
                             </div>
 
