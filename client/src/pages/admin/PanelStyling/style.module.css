@@ -9,15 +9,15 @@
 
 .input:focus {
     border-color: #0dcdbc;
-    box-shadow: 0 0 5px rgba(13,205,188,0.5);
-    color: #0dcdbc;
+    box-shadow: 0 0 5px #00bcd4;
+    color: #00bcd4;
     outline: none;
 }
 
 .label {
     font-weight: 400;
     font-size: 1.1rem;
-    color: #0dcdbc;
+    color: #00bcd4;
     letter-spacing: 0.3px;
     margin-bottom: 1px;
     display: block; 

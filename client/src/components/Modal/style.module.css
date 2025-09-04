@@ -2,7 +2,7 @@
   background-color: #12151d !important;
   color: #e5e7eb !important;
   border-radius: 12px !important;
-  box-shadow: 1px 1px 17px #0dcdbc;
+  box-shadow: 1px 1px 17px #00bcd4;
 }
 
 .modalHeader {
@@ -11,7 +11,7 @@
 
 .modalTitle {
   font-weight: bold;
-  color: #0dcdbc;
+  color: #00bcd4;
   text-align: center;
 }
 

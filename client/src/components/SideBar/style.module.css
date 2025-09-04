@@ -24,7 +24,7 @@
     padding: 15px;
     font-size: 2rem;
     font-weight: bold;
-    background: #0dcdbc;
+    background: #00bcd4;
     color: #12151d;
 }
 
@@ -57,12 +57,12 @@
 
 .navItem:hover {
     background: #1f2533;
-    color: #0dcdbc;
+    color: #00bcd4;
 }
 
 .active {
   background: #1f2533;
-  color: #0dcdbc;
+  color: #00bcd4;
 }
 
 /* Toggle button */
