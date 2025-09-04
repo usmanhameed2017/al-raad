@@ -3,50 +3,50 @@ import { motion } from 'framer-motion';
 import { FaBookOpen, FaBookReader, FaVideo, FaUsers, FaLightbulb, FaEnvelope } from 'react-icons/fa';
 import { Row, Col } from 'react-bootstrap';
 
-const sections = [
-  {
-    icon: <FaBookOpen size={30} />,
-    title: "Quranic Tafseer",
-    text: `We provide in-depth Quranic Tafseer in Urdu and Arabic, offering classical and modern insights for better understanding.
-    <br> 
-    Our Tafseer is presented with context, language analysis, and practical life applications.`,
-  },
-  {
-    icon: <FaBookReader size={30} />,
-    title: "Islamic Books",
-    text: `Access a curated digital library of authentic Islamic books, including Fiqh, Aqeedah, Seerah, and Hadith.
-    <br> 
-    All resources are free to read or download as pdf.`,
-  },
-  {
-    icon: <FaVideo size={30} />,
-    title: "Video Lectures",
-    text: `Our video section includes lectures from renowned scholars, detailed tafseer series, and educational sessions on various Islamic topics.
-    <br>
-    All videos are verified and free from bid'ah or misinformation.`,
-  },
-  {
-    icon: <FaLightbulb size={30} />,
-    title: "Why Al-Ra’ad?",
-    text: `- 100% Authentic Sources
-           <br>- Completely Free for All
-           <br>- Mobile-friendly and accessible
-           <br>- Regular updates with new content`,
-  },
-  {
-    icon: <FaUsers size={30} />,
-    title: "Our Team",
-    text: `We are developers, designers, and students of knowledge — collaborating for the sake of Allah ﷻ to make Islamic learning easy and accessible.`,
-  },
-  {
-    icon: <FaEnvelope size={30} />,
-    title: "Contact Us",
-    text: `Have feedback or suggestions? <a href='/contact'>Click here</a> to help improve Al-Ra’ad.`,
-  },
-];
-
 function About() 
 {
+  // Sections
+  const sections = [
+    {
+      icon: <FaBookOpen size={30} />,
+      title: "Quranic Tafseer",
+      text: `We provide in-depth Quranic Tafseer in Urdu and Arabic, offering classical and modern insights for better understanding.
+      <br> 
+      Our Tafseer is presented with context, language analysis, and practical life applications.`,
+    },
+    {
+      icon: <FaBookReader size={30} />,
+      title: "Islamic Books",
+      text: `Access a curated digital library of authentic Islamic books, including Fiqh, Aqeedah, Seerah, and Hadith.
+      <br> 
+      All resources are free to read or download as pdf.`,
+    },
+    {
+      icon: <FaVideo size={30} />,
+      title: "Video Lectures",
+      text: `Our video section includes lectures from renowned scholars, detailed tafseer series, and educational sessions on various Islamic topics.
+      <br>
+      All videos are verified and free from bid'ah or misinformation.`,
+    },
+    {
+      icon: <FaLightbulb size={30} />,
+      title: "Why Al-Ra’ad?",
+      text: `- 100% Authentic Sources
+            <br>- Completely Free for All
+            <br>- Mobile-friendly and accessible
+            <br>- Regular updates with new content`,
+    },
+    {
+      icon: <FaUsers size={30} />,
+      title: "Our Team",
+      text: `We are developers, designers, and students of knowledge — collaborating for the sake of Allah ﷻ to make Islamic learning easy and accessible.`,
+    },
+    {
+      icon: <FaEnvelope size={30} />,
+      title: "Contact Us",
+      text: `Have feedback or suggestions? <a href='/contact'>Click here</a> to help improve Al-Ra’ad.`,
+    },
+];  
   return (
     <div className={styles.aboutWrapper}>
       <motion.h1 className="heroTitle" initial={{ opacity: 0, y: -50, scale: 0.9 }}
