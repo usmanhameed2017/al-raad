@@ -45,8 +45,7 @@ function Animation({ children, type })
         <motion.div
             initial={{ opacity: 0, y: -30 }}
             animate={{ opacity: 1, y: -10 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            whileHover={{ scale: 1.04 }}>
+            transition={{ duration: 0.5, delay: 0.1 }}>
             { children }
         </motion.div>            
     );
