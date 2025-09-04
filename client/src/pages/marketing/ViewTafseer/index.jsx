@@ -91,7 +91,7 @@ function ViewTafseer()
                 )
                 :
                 ( 
-                    // No mail found
+                    // Content not found
                     <Row>
                         <Col>
                             <h1 className='textTheme fw-bold text-center mt-5'> { message } </h1> 

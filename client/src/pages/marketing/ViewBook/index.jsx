@@ -5,9 +5,8 @@ import { Row, Col } from 'react-bootstrap';
 import Loader from '../../../components/Loader';
 import { getTime } from '../../../utils/getTime';
 import Animation from '../../../components/Animation';
-import Button from '../../../components/Button';
 import { getRequest } from '../../../api/request';
-import { FaDownload } from 'react-icons/fa';
+import { FaBookOpen, FaDownload, FaPenAlt } from 'react-icons/fa';
 import { useAuth } from '../../../context/auth';
 
 function ViewBook() 
@@ -36,52 +35,80 @@ function ViewBook()
     }, [id]);
 
     return (
-        <div className={styles.bookContainer}>
-        {/* Loader */}
-        { loading && ( <div style={{ marginTop:"200px" }}> <Loader size='big' text="Loading" /> </div> ) } 
-        { book?._id ? (
-            <>            
-                {/* Surah & Ayat */}
-                <Row>
-                    <Animation type="heading">
-                        <Col>
-                            <h2 className={styles.bookName}> {book?.title} </h2>
-                            <a href={book?.pdf} download>
-                                <Button className='float-end' title="Download Book"> <FaDownload /> Download </Button>
-                            </a>
-                            <hr />
-                        </Col>                                
-                    </Animation>
-                </Row>
+        <>
+            {/* Loader */}
+            { loading && ( <div style={{ marginTop:"200px" }}> <Loader size='big' text="Loading" /> </div> ) } 
+            {
+                book?._id ? 
+                (
+                    // Mail
+                    <Row>
+                        <Animation type={`3d`}>
+                            <Col>
+                                {/* Wrapper */}
+                                <div className={styles.wrapper}>
+                                
+                                    {/* Header */}
+                                    <div className={styles.header}>
+                                        <h1 className={styles.title}> <FaBookOpen size={50} /> Books & Articles </h1>
+                                        <p className={styles.subtitle}>
+                                            Read authentic Islamic literature that enlightens the heart and mind.
+                                        </p>
+                                    </div>
 
-                {/* Description */}
-                <Row className="mt-3">
-                    <Animation type="normal">
-                        <Col>
-                            <p className={styles.bookDescription}> {book?.description} </p>
-                        </Col>                                
-                    </Animation>
-                </Row> 
+                                    {/* Details */}
+                                    <div className={styles.detailBox}>
+                                        <h2 className={styles.sectionTitle}> <FaPenAlt /> Book Details </h2>
 
-                {/* Uploaded Date */}
-                <Row className='mt-5'>
-                    <Animation type="normal">
-                        <Col md={{ span:"3", offset:"9" }}> 
-                            <p className='text-secondary'> Posted at: { getTime(book?.createdAt) } </p>
-                        </Col>                                
-                    </Animation>
-                </Row>
-            </>                    
-        )
-        :
-        (
-            <Row className="mt-3">
-                <Col>
-                    <h1 className='textTheme fw-bold text-center'> { message } </h1>
-                </Col>
-            </Row>   
-        )}
-        </div>
+                                        {/* Title */}
+                                        <p className={styles.detail}>
+                                            <strong className={styles.highlight}>Title:</strong> { book?.title }
+                                        </p>
+
+                                        {/* PDF */} 
+                                        <p className={styles.detail}>
+                                            <strong className={styles.highlight}>PDF:</strong> 
+                                            <a href={book?.pdf} download className='fw-bold' title='Download Book'> <FaDownload size={12} /> Download </a>
+                                        </p>
+
+                                        {/* Posted by */}
+                                        <p className={styles.detail}>
+                                            <strong className={styles.highlight}>Posted by:</strong> { book?.uploadedBy?.name } 
+                                        </p>
+
+                                        {/* Posted at */}
+                                        <p className={styles.detail}>
+                                            <strong className={styles.highlight}>Posted at:</strong> { getTime(book?.createdAt) } 
+                                        </p>
+                                    </div>
+
+                                    {/* Message */}
+                                    <div className={styles.messageBox}>
+                                        <h2 className={styles.sectionTitle}> <FaBookOpen /> Description</h2>
+                                        <p className={styles.message}> { book?.description } </p>
+                                    </div>
+
+                                    {/* Footer */}
+                                    <hr className={styles.divider} />
+                                    <p className={styles.footer}>
+                                        May these books and articles help you gain deeper insight into Islam.
+                                    </p>
+                                </div>  
+                            </Col>                        
+                        </Animation>
+                    </Row>
+                )
+                :
+                ( 
+                    // Content not found
+                    <Row>
+                        <Col>
+                            <h1 className='textTheme fw-bold text-center mt-5'> { message } </h1> 
+                        </Col>
+                    </Row>
+                )
+            }            
+        </>
     );
 }
 
