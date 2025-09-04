@@ -1,16 +1,17 @@
 .form {
   padding: 40px;
-  width: 90%;
+  width: 100%;
   max-width: 600px;
   margin: 0 auto;
   border-radius: 20px;
   background-color: #12151d;
+  box-shadow: 2px 4px 20px #00bcd4;
 }
 
 .form label {
     font-weight: 400;
     font-size: 1.1rem;
-    color: #0dcdbc;
+    color: #00bcd4;
     letter-spacing: 0.3px;
     margin-bottom: 3px;
     display: block;
@@ -26,8 +27,19 @@
 }
 
 .form input:focus {
-    border-color: #0dcdbc;
-    box-shadow: 0 0 5px rgba(13,205,188,0.5);
-    color: #0dcdbc;
+    border-color: #00bcd4;
+    box-shadow: 0 0 5px #00bcd4;
+    color: #00bcd4;
     outline: none;
+}
+
+.heading h1 {
+    font-size: 2.7rem;
+    text-align: center;
+    color: #00bcd4;
+}
+
+.subHeading p {
+    text-align: center;
+    color: gray;
 }

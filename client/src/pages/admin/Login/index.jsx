@@ -33,7 +33,16 @@ function AdminLogin()
         <>
         {
             !user ? 
-            <div className={`${styles.form} shadow`}>
+            <div className={styles.form}>
+                {/* Heading */}
+                <div className={styles.heading}>
+                    <h1> Admin Login </h1>
+                </div>
+                {/* Sub heading */}
+                <div className={styles.subHeading}>
+                    <p> Get login to access the quiries! </p>
+                    <hr />
+                </div>
                 <FormBS initialValues={initialValues} validationSchema={validationSchema} handlerFunction={adminLogin}>
                     <Animation type="normal">
                         <Form>
@@ -52,7 +61,6 @@ function AdminLogin()
                             </div>
 
                             <hr />
-                            
                             {/* Login Button */}
                             <div className="form-group d-grid">
                                 <Button type="submit" className="w-100"> Login </Button>
