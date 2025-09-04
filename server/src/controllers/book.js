@@ -89,7 +89,7 @@ const fetchSingleBook = async (request, response) => {
 
     try 
     {
-        const book = await Book.findById(id);
+        const book = await Book.findById(id).populate("uploadedBy");
         if(!book) throw new ApiError(404, "Book not found");
         return response.status(200).json(new ApiResponse(200, book, "Book has been fetched successfully"));
     } 
