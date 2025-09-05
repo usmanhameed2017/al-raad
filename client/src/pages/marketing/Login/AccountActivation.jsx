@@ -51,8 +51,8 @@ function AccountActivation()
                 }}>
                     <Animation type="normal">
                             <div>
-                                <h2 className='text-center'> Account Activation </h2> 
-                                <hr />
+                                <h2> Account Activation </h2> 
+                                <p> You are just one step away! </p>
                             </div>
                             {/* Activation code */}
                             <div className="form-group">
@@ -61,8 +61,8 @@ function AccountActivation()
                             </div>
                             <hr />
                             {/* Confirm */}
-                            <div className="form-group d-grid mt-3">
-                                <Button type="submit" className="w-100 mt-3">Confirm</Button>
+                            <div className="form-group d-grid">
+                                <Button type="submit" className="w-100">Confirm</Button>
                             </div>                       
                     </Animation>
                 </FormBS>
