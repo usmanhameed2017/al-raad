@@ -5,11 +5,10 @@ import FormBS from '../../../components/Form';
 import * as Yup from 'yup';
 import { getUser } from '../../../constants';
 import styles from './style.module.css';
-import { Form, Field, ErrorMessage } from 'formik';
 import { getRequest, putRequest } from '../../../api/request';
 import { useAuth } from '../../../context/auth';
 import Loader from '../../../components/Loader';
-import PasswordField from '../../../components/PasswordField';
+import Input from '../../../components/InputFields';
 
 function Settings() 
 {
@@ -104,51 +103,44 @@ function Settings()
                         }
                     }}
                     >
-                        <Form>
-                            {/* Name */}
-                            <div className="form-group mb-3">
-                                <label htmlFor="name" className={styles.label}> Name </label>
-                                <Field type="text" name="name" className={`form-control ${styles.input}`} placeholder="Enter Name" />
-                                <span className={styles.errorMsg}> <ErrorMessage name="name" /> </span>
-                            </div>
+                        {/* Name */}
+                        <div className="form-group mb-3">
+                            <label htmlFor="name" className={styles.label}> Name </label>
+                            <Input type="text" name="name" className={`form-control ${styles.input}`} placeholder="Enter Name" />
+                        </div>
 
-                            {/* Username */}
-                            <div className="form-group mb-3">
-                                <label htmlFor="username" className={styles.label}> Username </label>
-                                <Field type="text" name="username" className={`form-control ${styles.input}`} placeholder="Enter Username" />
-                                <span className={styles.errorMsg}> <ErrorMessage name="username" /> </span>
-                            </div>
+                        {/* Username */}
+                        <div className="form-group mb-3">
+                            <label htmlFor="username" className={styles.label}> Username </label>
+                            <Input type="text" name="username" className={`form-control ${styles.input}`} placeholder="Enter Username" />
+                        </div>
 
-                            {/* Password */}
-                            <div className="form-group mb-3">
+                        {/* Password */}
+                        <div className="form-group mb-3">
                             <label htmlFor="password" className={styles.label}> Password </label>
-                                <PasswordField name="password" className={`form-control ${styles.input}`} placeholder="Enter Password" />
-                                <span className={styles.errorMsg}> <ErrorMessage name="password" /> </span>
+                            <Input type="password" name="password" className={`form-control ${styles.input}`} placeholder="Enter Password" />
+                        </div>
+
+                        {/* Confirm Password */}
+                        <div className="form-group mb-3">
+                            <label htmlFor="cpassword" className={styles.label}> Confirm Password </label>
+                            <Input type="password" name="cpassword" className={`form-control ${styles.input}`} placeholder="Re-Enter Password" />
+                        </div>
+
+                        <hr />
+                        <i className='text-secondary mb-5 ms-1'>  Note: Leave the password fields blank to keep your current password. </i>
+
+                        {/* Save Changes */}
+                        <div className='d-grid mt-2'>
+                            <Button type="submit" disabled={savingChanges===true}> Save Changes </Button>
+                        </div>
+
+                        {/* Loader */}
+                        {savingChanges && (
+                            <div className='mt-4 float-start'>
+                                <Loader text={`Saving changes...`} size='small' />
                             </div>
-
-                            {/* Confirm Password */}
-                            <div className="form-group mb-3">
-                                <label htmlFor="cpassword" className={styles.label}> Confirm Password </label>
-                                <PasswordField name="cpassword" className={`form-control ${styles.input}`} placeholder="Re-Enter Password" />
-                                <span className={styles.errorMsg}> <ErrorMessage name="cpassword" /> </span>
-                            </div>
-
-                            <hr />
-                            <i className='text-secondary mb-5 ms-1'>  Note: Leave the password fields blank to keep your current password. </i>
-
-                            {/* Save Changes */}
-                            <div className='d-grid mt-2'>
-                                <Button type="submit" disabled={savingChanges===true}> Save Changes </Button>
-                            </div>
-
-                            {/* Loader */}
-                            {savingChanges && (
-                                <div className='mt-4 float-start'>
-                                    <Loader text={`Saving changes...`} size='small' />
-                                </div>
-                            )}
-
-                        </Form>
+                        )}
                     </FormBS>
                 </Animation>
             </div>

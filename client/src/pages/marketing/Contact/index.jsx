@@ -2,11 +2,11 @@ import { motion } from 'framer-motion';
 import styles from './style.module.css';
 import Button from '../../../components/Button';
 import FormBS from '../../../components/Form';
-import { ErrorMessage, Field, Form } from 'formik';
 import * as Yup from "yup";
 import { postRequest } from '../../../api/request';
 import { useAuth } from '../../../context/auth';
 import Loader from '../../../components/Loader';
+import Input from '../../../components/InputFields';
 
 function Contact() 
 {
@@ -48,7 +48,7 @@ function Contact()
                         Have a question, suggestion, or just want to say hello? Fill out the form below.
                     </p>
 
-                    <FormBS initialValues={initialValues} validationSchema={validationSchema}
+                    <FormBS initialValues={initialValues} validationSchema={validationSchema} className={styles.contactForm}
                     handlerFunction={async (values, action) => {
                         try
                         {
@@ -60,35 +60,31 @@ function Contact()
                             return error;
                         }
                     }}>
-                        <Form className={styles.contactForm}>
-                            {/* Subject Options */}
-                            <div className={styles.formGroup}>
-                                <label htmlFor="subject" className={styles.formLabel}>Subject</label>
-                                <Field as='select' name='subject' className={`${styles.inputField} mb-1`}> 
-                                    <option value="" className='text-black'> Select </option>
-                                    <option value="Feedback" className='text-black'> Feedback </option>
-                                    <option value="Suggestion" className='text-black'> Suggestion </option>
-                                    <option value="Question" className='text-black'> Question </option>
-                                    <option value="Business Query" className='text-black'> Business Query </option>
-                                </Field>
-                                <span className={styles.textDanger}><ErrorMessage name="subject" /></span>
-                            </div>                            
+                        {/* Subject Options */}
+                        <div className={styles.formGroup}>
+                            <label htmlFor="subject" className={styles.formLabel}>Subject</label>
+                            <Input type="select" name='subject' className={`${styles.inputField} mb-1`}>
+                                <option value="" className='text-black'> Select </option>
+                                <option value="Feedback" className='text-black'> Feedback </option>
+                                <option value="Suggestion" className='text-black'> Suggestion </option>
+                                <option value="Question" className='text-black'> Question </option>
+                                <option value="Business Query" className='text-black'> Business Query </option>
+                            </Input>
+                        </div>                            
 
-                            {/* Message */}
-                            <div className={styles.formGroup}>
-                                <label htmlFor="message" className={styles.formLabel}>Message</label>
-                                <Field as="textarea" name="message" className={`${styles.textarea}`} placeholder="Your Message" />
-                                <span className={styles.textDanger}><ErrorMessage name="message" /></span>
-                            </div>
+                        {/* Message */}
+                        <div className={styles.formGroup}>
+                            <label htmlFor="message" className={styles.formLabel}>Message</label>
+                            <Input type="textarea" name="message" className={`${styles.textarea}`} placeholder="Your Message" />
+                        </div>
 
-                            {/* Submit */}
-                            <Button type="submit" className="w-100" disabled={savingChanges === true}>Send Message</Button>
+                        {/* Submit */}
+                        <Button type="submit" className="w-100" disabled={savingChanges === true}>Send Message</Button>
 
-                            {/* Loader */}
-                            <div className="mt-3">
+                        {/* Loader */}
+                        <div className="mt-3">
                             {savingChanges && <Loader text="Sending mail..." /> }
-                            </div>
-                        </Form>
+                        </div>
                     </FormBS>
                 </motion.div>
             </div>

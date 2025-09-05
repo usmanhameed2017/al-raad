@@ -9,11 +9,10 @@ import { Row, Col } from 'react-bootstrap';
 import ModalBS from '../../../components/Modal';
 import FormBS from '../../../components/Form';
 import * as Yup from "yup";
-import { Form, Field, ErrorMessage } from "formik";
 import styles from "../PanelStyling/style.module.css";
 import { sweetAlert } from '../../../utils/sweetAlert2';
 import Loader from '../../../components/Loader';
-import PasswordField from '../../../components/PasswordField';
+import Input from '../../../components/InputFields';
 
 function Users() 
 {
@@ -234,73 +233,65 @@ function Users()
                         return error;
                     }
                 }}>
-                    <Form>
-                        {/* Name */}
-                        <div className="form-group mb-2">
-                            <label htmlFor="name" className={styles.label}> Name </label>
-                            <Field type="text" name="name" className={`${styles.input} form-control`} placeholder="Enter Name" />
-                            <span className={`${styles.errorMessage}`}> <ErrorMessage name='name' /> </span>
+                    {/* Name */}
+                    <div className="form-group mb-2">
+                        <label htmlFor="name" className={styles.label}> Name </label>
+                        <Input type="text" name="name" className={`${styles.input} form-control`} placeholder="Enter Name" />
+                    </div>
+
+                    {/* Username */}
+                    <div className="form-group mb-2">
+                        <label htmlFor="username" className={styles.label}> Username </label>
+                        <Input type="text" name="username" className={`${styles.input} form-control`} placeholder="Enter Username" />
+                    </div>
+
+                    {/* Email */}
+                    <div className="form-group mb-2">
+                        <label htmlFor="email" className={styles.label}> Email </label>
+                        <Input type="text" name="email" className={`${styles.input} form-control`} placeholder="Enter Email" />
+                    </div>                       
+
+                    {/* Role */}
+                    <div className="form-group mb-2">
+                        <label htmlFor="role" className={styles.label}> Role </label>
+                        <Input type="select" name="role" className={`${styles.input} form-control`}>
+                            <option value=""> Select Role </option>
+                            <option value="Admin"> Admin </option>
+                            <option value="User"> User </option>
+                        </Input>
+                    </div>
+
+                    {/* Password */}
+                    <div className="form-group mb-2">
+                        <label htmlFor="password" className={styles.label}> Password </label>
+                        <Input type="password" name="password" className={`${styles.input} form-control`} placeholder="Enter Password" />
+                    </div>
+
+                    {/* Confirm Password */}
+                    <div className="form-group mb-2">
+                        <label htmlFor="cpassword" className={styles.label}> Confirm Password </label>
+                        <Input type="password" name="cpassword" className={`${styles.input} form-control`} placeholder="Re-Enter Password" />
+                    </div>
+
+                    {formType === "edit" && (
+                        <>
+                            <hr />
+                            <i className='text-secondary mb-3 ms-1'>  Note: Leave the password fields blank to keep your current password. </i>
+                        </>
+                    )}
+
+                    {/* Buttons */}
+                    <div className="form-group mt-3 d-flex align-items-center gap-2">
+                        <Button type="submit" disabled={savingChanges === true}> Save Changes </Button>
+                        <Button type="button" onClick={ () => setShowModal(false) }> Cancel </Button>
+                    </div>
+
+                    {/* Loader */}
+                    {savingChanges && (
+                        <div className="form-group mt-3 d-flex align-items-center">
+                            <Loader size='small' text={`Saving changes...`} />
                         </div>
-
-                        {/* Username */}
-                        <div className="form-group mb-2">
-                            <label htmlFor="username" className={styles.label}> Username </label>
-                            <Field type="text" name="username" className={`${styles.input} form-control`} placeholder="Enter Username" />
-                            <span className={`${styles.errorMessage}`}> <ErrorMessage name='username' /> </span>
-                        </div>
-
-                        {/* Email */}
-                        <div className="form-group mb-2">
-                            <label htmlFor="email" className={styles.label}> Email </label>
-                            <Field type="text" name="email" className={`${styles.input} form-control`} placeholder="Enter Email" />
-                            <span className={`${styles.errorMessage}`}> <ErrorMessage name='email' /> </span>
-                        </div>                       
-
-                        {/* Role */}
-                        <div className="form-group mb-2">
-                            <label htmlFor="role" className={styles.label}> Role </label>
-                            <Field as="select" name="role" className={`${styles.input} form-control`}> 
-                                <option value=""> Select Role </option>
-                                <option value="Admin"> Admin </option>
-                                <option value="User"> User </option>
-                            </Field>
-                            <span className={`${styles.errorMessage}`}> <ErrorMessage name='role' /> </span>
-                        </div>
-
-                        {/* Password */}
-                        <div className="form-group mb-2">
-                            <label htmlFor="password" className={styles.label}> Password </label>
-                            <PasswordField name="password" className={`${styles.input} form-control`} placeholder="Enter Password" />
-                            <span className={`${styles.errorMessage}`}> <ErrorMessage name='password' /> </span>
-                        </div>
-
-                        {/* Confirm Password */}
-                        <div className="form-group mb-2">
-                            <label htmlFor="cpassword" className={styles.label}> Confirm Password </label>
-                            <PasswordField name="cpassword" className={`${styles.input} form-control`} placeholder="Re-Enter Password" />
-                            <span className={`${styles.errorMessage}`}> <ErrorMessage name='cpassword' /> </span>
-                        </div>
-
-                        {formType === "edit" && (
-                            <>
-                                <hr />
-                                <i className='text-secondary mb-3 ms-1'>  Note: Leave the password fields blank to keep your current password. </i>
-                            </>
-                        )}
-
-                        {/* Buttons */}
-                        <div className="form-group mt-3 d-flex align-items-center gap-2">
-                            <Button type="submit" disabled={savingChanges === true}> Save Changes </Button>
-                            <Button type="button" onClick={ () => setShowModal(false) }> Cancel </Button>
-                        </div>
-
-                        {/* Loader */}
-                        {savingChanges && (
-                            <div className="form-group mt-3 d-flex align-items-center">
-                                <Loader size='small' text={`Saving changes...`} />
-                            </div>
-                        )}
-                    </Form>                        
+                    )}                     
                 </FormBS>
             </ModalBS>
         </>

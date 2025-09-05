@@ -9,12 +9,12 @@ import { Row, Col } from 'react-bootstrap';
 import ModalBS from '../../../components/Modal';
 import FormBS from '../../../components/Form';
 import * as Yup from "yup";
-import { Form, Field, ErrorMessage } from "formik";
 import styles from "../PanelStyling/style.module.css";
 import { sweetAlert } from '../../../utils/sweetAlert2';
 import Loader from '../../../components/Loader';
 import { surahList } from '../../../constants';
 import { generateOptimizedUrl } from '../../../utils/cloudinary';
+import Input from '../../../components/InputFields';
 
 function Audios() 
 {
@@ -198,52 +198,39 @@ function Audios()
                     }
                 }}
                 >
-                {({ setFieldValue }) => (
-                    <Form>
-                        {/* Surah Name */}
-                        <div className="form-group mb-2">
-                            <label htmlFor="surahName" className={styles.label}> Surah Name </label>
-                            <Field type="text" name="surahName" list="surahOptions" className={`${styles.input} form-control`} placeholder="Select Surah" />
-
+                    {/* Surah Name */}
+                    <div className="form-group mb-2">
+                        <label htmlFor="surahName" className={styles.label}> Surah Name </label>
+                        <Input type="datalist" name="surahName" list="surahOptions" className={`${styles.input} form-control`} placeholder="Select Surah"> 
                             {/* Datalist options */}
-                            <datalist id="surahOptions">
-                            {surahList.map(surah => (
-                                <option value={surah} key={surah}> { surah } </option>
-                            ))}
-                            </datalist>
-                            <span className={`${styles.errorMessage}`}> <ErrorMessage name='surahName' /> </span>
+                            {surahList.map(surah => <option value={surah} key={surah}> { surah } </option> )}                      
+                        </Input>
+                    </div>
+
+                    {/* Ayah */}
+                    <div className="form-group mb-2">
+                        <label htmlFor="ayah" className={styles.label}> Ayat Reference </label>
+                        <Input type="text" name="ayah" className={`${styles.input} form-control`} placeholder="Enter Ayah No (eg: 02-04)" />
+                    </div>
+
+                    {/* Audio */}
+                    <div className="form-group mb-2">
+                        <label htmlFor="audio" className={styles.label}> Upload Audio </label>
+                        <Input type="file" name="url" className={`${styles.input} form-control`} required={formType==="create"} accept="audio/*" />
+                    </div>
+
+                    {/* Buttons */}
+                    <div className="form-group mt-3 d-flex align-items-center gap-2">
+                        <Button type="submit" disabled={savingChanges === true}> Save Changes </Button>
+                        <Button type="button" onClick={ () => setShowModal(false) }> Cancel </Button>
+                    </div>
+
+                    {/* Loader */}
+                    {savingChanges && (
+                        <div className="form-group mt-3 d-flex align-items-center">
+                            <Loader size='small' text={`Saving changes...`} />
                         </div>
-
-                        {/* Ayah */}
-                        <div className="form-group mb-2">
-                            <label htmlFor="ayah" className={styles.label}> Ayat Reference </label>
-                            <Field type="text" name="ayah" className={`${styles.input} form-control`} placeholder="Enter Ayah No (eg: 02-04)" />
-                            <span className={`${styles.errorMessage}`}> <ErrorMessage name='ayah' /> </span>
-                        </div>
-
-                        {/* Audio */}
-                        <div className="form-group mb-2">
-                            <label htmlFor="audio" className={styles.label}> Upload Audio </label>
-                            <input type="file" name="url" className={`${styles.input} form-control`} 
-                            required={formType==="create"} accept="audio/*"
-                            onChange={ (e) => setFieldValue("url", e.target.files[0]) } />
-                            <span className={`${styles.errorMessage}`}> <ErrorMessage name='url' /> </span>
-                        </div> 
-
-                        {/* Buttons */}
-                        <div className="form-group mt-3 d-flex align-items-center gap-2">
-                            <Button type="submit" disabled={savingChanges === true}> Save Changes </Button>
-                            <Button type="button" onClick={ () => setShowModal(false) }> Cancel </Button>
-                        </div>
-
-                        {/* Loader */}
-                        {savingChanges && (
-                            <div className="form-group mt-3 d-flex align-items-center">
-                                <Loader size='small' text={`Saving changes...`} />
-                            </div>
-                        )}
-                    </Form>                        
-                )}
+                    )}                     
                 </FormBS>
             </ModalBS>
         </>

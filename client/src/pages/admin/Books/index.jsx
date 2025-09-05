@@ -9,10 +9,10 @@ import { Row, Col } from 'react-bootstrap';
 import ModalBS from '../../../components/Modal';
 import FormBS from '../../../components/Form';
 import * as Yup from "yup";
-import { Form, Field, ErrorMessage } from "formik";
 import styles from "../PanelStyling/style.module.css";
 import { sweetAlert } from '../../../utils/sweetAlert2';
 import Loader from '../../../components/Loader';
+import Input from '../../../components/InputFields';
 
 function Books() 
 {
@@ -198,45 +198,37 @@ function Books()
                     }
                 }}
                 >
-                {({ setFieldValue }) => (
-                    <Form>
-                        {/* Title */}
-                        <div className="form-group mb-2">
-                            <label htmlFor="title" className={styles.label}> Title </label>
-                            <Field type="text" name="title" className={`${styles.input} form-control`} placeholder="Enter Title" />
-                            <span className={`${styles.errorMessage}`}> <ErrorMessage name='title' /> </span>
+                    {/* Title */}
+                    <div className="form-group mb-2">
+                        <label htmlFor="title" className={styles.label}> Title </label>
+                        <Input type="text" name="title" className={`${styles.input} form-control`} placeholder="Enter Title" />
+                    </div>
+
+                    {/* Description */}
+                    <div className="form-group mb-2">
+                        <label htmlFor="description" className={styles.label}> Description </label>
+                        <Input type="textarea" rows="3" name="description" className={`${styles.input} form-control`} placeholder="Enter Description" />
+                    </div>
+
+                    {/* PDF */}
+                    <div className="form-group mb-2">
+                        <label htmlFor="pdf" className={styles.label}> Upload PDF </label>
+                        <Input type="file" name="pdf" className={`${styles.input} form-control`}
+                        accept='application/pdf' required={formType==="create"} />
+                    </div> 
+
+                    {/* Buttons */}
+                    <div className="form-group mt-3 d-flex align-items-center gap-2">
+                        <Button type="submit" disabled={savingChanges === true}> Save Changes </Button>
+                        <Button type="button" onClick={ () => setShowModal(false) }> Cancel </Button>
+                    </div>
+
+                    {/* Loader */}
+                    {savingChanges && (
+                        <div className="form-group mt-3 d-flex align-items-center">
+                            <Loader size='small' text={`Saving changes...`} />
                         </div>
-
-                        {/* Description */}
-                        <div className="form-group mb-2">
-                            <label htmlFor="description" className={styles.label}> Description </label>
-                            <Field as="textarea" rows="3" name="description" className={`${styles.input} form-control`} placeholder="Enter Description" />
-                            <span className={`${styles.errorMessage}`}> <ErrorMessage name='description' /> </span>
-                        </div> 
-
-                        {/* PDF */}
-                        <div className="form-group mb-2">
-                            <label htmlFor="pdf" className={styles.label}> Upload PDF </label>
-                            <input type="file" name="pdf" className={`${styles.input} form-control`} 
-                            accept='application/pdf' required={formType==="create"}
-                            onChange={ (e) => setFieldValue("pdf", e.target.files[0]) } />
-                            <span className={`${styles.errorMessage}`}> <ErrorMessage name='pdf' /> </span>
-                        </div> 
-
-                        {/* Buttons */}
-                        <div className="form-group mt-3 d-flex align-items-center gap-2">
-                            <Button type="submit" disabled={savingChanges === true}> Save Changes </Button>
-                            <Button type="button" onClick={ () => setShowModal(false) }> Cancel </Button>
-                        </div>
-
-                        {/* Loader */}
-                        {savingChanges && (
-                            <div className="form-group mt-3 d-flex align-items-center">
-                                <Loader size='small' text={`Saving changes...`} />
-                            </div>
-                        )}
-                    </Form>                        
-                )}
+                    )}                       
                 </FormBS>
             </ModalBS>
         </>

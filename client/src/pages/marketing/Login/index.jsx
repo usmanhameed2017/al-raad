@@ -1,5 +1,4 @@
 import { Tabs, Tab } from "react-bootstrap";
-import { Form, Field, ErrorMessage } from "formik";
 import * as Yup from 'yup';
 import { Link, Navigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
@@ -9,7 +8,7 @@ import { useAuth } from "../../../context/auth";
 import styles from "./style.module.css";
 import { useState } from "react";
 import Loader from "../../../components/Loader";
-import PasswordField from "../../../components/PasswordField";
+import Input from "../../../components/InputFields";
 
 function Login() 
 {
@@ -118,32 +117,28 @@ function Login()
                         {activeTab === "Signin" && (
                         <motion.div key="signin" variants={formVariants} initial="hidden" animate="visible" exit="exit">
                             <FormBS initialValues={loginInitialValues} validationSchema={loginValidation} handlerFunction={userLogin}>
-                                <Form>
-                                    {/* Username */}
-                                    <div className="form-group">
-                                        <label htmlFor="username">Username</label>
-                                        <Field type="text" name="username" className="form-control" placeholder="Enter username" />
-                                        <span className="text-danger"> <ErrorMessage name="username" /> </span>
-                                    </div>
+                                {/* Username */}
+                                <div className="form-group">
+                                    <label htmlFor="username">Username</label>
+                                    <Input type="text" name="username" className="form-control" placeholder="Enter username" />
+                                </div>
 
-                                    {/* Password */}
-                                    <div className="form-group">
-                                        <label htmlFor="password">Password</label>
-                                        <PasswordField name="password" className="form-control" placeholder="Enter password" />
-                                        <span className="text-danger"> <ErrorMessage name="password" /> </span>
-                                    </div>
+                                {/* Password */}
+                                <div className="form-group">
+                                    <label htmlFor="password">Password</label>
+                                    <Input type="password" name="password" className="form-control" placeholder="Enter password" />
+                                </div>
 
-                                    {/* Forgot Password */}
-                                    <div className="form-group mb-2">
-                                        <Link className="text-info" to="/security/forgotPassword"> Forgot password? </Link>
-                                    </div>
+                                {/* Forgot Password */}
+                                <div className="form-group mb-2">
+                                    <Link className="text-info" to="/security/forgotPassword"> Forgot password? </Link>
+                                </div>
 
-                                    <hr />
-                                    {/* Signin Button */}
-                                    <div className="form-group d-grid">
-                                        <Button type="submit" className="w-100" disabled={savingChanges === true}>Signin</Button>
-                                    </div>
-                                </Form>
+                                <hr />
+                                {/* Signin Button */}
+                                <div className="form-group d-grid">
+                                    <Button type="submit" className="w-100" disabled={savingChanges === true}>Signin</Button>
+                                </div>
                             </FormBS>
                         </motion.div>
                     )}
@@ -158,53 +153,46 @@ function Login()
                         exit="exit">
 
                             <FormBS initialValues={signupInitialValues} validationSchema={signupValidation} handlerFunction={userSignup}>
-                                <Form>
-                                    {/* Name */}
-                                    <div className="form-group">
-                                        <label htmlFor="name">Name</label>
-                                        <Field type="text" name="name" className="form-control" placeholder="Enter name"/>
-                                        <span className="text-danger"> <ErrorMessage name="name" /> </span>
-                                    </div>
+                                {/* Name */}
+                                <div className="form-group">
+                                    <label htmlFor="name">Name</label>
+                                    <Input type="text" name="name" className="form-control" placeholder="Enter name" />
+                                </div>
 
-                                    {/* Email */}
-                                    <div className="form-group">
-                                        <label htmlFor="email">Email</label>
-                                        <Field type="text" name="email" className="form-control" placeholder="Enter email" />
-                                        <span className="text-danger"> <ErrorMessage name="email" /> </span>
-                                    </div>
+                                {/* Email */}
+                                <div className="form-group">
+                                    <label htmlFor="email">Email</label>
+                                    <Input type="text" name="email" className="form-control" placeholder="Enter email" />
+                                </div>
 
-                                    {/* Username */}
-                                    <div className="form-group">
-                                        <label htmlFor="username">Username</label>
-                                        <Field type="text" name="username" className="form-control" placeholder="Enter username" />
-                                        <span className="text-danger"> <ErrorMessage name="username" /> </span>
-                                    </div>
+                                {/* Username */}
+                                <div className="form-group">
+                                    <label htmlFor="username">Username</label>
+                                    <Input type="text" name="username" className="form-control" placeholder="Enter username" />
+                                </div>
 
-                                    {/* Password */}
-                                    <div className="form-group">
-                                        <label htmlFor="password">Password</label>
-                                        <PasswordField name="password" className="form-control" placeholder="Enter password" />
-                                        <span className="text-danger"> <ErrorMessage name="password" /> </span>
-                                    </div>
+                                {/* Password */}
+                                <div className="form-group">
+                                    <label htmlFor="password">Password</label>
+                                    <Input type="password" name="password" className="form-control" placeholder="Enter password" />
+                                </div>
 
-                                    {/* Confirm Password */}
-                                    <div className="form-group mb-2">
-                                        <label htmlFor="cpassword">Confirm Password</label>
-                                        <PasswordField name="cpassword" className="form-control" placeholder="Re-enter password" />
-                                        <span className="text-danger"> <ErrorMessage name="cpassword" /> </span>
-                                    </div>
+                                {/* Confirm Password */}
+                                <div className="form-group mb-2">
+                                    <label htmlFor="cpassword">Confirm Password</label>
+                                    <Input type="password" name="cpassword" className="form-control" placeholder="Re-Enter password" />
+                                </div>
 
-                                    <hr />
-                                    {/* Signup */}
-                                    <div className="form-group d-grid">
-                                        <Button type="submit" className="w-100 mt-2" disabled={savingChanges === true}> Signup </Button>
-                                    </div>
+                                <hr />
+                                {/* Signup */}
+                                <div className="form-group d-grid">
+                                    <Button type="submit" className="w-100 mt-2" disabled={savingChanges === true}> Signup </Button>
+                                </div>
 
-                                    {/* Loader */}
-                                    <div className="form-group mt-3">
-                                        { savingChanges && <Loader text="Creating account..." /> }
-                                    </div>
-                                </Form>
+                                {/* Loader */}
+                                <div className="form-group mt-3">
+                                    { savingChanges && <Loader text="Creating account..." /> }
+                                </div>
                             </FormBS>
                         </motion.div>
                     )}

@@ -1,4 +1,3 @@
-import { Form, Field, ErrorMessage } from "formik";
 import Button from "../../../components/Button";
 import FormBS from "../../../components/Form";
 import styles from "./style.module.css";
@@ -7,7 +6,7 @@ import * as Yup from 'yup';
 import { useAuth } from "../../../context/auth";
 import { Navigate } from 'react-router-dom';
 import Restricted from "../../security/Restricted";
-import PasswordField from "../../../components/PasswordField";
+import Input from "../../../components/InputFields";
 
 function AdminLogin() 
 {
@@ -45,27 +44,23 @@ function AdminLogin()
                 </div>
                 <FormBS initialValues={initialValues} validationSchema={validationSchema} handlerFunction={adminLogin}>
                     <Animation type="normal">
-                        <Form>
-                            {/* Username */}
-                            <div className="form-group mb-2">
-                                <label> Username </label>
-                                <Field type="text" name="username" placeholder="Enter username" className="form-control" />
-                                <ErrorMessage name="username" component="div" className="text-danger" />
-                            </div>
+                        {/* Username */}
+                        <div className="form-group mb-2">
+                            <label> Username </label>
+                            <Input type="text" name="username" placeholder="Enter username" className="form-control" />
+                        </div>
 
-                            {/* Password */}
-                            <div className="form-group mb-2">
-                                <label>Password</label>
-                                <PasswordField name="password" placeholder="Enter password" className="form-control" />
-                                <ErrorMessage name="password" component="div" className="text-danger" />
-                            </div>
+                        {/* Password */}
+                        <div className="form-group mb-2">
+                            <label>Password</label>
+                            <Input type="password" name="password" placeholder="Enter password" className="form-control" />
+                        </div>
 
-                            <hr />
-                            {/* Login Button */}
-                            <div className="form-group d-grid">
-                                <Button type="submit" className="w-100"> Login </Button>
-                            </div>
-                        </Form>                    
+                        <hr />
+                        {/* Login Button */}
+                        <div className="form-group d-grid">
+                            <Button type="submit" className="w-100"> Login </Button>
+                        </div>                   
                     </Animation>
                 </FormBS>
             </div>     

@@ -8,11 +8,11 @@ import { Row, Col } from 'react-bootstrap';
 import ModalBS from '../../../components/Modal';
 import FormBS from '../../../components/Form';
 import * as Yup from "yup";
-import { Form, Field, ErrorMessage } from "formik";
 import styles from "../PanelStyling/style.module.css";
 import { sweetAlert } from '../../../utils/sweetAlert2';
 import Loader from '../../../components/Loader';
 import { useNavigate } from 'react-router-dom';
+import Input from '../../../components/InputFields';
 
 function Mails() 
 {
@@ -151,34 +151,31 @@ function Mails()
                         return error;
                     }
                 }}>
-                    <Form>
-                        {/* Subject */}
-                        <div className="form-group mb-2">
-                            <label htmlFor="subject" className={styles.label}> Subject </label>
-                            <Field type="text" name="subject" className={`${styles.input} form-control`} placeholder="Enter Subject" />
-                            <span className={`${styles.errorMessage}`}> <ErrorMessage name='subject' /> </span>
+
+                    {/* Subject */}
+                    <div className="form-group mb-2">
+                        <label htmlFor="subject" className={styles.label}> Subject </label>
+                        <Input type="text" name="subject" className={`${styles.input} form-control`} placeholder="Enter Subject" />
+                    </div>
+
+                    {/* Message */}
+                    <div className="form-group mb-2">
+                        <label htmlFor="message" className={styles.label}> Message </label>
+                        <Input type="textarea" name="message" className={`${styles.input} form-control`} placeholder="Write Your Message" rows="8" />
+                    </div>                         
+
+                    {/* Buttons */}
+                    <div className="form-group mt-3 d-flex align-items-center gap-2">
+                        <Button type="submit" disabled={savingChanges === true}> Send Mail </Button>
+                        <Button type="button" onClick={ () => setShowModal(false) }> Cancel </Button>
+                    </div>
+
+                    {/* Loader */}
+                    {savingChanges && (
+                        <div className="form-group mt-3 d-flex align-items-center">
+                            <Loader size='small' text={`Sending mail...`} />
                         </div>
-
-                        {/* Message */}
-                        <div className="form-group mb-2">
-                            <label htmlFor="message" className={styles.label}> Message </label>
-                            <Field as="textarea" name="message" className={`${styles.input} form-control`} placeholder="Write Your Message" rows="8" />
-                            <span className={`${styles.errorMessage}`}> <ErrorMessage name='message' /> </span>
-                        </div>                         
-
-                        {/* Buttons */}
-                        <div className="form-group mt-3 d-flex align-items-center gap-2">
-                            <Button type="submit" disabled={savingChanges === true}> Send Mail </Button>
-                            <Button type="button" onClick={ () => setShowModal(false) }> Cancel </Button>
-                        </div>
-
-                        {/* Loader */}
-                        {savingChanges && (
-                            <div className="form-group mt-3 d-flex align-items-center">
-                                <Loader size='small' text={`Sending mail...`} />
-                            </div>
-                        )}
-                    </Form>                        
+                    )}                       
                 </FormBS>
             </ModalBS>
         </>
