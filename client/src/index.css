@@ -119,15 +119,15 @@ a{
 /* Make inactive tab text gray */
 #auth-tabs-tab-Signin,
 #auth-tabs-tab-Signup {
-  color: whitesmoke;
+  color: gray;
 }
 
 /* Active tab text color (when selected) */
 #auth-tabs-tab-Signin.active,
 #auth-tabs-tab-Signup.active {
-  color: whitesmoke;
+  color: #00bcd4;
   font-weight: bold;
-  background: rgba(255, 255, 255, 0.1);
+  background: #12151d;
   backdrop-filter: blur(1px);
   -webkit-backdrop-filter: blur(15px);
 }
