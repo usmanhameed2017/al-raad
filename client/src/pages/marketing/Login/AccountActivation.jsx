@@ -33,14 +33,14 @@ function AccountActivation()
 
     return (
         <div className={styles.loginPage}>
-            <div className={styles.glassCard} 
+            <div className={styles.form} 
             style={{ maxWidth: "500px", margin: "3rem auto", marginTop: '200px', padding: "2rem", borderRadius: "15px"}}>
 
                 <FormBS initialValues={initialValues} validationSchema={validationSchema}
                 handlerFunction={async (values, action) => {
                     try
                     {
-                        await patchRequest(`/user/accountActivation`, values);
+                        await patchRequest(`/user/account/activation`, values);
                         action.resetForm();
                         navigate("/login");
                     }

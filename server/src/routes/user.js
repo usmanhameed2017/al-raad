@@ -13,7 +13,7 @@ userRouter.route("/generateCsrfToken").get(csrfProtection, generateCsrfToken);
 userRouter.route("/signup").post(csrfProtection, signup);
 
 // Account activation
-userRouter.route("/accountActivation").patch(accountActivation);
+userRouter.route("/account/activation").patch(accountActivation);
 
 // User Login
 userRouter.route("/login").post(csrfProtection, login);
