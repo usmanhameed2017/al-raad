@@ -52,7 +52,7 @@ function App()
             <Route path="books" element={ <Books /> } />
             <Route path="books/:id" element={ <ViewBook /> } />
             <Route path="audios" element={ <Audios /> } />
-            <Route path="accountActivation" element={ <AccountActivation /> } />
+            <Route path="account/activation" element={ <AccountActivation /> } />
           </Route>
 
           {/* Protected Routes */}
