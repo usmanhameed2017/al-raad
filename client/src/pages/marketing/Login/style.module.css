@@ -1,7 +1,6 @@
 .loginPage {
   position: relative;
   min-height: 100vh;
-  background: url('/public/loginImage.jpg') no-repeat center center/cover;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -9,11 +8,11 @@
   filter: brightness(0.9);
 }
 
-.glassCard {
-  /* background: rgba(255, 255, 255, 0.1); */
+.form {
+  background: #12151d;
   backdrop-filter: blur(1px);
   -webkit-backdrop-filter: blur(15px);
-  box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
+  box-shadow: 2px 4px 20px #00bcd4;
   border-radius: 12px;
   padding: 40px;
   width: 90%;
@@ -23,9 +22,27 @@
   border: 1px rgba(0, 0, 0, 0.3) solid;
 }
 
-.glassCard label,
-.glassCard select,
-.glassCard .text-danger
-{
-  color: whitesmoke !important;
+.form label {
+  font-weight: 400;
+  font-size: 1.1rem;
+  color: #00bcd4;
+  letter-spacing: 0.3px;
+  margin-bottom: 3px;
+  display: block;
+}
+
+.form input, .form select {
+  background-color: white;
+  border: 1px solid #2c2f3a;
+  color: #2c2f3a;
+  padding: 10px 12px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.form input:focus {
+  border-color: #00bcd4;
+  box-shadow: 0 0 5px #00bcd4;
+  color: #00bcd4;
+  outline: none;
 }
