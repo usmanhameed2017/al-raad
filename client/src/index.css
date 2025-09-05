@@ -147,3 +147,11 @@ a.dropdown-item:hover {
 .link:hover {
   text-decoration: underline;
 }
+
+select {
+  appearance: none;
+}
+
+select:focus {
+  box-shadow: 0px 2px 7px #00bcd4;
+}
