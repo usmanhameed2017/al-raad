@@ -23,12 +23,3 @@
     display: block; 
     text-align: left;    
 }
-
-.errorMessage {
-    color: red;
-    display: block;
-    font-weight: 400;      
-    margin-top: 2px;
-    font-size: 1rem;
-    text-align: left;
-}
