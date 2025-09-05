@@ -75,7 +75,7 @@ function Audios()
                 data.docs?.map((audio, _) => (
                     <Col xs={12} sm={12} md={6} lg={4} xl={4} key={audio?._id} className='mb-3'>
                         <Animation type="normal">
-                            <AudioCard title={`Surah ${audio?.surahName}`} description={audio?.ayah} url={audio?.url} />
+                            <AudioCard title={`Surah ${audio?.surahName}`} description={`Ayah: (${audio?.ayah})`} url={audio?.url} />
                         </Animation>
                     </Col>                     
                 ))

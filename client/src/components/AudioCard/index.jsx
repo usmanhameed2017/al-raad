@@ -15,7 +15,7 @@ function AudioCard({ title, description, url })
                 Your browser does not support the audio element.
             </audio>
             {
-                title && <div className={`${styles.caption}`}> ({ description }) </div>
+                title && <div className={`${styles.caption}`}> { description } </div>
             }
         </div>
     );
