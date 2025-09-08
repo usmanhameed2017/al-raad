@@ -3,7 +3,7 @@ import { startLoading, startSaving, stopLoading, stopSaving } from '../utils/loa
 import { showSuccess, showError } from '../utils/toasterMessage';
 
 // Get request
-export const getRequest = async (url, activateLoader = true, enableSuccessMessage = false, enableErrorMessage = false) => {
+export const getRequest = async (url, activateLoader = true, enableSuccessMessage = false, enableErrorMessage = true) => {
     if(activateLoader) startLoading();
     try 
     {
