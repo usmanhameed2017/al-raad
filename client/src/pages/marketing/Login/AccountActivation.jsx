@@ -36,6 +36,7 @@ function AccountActivation()
             <div className={styles.form} 
             style={{ maxWidth: "500px", margin: "3rem auto", marginTop: '200px', padding: "2rem", borderRadius: "15px"}}>
 
+                {/* Form */}
                 <FormBS initialValues={initialValues} validationSchema={validationSchema}
                 handlerFunction={async (values, action) => {
                     try
@@ -50,20 +51,20 @@ function AccountActivation()
                     }
                 }}>
                     <Animation type="normal">
-                            <div>
-                                <h2> Account Activation </h2> 
-                                <p> You are just one step away! </p>
-                            </div>
-                            {/* Activation code */}
-                            <div className="form-group">
-                                <label htmlFor="username">Activation Code</label>
-                                <Input type='text' name='activationCode' className='form-control' placeholder="Enter activation code" />
-                            </div>
-                            <hr />
-                            {/* Confirm */}
-                            <div className="form-group d-grid">
-                                <Button type="submit" className="w-100">Confirm</Button>
-                            </div>                       
+                        <div>
+                            <h2> Account Activation </h2> 
+                            <p> You are just one step away! </p>
+                        </div>
+                        {/* Activation code */}
+                        <div className="form-group">
+                            <label htmlFor="username">Activation Code</label>
+                            <Input type='text' name='activationCode' className='form-control' placeholder="Enter activation code" />
+                        </div>
+                        <hr />
+                        {/* Confirm */}
+                        <div className="form-group d-grid">
+                            <Button type="submit" className="w-100">Confirm</Button>
+                        </div>                       
                     </Animation>
                 </FormBS>
             </div>                      
