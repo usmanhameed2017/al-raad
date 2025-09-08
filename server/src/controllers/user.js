@@ -3,11 +3,11 @@ const sendEmail = require("../service/mailer");
 const ApiError = require("../utils/ApiError");
 const ApiResponse = require("../utils/ApiResponse");
 const { isValidObjectId } = require("mongoose");
-const shortid = require("shortid");
 const fs = require("fs");
 const path = require("path");
 const { generateAccessToken } = require("../utils/auth");
 const { cookieOptions } = require("../config");
+const generateCode = require("../utils/generateCode");
 
 // Generate CSRF Token
 const generateCsrfToken = async (request, response) => {
@@ -30,11 +30,11 @@ const signup = async (request, response) => {
         // Resend code
         if(user.status === "Pending")
         {
-            // Generate verification code
-            const activationCode = shortid.generate();
+            // Generate verification code & and set expiry time
+            const { code:activationCode, expiresAt:activationCodeExpiresAt } = generateCode(10);
 
             // Update verification code
-            const updateUser = await User.findByIdAndUpdate(user?._id, { activationCode }, { new:true }).select("-password");
+            const updateUser = await User.findByIdAndUpdate(user?._id, { activationCode, activationCodeExpiresAt }, { new:true }).select("-password");
 
             // Get HTML template
             const html = fs.readFileSync(path.resolve(__dirname, "../../public/accountActivation.html"), "utf-8");
@@ -53,9 +53,11 @@ const signup = async (request, response) => {
     
     try 
     {
-        // Generate verification code
-        const activationCode = shortid.generate();
+        // Generate verification code & and set expiry time
+        const { code:activationCode, expiresAt:activationCodeExpiresAt } = generateCode(10);
+
         request.body.activationCode = activationCode;
+        request.body.activationCodeExpiresAt = activationCodeExpiresAt;
 
         // Create user
         const createUser = await User.create(request.body);
@@ -90,10 +92,20 @@ const accountActivation = async (request, response) => {
 
     try 
     {
-       const user = await User.findOneAndUpdate({ activationCode }, { status:"Approved" }, { new:true }).select("-password");
-       if(!user) throw new ApiError(404, "Invalid activation code");
+        // Check if activation code is exist
+        const user = await User.findOne({ activationCode });
+        if(!user) throw new ApiError(404, "Invalid activation code");
 
-       return response.status(200).json(new ApiResponse(200, user, "Your account has been activated successfully!"));
+        // Check activation code expiry
+        if (user?.activationCodeExpiresAt < Date.now()) throw new ApiError(400, "Activation code has expired");
+
+        // Get user ip
+        const ip = request.headers["x-forwarded-for"] || request.ip || null;
+        const updateUser = await User.findByIdAndUpdate(user?._id, 
+        { status:"Approved", ip:ip, activationCode:null, activationCodeExpiresAt:null }, { new:true }).select("-password");
+        if(!updateUser) throw new ApiError(404, "Invalid activation code");
+
+        return response.status(200).json(new ApiResponse(200, updateUser, "Your account has been activated successfully!"));
     } 
     catch (error) 
     {
@@ -136,7 +148,6 @@ const login = async (request, response) => {
         throw new ApiError(500, error.message);
     }
 };
-
 
 // Admin login
 const adminLogin = async (request, response) => {
