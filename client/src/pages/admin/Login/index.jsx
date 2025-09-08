@@ -1,6 +1,7 @@
 import Button from "../../../components/Button";
 import FormBS from "../../../components/Form";
 import styles from "./style.module.css";
+import panelStyle from "../PanelStyling/style.module.css";
 import Animation from "../../../components/Animation";
 import * as Yup from 'yup';
 import { useAuth } from "../../../context/auth";
@@ -47,13 +48,13 @@ function AdminLogin()
                         {/* Username */}
                         <div className="form-group mb-2">
                             <label> Username </label>
-                            <Input type="text" name="username" placeholder="Enter username" className="form-control" />
+                            <Input type="text" name="username" placeholder="Enter username" className={`${panelStyle.input} form-control`} />
                         </div>
 
                         {/* Password */}
                         <div className="form-group mb-2">
                             <label>Password</label>
-                            <Input type="password" name="password" placeholder="Enter password" className="form-control" />
+                            <Input type="password" name="password" placeholder="Enter password" className={`${panelStyle.input} form-control`} />
                         </div>
 
                         <hr />
