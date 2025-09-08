@@ -31,7 +31,7 @@ function ReactDataTable({ title, columns, data, setCurrentPage, search, setSearc
             {/* Search Field */}
             <Row>
                 <Col xl="2" lg="4" md="6" sm="12" xs="12" className='ms-auto'>
-                    <input type="search" placeholder="Search" className={`form-control ${styles.input}`}
+                    <input type="search" placeholder="Search" className="input"
                     value={search} onChange={ (e) => setSearch(e.target.value) } />
                 </Col>
             </Row>
