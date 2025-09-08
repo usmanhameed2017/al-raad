@@ -130,8 +130,11 @@ function Login()
                                 </div>
 
                                 {/* Forgot Password */}
-                                <div className="form-group mb-2">
-                                    <Link className="text-info" to="/security/forgotPassword"> Forgot password? </Link>
+                                <div className="form-group mt-2">
+                                    <span style={{ color:"#00bcd4" }}>Forgot password?</span>
+                                    <Link className="text-info" to="/security/forgotPassword" style={{ cursor:"default" }}> 
+                                        <b style={{ cursor:"pointer", letterSpacing:"0.3px" }}> Reset </b> 
+                                    </Link>
                                 </div>
 
                                 <hr />
