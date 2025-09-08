@@ -37,12 +37,29 @@ const userSchema = new Schema({
         required:true
     },
     activationCode:{
-        type:String
+        type:String,
+        default:null
     },
+    activationCodeExpiresAt: {
+        type: Date,
+        default: null
+    },
+    resetCode:{
+        type:String,
+        default:null
+    },
+    resetCodeExpiresAt:{
+        type:Date,
+        default:null
+    },    
     status:{
         type:String,
         enum:["Pending", "Approved", "Banned"],
         default:"Pending"
+    },
+    ip:{
+        type:String,
+        default:null
     }
 }, { timestamps:true });
 
