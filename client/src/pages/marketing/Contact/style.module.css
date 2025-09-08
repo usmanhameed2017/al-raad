@@ -74,6 +74,13 @@
   outline: none;
 }
 
+.inputField:focus, .textarea:focus {
+  border-color: #00bcd4;
+  box-shadow: 0 4px 17px #00bcd4;
+  color: #00bcd4;
+  outline: none;
+}
+
 .textarea {
   min-height: 120px;
   resize: vertical;

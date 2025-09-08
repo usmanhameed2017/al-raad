@@ -8,10 +8,10 @@
 }
 
 .input:focus {
-    border-color: #00bcd4;
-    box-shadow: 0 2px 7px #00bcd4;
-    color: #00bcd4;
-    outline: none;
+  border-color: #00bcd4;
+  box-shadow: 0 2px 15px #00bcd4;
+  color: #00bcd4;
+  outline: none;
 }
 
 .label {

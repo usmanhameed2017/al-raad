@@ -17,22 +17,6 @@
     display: block;
 }
 
-.form input {
-    background-color: white;
-    border: 1px solid #2c2f3a;
-    color: #2c2f3a;
-    padding: 10px 12px;
-    border-radius: 8px;
-    transition: all 0.3s ease;
-}
-
-.form input:focus {
-    border-color: #00bcd4;
-    box-shadow: 0 2px 7px #00bcd4;
-    color: #00bcd4;
-    outline: none;
-}
-
 .heading h1 {
     font-size: 2.7rem;
     text-align: center;
