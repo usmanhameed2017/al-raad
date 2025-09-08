@@ -120,13 +120,13 @@ function Login()
                                 {/* Username */}
                                 <div className="form-group">
                                     <label htmlFor="username">Username</label>
-                                    <Input type="text" name="username" className="form-control" placeholder="Enter username" />
+                                    <Input type="text" name="username" className="input" placeholder="Enter username" />
                                 </div>
 
                                 {/* Password */}
                                 <div className="form-group">
                                     <label htmlFor="password">Password</label>
-                                    <Input type="password" name="password" className="form-control" placeholder="Enter password" />
+                                    <Input type="password" name="password" className="input" placeholder="Enter password" />
                                 </div>
 
                                 {/* Forgot Password */}
@@ -156,31 +156,31 @@ function Login()
                                 {/* Name */}
                                 <div className="form-group">
                                     <label htmlFor="name">Name</label>
-                                    <Input type="text" name="name" className="form-control" placeholder="Enter name" />
+                                    <Input type="text" name="name" className="input" placeholder="Enter name" />
                                 </div>
 
                                 {/* Email */}
                                 <div className="form-group">
                                     <label htmlFor="email">Email</label>
-                                    <Input type="text" name="email" className="form-control" placeholder="Enter email" />
+                                    <Input type="text" name="email" className="input" placeholder="Enter email" />
                                 </div>
 
                                 {/* Username */}
                                 <div className="form-group">
                                     <label htmlFor="username">Username</label>
-                                    <Input type="text" name="username" className="form-control" placeholder="Enter username" />
+                                    <Input type="text" name="username" className="input" placeholder="Enter username" />
                                 </div>
 
                                 {/* Password */}
                                 <div className="form-group">
                                     <label htmlFor="password">Password</label>
-                                    <Input type="password" name="password" className="form-control" placeholder="Enter password" />
+                                    <Input type="password" name="password" className="input" placeholder="Enter password" />
                                 </div>
 
                                 {/* Confirm Password */}
                                 <div className="form-group mb-2">
                                     <label htmlFor="cpassword">Confirm Password</label>
-                                    <Input type="password" name="cpassword" className="form-control" placeholder="Re-Enter password" />
+                                    <Input type="password" name="cpassword" className="input" placeholder="Re-Enter password" />
                                 </div>
 
                                 <hr />
