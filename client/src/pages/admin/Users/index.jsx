@@ -84,6 +84,7 @@ function Users()
         { name: "Full Name", selector: row => row?.name, sortable: true },
         { name: "Username", selector: row => row?.username },
         { name: "Email", selector: row => row?.email },
+        { name: "IP Address", selector: row => row?.ip || "-" },
         { name: "Role", selector: row => row?.role },
         { 
             name: "Operations",
