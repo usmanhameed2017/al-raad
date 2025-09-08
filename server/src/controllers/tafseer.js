@@ -11,9 +11,9 @@ const createTafseer = async (request, response) => {
         const tafseer = await Tafseer.create(request.body);
         return response.status(201).json(new ApiResponse(201, tafseer, "Tafseer has been uploaded successfully"));
     } 
-    catch (error) 
+    catch(error)
     {
-        throw new ApiError(500, error.message);
+        throw error;
     }
 };
 
@@ -52,9 +52,9 @@ const fetchTafseers = async (request, response) => {
 
         return response.status(200).json(new ApiResponse(200, result, "All tafseers has been fetched successfully"));        
     } 
-    catch (error) 
+    catch(error)
     {
-        throw new ApiError(404, error.message);
+        throw error;
     }
 };
 
@@ -72,7 +72,7 @@ const fetchSingleTafseer = async (request, response) => {
     }
     catch(error) 
     {
-        throw new ApiError(500, error.message);
+        throw error;
     }
 };
 
@@ -90,7 +90,7 @@ const updateTafseer = async (request, response) => {
     }
     catch(error) 
     {
-        throw new ApiError(500, error.message);
+        throw error;
     }
 };
 
@@ -108,7 +108,7 @@ const deleteTafseer = async (request, response) => {
     }
     catch(error) 
     {
-        throw new ApiError(500, error.message);
+        throw error;
     }
 };
 

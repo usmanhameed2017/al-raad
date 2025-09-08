@@ -42,10 +42,10 @@ const createAudio = async (request, response) => {
         
         return response.status(201).json(new ApiResponse(201, audio, "A audio has been uploaded successfully"));
     } 
-    catch (error) 
+    catch(error) 
     {
         deleteFromTemp(audioUrl);
-        throw new ApiError(500, error.message);
+        throw error;
     }
 };
 
@@ -86,7 +86,7 @@ const fetchAudios = async (request, response) => {
     } 
     catch(error) 
     {
-        throw new ApiError(404, error.message);
+        throw error;
     }
 };
 
@@ -104,9 +104,9 @@ const fetchSingleAudio = async (request, response) => {
         if(!audio) throw new ApiError(404, "Audio not found");
         return response.status(200).json(new ApiResponse(200, audio, "Audio has been fetched successfully"));
     } 
-    catch (error) 
+    catch(error) 
     {
-        throw new ApiError(404, error.message);
+        throw error;
     }
 };
 
@@ -168,10 +168,10 @@ const updateAudio = async (request, response) => {
         const updatedAudio = await Audio.findByIdAndUpdate(id, request.body, { new:true });
         return response.status(200).json(new ApiResponse(200, updatedAudio, "Audio has been updated successfully"));
     } 
-    catch (error) 
+    catch(error) 
     {
         deleteFromTemp(uploadedAudio);
-        throw new ApiError(404, error.message);
+        throw error;
     }
 };
 
@@ -192,9 +192,9 @@ const deleteAudio = async (request, response) => {
         await deleteFromCloudinary(audio?.url, "video", "audios");
         return response.status(200).json(new ApiResponse(200, audio, "Audio has been deleted successfully"));
     } 
-    catch (error) 
+    catch(error) 
     {
-        throw new ApiError(500, error.message);
+        throw error;
     }    
 };
 

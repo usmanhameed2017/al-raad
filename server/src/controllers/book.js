@@ -37,7 +37,7 @@ const createBook = async (request, response) => {
     catch(error) 
     {
         deleteFromTemp(pdf, coverImage);
-        throw new ApiError(500, error.message);
+        throw error;
     }
 };
 
@@ -77,7 +77,7 @@ const fetchBooks = async (request, response) => {
     } 
     catch(error) 
     {
-        throw new ApiError(404, error.message);
+        throw error;
     }
 };
 
@@ -93,9 +93,9 @@ const fetchSingleBook = async (request, response) => {
         if(!book) throw new ApiError(404, "Book not found");
         return response.status(200).json(new ApiResponse(200, book, "Book has been fetched successfully"));
     } 
-    catch (error) 
+    catch(error)
     {
-        throw new ApiError(404, error.message);
+        throw error;
     }
 };
 
@@ -160,10 +160,10 @@ const updateBook = async (request, response) => {
         const updatedBook = await Book.findByIdAndUpdate(id, request.body, { new:true });
         return response.status(200).json(new ApiResponse(200, updatedBook, "Book has been updated"));
     } 
-    catch (error) 
+    catch(error)
     {
         deleteFromTemp(uploadedPdf, uploadedCoverImage);
-        throw new ApiError(404, error.message);
+        throw error;
     }
 };
 
@@ -183,9 +183,9 @@ const deleteBook = async (request, response) => {
         await deleteFromCloudinary(book?.pdf, "raw", "pdf");
         return response.status(200).json(new ApiResponse(200, book, "Book has been deleted successfully"));
     } 
-    catch (error) 
+    catch(error)
     {
-        throw new ApiError(500, error.message);
+        throw error;
     }
 };
 

@@ -35,10 +35,10 @@ const createVideo = async (request, response) => {
         
         return response.status(201).json(new ApiResponse(201, video, "A video has been uploaded successfully"));
     } 
-    catch (error) 
+    catch(error)
     {
         deleteFromTemp(videoUrl);
-        throw new ApiError(500, error.message);
+        throw error;
     }
 };
 
@@ -79,7 +79,7 @@ const fetchVideos = async (request, response) => {
     } 
     catch(error) 
     {
-        throw new ApiError(404, error.message);
+        throw error;
     }
 };
 
@@ -97,9 +97,9 @@ const fetchSingleVideo = async (request, response) => {
         if(!video) throw new ApiError(404, "Video not found");
         return response.status(200).json(new ApiResponse(200, video, "Video has been fetched successfully"));
     } 
-    catch (error) 
+    catch(error)
     {
-        throw new ApiError(404, error.message);
+        throw error;
     }
 };
 
@@ -148,10 +148,10 @@ const updateVideo = async (request, response) => {
         const updatedVideo = await Video.findByIdAndUpdate(id, request.body, { new:true });
         return response.status(200).json(new ApiResponse(200, updatedVideo, "Video has been updated successfully"));
     } 
-    catch (error) 
+    catch(error)
     {
         deleteFromTemp(uploadedVideo);
-        throw new ApiError(404, error.message);
+        throw error;
     }
 };
 
@@ -172,9 +172,9 @@ const deleteVideo = async (request, response) => {
         await deleteFromCloudinary(video?.url, "video", "videos");
         return response.status(200).json(new ApiResponse(200, video, "Video has been deleted successfully"));
     } 
-    catch (error) 
+    catch(error)
     {
-        throw new ApiError(500, error.message);
+        throw error;
     }    
 };
 

@@ -30,9 +30,9 @@ const sendMail = async (request, response) => {
         if(!result) throw new ApiError(500, "Unable to send email");        
         return response.status(201).json(new ApiResponse(201, mail, "Email has been sent successfully"));
     } 
-    catch (error) 
+    catch(error)
     {
-        throw new ApiError(500, error.message);
+        throw error;
     }
 };
 
@@ -52,9 +52,9 @@ const replyToUser = async (request, response) => {
         if(!result) throw new ApiError(500, "Unable to send email");         
         return response.status(201).json(new ApiResponse(200, null, "Email has been sent successfully"));        
     } 
-    catch (error) 
+    catch(error)
     {
-        throw new ApiError(500, error.message);
+        throw error;
     }
 };
 
@@ -93,9 +93,9 @@ const fetchMails = async (request, response) => {
 
         return response.status(200).json(new ApiResponse(200, result, "All mails has been fetched successfully"));        
     } 
-    catch (error) 
+    catch(error)
     {
-        throw new ApiError(404, error.message);
+        throw error;
     }
 };
 
@@ -113,7 +113,7 @@ const fetchSingleMail = async (request, response) => {
     }
     catch(error) 
     {
-        throw new ApiError(500, error.message);
+        throw error;
     }
 };
 
@@ -131,7 +131,7 @@ const deleteMail = async (request, response) => {
     }
     catch(error) 
     {
-        throw new ApiError(500, error.message);
+        throw error;
     }
 };
 

@@ -30,30 +30,37 @@ const signup = async (request, response) => {
         // Resend code
         if(user.status === "Pending")
         {
-            // Generate verification code & and set expiry time
-            const { code:activationCode, expiresAt:activationCodeExpiresAt } = generateCode(10);
+            try 
+            {
+                // Re-generate verification code & new expiry time
+                const { code:activationCode, expiresAt:activationCodeExpiresAt } = generateCode(10);
 
-            // Update verification code
-            const updateUser = await User.findByIdAndUpdate(user?._id, { activationCode, activationCodeExpiresAt }, { new:true }).select("-password");
+                // Update verification code and set new expiry time
+                const updateUser = await User.findByIdAndUpdate(user?._id, { activationCode, activationCodeExpiresAt }, { new:true }).select("-password");
 
-            // Get HTML template
-            const html = fs.readFileSync(path.resolve(__dirname, "../../public/accountActivation.html"), "utf-8");
+                // Get HTML template
+                const html = fs.readFileSync(path.resolve(__dirname, "../../public/accountActivation.html"), "utf-8");
 
-            // Replace placeholders
-            const filledHtml = html
-            .replace('{{name}}', name)
-            .replace('{{activationCode}}', activationCode);
-            const result = await sendEmail(email, "Account Activation", filledHtml);
-            if(!result) throw new ApiError(500, "Unable to send email"); 
+                // Replace placeholders
+                const filledHtml = html
+                .replace('{{name}}', name)
+                .replace('{{activationCode}}', activationCode);
+                const result = await sendEmail(email, "Account Activation", filledHtml);
+                if(!result) throw new ApiError(400, "Unable to send email"); 
 
-            return response.status(200)
-            .json(new ApiResponse(200, updateUser, `We have sent you a verification code at your email ${email}`))
+                return response.status(200)
+                .json(new ApiResponse(200, updateUser, `We have sent you a verification code at your email ${email}`));
+            } 
+            catch(error)
+            {
+                throw error;
+            }
         }
     }
     
     try 
     {
-        // Generate verification code & and set expiry time
+        // Generate verification code & expiry time
         const { code:activationCode, expiresAt:activationCodeExpiresAt } = generateCode(10);
 
         request.body.activationCode = activationCode;
@@ -74,14 +81,14 @@ const signup = async (request, response) => {
 
         // Send mail
         const result = await sendEmail(email, "Account Activation", filledHtml);      
-        if(!result) throw new ApiError(500, "Unable to send email");
+        if(!result) throw new ApiError(400, "Unable to send email");
 
         return response.status(201)
         .json(new ApiResponse(201, userData, `Account has been created! We have sent you a verification code at your email ${email}`));
     } 
-    catch (error) 
+    catch(error)
     {
-        throw new ApiError(500, error.message);
+        throw error;
     }
 };
 
@@ -107,9 +114,9 @@ const accountActivation = async (request, response) => {
 
         return response.status(200).json(new ApiResponse(200, updateUser, "Your account has been activated successfully!"));
     } 
-    catch (error) 
+    catch(error)
     {
-        throw new ApiError(500, error.message);
+        throw error;
     }
 };
 
@@ -145,7 +152,7 @@ const login = async (request, response) => {
     } 
     catch(error) 
     {
-        throw new ApiError(500, error.message);
+        throw error;
     }
 };
 
@@ -184,7 +191,7 @@ const adminLogin = async (request, response) => {
     } 
     catch(error) 
     {
-        throw new ApiError(500, error.message);
+        throw error;
     }
 };
 
@@ -213,9 +220,9 @@ const createUser = async (request, response) => {
         delete userData.password; // Exclude password
         return response.status(201).json(new ApiResponse(201, userData, `User has been created successfully`));
     } 
-    catch (error) 
+    catch(error)
     {
-        throw new ApiError(500, error.message);
+        throw error;
     }
 };
 
@@ -256,7 +263,7 @@ const fetchUsers = async (request, response) => {
     } 
     catch(error) 
     {
-        throw new ApiError(404, error.message);
+        throw error;
     }
 };
 
@@ -272,9 +279,9 @@ const fetchSingleUser = async (request, response) => {
         if(!user) throw new ApiError(404, "User not found");
         return response.status(200).json(new ApiResponse(200, user, "User has been fetched successfully"));
     } 
-    catch (error) 
+    catch(error)
     {
-        throw new ApiError(404, error.message);
+        throw error;
     }
 };
 
@@ -316,9 +323,9 @@ const editUser = async (request, response) => {
         // Admin updating another user
         return response.status(200).json(new ApiResponse(200, userData, "User has been updated successfully"));
     } 
-    catch (error) 
+    catch(error)
     {
-        throw new ApiError(404, error.message);
+        throw error;
     }
 };
 
@@ -334,9 +341,9 @@ const deleteUser = async (request, response) => {
         if(!user) throw new ApiError(404, "User not found");
         return response.status(200).json(new ApiResponse(200, user, "User has been deleted successfully"));
     } 
-    catch (error) 
+    catch(error)
     {
-        throw new ApiError(404, error.message);
+        throw error;
     }
 };
 
