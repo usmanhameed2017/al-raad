@@ -6,7 +6,7 @@ import { csrfToken } from "./token";
 
 // Create instance
 const client = axios.create({
-    baseURL: backendURL,
+    baseURL: `${backendURL}/api/v1`,
     withCredentials: true,
     withXSRFToken: true, 
     xsrfCookieName: '_csrf',
