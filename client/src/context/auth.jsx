@@ -137,7 +137,7 @@ function AuthProvider({ children })
     const verifyAccessToken = useCallback(async () => {
         try 
         {
-            const response = await getRequest("/user/verifyAccessToken");
+            const response = await getRequest("/user/verifyAccessToken", undefined, undefined, false);
             setUser(response.data); // Plain user object
             setLoggedIn(response.success);
             localStorage.setItem("user", JSON.stringify(response.data));             
