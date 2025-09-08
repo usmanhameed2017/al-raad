@@ -26,7 +26,7 @@ function ViewTafseer()
 
     // Fetch tafseer on page load
     useEffect(() => {
-        getRequest(`/tafseer/${id}`, undefined, undefined, true)
+        getRequest(`/tafseer/${id}`)
         .then(response => setTafseer(response.data))
         .catch(() => {
             setTafseer({});
