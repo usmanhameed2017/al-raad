@@ -104,7 +104,7 @@ const accountActivation = async (request, response) => {
         if(!user) throw new ApiError(404, "Invalid activation code");
 
         // Check activation code expiry
-        if (user?.activationCodeExpiresAt < Date.now()) throw new ApiError(400, "Activation code has expired");
+        if(user?.activationCodeExpiresAt < Date.now()) throw new ApiError(400, "Activation code has expired");
 
         // Get user ip
         const ip = request.headers["x-forwarded-for"] || request.ip || null;
@@ -246,7 +246,7 @@ const fetchUsers = async (request, response) => {
         let query = {};
 
         // If search keyword provided
-        if (search && search.trim() !== "") 
+        if(search && search.trim() !== "") 
         {
             query = {
                 $or: [
@@ -391,7 +391,34 @@ const forgotPassword = async (request, response) => {
         return response.status(200)
         .json(new ApiResponse(200, null, `We have sent you a reset code at your email ${email}`));
     } 
-    catch (error) 
+    catch(error) 
+    {
+        throw error;
+    }
+};
+
+// Security Step-02 (Verify Reset Code)
+const verifyResetCode = async (request, response) => {
+    try 
+    {
+        // Validate reset code
+        const resetCode = request.params?.resetCode || "";
+        if(!resetCode) throw new ApiError(400, "Reset code is required");
+
+        // Get user
+        const user = await User.findOne({ resetCode }, { new:true }).select("resetCode resetCodeExpiresAt");
+        if(!user) throw new ApiError(404, "Invalid reset code");
+
+        // Check reset code expiry
+        if(user?.resetCodeExpiresAt < Date.now()) throw new ApiError(400, "Reset code has expired");
+
+        // Update reset code and expiry time
+        const updateUser = await User.findByIdAndUpdate(user?._id, { resetCode:null, resetCodeExpiresAt:null }, { new:true });
+        if(!updateUser) throw new ApiError(404, "User not found");
+
+        return response.status(200).json(new ApiResponse(200, null, "Reset code has been verified! Please reset your password now"));
+    } 
+    catch(error) 
     {
         throw error;
     }
@@ -410,5 +437,6 @@ module.exports = {
     editUser,
     deleteUser,
     logout,
-    forgotPassword
+    forgotPassword,
+    verifyResetCode
 };
