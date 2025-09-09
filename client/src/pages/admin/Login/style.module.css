@@ -1,11 +1,25 @@
+.wrapper {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    filter: brightness(0.9);
+}
+
 .form {
-  padding: 40px;
-  width: 100%;
-  max-width: 600px;
-  margin: 0 auto;
-  border-radius: 20px;
-  background-color: #12151d;
-  box-shadow: 2px 4px 20px #00bcd4;
+    background: #12151d;
+    backdrop-filter: blur(1px);
+    -webkit-backdrop-filter: blur(15px);
+    box-shadow: 2px 4px 20px #00bcd4;
+    border-radius: 12px;
+    padding: 40px;
+    width: 90%;
+    max-width: 550px;
+    color: white;
+    z-index: 1;
+    border: 1px rgba(0, 0, 0, 0.3) solid;
 }
 
 .form label {
