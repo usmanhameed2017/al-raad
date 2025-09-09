@@ -27,6 +27,7 @@ import Users from "./pages/admin/Users";
 import Mails from "./pages/admin/Mails";
 import ViewMail from "./pages/admin/ViewMail";
 import ForgotPassword from "./pages/security/ForgotPassword";
+import VerifyResetCode from "./pages/security/VerifyResetCode";
 
 function App() 
 {
@@ -54,7 +55,10 @@ function App()
             <Route path="books/:id" element={ <ViewBook /> } />
             <Route path="audios" element={ <Audios /> } />
             <Route path="account/activation" element={ <AccountActivation /> } />
+
+            {/* Security paths */} 
             <Route path="security/forgotPassword" element={ <ForgotPassword /> } />
+            <Route path="security/verifyResetCode" element={ <VerifyResetCode /> } />
           </Route>
 
           {/* Protected Routes */}
