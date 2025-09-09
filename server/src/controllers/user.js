@@ -144,8 +144,10 @@ const login = async (request, response) => {
     try 
     {
         // Get user specific details
-        const userData = await User.findById(user?._id).select("-password -status -activationCode");
+        const userData = await User.findById(user?._id)
+        .select("-password -status -activationCode -activationCodeExpiresAt -resetCode -resetCodeExpiresAt -status -ip");
         if(!userData) throw new ApiError(400, "Invalid user ID");
+
         return response.status(200)
         .cookie("accessToken", accessToken, cookieOptions)
         .json(new ApiResponse(200, userData, "Login successful"));
@@ -183,8 +185,10 @@ const adminLogin = async (request, response) => {
     try 
     {
         // Get user specific details
-        const userData = await User.findById(user?._id).select("-password -status -activationCode");
+        const userData = await User.findById(user?._id)
+        .select("-password -status -activationCode -activationCodeExpiresAt -resetCode -resetCodeExpiresAt -status -ip");
         if(!userData) throw new ApiError(400, "Invalid user ID");
+
         return response.status(200)
         .cookie("accessToken", accessToken, cookieOptions)
         .json(new ApiResponse(200, userData, "Login successful"));
@@ -205,7 +209,6 @@ const verifyAccessToken = async (request, response) => {
 const createUser = async (request, response) => {
     const { name, email, username, role, password, cpassword } = request.body;
     if([name, email, username, role, password, cpassword].some(field => !field?.trim())) throw new ApiError(400, "All fields are required");
-
     if(password !== cpassword) throw new ApiError(400, "Password & confirm password must be identical");
 
     const user = await User.getUser(email, username);
