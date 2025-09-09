@@ -25,6 +25,7 @@ const bookRouter = require("./routes/book");
 // const videoRouter = require("./routes/video");
 const audioRouter = require("./routes/audio");
 const mailRouter = require("./routes/mails");
+const securityRouter = require("./routes/security");
 
 // Registered routes
 app.use("/api/v1/user", userRouter);
@@ -33,6 +34,7 @@ app.use("/api/v1/book", bookRouter);
 // app.use("/api/v1/video", videoRouter);
 app.use("/api/v1/audio", audioRouter);
 app.use("/api/v1/mail", mailRouter);
+app.use("/api/v1/security", securityRouter);
 
 // Error handling middleware
 app.use(errorHandler);
