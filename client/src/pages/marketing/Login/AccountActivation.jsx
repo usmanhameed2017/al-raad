@@ -50,22 +50,20 @@ function AccountActivation()
                         return error;
                     }
                 }}>
-                    <Animation type="normal">
-                        <div>
-                            <h2> Account Activation </h2> 
-                            <p> You are just one step away! </p>
-                        </div>
-                        {/* Activation code */}
-                        <div className="form-group">
-                            <label htmlFor="username">Activation Code</label>
-                            <Input type='text' name='activationCode' className='form-control' placeholder="Enter activation code" />
-                        </div>
-                        <hr />
-                        {/* Confirm */}
-                        <div className="form-group d-grid">
-                            <Button type="submit" className="w-100">Confirm</Button>
-                        </div>                       
-                    </Animation>
+                    <div>
+                        <h2> Account Activation </h2> 
+                        <p> You are just one step away! </p>
+                    </div>
+                    {/* Activation code */}
+                    <div className="form-group">
+                        <label htmlFor="username">Activation Code</label>
+                        <Input type='text' name='activationCode' className='form-control' placeholder="Enter activation code" />
+                    </div>
+                    <hr />
+                    {/* Confirm */}
+                    <div className="form-group d-grid">
+                        <Button type="submit" className="w-100">Confirm</Button>
+                    </div>                       
                 </FormBS>
             </div>                      
         </div>
