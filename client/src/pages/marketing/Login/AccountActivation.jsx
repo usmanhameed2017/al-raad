@@ -57,7 +57,7 @@ function AccountActivation()
                     {/* Activation code */}
                     <div className="form-group">
                         <label htmlFor="username">Activation Code</label>
-                        <Input type='text' name='activationCode' className='form-control' placeholder="Enter activation code" />
+                        <Input type='text' name='activationCode' className='input' placeholder="Enter activation code" />
                     </div>
                     <hr />
                     {/* Confirm */}
