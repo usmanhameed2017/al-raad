@@ -39,7 +39,7 @@ function VerifyResetCode()
         {
             const response = await getRequest(`/user/security/verifyResetCode/${values.resetCode}`, true, true);
             action.resetForm();
-            navigate("/security/resetPassword", { state:{ redirectToVerifyResetCode:true } })
+            navigate("/security/resetPassword", { state:{ redirectToVerifyResetPassword:true } })
         } 
         catch (error) 
         {
