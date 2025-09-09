@@ -48,9 +48,4 @@ userRouter.route("/:id")
 .put(csrfProtection, authentication, authorization(["Admin"]), editUser)  // Edit user
 .delete(authentication, authorization(["Admin"]), deleteUser);            // Delete user
 
-// Security
-userRouter.route("/security/forgotPassword/:email").get(csrfProtection, forgotPassword);
-userRouter.route("/security/verifyResetCode/:resetCode/:_id").get(csrfProtection, verifyResetCode);
-userRouter.route("/security/resetPassword").patch(csrfProtection, resetPassword);
-
 module.exports = userRouter;
