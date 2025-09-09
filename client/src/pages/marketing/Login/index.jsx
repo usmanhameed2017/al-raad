@@ -132,7 +132,8 @@ function Login()
                                 {/* Forgot Password */}
                                 <div className="form-group mt-2">
                                     <span style={{ color:"#00bcd4" }}>Forgot password?</span>
-                                    <Link className="text-info" to="/security/forgotPassword" style={{ cursor:"default" }}> 
+                                    <Link className="text-info" to="/security/forgotPassword" style={{ cursor:"default" }}
+                                    state={{ redirectToForgotPassword:true }}> 
                                         <b style={{ cursor:"pointer", letterSpacing:"0.3px" }}> Reset </b> 
                                     </Link>
                                 </div>
