@@ -1,6 +1,7 @@
 const { signup, accountActivation, login, logout, fetchUsers, editUser, deleteUser, 
 fetchSingleUser, verifyAccessToken, generateCsrfToken, adminLogin, createUser, 
-forgotPassword} = require("../controllers/user");
+forgotPassword,
+verifyResetCode} = require("../controllers/user");
 const { authentication, authorization } = require("../middlewares/auth");
 const csrfProtection = require("../middlewares/csrfToken");
 
@@ -47,6 +48,7 @@ userRouter.route("/:id")
 .delete(authentication, authorization(["Admin"]), deleteUser);            // Delete user
 
 // Security
-userRouter.route("/security/forgotPassword/:email").get(forgotPassword);
+userRouter.route("/security/forgotPassword/:email").get(csrfProtection, forgotPassword);
+userRouter.route("/security/verifyResetCode/:resetCode").get(csrfProtection, verifyResetCode);
 
 module.exports = userRouter;
