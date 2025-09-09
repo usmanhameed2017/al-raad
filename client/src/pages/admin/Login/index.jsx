@@ -30,7 +30,7 @@ function AdminLogin()
     const { adminLogin, user } = useAuth();
 
     return (
-        <>
+        <div className={styles.wrapper}>
         {
             !user ? 
             <div className={styles.form}>
@@ -44,25 +44,23 @@ function AdminLogin()
                     <hr />
                 </div>
                 <FormBS initialValues={initialValues} validationSchema={validationSchema} handlerFunction={adminLogin}>
-                    <Animation type="normal">
-                        {/* Username */}
-                        <div className="form-group mb-2">
-                            <label> Username </label>
-                            <Input type="text" name="username" placeholder="Enter username" className={`${panelStyle.input} form-control`} />
-                        </div>
+                    {/* Username */}
+                    <div className="form-group mb-2">
+                        <label> Username </label>
+                        <Input type="text" name="username" placeholder="Enter username" className={`${panelStyle.input} form-control`} />
+                    </div>
 
-                        {/* Password */}
-                        <div className="form-group mb-2">
-                            <label>Password</label>
-                            <Input type="password" name="password" placeholder="Enter password" className={`${panelStyle.input} form-control`} />
-                        </div>
+                    {/* Password */}
+                    <div className="form-group mb-2">
+                        <label>Password</label>
+                        <Input type="password" name="password" placeholder="Enter password" className={`${panelStyle.input} form-control`} />
+                    </div>
 
-                        <hr />
-                        {/* Login Button */}
-                        <div className="form-group d-grid">
-                            <Button type="submit" className="w-100"> Login </Button>
-                        </div>                   
-                    </Animation>
+                    <hr />
+                    {/* Login Button */}
+                    <div className="form-group d-grid">
+                        <Button type="submit" className="w-100"> Login </Button>
+                    </div>                   
                 </FormBS>
             </div>     
             : 
@@ -71,7 +69,7 @@ function AdminLogin()
             : 
             <Restricted statusCode={403} message={`FORBIDDEN`} />
         }       
-        </>
+        </div>
     );
 }
 
