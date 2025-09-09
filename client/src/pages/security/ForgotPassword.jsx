@@ -15,6 +15,7 @@ function ForgotPassword()
     const location = useLocation().state;
     const { redirectToForgotPassword = false } = location || {};
 
+    // Global loader
     const { loading } = useAuth();
 
     // Navigator
@@ -38,7 +39,7 @@ function ForgotPassword()
     const formHandler = useCallback(async (values, action) => {
         try 
         {
-            const response = await getRequest(`/user/security/forgotPassword/${values.email}`, true, true);
+            const response = await getRequest(`/security/forgotPassword/${values.email}`, true, true);
             const { _id } = response.data;
             action.resetForm();
             navigate("/security/verifyResetCode", { state:{ _id, redirectToVerifyResetCode:true } });
@@ -50,13 +51,13 @@ function ForgotPassword()
     },[]);
 
     // If user is not redirected from login page
-    if(!redirectToForgotPassword) return <Navigate to={`/Login`} replace />
+    if(!redirectToForgotPassword) return <Navigate to={`/Login`} replace={true} />
 
     return (
         <div className={styles.wrapper}>
             <div className={styles.form}>
                 {/* Heading */}
-                <div className={styles.heading}> <h1> Email Verification </h1> </div>
+                <div className={styles.heading}> <h3> Email Verification </h3> </div>
 
                 {/* Sub heading */}
                 <div className={styles.subHeading}> <p> Verification Step-01 </p> </div>
@@ -77,7 +78,7 @@ function ForgotPassword()
 
                     {/* Loader */}
                     {loading && (
-                        <div className="mt-3 float-start"> <Loader text="Sending mail..." size="small" /> </div>
+                        <div className="mt-3 float-start"> <Loader text="Sending mail" size="small" /> </div>
                     )}                   
                 </FormBS>
             </div>                      
