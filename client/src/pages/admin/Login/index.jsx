@@ -2,7 +2,6 @@ import Button from "../../../components/Button";
 import FormBS from "../../../components/Form";
 import styles from "./style.module.css";
 import panelStyle from "../PanelStyling/style.module.css";
-import Animation from "../../../components/Animation";
 import * as Yup from 'yup';
 import { useAuth } from "../../../context/auth";
 import { Navigate } from 'react-router-dom';
