@@ -15,6 +15,7 @@ function VerifyResetCode()
     const location = useLocation().state;
     const { redirectToVerifyResetCode = false, _id = null } = location || {};
 
+    // Global loader
     const { loading } = useAuth();
 
     // Navigator
@@ -37,9 +38,9 @@ function VerifyResetCode()
     const formHandler = useCallback(async (values, action) => {
         try 
         {
-            await getRequest(`/user/security/verifyResetCode/${values.resetCode}/${_id}`, true, true);
+            await getRequest(`/security/verifyResetCode/${values.resetCode}/${_id}`, true, true);
             action.resetForm();
-            navigate("/security/resetPassword", { state:{ _id, redirectToVerifyResetPassword:true }, replace:true });
+            navigate("/security/resetPassword", { state:{ _id, redirectToVerifyResetPassword:true } });
         } 
         catch (error) 
         {
@@ -48,13 +49,13 @@ function VerifyResetCode()
     },[]);
 
     // If user is not redirected from forgot password page
-    if(!redirectToVerifyResetCode || !_id) return <Navigate to={`/security/forgotPassword`} replace />
+    if(!redirectToVerifyResetCode || !_id) return <Navigate to={`/security/forgotPassword`} replace={true} />
 
     return (
         <div className={styles.wrapper}>
             <div className={styles.form}>
                 {/* Heading */}
-                <div className={styles.heading}> <h1> Code Verification </h1> </div>
+                <div className={styles.heading}> <h3> Code Verification </h3> </div>
 
                 {/* Sub heading */}
                 <div className={styles.subHeading}> <p> Verification Step-02 </p> </div>
