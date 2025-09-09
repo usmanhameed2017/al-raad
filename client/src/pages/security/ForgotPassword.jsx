@@ -38,9 +38,9 @@ function ForgotPassword()
     const formHandler = useCallback(async (values, action) => {
         try 
         {
-            const response = await getRequest(`/user/security/forgotPassword/${values.email}`, true, true);
+            const { _id } = await await getRequest(`/user/security/forgotPassword/${values.email}`, true, true).data;
             action.resetForm();
-            navigate("/security/verifyResetCode", { state:{ redirectToVerifyResetCode:true } })
+            navigate("/security/verifyResetCode", { state:{ redirectToVerifyResetCode:true, _id:_id } });
         } 
         catch (error) 
         {
