@@ -28,6 +28,7 @@ import Mails from "./pages/admin/Mails";
 import ViewMail from "./pages/admin/ViewMail";
 import ForgotPassword from "./pages/security/ForgotPassword";
 import VerifyResetCode from "./pages/security/VerifyResetCode";
+import ResetPassword from "./pages/security/ResetPassword";
 
 function App() 
 {
@@ -59,6 +60,7 @@ function App()
             {/* Security paths */} 
             <Route path="security/forgotPassword" element={ <ForgotPassword /> } />
             <Route path="security/verifyResetCode" element={ <VerifyResetCode /> } />
+            <Route path="security/resetPassword" element={ <ResetPassword /> } />
           </Route>
 
           {/* Protected Routes */}
