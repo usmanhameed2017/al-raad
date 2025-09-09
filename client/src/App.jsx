@@ -26,6 +26,7 @@ import AudiosAdmin from "./pages/admin/Audios";
 import Users from "./pages/admin/Users";
 import Mails from "./pages/admin/Mails";
 import ViewMail from "./pages/admin/ViewMail";
+import ForgotPassword from "./pages/security/ForgotPassword";
 
 function App() 
 {
@@ -53,6 +54,7 @@ function App()
             <Route path="books/:id" element={ <ViewBook /> } />
             <Route path="audios" element={ <Audios /> } />
             <Route path="account/activation" element={ <AccountActivation /> } />
+            <Route path="security/forgotPassword" element={ <ForgotPassword /> } />
           </Route>
 
           {/* Protected Routes */}
