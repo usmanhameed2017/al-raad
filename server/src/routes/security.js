@@ -5,8 +5,8 @@ const csrfProtection = require("../middlewares/csrfToken");
 const securityRouter = require("express").Router();
 
 // Forgot password
-securityRouter.route("/security/forgotPassword/:email").get(csrfProtection, forgotPassword);
-securityRouter.route("/security/verifyResetCode/:resetCode/:_id").get(csrfProtection, verifyResetCode);
-securityRouter.route("/security/resetPassword").patch(csrfProtection, resetPassword);
+securityRouter.route("/forgotPassword/:email").get(csrfProtection, forgotPassword);
+securityRouter.route("/verifyResetCode/:resetCode/:_id").get(csrfProtection, verifyResetCode);
+securityRouter.route("/resetPassword").patch(csrfProtection, resetPassword);
 
 module.exports = securityRouter;
