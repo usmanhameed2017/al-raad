@@ -194,9 +194,9 @@ function Login()
                                 </div>
 
                                 {/* Loader */}
-                                <div className="form-group mt-3">
-                                    { savingChanges && <Loader text="Creating account..." /> }
-                                </div>
+                                {savingChanges && (
+                                    <div className="float-start mt-3"> <Loader text="Creating account" /> </div>
+                                )}
                             </FormBS>
                         </motion.div>
                     )}
