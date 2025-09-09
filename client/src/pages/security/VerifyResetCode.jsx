@@ -13,7 +13,7 @@ function VerifyResetCode()
 {
     // Get redirection state
     const location = useLocation().state;
-    const { redirectToVerifyResetCode = false } = location || {};
+    const { redirectToVerifyResetCode = false, _id = null } = location || {};
 
     const { loading } = useAuth();
 
@@ -37,9 +37,9 @@ function VerifyResetCode()
     const formHandler = useCallback(async (values, action) => {
         try 
         {
-            const response = await getRequest(`/user/security/verifyResetCode/${values.resetCode}`, true, true);
+            await getRequest(`/user/security/verifyResetCode/${values.resetCode}/${_id}`, true, true);
             action.resetForm();
-            navigate("/security/resetPassword", { state:{ redirectToVerifyResetPassword:true } })
+            navigate("/security/resetPassword", { state:{ _id, redirectToVerifyResetPassword:true }, replace:true });
         } 
         catch (error) 
         {
@@ -48,7 +48,7 @@ function VerifyResetCode()
     },[]);
 
     // If user is not redirected from forgot password page
-    if(!redirectToVerifyResetCode) return <Navigate to={`/security/forgotPassword`} replace />
+    if(!redirectToVerifyResetCode || !_id) return <Navigate to={`/security/forgotPassword`} replace />
 
     return (
         <div className={styles.wrapper}>
