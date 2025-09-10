@@ -9,6 +9,6 @@ const authRouter = require("express").Router();
 authRouter.route("/generateCsrfToken").get(csrfProtection, generateCsrfToken);
 
 // Verify access token
-userRouter.route("/verifyAccessToken").get(authentication, verifyAccessToken);
+authRouter.route("/verifyAccessToken").get(authentication, verifyAccessToken);
 
 module.exports = authRouter;
