@@ -76,7 +76,8 @@ const signup = async (request, response) => {
         // Send mail
         const result = await sendEmail(email, "Account Activation", filledHtml);      
         if(!result) throw new ApiError(400, "Unable to send email");
-
+        request.io.emit("Refresh User");
+        
         return response.status(201)
         .json(new ApiResponse(201, userData, `Account has been created! We have sent you a verification code at your email ${email}`));
     } 
@@ -209,6 +210,7 @@ const createUser = async (request, response) => {
         const createUser = await User.create(request.body);
         const userData = createUser.toObject();
         delete userData.password; // Exclude password
+        request.io.emit("Refresh User");
         return response.status(201).json(new ApiResponse(201, userData, `User has been created successfully`));
     } 
     catch(error)
@@ -304,14 +306,15 @@ const editUser = async (request, response) => {
         {
             // Generate new access token
             const accessToken = generateAccessToken(user);
-            if(!accessToken) throw new ApiError(400, "Failed to generate new access token");        
-
+            if(!accessToken) throw new ApiError(400, "Failed to generate new access token");  
+            request.io.emit("Refresh User");
             return response.status(200)
             .cookie("accessToken", accessToken, cookieOptions)
             .json(new ApiResponse(200, userData, "Your info has been updated successfully"));
         }
 
         // Admin updating another user
+        request.io.emit("Refresh User");
         return response.status(200).json(new ApiResponse(200, userData, "User has been updated successfully"));
     } 
     catch(error)
@@ -330,6 +333,7 @@ const deleteUser = async (request, response) => {
     {
         const user = await User.findByIdAndDelete(id).select("-password -activationCode");
         if(!user) throw new ApiError(404, "User not found");
+        request.io.emit("Refresh User");
         return response.status(200).json(new ApiResponse(200, user, "User has been deleted successfully"));
     } 
     catch(error)
