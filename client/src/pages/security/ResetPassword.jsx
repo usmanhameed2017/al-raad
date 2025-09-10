@@ -12,8 +12,8 @@ import Loader from "../../components/Loader";
 function ResetPassword() 
 {
     // Get redirection state
-    const location = useLocation().state;
-    const { redirectToVerifyResetPassword = false, _id = null } = location || {};
+    const location = useLocation();
+    const { redirectToVerifyResetPassword = false, _id = null } = location.state || {};
 
     // Global loader
     const { savingChanges } = useAuth();
@@ -43,7 +43,7 @@ function ResetPassword()
     const formHandler = useCallback(async (values, action) => {
         try 
         {
-            const response = await patchRequest(`/security/resetPassword`, values);
+            await patchRequest(`/security/resetPassword`, values);
             action.resetForm();
             navigate("/login", { replace:true });
         } 

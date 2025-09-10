@@ -5,18 +5,18 @@ import FormBS from "../../components/Form";
 import Input from "../../components/InputFields";
 import Button from "../../components/Button";
 import { useCallback } from "react";
-import { getRequest } from "../../api/request";
+import { postRequest } from "../../api/request";
 import { useAuth } from "../../context/auth";
 import Loader from "../../components/Loader";
 
 function ForgotPassword() 
 {
     // Get redirection state
-    const location = useLocation().state;
-    const { redirectToForgotPassword = false } = location || {};
+    const location = useLocation();
+    const { redirectToForgotPassword = false } = location.state || {};
 
     // Global loader
-    const { loading } = useAuth();
+    const { savingChanges } = useAuth();
 
     // Navigator
     const navigate = useNavigate();
@@ -39,12 +39,12 @@ function ForgotPassword()
     const formHandler = useCallback(async (values, action) => {
         try 
         {
-            const response = await getRequest(`/security/forgotPassword/${values.email}`, true, true);
+            const response = await postRequest(`/security/forgotPassword`, values);
             const { _id } = response.data;
             action.resetForm();
             navigate("/security/verifyResetCode", { state:{ _id, redirectToVerifyResetCode:true } });
         } 
-        catch (error) 
+        catch(error) 
         {
             return error;
         }
@@ -73,11 +73,11 @@ function ForgotPassword()
 
                     {/* Submit */}
                     <div className="form-group">
-                        <Button type="submit" disabled={loading===true}> Submit </Button>
+                        <Button type="submit" disabled={savingChanges===true}> Submit </Button>
                     </div>
 
                     {/* Loader */}
-                    {loading && (
+                    {savingChanges && (
                         <div className="mt-3 float-start"> <Loader text="Sending mail" size="small" /> </div>
                     )}                   
                 </FormBS>

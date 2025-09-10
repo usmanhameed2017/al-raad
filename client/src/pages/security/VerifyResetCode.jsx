@@ -5,24 +5,25 @@ import FormBS from "../../components/Form";
 import Input from "../../components/InputFields";
 import Button from "../../components/Button";
 import { useCallback } from "react";
-import { getRequest } from "../../api/request";
+import { patchRequest } from "../../api/request";
 import { useAuth } from "../../context/auth";
 import Loader from "../../components/Loader";
 
 function VerifyResetCode() 
 {
     // Get redirection state
-    const location = useLocation().state;
-    const { redirectToVerifyResetCode = false, _id = null } = location || {};
+    const location = useLocation();
+    const { redirectToVerifyResetCode = false, _id = null } = location.state || {};
 
     // Global loader
-    const { loading } = useAuth();
+    const { savingChanges } = useAuth();
 
     // Navigator
     const navigate = useNavigate();
 
     // Initial values
     const initialValues = {
+        _id,
         resetCode: ""
     };
 
@@ -38,7 +39,7 @@ function VerifyResetCode()
     const formHandler = useCallback(async (values, action) => {
         try 
         {
-            await getRequest(`/security/verifyResetCode/${values.resetCode}/${_id}`, true, true);
+            await patchRequest(`/security/verifyResetCode`, values);
             action.resetForm();
             navigate("/security/resetPassword", { state:{ _id, redirectToVerifyResetPassword:true } });
         } 
@@ -71,11 +72,11 @@ function VerifyResetCode()
 
                     {/* Submit */}
                     <div className="form-group">
-                        <Button type="submit" disabled={loading===true}> Submit </Button>
+                        <Button type="submit" disabled={savingChanges===true}> Submit </Button>
                     </div>
 
                     {/* Loader */}
-                    {loading && (
+                    {savingChanges && (
                         <div className="mt-3 float-start"> <Loader text="Verifying" size="small" /> </div>
                     )}                   
                 </FormBS>
