@@ -1,8 +1,5 @@
 const { signup, accountActivation, login, logout, fetchUsers, editUser, deleteUser, 
-fetchSingleUser, verifyAccessToken, generateCsrfToken, adminLogin, createUser, 
-forgotPassword,
-verifyResetCode,
-resetPassword} = require("../controllers/user");
+fetchSingleUser, verifyAccessToken, generateCsrfToken, adminLogin, createUser, } = require("../controllers/user");
 const { authentication, authorization } = require("../middlewares/auth");
 const csrfProtection = require("../middlewares/csrfToken");
 
