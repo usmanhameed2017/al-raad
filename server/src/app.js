@@ -5,9 +5,17 @@ const path = require("path");
 const { corsOptions } = require("./config");
 const { cookieParserSecret } = require("./constants");
 const errorHandler = require("./middlewares/errorHandler");
+const { Server } = require("socket.io");
+const http = require("http");
 
 // Express app
 const app = express();
+
+// Create HTTP Server
+const server = http.createServer(app);
+
+// Binding with socket server
+const io = new Server(server, { cors:corsOptions });
 
 // ************* MIDDLEWARES ************* //
 app.use(cors(corsOptions));
@@ -15,7 +23,10 @@ app.use(cookieParse(cookieParserSecret));
 app.use(express.urlencoded({ extended:true, limit:"20kb" }));
 app.use(express.json({ limit:"20kb" }));
 app.use("/public", express.static(path.resolve("public")));
-
+app.use((request, response, next) => {
+    request.io = io;
+    next();
+});
 
 // ************* ROUTES ************* //
 // Imports
@@ -39,4 +50,4 @@ app.use("/api/v1/auth", authRouter);
 // Error handling middleware
 app.use(errorHandler);
 
-module.exports = app;
+module.exports = { app, server };
