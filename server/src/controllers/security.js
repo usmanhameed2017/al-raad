@@ -11,7 +11,7 @@ const forgotPassword = async (request, response) => {
     try 
     {
         // Validate email
-        const email = request.params?.email || null;
+        const email = request.body?.email || null;
         if(!email) throw new ApiError(400, "Email is required");
 
         // Get user
@@ -51,21 +51,21 @@ const verifyResetCode = async (request, response) => {
     try 
     {
         // Validate reset code
-        const { resetCode = null, _id = null } = request.params || {};
+        const { resetCode = null, _id = null } = request.body || {};
         if(!resetCode) throw new ApiError(400, "Reset code is required");
 
         // Get user
-        const user = await User.findOne({ _id, resetCode }, { new:true }).select("resetCode resetCodeExpiresAt");
+        const user = await User.findOne({ _id, resetCode }).select("resetCode resetCodeExpiresAt");
         if(!user) throw new ApiError(404, "Invalid reset code");
 
         // Check reset code expiry
         if(user?.resetCodeExpiresAt < Date.now()) throw new ApiError(400, "Reset code has expired");
 
         // Update reset code and expiry time
-        const updateUser = await User.findByIdAndUpdate(user?._id, { resetCode:null, resetCodeExpiresAt:null }, { new:true });
+        const updateUser = await User.findByIdAndUpdate(user?._id, { resetCode:null, resetCodeExpiresAt:null });
         if(!updateUser) throw new ApiError(404, "User not found");
 
-        return response.status(200).json(new ApiResponse(200, null, "Reset code has been verified! Please reset your password now"));
+        return response.status(200).json(new ApiResponse(200, null, "Reset code has been verified! Please reset your password"));
     } 
     catch(error) 
     {
