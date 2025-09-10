@@ -5,6 +5,7 @@ const ApiResponse = require("../utils/ApiResponse");
 const fs = require("fs");
 const path = require("path");
 const generateCode = require("../utils/generateCode");
+const bcrypt = require("bcrypt");
 
 // Security Step-01 (Forgot Password)
 const forgotPassword = async (request, response) => {
@@ -21,8 +22,12 @@ const forgotPassword = async (request, response) => {
         // Generate verification code & expiry time
         const { code:resetCode, expiresAt:resetCodeExpiresAt } = generateCode(15);
 
+        // Hash the reset code before saving into database
+        const hashedCode = await bcrypt.hash(resetCode, 10);
+        if(!hashedCode) throw new ApiError(500, "Failed to hash reset code! Try again after a while");
+
         // Update reset code
-        const updateUser = await User.findByIdAndUpdate(user?._id, { resetCode, resetCodeExpiresAt }, { new:true }).select("-password");
+        const updateUser = await User.findByIdAndUpdate(user?._id, { resetCode: hashedCode, resetCodeExpiresAt }, { new:true }).select("-password");
         if(!updateUser) throw new ApiError(404, "User not found");
 
         // Get HTML template
@@ -55,8 +60,12 @@ const verifyResetCode = async (request, response) => {
         if(!resetCode) throw new ApiError(400, "Reset code is required");
 
         // Get user
-        const user = await User.findOne({ _id, resetCode }).select("resetCode resetCodeExpiresAt");
-        if(!user) throw new ApiError(404, "Invalid reset code");
+        const user = await User.findById(_id).select("resetCode resetCodeExpiresAt");
+        if(!user) throw new ApiError(404, "User not found associated with the state ID");
+
+        // Compare reset code
+        const isValid = await bcrypt.compare(resetCode, user?.resetCode);
+        if(!isValid) throw new ApiError(400, "Invalid reset code");
 
         // Check reset code expiry
         if(user?.resetCodeExpiresAt < Date.now()) throw new ApiError(400, "Reset code has expired");
