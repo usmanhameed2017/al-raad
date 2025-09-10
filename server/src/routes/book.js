@@ -13,6 +13,6 @@ bookRouter.route("/")
 bookRouter.route("/:id")
 .get(fetchSingleBook) // Fetch single book
 .put(csrfProtection, authentication, authorization(["Admin"]), upload.fields([{ name:"pdf", maxCount:1 }, { name:"coverImage", maxCount:1 }]), updateBook) // Edit book
-.delete(authentication, authorization(["Admin"]), deleteBook); // Delete book
+.delete(csrfProtection, authentication, authorization(["Admin"]), deleteBook); // Delete book
 
 module.exports = bookRouter;

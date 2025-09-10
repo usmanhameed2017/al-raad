@@ -11,6 +11,6 @@ tafseerRouter.route("/")
 tafseerRouter.route("/:id")
 .get(authentication, authorization(["Admin", "User"]), fetchSingleTafseer) // Fetch single tafseer
 .put(csrfProtection, authentication, authorization(["Admin"]), updateTafseer)      // Update tafseer
-.delete(authentication, authorization(["Admin"]), deleteTafseer);  // Delete tafseer
+.delete(csrfProtection, authentication, authorization(["Admin"]), deleteTafseer);  // Delete tafseer
 
 module.exports = tafseerRouter;

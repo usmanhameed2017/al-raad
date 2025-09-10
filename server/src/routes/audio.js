@@ -13,6 +13,6 @@ audioRouter.route("/")
 audioRouter.route("/:id")
 .get(fetchSingleAudio) // Fetch single audio
 .put(csrfProtection, authentication, authorization(["Admin"]), upload.single("url"), updateAudio) // Update audio
-.delete(authentication, authorization(["Admin"]), deleteAudio); // Delete audio
+.delete(csrfProtection, authentication, authorization(["Admin"]), deleteAudio); // Delete audio
 
 module.exports = audioRouter;

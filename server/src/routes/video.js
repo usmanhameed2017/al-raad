@@ -13,6 +13,6 @@ videoRouter.route("/")
 videoRouter.route("/:id")
 .get(fetchSingleVideo) // Fetch single video
 .put(csrfProtection, authentication, authorization(["Admin"]), upload.single("url"), updateVideo) // Update video
-.delete(authentication, authorization(["Admin"]), deleteVideo); // Delete video
+.delete(csrfProtection, authentication, authorization(["Admin"]), deleteVideo); // Delete video
 
 module.exports = videoRouter;

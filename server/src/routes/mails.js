@@ -11,7 +11,7 @@ mailRouter.route("/")
 
 mailRouter.route("/:id")
 .get(authentication, authorization(["Admin"]), fetchSingleMail) // Fetch single mail
-.delete(authentication, authorization(["Admin"]), deleteMail); // Delete mail
+.delete(csrfProtection, authentication, authorization(["Admin"]), deleteMail); // Delete mail
 
 // Reply to user
 mailRouter.route("/replyToUser").post(csrfProtection, authentication, authorization(["Admin"]), replyToUser);

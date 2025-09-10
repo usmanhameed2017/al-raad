@@ -37,6 +37,6 @@ userRouter.route("/logout").get(authentication, logout);
 userRouter.route("/:id")
 .get(authentication, authorization(["Admin"]), fetchSingleUser)           // Fetch single user
 .put(csrfProtection, authentication, authorization(["Admin"]), editUser)  // Edit user
-.delete(authentication, authorization(["Admin"]), deleteUser);            // Delete user
+.delete(csrfProtection, authentication, authorization(["Admin"]), deleteUser);            // Delete user
 
 module.exports = userRouter;
