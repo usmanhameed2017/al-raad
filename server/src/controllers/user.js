@@ -9,12 +9,6 @@ const { generateAccessToken } = require("../utils/auth");
 const { cookieOptions } = require("../config");
 const generateCode = require("../utils/generateCode");
 
-// Generate CSRF Token
-const generateCsrfToken = async (request, response) => {
-    return response.status(200)
-    .json(new ApiResponse(200, request.csrfToken(), "CSRF Token has been generated successfully"));
-};
-
 // User signup
 const signup = async (request, response) => {
     const { name, email, username, password, cpassword } = request.body;
@@ -199,12 +193,6 @@ const adminLogin = async (request, response) => {
     }
 };
 
-// Verify access token
-const verifyAccessToken = async (request, response) => {
-    if(!request.user) throw new ApiError(401, "Unauthenticated");
-    return response.status(200).json(new ApiResponse(200, request.user, "Authenticated"));
-};
-
 // Create user (Created by admin)
 const createUser = async (request, response) => {
     const { name, email, username, role, password, cpassword } = request.body;
@@ -358,12 +346,10 @@ const logout = async (request, response) => {
 };
 
 module.exports = { 
-    generateCsrfToken,
     signup,
     accountActivation,
     login,
     adminLogin,
-    verifyAccessToken,
     createUser,
     fetchUsers, 
     fetchSingleUser,
