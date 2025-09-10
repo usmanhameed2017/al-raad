@@ -1,13 +1,10 @@
 const { signup, accountActivation, login, logout, fetchUsers, editUser, deleteUser, 
-fetchSingleUser, verifyAccessToken, generateCsrfToken, adminLogin, createUser, } = require("../controllers/user");
+fetchSingleUser, adminLogin, createUser, } = require("../controllers/user");
 const { authentication, authorization } = require("../middlewares/auth");
 const csrfProtection = require("../middlewares/csrfToken");
 
 // Router instance
 const userRouter = require("express").Router();
-
-// Generate CSRF Token
-userRouter.route("/generateCsrfToken").get(csrfProtection, generateCsrfToken);
 
 // Signup
 userRouter.route("/signup").post(csrfProtection, signup);
@@ -20,9 +17,6 @@ userRouter.route("/login").post(csrfProtection, login);
 
 // Admin login
 userRouter.route("/admin/login").post(csrfProtection, adminLogin);
-
-// Verify access token
-userRouter.route("/verifyAccessToken").get(authentication, verifyAccessToken);
 
 // Create user (Created by admin)
 userRouter.route("/create").post(csrfProtection, authentication, authorization(["Admin"]), createUser)
