@@ -13,6 +13,8 @@ import styles from "../PanelStyling/style.module.css";
 import { sweetAlert } from '../../../utils/sweetAlert2';
 import Loader from '../../../components/Loader';
 import Input from '../../../components/InputFields';
+import socket from '../../../service/socket';
+import useSocket from '../../../hooks/useSocket';
 
 function Users() 
 {
@@ -32,6 +34,14 @@ function Users()
 
     // Page name
     const pageName = "User";
+
+    // Trigger handler
+    const handler = useCallback(() => {
+        setReloadData(prev => prev + 1); 
+    },[]);
+
+    // Realtime UI update
+    useSocket("Refresh User", handler);
     
     // Debounce technique
     useEffect(() => {
