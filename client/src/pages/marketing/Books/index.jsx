@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import styles from './style.module.css';
 import { FaBookOpen, FaEye } from 'react-icons/fa';
 import { Row, Col } from 'react-bootstrap';
@@ -9,6 +9,7 @@ import ServerSidePagination from '../../../components/Pagination';
 import Animation from '../../../components/Animation';
 import { getRequest } from '../../../api/request';
 import { isArrayHaveData } from '../../../constants';
+import useSocket from '../../../hooks/useSocket';
 
 function Books() 
 {
@@ -18,7 +19,18 @@ function Books()
     const [message, setMessage] = useState("");
     const [search, setSearch] = useState("");
     const [debouncedSearch, setDebouncedSearch] = useState("");
+    const [reload, setReload] = useState(0);
+
+    // Global state
     const { loading, setLoading } = useAuth();
+
+    // Real time update handler
+    const realtimeUpdate = useCallback(() => {
+        setReload(prev => prev + 1);
+    },[]);
+    
+    // Listen event
+    useSocket("Refresh Book", realtimeUpdate);    
 
     useEffect(() => {
         setLoading(true); // Enable loader on page load
@@ -44,7 +56,7 @@ function Books()
         getRequest(`/book?page=${currentPage}&limit=${6}&search=${debouncedSearch}`, false)
         .then(response => setData(response.data))
         .catch(() => setData({ docs:[] }));
-    }, [currentPage, debouncedSearch]);
+    }, [currentPage, debouncedSearch, reload]);
 
     return (
         <div className={styles.bookWrapper}>

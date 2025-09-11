@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import styles from './style.module.css';
 import { FaVideo } from 'react-icons/fa';
 import { Row, Col } from 'react-bootstrap';
@@ -9,6 +9,7 @@ import Animation from '../../../components/Animation';
 import VideoCard from '../../../components/VideoCard';
 import { getRequest } from '../../../api/request';
 import { isArrayHaveData } from '../../../constants';
+import useSocket from '../../../hooks/useSocket';
 
 function Videos() 
 {
@@ -18,7 +19,18 @@ function Videos()
   const [message, setMessage] = useState("");
   const [search, setSearch] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState("");
+  const [reload, setReload] = useState(0);
+
+  // Global state
   const { loading, setLoading } = useAuth();
+
+  // Real time update handler
+  const realtimeUpdate = useCallback(() => {
+    setReload(prev => prev + 1);
+  },[]);
+    
+  // Listen event
+  useSocket("Refresh Video", realtimeUpdate);
 
   useEffect(() => {
     setLoading(true); // Forcefully enable loader on page load
@@ -44,7 +56,7 @@ function Videos()
     getRequest(`/video?page=${currentPage}&limit=${6}&search=${debouncedSearch}`, false)
     .then(response => setData(response.data))
     .catch(() => setData({ docs:[] }));
-  },[currentPage, debouncedSearch]);
+  },[currentPage, debouncedSearch, reload]);
 
     return (
       <div className={styles.videoWrapper}>
