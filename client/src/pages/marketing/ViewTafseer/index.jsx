@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import styles from './style.module.css';
 import { Row, Col } from 'react-bootstrap';
@@ -8,14 +8,28 @@ import Animation from '../../../components/Animation';
 import { getRequest } from '../../../api/request';
 import { useAuth } from '../../../context/auth';
 import { FaBookOpen, FaPenAlt } from 'react-icons/fa'
+import useSocket from '../../../hooks/useSocket';
 
 function ViewTafseer() 
 {
     const { id } = useParams();
     const [tafseer, setTafseer] = useState({});
     const [message, setMessage] = useState("");
+    const [reload, setReload] = useState(0);
+
+    // Global state
     const { loading } = useAuth();
+
+    // Navigator
     const navigate = useNavigate();
+
+    // Realtime updates handler
+    const realtimeUpdate = useCallback(() => {
+        setReload(prev => prev + 1);
+    },[]);
+
+    // Listen event
+    useSocket("Refresh Tafseer", realtimeUpdate);
 
     // For better UX
     useEffect(() => {
@@ -32,7 +46,7 @@ function ViewTafseer()
             setTafseer({});
             navigate("/tafseer");
         });
-    }, [id]);
+    }, [id, reload]);
 
     return (
         <>
