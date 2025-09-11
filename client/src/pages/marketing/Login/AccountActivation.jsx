@@ -10,13 +10,15 @@ import Input from '../../../components/InputFields';
 function AccountActivation() 
 {
     // Get redirection state
-    const location = useLocation().state;
+    const location = useLocation();
+    const { redirectionFromSignup, _id } = location.state;
 
     // Navigator
     const navigate = useNavigate();
 
     // Initial values
     const initialValues = {
+        _id,
         activationCode: ""
     };
 
@@ -29,7 +31,7 @@ function AccountActivation()
     });
 
     // If user is not redirected from signup form
-    if(!location) return <Navigate to={`/Login`} replace />
+    if(!redirectionFromSignup) return <Navigate to={`/Login`} replace />
 
     return (
         <div className={styles.loginPage}>
