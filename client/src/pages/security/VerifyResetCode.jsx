@@ -30,8 +30,8 @@ function VerifyResetCode()
     // Validation schema
     const validationSchema = Yup.object({
         resetCode:Yup.string()
-        .min(6, "Reset code must be at least 6 characters long")
-        .max(12, "Reset code must not be longer than 12 characters")
+        .min(9, "Reset code must be 9 characters long")
+        .max(9, "Reset code must not be longer than 9 characters")
         .required("Reset code is required")
     });
 
