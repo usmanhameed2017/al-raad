@@ -25,8 +25,8 @@ function AccountActivation()
     // Validation schema
     const validationSchema = Yup.object({
         activationCode:Yup.string()
-        .min(6, "Activation code must be at least 6 characters long")
-        .max(12, "Activation code must not be longer than 12 characters")
+        .min(9, "Activation code must be 9 characters long")
+        .max(9, "Activation code must not be longer than 9 characters")
         .required("Activation code is required")
     });
 
