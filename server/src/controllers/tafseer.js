@@ -9,6 +9,7 @@ const createTafseer = async (request, response) => {
     {
         request.body.uploadedBy = request.user?._id;
         const tafseer = await Tafseer.create(request.body);
+        request.io.emit("Refresh Tafseer");
         return response.status(201).json(new ApiResponse(201, tafseer, "Tafseer has been uploaded successfully"));
     } 
     catch(error)
@@ -86,6 +87,7 @@ const updateTafseer = async (request, response) => {
     {
         const tafseer = await Tafseer.findByIdAndUpdate(id, request.body, { new:true });
         if(!tafseer) throw new ApiError(404, "Tafseer not found");
+        request.io.emit("Refresh Tafseer");
         return response.status(200).json(new ApiResponse(200, tafseer, "Tafseer has been updated successfully"));
     }
     catch(error) 
@@ -104,6 +106,7 @@ const deleteTafseer = async (request, response) => {
     {
         const tafseer = await Tafseer.findByIdAndDelete(id);
         if(!tafseer) throw new ApiError(404, "Tafseer not found");
+        request.io.emit("Refresh Tafseer");
         return response.status(200).json(new ApiResponse(200, tafseer, "Tafseer has been deleted successfully"));
     }
     catch(error) 
