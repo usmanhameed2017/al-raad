@@ -39,7 +39,7 @@ const createAudio = async (request, response) => {
 
         request.body.url = uploadedUrl;
         const audio = await Audio.create(request.body);
-        
+        request.io.emit("Refresh Audio");
         return response.status(201).json(new ApiResponse(201, audio, "A audio has been uploaded successfully"));
     } 
     catch(error) 
@@ -166,6 +166,7 @@ const updateAudio = async (request, response) => {
 
         // Update audio
         const updatedAudio = await Audio.findByIdAndUpdate(id, request.body, { new:true });
+        request.io.emit("Refresh Audio");
         return response.status(200).json(new ApiResponse(200, updatedAudio, "Audio has been updated successfully"));
     } 
     catch(error) 
@@ -190,6 +191,7 @@ const deleteAudio = async (request, response) => {
 
         // Delete audio from cloudinary
         await deleteFromCloudinary(audio?.url, "video", "audios");
+        request.io.emit("Refresh Audio");
         return response.status(200).json(new ApiResponse(200, audio, "Audio has been deleted successfully"));
     } 
     catch(error) 

@@ -32,7 +32,7 @@ const createVideo = async (request, response) => {
 
         request.body.url = uploadedUrl;
         const video = await Video.create(request.body);
-        
+        request.io.emit("Refresh Video"); 
         return response.status(201).json(new ApiResponse(201, video, "A video has been uploaded successfully"));
     } 
     catch(error)
@@ -146,6 +146,7 @@ const updateVideo = async (request, response) => {
 
         // Update video
         const updatedVideo = await Video.findByIdAndUpdate(id, request.body, { new:true });
+        request.io.emit("Refresh Video"); 
         return response.status(200).json(new ApiResponse(200, updatedVideo, "Video has been updated successfully"));
     } 
     catch(error)
@@ -170,6 +171,7 @@ const deleteVideo = async (request, response) => {
 
         // Delete video from cloudinary
         await deleteFromCloudinary(video?.url, "video", "videos");
+        request.io.emit("Refresh Video"); 
         return response.status(200).json(new ApiResponse(200, video, "Video has been deleted successfully"));
     } 
     catch(error)

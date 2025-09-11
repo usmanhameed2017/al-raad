@@ -32,6 +32,7 @@ const createBook = async (request, response) => {
         request.body.coverImage = await uploadOnCloudinary(coverImage, "image", "images") || "";
 
         const book = await Book.create(request.body);
+        request.io.emit("Refresh Book");
         return response.status(201).json(new ApiResponse(201, book, "A new book has been created successfully"));
     } 
     catch(error) 
@@ -158,6 +159,7 @@ const updateBook = async (request, response) => {
 
         // Update book
         const updatedBook = await Book.findByIdAndUpdate(id, request.body, { new:true });
+        request.io.emit("Refresh Book");
         return response.status(200).json(new ApiResponse(200, updatedBook, "Book has been updated"));
     } 
     catch(error)
@@ -181,6 +183,7 @@ const deleteBook = async (request, response) => {
         // Delete files from cloudinary
         await deleteFromCloudinary(book?.coverImage, "image", "images");
         await deleteFromCloudinary(book?.pdf, "raw", "pdf");
+        request.io.emit("Refresh Book");
         return response.status(200).json(new ApiResponse(200, book, "Book has been deleted successfully"));
     } 
     catch(error)

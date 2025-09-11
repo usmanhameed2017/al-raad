@@ -113,7 +113,7 @@ const accountActivation = async (request, response) => {
         const updateUser = await User.findByIdAndUpdate(user?._id, 
         { status:"Approved", ip:ip, activationCode:null, activationCodeExpiresAt:null }, { new:true }).select("-password");
         if(!updateUser) throw new ApiError(404, "Invalid activation code");
-
+        request.io.emit("Refresh User"); 
         return response.status(200).json(new ApiResponse(200, updateUser, "Your account has been activated successfully!"));
     } 
     catch(error)
