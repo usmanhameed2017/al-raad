@@ -13,6 +13,7 @@ import styles from "../PanelStyling/style.module.css";
 import { sweetAlert } from '../../../utils/sweetAlert2';
 import Loader from '../../../components/Loader';
 import Input from '../../../components/InputFields';
+import useSocket from '../../../hooks/useSocket';
 
 function Books() 
 {
@@ -32,6 +33,14 @@ function Books()
 
     // Page name
     const pageName = "Book";
+
+    // Real time update handler
+    const realtimeUpdate = useCallback(() => {
+        setReloadData(prev => prev + 1);
+    },[]);
+    
+    // Listen event
+    useSocket("Refresh Book", realtimeUpdate);    
     
     // Debounce technique
     useEffect(() => {

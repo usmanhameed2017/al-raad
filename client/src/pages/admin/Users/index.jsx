@@ -35,13 +35,13 @@ function Users()
     // Page name
     const pageName = "User";
 
-    // Trigger handler
-    const handler = useCallback(() => {
-        setReloadData(prev => prev + 1); 
+    // Real time update handler
+    const realtimeUpdate = useCallback(() => {
+        setReloadData(prev => prev + 1);
     },[]);
-
-    // Realtime UI update
-    useSocket("Refresh User", handler);
+    
+    // Listen event
+    useSocket("Refresh User", realtimeUpdate);
     
     // Debounce technique
     useEffect(() => {

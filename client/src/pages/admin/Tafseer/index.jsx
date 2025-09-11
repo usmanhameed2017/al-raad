@@ -15,6 +15,7 @@ import Loader from '../../../components/Loader';
 import { surahList } from '../../../constants';
 import { getTime } from '../../../utils/getTime';
 import Input from '../../../components/InputFields';
+import useSocket from '../../../hooks/useSocket';
 
 function Tafseer() 
 {
@@ -34,6 +35,14 @@ function Tafseer()
 
     // Page name
     const pageName = "Tafseer";
+
+    // Real time update handler
+    const realtimeUpdate = useCallback(() => {
+        setReloadData(prev => prev + 1);
+    },[]);
+    
+    // Listen event
+    useSocket("Refresh Tafseer", realtimeUpdate);    
     
     // Debounce technique
     useEffect(() => {

@@ -13,6 +13,7 @@ import { sweetAlert } from '../../../utils/sweetAlert2';
 import Loader from '../../../components/Loader';
 import { useNavigate } from 'react-router-dom';
 import Input from '../../../components/InputFields';
+import useSocket from '../../../hooks/useSocket';
 
 function Mails() 
 {
@@ -35,6 +36,14 @@ function Mails()
 
     // Page name
     const pageName = "Mail";
+
+    // Real time update handler
+    const realtimeUpdate = useCallback(() => {
+        setReloadData(prev => prev + 1);
+    },[]);
+    
+    // Listen event
+    useSocket("Refresh Mail", realtimeUpdate);    
     
     // Debounce technique
     useEffect(() => {

@@ -15,6 +15,7 @@ import Loader from '../../../components/Loader';
 import { surahList } from '../../../constants';
 import { generateOptimizedUrl } from '../../../utils/cloudinary';
 import Input from '../../../components/InputFields';
+import useSocket from '../../../hooks/useSocket';
 
 function Audios() 
 {
@@ -34,6 +35,14 @@ function Audios()
 
     // Page name
     const pageName = "Audio";
+
+    // Real time update handler
+    const realtimeUpdate = useCallback(() => {
+        setReloadData(prev => prev + 1);
+    },[]);
+    
+    // Listen event
+    useSocket("Refresh Audio", realtimeUpdate);    
     
     // Debounce technique
     useEffect(() => {
