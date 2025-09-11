@@ -15,8 +15,10 @@ const signup = async (request, response) => {
     const { name, email, username, password, cpassword } = request.body;
     if([name, email, username, password, cpassword].some(field => !field?.trim())) throw new ApiError(400, "All fields are required");
 
+    // Match password
     if(password !== cpassword) throw new ApiError(400, "Password & confirm password must be identical");
 
+    // Get user
     const user = await User.getUser(email, username);
     if(user)
     {
@@ -79,7 +81,7 @@ const signup = async (request, response) => {
         if(!result) throw new ApiError(400, "Unable to send email");
         request.io.emit("Refresh User");
         return response.status(201)
-        .json(new ApiResponse(201, {}, `Account has been created! We have sent you a verification code at your email ${email}`));
+        .json(new ApiResponse(201, userData, `Account has been created! We have sent you a verification code at your email ${email}`));
     } 
     catch(error)
     {
@@ -90,13 +92,13 @@ const signup = async (request, response) => {
 // Account activation
 const accountActivation = async (request, response) => {
     const { _id, activationCode } = request.body;
-    if(!_id.trim()) throw new ApiError(404, "State ID is missing");
-    if(!activationCode.trim()) throw new ApiError(400, "Activation code is required");
+    if(!_id?.trim()) throw new ApiError(404, "State ID is missing");
+    if(!activationCode?.trim()) throw new ApiError(400, "Activation code is required");
 
     try 
     {
         // Check if activation code is exist
-        const user = await User.findByid(_id).select("activationCode activationCodeExpiresAt");
+        const user = await User.findById(_id).select("activationCode activationCodeExpiresAt");
         if(!user) throw new ApiError(404, "User not found associated with the state ID");
 
         // Match activation code
