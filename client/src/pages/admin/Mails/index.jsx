@@ -43,7 +43,7 @@ function Mails()
     },[]);
     
     // Listen event
-    useSocket("Refresh Mail", realtimeUpdate);    
+    useSocket("Refresh Email", realtimeUpdate);    
     
     // Debounce technique
     useEffect(() => {
