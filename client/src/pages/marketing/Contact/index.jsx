@@ -82,9 +82,11 @@ function Contact()
                         <Button type="submit" className="w-100" disabled={savingChanges === true}>Send Message</Button>
 
                         {/* Loader */}
-                        <div className="mt-3">
-                            {savingChanges && <Loader text="Sending mail..." /> }
-                        </div>
+                        {savingChanges && (
+                            <div className="mt-3">
+                                <Loader text="Sending mail" />
+                            </div>
+                        )}
                     </FormBS>
                 </motion.div>
             </div>
