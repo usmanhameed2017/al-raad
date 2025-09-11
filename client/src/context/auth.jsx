@@ -39,9 +39,10 @@ function AuthProvider({ children })
 
         try 
         {
-            await postRequest("/user/signup", user);
+            const response = await postRequest("/user/signup", user);
+            const { _id } = response.data;
             action.resetForm();
-            navigate("/account/activation", { state:{ redirectionFromSignup:true } });
+            navigate("/account/activation", { state:{ redirectionFromSignup:true, _id } });
         } 
         catch(error) 
         {
