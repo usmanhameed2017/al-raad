@@ -8,6 +8,7 @@ const path = require("path");
 const { generateAccessToken } = require("../utils/auth");
 const { cookieOptions } = require("../config");
 const generateCode = require("../utils/generateCode");
+const bcrypt = require("bcrypt");
 
 // User signup
 const signup = async (request, response) => {
@@ -27,10 +28,10 @@ const signup = async (request, response) => {
             try 
             {
                 // Re-generate verification code & new expiry time
-                const { code:activationCode, expiresAt:activationCodeExpiresAt } = generateCode(10);
+                const { code:activationCode, hashedCode, expiresAt:activationCodeExpiresAt } = await generateCode();
 
                 // Update verification code and set new expiry time
-                const updateUser = await User.findByIdAndUpdate(user?._id, { activationCode, activationCodeExpiresAt }, { new:true }).select("-password");
+                const updateUser = await User.findByIdAndUpdate(user?._id, { activationCode:hashedCode, activationCodeExpiresAt }, { new:true }).select("-password");
 
                 // Get HTML template
                 const html = fs.readFileSync(path.resolve(__dirname, "../../public/accountActivation.html"), "utf-8");
@@ -55,9 +56,9 @@ const signup = async (request, response) => {
     try 
     {
         // Generate verification code & expiry time
-        const { code:activationCode, expiresAt:activationCodeExpiresAt } = generateCode(10);
+        const { code:activationCode, hashedCode, expiresAt:activationCodeExpiresAt } = await generateCode();
 
-        request.body.activationCode = activationCode;
+        request.body.activationCode = hashedCode;
         request.body.activationCodeExpiresAt = activationCodeExpiresAt;
 
         // Create user
@@ -77,9 +78,8 @@ const signup = async (request, response) => {
         const result = await sendEmail(email, "Account Activation", filledHtml);      
         if(!result) throw new ApiError(400, "Unable to send email");
         request.io.emit("Refresh User");
-        
         return response.status(201)
-        .json(new ApiResponse(201, userData, `Account has been created! We have sent you a verification code at your email ${email}`));
+        .json(new ApiResponse(201, {}, `Account has been created! We have sent you a verification code at your email ${email}`));
     } 
     catch(error)
     {
@@ -89,14 +89,19 @@ const signup = async (request, response) => {
 
 // Account activation
 const accountActivation = async (request, response) => {
-    const { activationCode } = request.body;
+    const { _id, activationCode } = request.body;
+    if(!_id.trim()) throw new ApiError(404, "State ID is missing");
     if(!activationCode.trim()) throw new ApiError(400, "Activation code is required");
 
     try 
     {
         // Check if activation code is exist
-        const user = await User.findOne({ activationCode });
-        if(!user) throw new ApiError(404, "Invalid activation code");
+        const user = await User.findByid(_id).select("activationCode activationCodeExpiresAt");
+        if(!user) throw new ApiError(404, "User not found associated with the state ID");
+
+        // Match activation code
+        const isValid = await bcrypt.compare(activationCode, user?.activationCode);
+        if(!isValid) throw new ApiError(400, "Invalid activtion code");
 
         // Check activation code expiry
         if(user?.activationCodeExpiresAt < Date.now()) throw new ApiError(400, "Activation code has expired");
