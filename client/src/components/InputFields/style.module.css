@@ -1,3 +1,19 @@
+.input {
+    background-color: white;
+    border: 1px solid #2c2f3a;
+    color: #2c2f3a;
+    padding: 10px 12px;
+    border-radius: 8px;
+    width: 100%;
+}
+
+.input:focus {
+    border-color: #00bcd4;
+    box-shadow: 0 2px 15px #00bcd4;
+    color: #00bcd4;
+    outline: none;
+}
+
 .passwordFieldWrapper {
     display: flex;
     align-items: center;
