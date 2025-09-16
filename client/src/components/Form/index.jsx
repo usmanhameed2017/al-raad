@@ -7,7 +7,11 @@ function FormBS({ children, initialValues, validationSchema, handlerFunction, cl
         <div className={styles.formContainer}>
             <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handlerFunction} 
             enableReinitialize={true} validateOnBlur={false} validateOnChange={false}>
-                <Form className={className}> { children } </Form>
+                {formikProps => (
+                    <Form className={className ? className : `${styles.form}`}>        
+                        { typeof children === "function" ? children(formikProps) : children }
+                    </Form>
+                )}             
             </Formik>
         </div>
     );
