@@ -20,8 +20,8 @@ const io = new Server(server, { cors:corsOptions });
 // ************* MIDDLEWARES ************* //
 app.use(cors(corsOptions));
 app.use(cookieParse(cookieParserSecret));
-app.use(express.urlencoded({ extended:true, limit:"20kb" }));
-app.use(express.json({ limit:"20kb" }));
+app.use(express.urlencoded({ extended:true, limit:"100kb" }));
+app.use(express.json({ limit:"100kb" }));
 app.use("/public", express.static(path.resolve("public")));
 app.use((request, response, next) => {
     request.io = io;
