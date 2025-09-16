@@ -4,13 +4,13 @@ import socket from "../service/socket";
 function useSocket(event, callback)
 {
     useEffect(() => {
-        if(!event || typeof callback !== "function") return;
+        if(!socket || !event || typeof callback !== "function") return;
 
         // Listen for event
-        socket.on(event, callback);
+        socket?.on(event, callback);
 
         // Cleanup on unmount
-        return () => socket.off(event, callback);
+        return () => socket?.off(event, callback);
     }, [event, callback]);
 }
 
