@@ -162,7 +162,7 @@ const updateBook = async (request, response) => {
         }
 
         // Update book
-        const updatedBook = await Book.findByIdAndUpdate(id, request.body, { new:true });
+        const updatedBook = await Book.findByIdAndUpdate(id, request.body, { new:true }).populate("uploadedBy", "name");
         request.io.emit("BookUpdated", updatedBook);
         return response.status(200).json(new ApiResponse(200, updatedBook, "Book has been updated"));
     } 
