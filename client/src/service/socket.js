@@ -9,13 +9,14 @@ const socket = io(backendURL, {
 
 // Connect with backend
 export const connectSocket = () => {
-    // Remove previous listeners
-    socket.removeAllListeners();
-
     try 
     {
-        // Destroy previous instance if exist
-        if(socket.connected) socket.disconnect();
+        // Destroy previous instance and listeners if exist
+        if(socket.connected)
+        {
+            socket.removeAllListeners();
+            socket.disconnect();
+        }
         
         // Fresh connection
         if(!socket.connected) socket.connect();        
@@ -23,6 +24,22 @@ export const connectSocket = () => {
     catch(error) 
     {
         console.log("Failed to connect or disconnect socket error:", error.message);
+    }
+};
+
+// Disconnect socket
+export const disconnectSocket = () => {
+    try 
+    {
+        if(socket.connected)
+        {
+            socket.removeAllListeners();
+            socket.disconnect();
+        }
+    } 
+    catch(error) 
+    {
+        console.log("Failed to disconnect socket", error.message);
     }
 };
 
