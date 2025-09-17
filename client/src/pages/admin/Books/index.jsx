@@ -14,6 +14,7 @@ import { sweetAlert } from '../../../utils/sweetAlert2';
 import Loader from '../../../components/Loader';
 import Input from '../../../components/InputFields';
 import useSocket from '../../../hooks/useSocket';
+import { addRealTime, deleteRealTime, updateRealTime } from '../../../utils/RealTimeHelpers';
 
 function Books() 
 {
@@ -26,21 +27,19 @@ function Books()
     const [showModal, setShowModal] = useState(false);
     const [editFormValues, setEditFormValues] = useState(null);
     const [formType, setFormType] = useState("");
-    const [reloadData, setReloadData] = useState(0);
 
     // Global state loader
     const { savingChanges } = useAuth();
 
-    // Page name
-    const pageName = "Book";
+    // Helpers
+    const handleAdd = useCallback(addRealTime(setData), [setData]);
+    const handleUpdate = useCallback(updateRealTime(setData), [setData]);
+    const handleDelete = useCallback(deleteRealTime(setData, setCurrentPage), [setData]);
 
-    // Real time update handler
-    const realtimeUpdate = useCallback(() => {
-        setReloadData(prev => prev + 1);
-    },[]);
-    
-    // Listen event
-    useSocket("Refresh Book", realtimeUpdate);    
+    // Listen for real time updates
+    useSocket("BookAdded", handleAdd);
+    useSocket("BookUpdated", handleUpdate);
+    useSocket("BookDeleted", handleDelete);  
     
     // Debounce technique
     useEffect(() => {
@@ -53,39 +52,60 @@ function Books()
     
     // Fetch data on page load and on search
     useEffect(() => {
-        getRequest(`/${pageName.toLowerCase()}?page=${currentPage}&limit=${limit}&search=${debouncedSearch}`)
+        getRequest(`/book?page=${currentPage}&limit=${limit}&search=${debouncedSearch}`)
         .then(response => setData(response.data))
         .catch(error => console.log(error.message));
-    }, [currentPage, limit, debouncedSearch, reloadData]);
+    }, [currentPage, limit, debouncedSearch]);
 
-    // Launch Modal
+    // Launch modal for add
     const launchModal = useCallback(() => {
         setFormType("create");
         setEditFormValues(null);
         setShowModal(true);
     },[]);
 
-    // Edit
+    // Launch modal for edit
     const edit = useCallback((data) => {
         setFormType("edit")
         setEditFormValues({ ...data, pdf: "" }); // Keep pdf empty initially
         setShowModal(true);
-    },[]);
+    },[]); 
+    
+    // Add & Edit
+    const handleSubmit = useCallback(async (values, action) => {
+        try
+        {
+            if(formType === "create")
+            {
+                delete values?._id;
+                await postRequest("/book", values, true);
+                action.resetForm();
+            }
+            else
+            {
+                await putRequest(`/book/${values?._id}`, values, true);
+            }
+            setShowModal(false);
+        }
+        catch(error)
+        {
+            return error;
+        } 
+    },[formType]);    
 
     // Delete
     const drop = useCallback(async (_id) => {
         sweetAlert("Are you sure?", "This action will permanently delete the record.", "confirm", "Yes, delete it!", null, async () => {
             try 
             {
-                await deleteRequest(`/${pageName.toLowerCase()}/${_id}`);
-                setReloadData(reloadData + 1);
+                await deleteRequest(`/book/${_id}`);
             } 
             catch (error) 
             {
                 return error;
             } 
         })
-    },[reloadData]);
+    },[]);
 
     // Columns
     const columns = [
@@ -150,7 +170,7 @@ function Books()
         .test('size', "PDF size must not be larger than 9MB", (file) => {
             return !file || file?.size <= 9000000;
         })
-});    
+    });  
 
     return (
         <>
@@ -169,7 +189,7 @@ function Books()
         <Row>
             <Col>
                 <ReactDataTable 
-                title={`${pageName}s`} 
+                title={`Books`} 
                 columns={columns} 
                 data={data} 
                 setCurrentPage={setCurrentPage}
@@ -182,31 +202,9 @@ function Books()
 
             {/* Modal */}
             <ModalBS showModal={showModal} setShowModal={setShowModal} 
-            modalTitle={ formType === "create" ? `ADD NEW ${pageName.toUpperCase()}` : `EDIT ${pageName.toUpperCase()}` }>
+            modalTitle={ formType === "create" ? "ADD NEW BOOK" : "EDIT BOOK" }>
                 {/* Form */}
-                <FormBS initialValues={initialValues} validationSchema={validationSchema}
-                handlerFunction={ async (values, action) => {
-                    try
-                    {
-                        if(formType === "create")
-                        {
-                            delete values?._id;
-                            await postRequest(`/${pageName.toLowerCase()}`, values, true);
-                            action.resetForm();
-                        }
-                        else
-                        {
-                            await putRequest(`/${pageName.toLowerCase()}/${values?._id}`, values, true);
-                        }
-                        setShowModal(false);
-                        setReloadData(reloadData + 1);
-                    }
-                    catch(error)
-                    {
-                        return error;
-                    }
-                }}
-                >
+                <FormBS initialValues={initialValues} validationSchema={validationSchema} handlerFunction={handleSubmit}>
                     {/* Title */}
                     <div className="form-group mb-2">
                         <label htmlFor="title" className={styles.label}> Title </label>
