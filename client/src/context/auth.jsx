@@ -4,6 +4,7 @@ import { showError } from '../utils/toasterMessage';
 import { getRequest, postRequest } from '../api/request';
 import { setLoadingFunction, setSavingFunction } from '../utils/loadingManager';
 import { getCsrfToken, csrfToken } from '../utils/token';
+import { connectSocket } from '../service/socket';
 
 // Create auth context
 const AuthContext = createContext();
