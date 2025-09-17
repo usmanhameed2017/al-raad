@@ -150,6 +150,10 @@ function AuthProvider({ children })
             localStorage.removeItem("user"); 
             return error;
         }
+        finally
+        {
+            connectSocket(); // Connect socket on app load
+        }
     },[]);
 
     useEffect(() => {
