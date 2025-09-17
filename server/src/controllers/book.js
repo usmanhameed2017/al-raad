@@ -31,8 +31,12 @@ const createBook = async (request, response) => {
         request.body.pdf = pdfUrl.replace("/upload/", "/upload/fl_attachment/"); // Download pdf forcefully
         request.body.coverImage = await uploadOnCloudinary(coverImage, "image", "images") || "";
 
+        // Create book
         const book = await Book.create(request.body);
-        request.io.emit("BookAdded", book);
+
+        // Get uploader name
+        const addedBook = await Book.findById(book?._id).populate("uploadedBy", "name");
+        request.io.emit("BookAdded", addedBook);
         return response.status(201).json(new ApiResponse(201, book, "A new book has been created successfully"));
     } 
     catch(error) 
