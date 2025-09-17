@@ -7,7 +7,7 @@ const socket = io(backendURL, {
     autoConnect: false 
 });
 
-// Connect with backend
+// Connect socket
 export const connectSocket = () => {
     try 
     {
