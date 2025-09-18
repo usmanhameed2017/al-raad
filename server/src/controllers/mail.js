@@ -28,7 +28,10 @@ const sendMail = async (request, response) => {
         // Send mail
         const result = await sendEmail("usmanhameed1790@gmail.com", `📬 Contact us - ${mail?.subject}`, filledHtml);      
         if(!result) throw new ApiError(500, "Unable to send email");
-        request.io.emit("Refresh Email");      
+
+        // Payload with sender name
+        const newEmail = await mail.findById(mail?._id).populate("mailedBy", "name");
+        request.io.emit("EmailSend", newEmail);    
         return response.status(201).json(new ApiResponse(201, mail, "Email has been sent successfully"));
     } 
     catch(error)
@@ -128,7 +131,7 @@ const deleteMail = async (request, response) => {
     {
         const mail = await Mail.findByIdAndDelete(id);
         if(!mail) throw new ApiError(404, "Mail not found");
-        request.io.emit("Refresh Email"); 
+        request.io.emit("EmailDeleted", id); 
         return response.status(200).json(new ApiResponse(200, mail, "Mail has been deleted successfully"));
     }
     catch(error) 

@@ -34,7 +34,7 @@ const createBook = async (request, response) => {
         // Create book
         const book = await Book.create(request.body);
 
-        // Get uploader name
+        // Payload with uploader name
         const addedBook = await Book.findById(book?._id).populate("uploadedBy", "name");
         request.io.emit("BookAdded", addedBook);
         return response.status(201).json(new ApiResponse(201, book, "A new book has been created successfully"));
@@ -187,7 +187,7 @@ const deleteBook = async (request, response) => {
         // Delete files from cloudinary
         await deleteFromCloudinary(book?.coverImage, "image", "images");
         await deleteFromCloudinary(book?.pdf, "raw", "pdf");
-        request.io.emit("BookDeleted", book?._id);
+        request.io.emit("BookDeleted", id);
         return response.status(200).json(new ApiResponse(200, book, "Book has been deleted successfully"));
     } 
     catch(error)
