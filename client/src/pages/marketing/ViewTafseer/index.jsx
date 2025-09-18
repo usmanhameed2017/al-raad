@@ -9,13 +9,13 @@ import { getRequest } from '../../../api/request';
 import { useAuth } from '../../../context/auth';
 import { FaBookOpen, FaPenAlt } from 'react-icons/fa'
 import useSocket from '../../../hooks/useSocket';
+import { changesRealTime } from '../../../utils/realTimeHelpers';
 
 function ViewTafseer() 
 {
     const { id } = useParams();
     const [tafseer, setTafseer] = useState({});
     const [message, setMessage] = useState("");
-    const [reload, setReload] = useState(0);
 
     // Global state
     const { loading } = useAuth();
@@ -23,13 +23,11 @@ function ViewTafseer()
     // Navigator
     const navigate = useNavigate();
 
-    // Realtime updates handler
-    const realtimeUpdate = useCallback(() => {
-        setReload(prev => prev + 1);
-    },[]);
+    // Helper to make changes in real time
+    const handleChanges = useCallback(changesRealTime(setTafseer, id), [setTafseer]);
 
-    // Listen event
-    useSocket("Refresh Tafseer", realtimeUpdate);
+    // Listen for real time changes
+    useSocket("TafseerUpdated", handleChanges);
 
     // For better UX
     useEffect(() => {
@@ -46,7 +44,7 @@ function ViewTafseer()
             setTafseer({});
             navigate("/tafseer");
         });
-    }, [id, reload]);
+    }, [id]);
 
     return (
         <>

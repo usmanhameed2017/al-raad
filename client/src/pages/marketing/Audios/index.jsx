@@ -10,6 +10,7 @@ import AudioCard from '../../../components/AudioCard';
 import { getRequest } from '../../../api/request';
 import { isArrayHaveData } from '../../../constants';
 import useSocket from '../../../hooks/useSocket';
+import { addRealTime, deleteRealTime, updateRealTime } from '../../../utils/realTimeHelpers';
 
 function Audios() 
 {
@@ -19,18 +20,19 @@ function Audios()
     const [message, setMessage] = useState("");
     const [search, setSearch] = useState("");
     const [debouncedSearch, setDebouncedSearch] = useState("");
-    const [reload, setReload] = useState(0);
 
     // Global state
     const { loading, setLoading } = useAuth();
 
-    // Real time update handler
-    const realtimeUpdate = useCallback(() => {
-        setReload(prev => prev + 1);
-    },[]);
-    
-    // Listen event
-    useSocket("Refresh Audio", realtimeUpdate); 
+    // Helpers
+    const handleAdd = useCallback(addRealTime(setData), [setData]);
+    const handleUpdate = useCallback(updateRealTime(setData), [setData]);
+    const handleDelete = useCallback(deleteRealTime(setData, setCurrentPage), [setData]);
+
+    // Listen for real time updates
+    useSocket("AudioAdded", handleAdd);
+    useSocket("AudioUpdated", handleUpdate);
+    useSocket("AudioDeleted", handleDelete); 
 
     useEffect(() => {
         setLoading(true); // Forcefully enable loader on page load
@@ -56,7 +58,7 @@ function Audios()
         getRequest(`/audio?page=${currentPage}&limit=${6}&search=${debouncedSearch}`, false)
         .then(response => setData(response.data))
         .catch(() => setData({ docs:[] }));
-    }, [currentPage, debouncedSearch, reload]);
+    }, [currentPage, debouncedSearch]);
 
     return (
         <div className={styles.audioWrapper}>
