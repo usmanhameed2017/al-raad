@@ -192,7 +192,7 @@ function Audios()
             <Row>
                 <Col>
                     <ReactDataTable 
-                    title={`Audios`} 
+                    title={`Lectures`} 
                     columns={columns} 
                     data={data} 
                     setCurrentPage={setCurrentPage}
