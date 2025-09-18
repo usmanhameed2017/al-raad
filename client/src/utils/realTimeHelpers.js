@@ -38,3 +38,8 @@ export const deleteRealTime = (updaterFunction) => (deletedId) => {
         totalPages: Math.ceil((prev.totalDocs - 1) / prev.limit) || 1
     }));
 };
+
+// Changes within single entity in real time
+export const changesRealTime = (updaterFunction, id) => (updatedItem) => {
+    if(updatedItem?._id === id) updaterFunction(updatedItem);
+};
