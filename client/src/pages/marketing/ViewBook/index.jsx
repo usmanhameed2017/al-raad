@@ -9,13 +9,13 @@ import { getRequest } from '../../../api/request';
 import { FaBookOpen, FaDownload, FaPenAlt } from 'react-icons/fa';
 import { useAuth } from '../../../context/auth';
 import useSocket from '../../../hooks/useSocket';
+import { changesRealTime } from '../../../utils/realTimeHelpers';
 
 function ViewBook() 
 {
     const { id } = useParams();
     const [book, setBook] = useState({});
     const [message, setMessage] = useState("");
-    const [reload, setReload] = useState(0);
 
     // Global state
     const { loading } = useAuth();
@@ -23,13 +23,11 @@ function ViewBook()
     // Navigator
     const navigate = useNavigate();
 
-    // Realtime updates handler
-    const realtimeUpdate = useCallback(() => {
-        setReload(prev => prev + 1);
-    },[]);
+    // Helper to make changes in real time
+    const handleChanges = useCallback(changesRealTime(setBook, id), [setBook]);
 
-    // Listen event
-    useSocket("Refresh Book", realtimeUpdate);
+    // Listen for real time changes
+    useSocket("BookUpdated", handleChanges);
 
     // For better UX
     useEffect(() => {
@@ -46,7 +44,7 @@ function ViewBook()
             setBook({});
             navigate("/books");
         });
-    }, [id, reload]);
+    }, [id]);
 
     return (
         <>
