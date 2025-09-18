@@ -16,6 +16,7 @@ import { surahList } from '../../../constants';
 import { generateOptimizedUrl } from '../../../utils/cloudinary';
 import Input from '../../../components/InputFields';
 import useSocket from '../../../hooks/useSocket';
+import { addRealTime, deleteRealTime, updateRealTime } from '../../../utils/realTimeHelpers';
 
 function Audios() 
 {
@@ -28,7 +29,6 @@ function Audios()
     const [showModal, setShowModal] = useState(false);
     const [editFormValues, setEditFormValues] = useState(null);
     const [formType, setFormType] = useState("");
-    const [reloadData, setReloadData] = useState(0);
 
     // Global state loader
     const { savingChanges } = useAuth();
@@ -36,13 +36,15 @@ function Audios()
     // Page name
     const pageName = "Audio";
 
-    // Real time update handler
-    const realtimeUpdate = useCallback(() => {
-        setReloadData(prev => prev + 1);
-    },[]);
-    
-    // Listen event
-    useSocket("Refresh Audio", realtimeUpdate);    
+    // Helpers
+    const handleAdd = useCallback(addRealTime(setData), [setData]);
+    const handleUpdate = useCallback(updateRealTime(setData), [setData]);
+    const handleDelete = useCallback(deleteRealTime(setData, setCurrentPage), [setData]);
+
+    // Listen for real time updates
+    useSocket("AudioAdded", handleAdd);
+    useSocket("AudioUpdated", handleUpdate);
+    useSocket("AudioDeleted", handleDelete);
     
     // Debounce technique
     useEffect(() => {
@@ -55,10 +57,10 @@ function Audios()
     
     // Fetch data on page load and on search
     useEffect(() => {
-        getRequest(`/${pageName.toLowerCase()}?page=${currentPage}&limit=${limit}&search=${debouncedSearch}`)
+        getRequest(`/audio?page=${currentPage}&limit=${limit}&search=${debouncedSearch}`)
         .then(response => setData(response.data))
         .catch(error => console.log(error.message));
-    }, [currentPage, limit, debouncedSearch, reloadData]);
+    }, [currentPage, limit, debouncedSearch]);
 
     // Launch Modal
     const launchModal = useCallback(() => {
@@ -74,20 +76,41 @@ function Audios()
         setShowModal(true);
     },[]);
 
+    // Add & Edit
+    const handleSubmit = useCallback(async (values, action) => {
+        try
+        {
+            if(formType === "create")
+            {
+                delete values?._id;
+                await postRequest("/audio", values, true);
+                action.resetForm();
+            }
+            else
+            {
+                await putRequest(`/audio/${values?._id}`, values, true);
+            }
+            setShowModal(false);
+        }
+        catch(error)
+        {
+            return error;
+        } 
+    },[formType]);      
+
     // Delete
     const drop = useCallback(async (_id) => {
         sweetAlert("Are you sure?", "This action will permanently delete the record.", "confirm", "Yes, delete it!", null, async () => {
             try 
             {
-                await deleteRequest(`/${pageName.toLowerCase()}/${_id}`);
-                setReloadData(reloadData + 1);
+                await deleteRequest(`/audio/${_id}`);
             } 
             catch (error) 
             {
                 return error;
             } 
         })
-    },[reloadData]);
+    },[]);
 
     // Columns
     const columns = [
@@ -169,7 +192,7 @@ function Audios()
             <Row>
                 <Col>
                     <ReactDataTable 
-                    title={`${pageName}s`} 
+                    title={`Audios`} 
                     columns={columns} 
                     data={data} 
                     setCurrentPage={setCurrentPage}
@@ -182,31 +205,9 @@ function Audios()
 
             {/* Modal */}
             <ModalBS showModal={showModal} setShowModal={setShowModal} 
-            modalTitle={ formType === "create" ? `ADD NEW ${pageName.toUpperCase()}` : `EDIT ${pageName.toUpperCase()}` }>
+            modalTitle={ formType === "create" ? "ADD NEW AUDIO" : "EDIT AUDIO" }>
                 {/* Form */}
-                <FormBS initialValues={initialValues} validationSchema={validationSchema}
-                handlerFunction={ async (values, action) => {
-                    try
-                    {
-                        if(formType === "create")
-                        {
-                            delete values?._id;
-                            await postRequest(`/${pageName.toLowerCase()}`, values, true);
-                            action.resetForm();
-                        }
-                        else
-                        {
-                            await putRequest(`/${pageName.toLowerCase()}/${values?._id}`, values, true);
-                        }
-                        setShowModal(false);
-                        setReloadData(reloadData + 1);
-                    }
-                    catch(error)
-                    {
-                        return error;
-                    }
-                }}
-                >
+                <FormBS initialValues={initialValues} validationSchema={validationSchema} handlerFunction={handleSubmit}>
                     {/* Surah Name */}
                     <div className="form-group mb-2">
                         <label htmlFor="surahName" className={styles.label}> Surah Name </label>

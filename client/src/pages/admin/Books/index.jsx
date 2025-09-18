@@ -14,7 +14,7 @@ import { sweetAlert } from '../../../utils/sweetAlert2';
 import Loader from '../../../components/Loader';
 import Input from '../../../components/InputFields';
 import useSocket from '../../../hooks/useSocket';
-import { addRealTime, deleteRealTime, updateRealTime } from '../../../utils/RealTimeHelpers';
+import { addRealTime, deleteRealTime, updateRealTime } from '../../../utils/realTimeHelpers';
 
 function Books() 
 {
