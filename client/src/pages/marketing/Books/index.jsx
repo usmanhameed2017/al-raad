@@ -10,7 +10,7 @@ import Animation from '../../../components/Animation';
 import { getRequest } from '../../../api/request';
 import { isArrayHaveData } from '../../../constants';
 import useSocket from '../../../hooks/useSocket';
-import { addRealTime, deleteRealTime, updateRealTime } from '../../../utils/RealTimeHelpers';
+import { addRealTime, deleteRealTime, updateRealTime } from '../../../utils/realTimeHelpers';
 
 function Books() 
 {
