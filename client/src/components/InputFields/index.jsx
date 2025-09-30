@@ -3,9 +3,9 @@ import { useState } from 'react';
 import styles from "./style.module.css";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 
-function Input({ type, name, className, placeholder, required = false, accept, rows, list, children }) 
+function Input({ type, name, className, placeholder, required = false, accept, rows, multiple, list, autoComplete, onChange, children }) 
 {
-    // For handling files
+    // Get field value for file handling
     const { setFieldValue } = useFormikContext();
 
     // State to toggle show and hide password
@@ -20,7 +20,15 @@ function Input({ type, name, className, placeholder, required = false, accept, r
             {/* Wrapper */}
             <div className={styles.passwordFieldWrapper}>
                 {/* Field */}
-                <Field type={showPassword ? "text" : "password"} name={name} className={`${input} pe-5`} placeholder={placeholder} required={required} />
+                <Field type={showPassword ? "text" : "password"} name={name} className={`${input} pe-5`} placeholder={placeholder} required={required}
+                onChange={(e) => {
+                    // Formik value update
+                    setFieldValue(name, e.target.value);
+
+                    // For custom onChange
+                    if(onChange) onChange(e);
+                }} 
+                />
 
                 {/* Icon */}
                 <span className={styles.icon} onClick={() => setShowPassword(!showPassword)}>
@@ -34,8 +42,15 @@ function Input({ type, name, className, placeholder, required = false, accept, r
     // File
     if(type === "file") return (
         <>
-            <input type={type} name={name} className={input} accept={accept} required={required}
-            onChange={ (e) => setFieldValue(name, e.target.multiple ? e.target.files : e.target.files[0]) } />
+            <input type={type} name={name} className={input} accept={accept} multiple={multiple} required={required}
+            onChange={ (e) => {
+                // Formik value update
+                setFieldValue(name, multiple ? e.target.files : e.target.files[0]);
+
+                // For custom onChange
+                if(onChange) onChange(e);
+            }} 
+            />
             <span className={styles.errorMessage}> <ErrorMessage name={name} /> </span>
         </>
     );
@@ -43,7 +58,15 @@ function Input({ type, name, className, placeholder, required = false, accept, r
     // Text area
     if(type === "textarea") return (
         <>
-            <Field as={type} rows={rows} name={name} className={input} placeholder={placeholder} required={required} />
+            <Field as={type} rows={rows} name={name} className={input} placeholder={placeholder} required={required}
+            onChange={(e) => {
+                // Formik value update
+                setFieldValue(name, e.target.value);
+
+                // For custom onChange
+                if(onChange) onChange(e);
+            }}              
+            />
             <span className={styles.errorMessage}> <ErrorMessage name={name} /> </span>
         </>
     );
@@ -51,7 +74,7 @@ function Input({ type, name, className, placeholder, required = false, accept, r
     // Select - (Dropdown list)
     if(type === "select") return (
         <>
-            <Field as={type} name={name} className={input} required={required}> 
+            <Field as={type} name={name} className={input} multiple={multiple} required={required}> 
                 { children }
             </Field>
             <span className={styles.errorMessage}> <ErrorMessage name={name} /> </span>
@@ -70,7 +93,15 @@ function Input({ type, name, className, placeholder, required = false, accept, r
     // Default input types: (Text, Number, Email, Search)
     return (
         <>
-            <Field type={type} name={name} className={input} placeholder={placeholder} required={required} />
+            <Field type={type} name={name} className={input} placeholder={placeholder} required={required} autoComplete={autoComplete}
+            onChange={(e) => {
+                // Formik value update
+                setFieldValue(name, e.target.value);
+
+                // For custom onChange
+                if(onChange) onChange(e);
+            }} 
+            />
             <span className={styles.errorMessage}> <ErrorMessage name={name} /> </span>
         </>
     );
