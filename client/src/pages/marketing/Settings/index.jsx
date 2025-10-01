@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import Animation from '../../../components/Animation';
 import Button from '../../../components/Button';
 import FormBS from '../../../components/Form';
@@ -14,7 +14,6 @@ function Settings()
 {
     const { user, setUser, savingChanges } = useAuth();
     const userData = user || getUser() || {};
-    const [showPassword, setShowPassword] = useState(false);
 
     // Fetch user data on page load
     useEffect(() => {

@@ -24,15 +24,10 @@ function Videos()
   // Global state
   const { loading, setLoading } = useAuth();
 
-  // Helpers
-  const handleAdd = useCallback(addRealTime(setData), [setData]);
-  const handleUpdate = useCallback(updateRealTime(setData), [setData]);
-  const handleDelete = useCallback(deleteRealTime(setData, setCurrentPage), [setData]);
-
   // Listen for real time updates
-  useSocket("VideoAdded", handleAdd);
-  useSocket("VideoUpdated", handleUpdate);
-  useSocket("VideoDeleted", handleDelete);
+  useSocket("VideoAdded", useCallback(addRealTime(setData), [setData]));
+  useSocket("VideoUpdated", useCallback(updateRealTime(setData), [setData]));
+  useSocket("VideoDeleted", useCallback(deleteRealTime(setData, setCurrentPage), [setData]));
 
   useEffect(() => {
     setLoading(true); // Forcefully enable loader on page load

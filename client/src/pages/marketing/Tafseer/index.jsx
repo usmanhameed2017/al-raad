@@ -24,15 +24,10 @@ function Tafseer()
     // Global state
     const { loading, setLoading } = useAuth();
 
-    // Helpers
-    const handleAdd = useCallback(addRealTime(setData), [setData]);
-    const handleUpdate = useCallback(updateRealTime(setData), [setData]);
-    const handleDelete = useCallback(deleteRealTime(setData, setCurrentPage), [setData]);
-
     // Listen for real time updates
-    useSocket("TafseerAdded", handleAdd);
-    useSocket("TafseerUpdated", handleUpdate);
-    useSocket("TafseerDeleted", handleDelete);
+    useSocket("TafseerAdded", useCallback(addRealTime(setData), [setData]));
+    useSocket("TafseerUpdated", useCallback(updateRealTime(setData), [setData]));
+    useSocket("TafseerDeleted", useCallback(deleteRealTime(setData, setCurrentPage), [setData]));
 
     useEffect(() => {
         setLoading(true); // Forcefully enable loader on page load

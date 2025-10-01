@@ -23,11 +23,8 @@ function ViewTafseer()
     // Navigator
     const navigate = useNavigate();
 
-    // Helper to make changes in real time
-    const handleChanges = useCallback(changesRealTime(setTafseer, id), [setTafseer]);
-
     // Listen for real time changes
-    useSocket("TafseerUpdated", handleChanges);
+    useSocket("TafseerUpdated", useCallback(changesRealTime(setTafseer, id), [setTafseer]));
 
     // For better UX
     useEffect(() => {

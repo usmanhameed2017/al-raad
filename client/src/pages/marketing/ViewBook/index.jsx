@@ -23,11 +23,8 @@ function ViewBook()
     // Navigator
     const navigate = useNavigate();
 
-    // Helper to make changes in real time
-    const handleChanges = useCallback(changesRealTime(setBook, id), [setBook]);
-
     // Listen for real time changes
-    useSocket("BookUpdated", handleChanges);
+    useSocket("BookUpdated", useCallback(changesRealTime(setBook, id), [setBook]));
 
     // For better UX
     useEffect(() => {
