@@ -10,6 +10,9 @@ import Input from "../../../components/InputFields";
 
 function AdminLogin() 
 {
+    // Global auth utilities
+    const { adminLogin, user } = useAuth();
+
     // Form initial values
     const initialValues = {
         username:"",
@@ -25,8 +28,6 @@ function AdminLogin()
         password:Yup.string()
         .required('Password is required'),
     });
-
-    const { adminLogin, user } = useAuth();
 
     return (
         <div className={styles.wrapper}>
