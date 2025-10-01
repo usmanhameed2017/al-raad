@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useState } from 'react';
-import { deleteRequest, getRequest, postRequest, putRequest } from '../../../api/request';
 import ReactDataTable from '../../../components/DataTable';
 import Button from '../../../components/Button';
 import { useAuth } from '../../../context/auth';
@@ -15,6 +14,7 @@ import Loader from '../../../components/Loader';
 import Input from '../../../components/InputFields';
 import useSocket from '../../../hooks/useSocket';
 import { addRealTime, deleteRealTime, updateRealTime } from '../../../utils/realTimeHelpers';
+import api from '../../../service/axios';
 
 function Books() 
 {
@@ -52,7 +52,7 @@ function Books()
     
     // Fetch data on page load and on search
     useEffect(() => {
-        getRequest(`/book?page=${currentPage}&limit=${limit}&search=${debouncedSearch}`)
+        api.get(`/book?page=${currentPage}&limit=${limit}&search=${debouncedSearch}`)
         .then(response => setData(response.data))
         .catch(error => console.log(error.message));
     }, [currentPage, limit, debouncedSearch]);
@@ -72,18 +72,18 @@ function Books()
     },[]); 
     
     // Add & Edit
-    const handleSubmit = useCallback(async (values, action) => {
+    const handleSubmit = useCallback(async (payload, action) => {
         try
         {
             if(formType === "create")
             {
-                delete values?._id;
-                await postRequest("/book", values, true);
+                delete payload?._id;
+                await api.post("/book", payload, true);
                 action.resetForm();
             }
             else
             {
-                await putRequest(`/book/${values?._id}`, values, true);
+                await api.put(`/book/${payload?._id}`, payload, true);
             }
             setShowModal(false);
         }
@@ -98,7 +98,7 @@ function Books()
         sweetAlert("Are you sure?", "This action will permanently delete the record.", "confirm", "Yes, delete it!", null, async () => {
             try 
             {
-                await deleteRequest(`/book/${_id}`);
+                await api.delete(`/book/${_id}`);
             } 
             catch (error) 
             {
@@ -174,7 +174,7 @@ function Books()
 
     return (
         <>
-        {/* Modal Launcher */}
+        {/* Modal Launcher Button */}
         <Row className='mb-3'>
             <Col>
                 <Animation type="button">

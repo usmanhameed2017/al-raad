@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useState } from 'react';
-import { deleteRequest, getRequest, postRequest, putRequest } from '../../../api/request';
 import ReactDataTable from '../../../components/DataTable';
 import Button from '../../../components/Button';
 import { useAuth } from '../../../context/auth';
@@ -13,8 +12,8 @@ import styles from "../PanelStyling/style.module.css";
 import { sweetAlert } from '../../../utils/sweetAlert2';
 import Loader from '../../../components/Loader';
 import Input from '../../../components/InputFields';
-import socket from '../../../service/socket';
 import useSocket from '../../../hooks/useSocket';
+import api from '../../../service/axios';
 
 function Users() 
 {
@@ -31,9 +30,6 @@ function Users()
 
     // Global state loader
     const { savingChanges } = useAuth();
-
-    // Page name
-    const pageName = "User";
 
     // Real time update handler
     const realtimeUpdate = useCallback(() => {
@@ -54,19 +50,19 @@ function Users()
     
     // Fetch data on page load and on search
     useEffect(() => {
-        getRequest(`/${pageName.toLowerCase()}?page=${currentPage}&limit=${limit}&search=${debouncedSearch}`)
+        api.get(`/user?page=${currentPage}&limit=${limit}&search=${debouncedSearch}`)
         .then(response => setData(response.data))
         .catch(error => console.log(error.message));
     }, [currentPage, limit, debouncedSearch, reloadData]);
 
-    // Launch Modal
+    // Launch modal for add
     const launchModal = useCallback(() => {
         setFormType("create");
         setEditFormValues(null);
         setShowModal(true);
     },[]);
 
-    // Edit
+    // Launch modal for edit
     const edit = useCallback((data) => {
         setFormType("edit")
         setEditFormValues(data);
@@ -78,7 +74,7 @@ function Users()
         sweetAlert("Are you sure?", "This action will permanently delete the record.", "confirm", "Yes, delete it!", null, async () => {
             try 
             {
-                await deleteRequest(`/${pageName.toLowerCase()}/${_id}`);
+                await api.get(`/user/${_id}`);
                 setReloadData(reloadData + 1);
             } 
             catch (error) 
@@ -183,7 +179,7 @@ function Users()
 
     return (
         <>
-            {/* Modal Launcher */}
+            {/* Modal Launcher Button */}
             <Row className='mb-3'>
                 <Col>
                     <Animation type="button">
@@ -198,7 +194,7 @@ function Users()
             <Row>
                 <Col>
                     <ReactDataTable 
-                    title={`${pageName}s`} 
+                    title={`Users`} 
                     columns={columns} 
                     data={data} 
                     setCurrentPage={setCurrentPage}
@@ -211,7 +207,7 @@ function Users()
 
             {/* Modal */}
             <ModalBS showModal={showModal} setShowModal={setShowModal}  modalSize='md'
-            modalTitle={ formType === "create" ? `ADD NEW ${pageName.toUpperCase()}` : `EDIT ${pageName.toUpperCase()}` }>
+            modalTitle={ formType === "create" ? `ADD NEW USER` : `EDIT USER` }>
                 {/* Form */}
                 <FormBS initialValues={initialValues} validationSchema={validationSchema}
                 handlerFunction={ async (values, action) => {
@@ -220,7 +216,7 @@ function Users()
                         if(formType === "create")
                         {
                             delete values?._id;
-                            await postRequest(`/${pageName.toLowerCase()}/create`, values);
+                            await api.post(`/user/create`, values);
                             action.resetForm();
                         }
                         else
@@ -234,7 +230,7 @@ function Users()
                             };
 
                             if(values?.password) payload.password = values?.password;
-                            await putRequest(`/${pageName.toLowerCase()}/${values?._id}`, payload);
+                            await api.put(`/user/${values?._id}`, payload);
                         }
                         setShowModal(false);
                         setReloadData(reloadData + 1);

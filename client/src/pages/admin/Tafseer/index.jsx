@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useState } from 'react';
-import { deleteRequest, getRequest, postRequest, putRequest } from '../../../api/request';
 import ReactDataTable from '../../../components/DataTable';
 import Button from '../../../components/Button';
 import { useAuth } from '../../../context/auth';
@@ -16,6 +15,7 @@ import { surahList } from '../../../constants';
 import { getTime } from '../../../utils/getTime';
 import Input from '../../../components/InputFields';
 import useSocket from '../../../hooks/useSocket';
+import api from '../../../service/axios';
 
 function Tafseer() 
 {
@@ -32,9 +32,6 @@ function Tafseer()
 
     // Global state loader
     const { savingChanges } = useAuth();
-
-    // Page name
-    const pageName = "Tafseer";
 
     // Real time update handler
     const realtimeUpdate = useCallback(() => {
@@ -55,31 +52,54 @@ function Tafseer()
     
     // Fetch data on page load and on search
     useEffect(() => {
-        getRequest(`/${pageName.toLowerCase()}?page=${currentPage}&limit=${limit}&search=${debouncedSearch}`)
+        api.get(`/tafseer?page=${currentPage}&limit=${limit}&search=${debouncedSearch}`)
         .then(response => setData(response.data))
         .catch(error => console.log(error.message));
     }, [currentPage, limit, debouncedSearch, reloadData]);
 
-    // Launch Modal
+    // Launch modal for add
     const launchModal = useCallback(() => {
         setFormType("create");
         setEditFormValues(null);
         setShowModal(true);
     },[]);
 
-    // Edit
+    // Launch modal for edit
     const edit = useCallback((data) => {
         setFormType("edit")
         setEditFormValues(data);
         setShowModal(true);
     },[]);
 
+    // Add & Edit
+    const handleSubmit = useCallback(async (payload, action) => {
+        try
+        {
+            if(formType === "create")
+            {
+                delete payload?._id;
+                await api.post(`/tafseer`, payload);
+                action.resetForm();
+            }
+            else
+            {
+                await api.put(`/tafseer/${payload?._id}`, payload);
+            }
+            setShowModal(false);
+            setReloadData(reloadData + 1);
+        }
+        catch(error)
+        {
+            return error;
+        }
+    },[formType]);     
+
     // Delete
     const drop = useCallback(async (_id) => {
         sweetAlert("Are you sure?", "This action will permanently delete the record.", "confirm", "Yes, delete it!", null, async () => {
             try 
             {
-                await deleteRequest(`/${pageName.toLowerCase()}/${_id}`);
+                await api.delete(`/tafseer/${_id}`);
                 setReloadData(reloadData + 1);
             } 
             catch (error) 
@@ -145,7 +165,7 @@ function Tafseer()
 
     return (
         <>
-            {/* Modal Launcher */}
+            {/* Modal Launcher Button */}
             <Row className='mb-3'>
                 <Col>
                     <Animation type="button">
@@ -160,7 +180,7 @@ function Tafseer()
             <Row>
                 <Col>
                     <ReactDataTable 
-                    title={`${pageName}s`} 
+                    title={`Tafseers`} 
                     columns={columns} 
                     data={data} 
                     setCurrentPage={setCurrentPage}
@@ -173,30 +193,10 @@ function Tafseer()
 
             {/* Modal */}
             <ModalBS showModal={showModal} setShowModal={setShowModal} 
-            modalTitle={ formType === "create" ? `ADD NEW ${pageName.toUpperCase()}` : `EDIT ${pageName.toUpperCase()}` }>
+            modalTitle={ formType === "create" ? `ADD NEW TAFSEER` : `EDIT TAFSEER` }>
                 {/* Form */}
                 <FormBS initialValues={initialValues} validationSchema={validationSchema}
-                handlerFunction={ async (values, action) => {
-                    try
-                    {
-                        if(formType === "create")
-                        {
-                            delete values?._id;
-                            await postRequest(`/${pageName.toLowerCase()}`, values);
-                            action.resetForm();
-                        }
-                        else
-                        {
-                            await putRequest(`/${pageName.toLowerCase()}/${values?._id}`, values);
-                        }
-                        setShowModal(false);
-                        setReloadData(reloadData + 1);
-                    }
-                    catch(error)
-                    {
-                        return error;
-                    }
-                }}>
+                handlerFunction={handleSubmit}>
 
                     {/* Surah Name */}
                     <div className="form-group mb-2">

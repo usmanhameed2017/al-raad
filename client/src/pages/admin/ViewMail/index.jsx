@@ -2,10 +2,10 @@ import { useParams, useNavigate } from 'react-router-dom';
 import EmailTemplate from '../../../components/EmailTemplate';
 import { useState, useEffect } from 'react';
 import { useAuth } from '../../../context/auth';
-import { getRequest } from '../../../api/request';
 import Loader from '../../../components/Loader';
 import { Row, Col } from 'react-bootstrap';
 import Animation from '../../../components/Animation';
+import api from '../../../service/axios';
 
 function ViewMail() 
 {
@@ -24,7 +24,7 @@ function ViewMail()
 
     // Fetch book on page load
     useEffect(() => {
-        getRequest(`/mail/${id}`)
+        api.get(`/mail/${id}`)
         .then(response => setMail(response.data))
         .catch(() => {
             setMail({});

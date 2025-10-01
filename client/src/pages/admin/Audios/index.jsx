@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useState } from 'react';
-import { deleteRequest, getRequest, postRequest, putRequest } from '../../../api/request';
 import ReactDataTable from '../../../components/DataTable';
 import Button from '../../../components/Button';
 import { useAuth } from '../../../context/auth';
@@ -17,6 +16,7 @@ import { generateOptimizedUrl } from '../../../utils/cloudinary';
 import Input from '../../../components/InputFields';
 import useSocket from '../../../hooks/useSocket';
 import { addRealTime, deleteRealTime, updateRealTime } from '../../../utils/realTimeHelpers';
+import api from '../../../service/axios';
 
 function Audios() 
 {
@@ -32,9 +32,6 @@ function Audios()
 
     // Global state loader
     const { savingChanges } = useAuth();
-
-    // Page name
-    const pageName = "Audio";
 
     // Helpers
     const handleAdd = useCallback(addRealTime(setData), [setData]);
@@ -57,19 +54,19 @@ function Audios()
     
     // Fetch data on page load and on search
     useEffect(() => {
-        getRequest(`/audio?page=${currentPage}&limit=${limit}&search=${debouncedSearch}`)
+        api.get(`/audio?page=${currentPage}&limit=${limit}&search=${debouncedSearch}`)
         .then(response => setData(response.data))
         .catch(error => console.log(error.message));
     }, [currentPage, limit, debouncedSearch]);
 
-    // Launch Modal
+    // Launch modal for add
     const launchModal = useCallback(() => {
         setFormType("create");
         setEditFormValues(null);
         setShowModal(true);
     },[]);
 
-    // Edit
+    // Launch modal for edit
     const edit = useCallback((data) => {
         setFormType("edit")
         setEditFormValues({ ...data, url: "" });
@@ -77,18 +74,18 @@ function Audios()
     },[]);
 
     // Add & Edit
-    const handleSubmit = useCallback(async (values, action) => {
+    const handleSubmit = useCallback(async (payload, action) => {
         try
         {
             if(formType === "create")
             {
-                delete values?._id;
-                await postRequest("/audio", values, true);
+                delete payload?._id;
+                await api.post("/audio", payload, true);
                 action.resetForm();
             }
             else
             {
-                await putRequest(`/audio/${values?._id}`, values, true);
+                await api.put(`/audio/${payload?._id}`, payload, true);
             }
             setShowModal(false);
         }
@@ -103,7 +100,7 @@ function Audios()
         sweetAlert("Are you sure?", "This action will permanently delete the record.", "confirm", "Yes, delete it!", null, async () => {
             try 
             {
-                await deleteRequest(`/audio/${_id}`);
+                await api.delete(`/audio/${_id}`);
             } 
             catch (error) 
             {
@@ -177,7 +174,7 @@ function Audios()
 
     return (
         <>
-            {/* Modal Launcher */}
+            {/* Modal Launcher Button */}
             <Row className='mb-3'>
                 <Col>
                     <Animation type="button">

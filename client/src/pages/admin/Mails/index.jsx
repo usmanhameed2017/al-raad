@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useState } from 'react';
-import { deleteRequest, getRequest, postRequest } from '../../../api/request';
 import ReactDataTable from '../../../components/DataTable';
 import Button from '../../../components/Button';
 import { useAuth } from '../../../context/auth';
@@ -14,6 +13,7 @@ import Loader from '../../../components/Loader';
 import { useNavigate } from 'react-router-dom';
 import Input from '../../../components/InputFields';
 import useSocket from '../../../hooks/useSocket';
+import api from '../../../service/axios';
 
 function Mails() 
 {
@@ -34,9 +34,6 @@ function Mails()
     // Navigator
     const navigate = useNavigate();
 
-    // Page name
-    const pageName = "Mail";
-
     // Real time update handler
     const realtimeUpdate = useCallback(() => {
         setReloadData(prev => prev + 1);
@@ -56,7 +53,7 @@ function Mails()
     
     // Fetch data on page load and on search
     useEffect(() => {
-        getRequest(`/${pageName.toLowerCase()}?page=${currentPage}&limit=${limit}&search=${debouncedSearch}`)
+        api.get(`/mail?page=${currentPage}&limit=${limit}&search=${debouncedSearch}`)
         .then(response => setData(response.data))
         .catch(error => console.log(error.message));
     }, [currentPage, limit, debouncedSearch, reloadData]);
@@ -73,7 +70,7 @@ function Mails()
         sweetAlert("Are you sure?", "This action will permanently delete the record.", "confirm", "Yes, delete it!", null, async () => {
             try 
             {
-                await deleteRequest(`/${pageName.toLowerCase()}/${_id}`);
+                await api.delete(`/mail/${_id}`);
                 setReloadData(reloadData + 1);
             } 
             catch (error) 
@@ -124,7 +121,22 @@ function Mails()
         .min(10, "Message must be at least 10 characters long")
         .max(9999, "Message must not be longer than 9999 characters")
         .required("Message is required"),
-    });  
+    });
+
+    // Handler for reply to user
+    const replyToUser = useCallback(async (payload, action) => {
+        try
+        {
+            await api.post(`/mail/replyToUser`, payload);
+            action.resetForm();
+            setShowModal(false);
+            setReloadData(reloadData + 1);
+        }
+        catch(error)
+        {
+            return error;
+        }
+    },[]);
 
     return (
         <>
@@ -132,7 +144,7 @@ function Mails()
             <Row>
                 <Col>
                     <ReactDataTable 
-                    title={`${pageName}s`} 
+                    title={`Mails`} 
                     columns={columns} 
                     data={data} 
                     setCurrentPage={setCurrentPage}
@@ -146,20 +158,7 @@ function Mails()
             {/* Modal */}
             <ModalBS showModal={showModal} setShowModal={setShowModal} modalTitle={`REPLY TO MAIL`} modalSize='lg'>
                 {/* Form */}
-                <FormBS initialValues={initialValues} validationSchema={validationSchema}
-                handlerFunction={ async (values, action) => {
-                    try
-                    {
-                        await postRequest(`/${pageName.toLowerCase()}/replyToUser`, values);
-                        action.resetForm();
-                        setShowModal(false);
-                        setReloadData(reloadData + 1);
-                    }
-                    catch(error)
-                    {
-                        return error;
-                    }
-                }}>
+                <FormBS initialValues={initialValues} validationSchema={validationSchema} handlerFunction={replyToUser}>
 
                     {/* Subject */}
                     <div className="form-group mb-2">
