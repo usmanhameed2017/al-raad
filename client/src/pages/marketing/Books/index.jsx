@@ -7,10 +7,10 @@ import { useAuth } from '../../../context/auth';
 import Loader from '../../../components/Loader';
 import ServerSidePagination from '../../../components/Pagination';
 import Animation from '../../../components/Animation';
-import { getRequest } from '../../../api/request';
 import { isArrayHaveData } from '../../../constants';
 import useSocket from '../../../hooks/useSocket';
 import { addRealTime, deleteRealTime, updateRealTime } from '../../../utils/realTimeHelpers';
+import api from '../../../service/axios';
 
 function Books() 
 {
@@ -55,7 +55,7 @@ function Books()
 
     // Fetch book on page load
     useEffect(() => {
-        getRequest(`/book?page=${currentPage}&limit=${6}&search=${debouncedSearch}`, false)
+        api.get(`/book?page=${currentPage}&limit=${6}&search=${debouncedSearch}`, false)
         .then(response => setData(response.data))
         .catch(() => setData({ docs:[] }));
     }, [currentPage, debouncedSearch]);

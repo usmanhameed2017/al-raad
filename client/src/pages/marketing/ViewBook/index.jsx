@@ -5,11 +5,11 @@ import { Row, Col } from 'react-bootstrap';
 import Loader from '../../../components/Loader';
 import { getTime } from '../../../utils/getTime';
 import Animation from '../../../components/Animation';
-import { getRequest } from '../../../api/request';
 import { FaBookOpen, FaDownload, FaPenAlt } from 'react-icons/fa';
 import { useAuth } from '../../../context/auth';
 import useSocket from '../../../hooks/useSocket';
 import { changesRealTime } from '../../../utils/realTimeHelpers';
+import api from '../../../service/axios';
 
 function ViewBook() 
 {
@@ -38,7 +38,7 @@ function ViewBook()
 
     // Fetch book on page load
     useEffect(() => {
-        getRequest(`/book/${id}`)
+        api.get(`/book/${id}`)
         .then(response => setBook(response.data))
         .catch(() => {
             setBook({});

@@ -5,9 +5,9 @@ import FormBS from "../../components/Form";
 import Input from "../../components/InputFields";
 import Button from "../../components/Button";
 import { useCallback } from "react";
-import { patchRequest, } from "../../api/request";
 import { useAuth } from "../../context/auth";
 import Loader from "../../components/Loader";
+import api from "../../service/axios";
 
 function ResetPassword() 
 {
@@ -43,7 +43,7 @@ function ResetPassword()
     const formHandler = useCallback(async (values, action) => {
         try 
         {
-            await patchRequest(`/security/resetPassword`, values);
+            await api.patch(`/security/resetPassword`, values);
             action.resetForm();
             navigate("/login", { replace:true });
         } 

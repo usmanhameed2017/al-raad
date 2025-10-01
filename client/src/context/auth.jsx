@@ -1,10 +1,10 @@
 import { useState, useEffect, createContext, useContext, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { showError } from '../utils/toasterMessage';
-import { getRequest, postRequest } from '../api/request';
 import { setLoadingFunction, setSavingFunction } from '../utils/loadingManager';
 import { getCsrfToken, csrfToken } from '../utils/token';
 import { connectSocket } from '../service/socket';
+import api from '../service/axios';
 
 // Create auth context
 const AuthContext = createContext();
@@ -24,7 +24,7 @@ function AuthProvider({ children })
     const generateCsrfToken = useCallback(async () => {
         try
         {
-            const response = await getRequest("/auth/generateCsrfToken");
+            const response = await api.get("/auth/generateCsrfToken");
             getCsrfToken(response.data);
         } 
         catch(error) 
@@ -40,7 +40,7 @@ function AuthProvider({ children })
 
         try 
         {
-            const response = await postRequest("/user/signup", user);
+            const response = await api.post("/user/signup", user);
             const { _id } = response.data;
             action.resetForm();
             navigate("/account/activation", { state:{ redirectionFromSignup:true, _id } });
@@ -62,7 +62,7 @@ function AuthProvider({ children })
 
         try
         {
-            const response = await postRequest("/user/login", user);
+            const response = await api.post("/user/login", user);
             setUser(response.data);
             setLoggedIn(response.success);
             localStorage.setItem("user", JSON.stringify(response.data));
@@ -86,7 +86,7 @@ function AuthProvider({ children })
 
         try
         {
-            const response = await postRequest("/user/admin/login", user);
+            const response = await api.post("/user/admin/login", user);
             setUser(response.data);
             setLoggedIn(response.success);
             localStorage.setItem("user", JSON.stringify(response.data));
@@ -107,7 +107,7 @@ function AuthProvider({ children })
     const userLogout = useCallback(async () => {
         try 
         {
-            await getRequest("/user/logout");
+            await api.get("/user/logout");
             setUser(null);
             setLoggedIn(false);
             localStorage.removeItem("user");
@@ -123,7 +123,7 @@ function AuthProvider({ children })
     const adminLogout = useCallback(async () => {
         try 
         {
-            await getRequest("/user/logout");
+            await api.get("/user/logout");
             setUser(null);
             setLoggedIn(false);
             localStorage.removeItem("user");
@@ -139,7 +139,7 @@ function AuthProvider({ children })
     const verifyAccessToken = useCallback(async () => {
         try 
         {
-            const response = await getRequest("/auth/verifyAccessToken", undefined, undefined, false);
+            const response = await api.get("/auth/verifyAccessToken", undefined, undefined, false);
             setUser(response.data); // Plain user object
             setLoggedIn(response.success);
             localStorage.setItem("user", JSON.stringify(response.data));             

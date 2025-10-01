@@ -3,9 +3,9 @@ import FormBS from "../../../components/Form";
 import Button from "../../../components/Button";
 import styles from './style.module.css';
 import * as Yup from 'yup';
-import { patchRequest } from '../../../api/request';
-import Animation from '../../../components/Animation';
 import Input from '../../../components/InputFields';
+import api from "../../../service/axios";
+import { useCallback } from "react";
 
 function AccountActivation() 
 {
@@ -30,6 +30,20 @@ function AccountActivation()
         .required("Activation code is required")
     });
 
+    // Handler for account activation
+    const accountActivation = useCallback(async (payload, action) => {
+        try
+        {
+            await api.patch(`/user/account/activation`, payload);
+            action.resetForm();
+            navigate("/login");
+        }
+        catch(error)
+        {
+            return error;
+        }
+    },[]);
+
     // If user is not redirected from signup form
     if(!redirectionFromSignup) return <Navigate to={`/Login`} replace />
 
@@ -39,19 +53,7 @@ function AccountActivation()
             style={{ maxWidth: "500px", margin: "3rem auto", marginTop: '200px', padding: "2rem", borderRadius: "15px"}}>
 
                 {/* Form */}
-                <FormBS initialValues={initialValues} validationSchema={validationSchema}
-                handlerFunction={async (values, action) => {
-                    try
-                    {
-                        await patchRequest(`/user/account/activation`, values);
-                        action.resetForm();
-                        navigate("/login");
-                    }
-                    catch(error)
-                    {
-                        return error;
-                    }
-                }}>
+                <FormBS initialValues={initialValues} validationSchema={validationSchema} handlerFunction={accountActivation}>
                     <div>
                         <h2> Account Activation </h2> 
                         <p> You are just one step away! </p>

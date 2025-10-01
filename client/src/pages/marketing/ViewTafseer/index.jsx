@@ -5,11 +5,11 @@ import { Row, Col } from 'react-bootstrap';
 import Loader from '../../../components/Loader';
 import { getTime } from '../../../utils/getTime';
 import Animation from '../../../components/Animation';
-import { getRequest } from '../../../api/request';
 import { useAuth } from '../../../context/auth';
 import { FaBookOpen, FaPenAlt } from 'react-icons/fa'
 import useSocket from '../../../hooks/useSocket';
 import { changesRealTime } from '../../../utils/realTimeHelpers';
+import api from '../../../service/axios';
 
 function ViewTafseer() 
 {
@@ -38,7 +38,7 @@ function ViewTafseer()
 
     // Fetch tafseer on page load
     useEffect(() => {
-        getRequest(`/tafseer/${id}`)
+        api.get(`/tafseer/${id}`)
         .then(response => setTafseer(response.data))
         .catch(() => {
             setTafseer({});

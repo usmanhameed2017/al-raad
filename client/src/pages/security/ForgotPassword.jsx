@@ -5,9 +5,9 @@ import FormBS from "../../components/Form";
 import Input from "../../components/InputFields";
 import Button from "../../components/Button";
 import { useCallback } from "react";
-import { postRequest } from "../../api/request";
 import { useAuth } from "../../context/auth";
 import Loader from "../../components/Loader";
+import api from "../../service/axios";
 
 function ForgotPassword() 
 {
@@ -39,7 +39,7 @@ function ForgotPassword()
     const formHandler = useCallback(async (values, action) => {
         try 
         {
-            const response = await postRequest(`/security/forgotPassword`, values);
+            const response = await api.post(`/security/forgotPassword`, values);
             const { _id } = response.data;
             action.resetForm();
             navigate("/security/verifyResetCode", { state:{ _id, redirectToVerifyResetCode:true } });

@@ -5,10 +5,10 @@ import FormBS from '../../../components/Form';
 import * as Yup from 'yup';
 import { getUser } from '../../../constants';
 import styles from './style.module.css';
-import { getRequest, putRequest } from '../../../api/request';
 import { useAuth } from '../../../context/auth';
 import Loader from '../../../components/Loader';
 import Input from '../../../components/InputFields';
+import api from '../../../service/axios';
 
 function Settings() 
 {
@@ -18,7 +18,7 @@ function Settings()
 
     // Fetch user data on page load
     useEffect(() => {
-        getRequest(`/user/me`)
+        api.get(`/user/me`)
         .then(response => setUser(response.data))
         .catch(() => setUser({}));
     },[]);    
@@ -83,7 +83,7 @@ function Settings()
                         if(user?.password) payload.password = user.password;
                         try
                         {
-                            const response = await putRequest(`/user/me/edit`, payload);
+                            const response = await api.put(`/user/me/edit`, payload);
                             localStorage.setItem("user", JSON.stringify(response.data));
                             setUser(response.data);
 

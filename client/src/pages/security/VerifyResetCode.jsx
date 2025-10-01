@@ -5,9 +5,9 @@ import FormBS from "../../components/Form";
 import Input from "../../components/InputFields";
 import Button from "../../components/Button";
 import { useCallback } from "react";
-import { patchRequest } from "../../api/request";
 import { useAuth } from "../../context/auth";
 import Loader from "../../components/Loader";
+import api from "../../service/axios";
 
 function VerifyResetCode() 
 {
@@ -39,7 +39,7 @@ function VerifyResetCode()
     const formHandler = useCallback(async (values, action) => {
         try 
         {
-            await patchRequest(`/security/verifyResetCode`, values);
+            await api.patch(`/security/verifyResetCode`, values);
             action.resetForm();
             navigate("/security/resetPassword", { state:{ _id, redirectToVerifyResetPassword:true } });
         } 

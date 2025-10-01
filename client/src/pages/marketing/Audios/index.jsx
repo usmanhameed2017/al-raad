@@ -7,10 +7,10 @@ import Loader from '../../../components/Loader';
 import ServerSidePagination from '../../../components/Pagination';
 import Animation from '../../../components/Animation';
 import AudioCard from '../../../components/AudioCard';
-import { getRequest } from '../../../api/request';
 import { isArrayHaveData } from '../../../constants';
 import useSocket from '../../../hooks/useSocket';
 import { addRealTime, deleteRealTime, updateRealTime } from '../../../utils/realTimeHelpers';
+import api from '../../../service/axios';
 
 function Audios() 
 {
@@ -55,7 +55,7 @@ function Audios()
 
     // Fetch audio on page load
     useEffect(() => {
-        getRequest(`/audio?page=${currentPage}&limit=${6}&search=${debouncedSearch}`, false)
+        api.get(`/audio?page=${currentPage}&limit=${6}&search=${debouncedSearch}`, false)
         .then(response => setData(response.data))
         .catch(() => setData({ docs:[] }));
     }, [currentPage, debouncedSearch]);

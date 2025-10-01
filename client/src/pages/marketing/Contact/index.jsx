@@ -3,10 +3,11 @@ import styles from './style.module.css';
 import Button from '../../../components/Button';
 import FormBS from '../../../components/Form';
 import * as Yup from "yup";
-import { postRequest } from '../../../api/request';
 import { useAuth } from '../../../context/auth';
 import Loader from '../../../components/Loader';
 import Input from '../../../components/InputFields';
+import api from '../../../service/axios';
+import { useCallback } from 'react';
 
 function Contact() 
 {
@@ -32,6 +33,19 @@ function Contact()
         .required("Message is required"),         
     });
 
+    // Handler function
+    const sendEmail = useCallback(async (payload, action) => {
+        try
+        {
+            await api.post("/mail", payload);
+            action.resetForm();
+        }
+        catch(error)
+        {
+            return error;
+        }
+    },[]);
+
     return (
         <div className={styles.contactWrapper}>
             <img src="/public/contactus.jpg" alt="background" className={styles.bgImage} />
@@ -48,18 +62,7 @@ function Contact()
                         Have a question, suggestion, or just want to say hello? Fill out the form below.
                     </p>
 
-                    <FormBS initialValues={initialValues} validationSchema={validationSchema} className={styles.contactForm}
-                    handlerFunction={async (values, action) => {
-                        try
-                        {
-                            await postRequest("/mail", values);
-                            action.resetForm();
-                        }
-                        catch(error)
-                        {
-                            return error;
-                        }
-                    }}>
+                    <FormBS initialValues={initialValues} validationSchema={validationSchema} handlerFunction={sendEmail} className={styles.contactForm}>
                         {/* Subject Options */}
                         <div className={styles.formGroup}>
                             <label htmlFor="subject" className={styles.formLabel}>Subject</label>
