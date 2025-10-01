@@ -3,15 +3,37 @@
   backdrop-filter: blur(8px);
   z-index: 999;
   padding: 20px;
+  height: 100px; 
+  display: flex;
+  align-items: center;
 }
 
-.logo {
-  color: #fff !important;
-  font-size: 1.8rem;
-  font-weight: bold;
-  letter-spacing: 2px;
+:global(.navbar .container-fluid) {
+  padding-left: 0 !important;
+  margin-left: 0 !important;
+}
+:global(.navbar .navbar-brand) {
+  margin-left: 0 !important;
+  padding-left: 0 !important;
 }
 
+.logoImg {
+  height: 50px;
+  width: auto;
+  margin: 0;
+  display: block;
+  transform: scale(7.7);
+  transform-origin: 40% center;
+}
+
+@media (max-width: 768px) {
+  .logoImg {
+    transform: scale(4.5);
+    transform-origin: 35% center;
+  }
+}
+
+/* NavLinks */
 .navbar :global(.nav-link) {
   color: darkgray;
   font-size: 1.09rem;
@@ -24,6 +46,7 @@
 .navbar :global(.nav-link:hover) {
   color: #00bcd4;
 }
+
 .navbar :global(.nav-link.active) {
   box-shadow: 0px 1px #00bcd4;
   color: #00bcd4;
@@ -45,6 +68,7 @@
   width: 100%;
 }
 
+/* Dropdown */
 .userDropdown .dropdown-menu {
   background-color: white;
   border: 1px solid #ccc;
