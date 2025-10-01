@@ -74,7 +74,7 @@ function Users()
         sweetAlert("Are you sure?", "This action will permanently delete the record.", "confirm", "Yes, delete it!", null, async () => {
             try 
             {
-                await api.get(`/user/${_id}`);
+                await api.delete(`/user/${_id}`);
                 setReloadData(reloadData + 1);
             } 
             catch (error) 
