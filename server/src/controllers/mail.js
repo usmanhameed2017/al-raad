@@ -13,7 +13,9 @@ const sendMail = async (request, response) => {
         request.body.name = request.user?.name;
         request.body.email = request.user?.email;
         request.body.mailedBy = request.user?._id;
-        const mail = await Mail.create(request.body);
+
+        // Insert into database and get sender name
+        const mail = await (await Mail.create(request.body)).populate("mailedBy", "name");
 
         // Get HTML template
         const html = fs.readFileSync(path.resolve(__dirname, "../../public/contactus.html"), "utf-8");
@@ -29,9 +31,7 @@ const sendMail = async (request, response) => {
         const result = await sendEmail("usmanhameed1790@gmail.com", `📬 Contact us - ${mail?.subject}`, filledHtml);      
         if(!result) throw new ApiError(500, "Unable to send email");
 
-        // Payload with sender name
-        const newEmail = await mail.findById(mail?._id).populate("mailedBy", "name");
-        request.io.emit("EmailSend", newEmail);    
+        request.io.emit("EmailSend", mail);
         return response.status(201).json(new ApiResponse(201, mail, "Email has been sent successfully"));
     } 
     catch(error)
