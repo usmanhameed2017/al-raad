@@ -14,6 +14,7 @@ import Loader from '../../../components/Loader';
 import Input from '../../../components/InputFields';
 import useSocket from '../../../hooks/useSocket';
 import api from '../../../service/axios';
+import { addRealTime, deleteRealTime, updateRealTime } from '../../../utils/realTimeHelpers';
 
 function Users() 
 {
@@ -26,18 +27,14 @@ function Users()
     const [showModal, setShowModal] = useState(false);
     const [editFormValues, setEditFormValues] = useState(null);
     const [formType, setFormType] = useState("");
-    const [reloadData, setReloadData] = useState(0);
 
     // Global state loader
     const { savingChanges } = useAuth();
 
-    // Real time update handler
-    const realtimeUpdate = useCallback(() => {
-        setReloadData(prev => prev + 1);
-    },[]);
-    
-    // Listen event
-    useSocket("Refresh User", realtimeUpdate);
+    // Listen for real time updates
+    useSocket("UserAdded", useCallback(addRealTime(setData), [setData]));
+    useSocket("UserUpdated", useCallback(updateRealTime(setData), [setData]));
+    useSocket("UserDeleted", useCallback(deleteRealTime(setData, setCurrentPage), [setData]));
     
     // Debounce technique
     useEffect(() => {
@@ -53,7 +50,7 @@ function Users()
         api.get(`/user?page=${currentPage}&limit=${limit}&search=${debouncedSearch}`)
         .then(response => setData(response.data))
         .catch(error => console.log(error.message));
-    }, [currentPage, limit, debouncedSearch, reloadData]);
+    }, [currentPage, limit, debouncedSearch]);
 
     // Launch modal for add
     const launchModal = useCallback(() => {
@@ -75,14 +72,13 @@ function Users()
             try 
             {
                 await api.delete(`/user/${_id}`);
-                setReloadData(reloadData + 1);
             } 
             catch (error) 
             {
                 return error;
             } 
         })
-    },[reloadData]);
+    },[]);
 
     // Columns
     const columns = [
@@ -233,7 +229,6 @@ function Users()
                             await api.put(`/user/${values?._id}`, payload);
                         }
                         setShowModal(false);
-                        setReloadData(reloadData + 1);
                     }
                     catch(error)
                     {

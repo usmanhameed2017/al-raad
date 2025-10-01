@@ -16,6 +16,7 @@ import { getTime } from '../../../utils/getTime';
 import Input from '../../../components/InputFields';
 import useSocket from '../../../hooks/useSocket';
 import api from '../../../service/axios';
+import { addRealTime, deleteRealTime, updateRealTime } from '../../../utils/realTimeHelpers';
 
 function Tafseer() 
 {
@@ -28,18 +29,14 @@ function Tafseer()
     const [showModal, setShowModal] = useState(false);
     const [editFormValues, setEditFormValues] = useState(null);
     const [formType, setFormType] = useState("");
-    const [reloadData, setReloadData] = useState(0);
 
     // Global state loader
     const { savingChanges } = useAuth();
 
-    // Real time update handler
-    const realtimeUpdate = useCallback(() => {
-        setReloadData(prev => prev + 1);
-    },[]);
-    
-    // Listen event
-    useSocket("Refresh Tafseer", realtimeUpdate);    
+    // Listen for real time updates
+    useSocket("TafseerAdded", useCallback(addRealTime(setData), [setData]));
+    useSocket("TafseerUpdated", useCallback(updateRealTime(setData), [setData]));
+    useSocket("TafseerDeleted", useCallback(deleteRealTime(setData, setCurrentPage), [setData]));
     
     // Debounce technique
     useEffect(() => {
@@ -55,7 +52,7 @@ function Tafseer()
         api.get(`/tafseer?page=${currentPage}&limit=${limit}&search=${debouncedSearch}`)
         .then(response => setData(response.data))
         .catch(error => console.log(error.message));
-    }, [currentPage, limit, debouncedSearch, reloadData]);
+    }, [currentPage, limit, debouncedSearch]);
 
     // Launch modal for add
     const launchModal = useCallback(() => {
@@ -86,7 +83,6 @@ function Tafseer()
                 await api.put(`/tafseer/${payload?._id}`, payload);
             }
             setShowModal(false);
-            setReloadData(reloadData + 1);
         }
         catch(error)
         {
@@ -100,14 +96,13 @@ function Tafseer()
             try 
             {
                 await api.delete(`/tafseer/${_id}`);
-                setReloadData(reloadData + 1);
             } 
             catch (error) 
             {
                 return error;
             } 
         })
-    },[reloadData]);
+    },[]);
 
     // Columns
     const columns = [

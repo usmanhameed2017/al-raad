@@ -33,15 +33,10 @@ function Audios()
     // Global state loader
     const { savingChanges } = useAuth();
 
-    // Helpers
-    const handleAdd = useCallback(addRealTime(setData), [setData]);
-    const handleUpdate = useCallback(updateRealTime(setData), [setData]);
-    const handleDelete = useCallback(deleteRealTime(setData, setCurrentPage), [setData]);
-
     // Listen for real time updates
-    useSocket("AudioAdded", handleAdd);
-    useSocket("AudioUpdated", handleUpdate);
-    useSocket("AudioDeleted", handleDelete);
+    useSocket("AudioAdded", useCallback(addRealTime(setData), [setData]));
+    useSocket("AudioUpdated", useCallback(updateRealTime(setData), [setData]));
+    useSocket("AudioDeleted", useCallback(deleteRealTime(setData, setCurrentPage), [setData]));
     
     // Debounce technique
     useEffect(() => {

@@ -14,6 +14,7 @@ import { useNavigate } from 'react-router-dom';
 import Input from '../../../components/InputFields';
 import useSocket from '../../../hooks/useSocket';
 import api from '../../../service/axios';
+import { addRealTime, deleteRealTime } from '../../../utils/realTimeHelpers';
 
 function Mails() 
 {
@@ -24,7 +25,6 @@ function Mails()
     const [search, setSearch] = useState("");
     const [debouncedSearch, setDebouncedSearch] = useState("");
     const [showModal, setShowModal] = useState(false);
-    const [reloadData, setReloadData] = useState(0);
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
 
@@ -34,13 +34,9 @@ function Mails()
     // Navigator
     const navigate = useNavigate();
 
-    // Real time update handler
-    const realtimeUpdate = useCallback(() => {
-        setReloadData(prev => prev + 1);
-    },[]);
-    
-    // Listen event
-    useSocket("Refresh Email", realtimeUpdate);    
+    // Listen for real time updates
+    useSocket("EmailSend", useCallback(addRealTime(setData), [setData]));
+    useSocket("EmailDeleted", useCallback(deleteRealTime(setData, setCurrentPage), [setData]));   
     
     // Debounce technique
     useEffect(() => {
@@ -56,7 +52,7 @@ function Mails()
         api.get(`/mail?page=${currentPage}&limit=${limit}&search=${debouncedSearch}`)
         .then(response => setData(response.data))
         .catch(error => console.log(error.message));
-    }, [currentPage, limit, debouncedSearch, reloadData]);
+    }, [currentPage, limit, debouncedSearch]);
 
     // Reply to mail
     const replyToMail = useCallback((name, email) => {
@@ -71,14 +67,13 @@ function Mails()
             try 
             {
                 await api.delete(`/mail/${_id}`);
-                setReloadData(reloadData + 1);
             } 
             catch (error) 
             {
                 return error;
             } 
         })
-    },[reloadData]);
+    },[]);
 
     // Columns
     const columns = [
@@ -130,7 +125,6 @@ function Mails()
             await api.post(`/mail/replyToUser`, payload);
             action.resetForm();
             setShowModal(false);
-            setReloadData(reloadData + 1);
         }
         catch(error)
         {
