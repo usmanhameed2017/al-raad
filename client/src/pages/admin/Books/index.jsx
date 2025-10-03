@@ -110,7 +110,7 @@ function Books()
         { name: "Uploaded By", selector: row => row?.uploadedBy?.name || "-" },
         { 
             name: "PDFs",
-            width:"205px",
+            width:"207px",
             cell: row => row?.pdf ? ( 
                 <a href={row?.pdf} download> 
                     <Button> <FaDownload /> Download </Button>
