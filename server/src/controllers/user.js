@@ -201,6 +201,20 @@ const adminLogin = async (request, response) => {
     }
 };
 
+// Login as gmail
+const googleLogin = async (request, response) => {
+    if(!request.user) return response.status(404).json({ message:"User not found", success:false });
+
+    // Generate access token
+    const accessToken = generateAccessToken(request.user);
+    if(!accessToken) return response.status(500).json({ message:"Access token generation failed", success:false });
+
+    // Send response
+    return response.status(200)
+    .cookie("accessToken", accessToken, cookieOptions)
+    .redirect("http://localhost:5173");
+}
+
 // Create user (Created by admin)
 const createUser = async (request, response) => {
     const { name, email, username, role, password, cpassword } = request.body;
@@ -361,6 +375,7 @@ module.exports = {
     accountActivation,
     login,
     adminLogin,
+    googleLogin,
     createUser,
     fetchUsers, 
     fetchSingleUser,
