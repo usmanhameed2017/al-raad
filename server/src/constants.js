@@ -18,8 +18,14 @@ const cloudinaryCloudName = process.env.CLOUDINARY_CLOUD_NAME;
 const cloudinaryApiKey = process.env.CLOUDINARY_API_KEY;
 const cloudinaryApiSecret = process.env.CLOUDINARY_API_SECRET;
 
+// Email service credentials
 const gmail = process.env.GMAIL;
 const gmailAppPassword = process.env.GMAIL_APP_PASSWORD;
+
+// Google login credentials
+const googleClientId = process.env.GOOGLE_CLIENT_ID;
+const googleClientSecret = process.env.GOOGLE_CLIENT_SECRET;
+const googleCallbackUrl = process.env.GOOGLE_CALLBACK_URL;
 
 module.exports = { 
     port, 
@@ -33,5 +39,8 @@ module.exports = {
     cloudinaryApiKey,
     cloudinaryApiSecret,
     gmail,
-    gmailAppPassword
+    gmailAppPassword,
+    googleClientId,
+    googleClientSecret,
+    googleCallbackUrl
 };
