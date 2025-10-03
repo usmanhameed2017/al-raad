@@ -203,11 +203,11 @@ const adminLogin = async (request, response) => {
 
 // Login as gmail
 const googleLogin = async (request, response) => {
-    if(!request.user) return response.status(404).json({ message:"User not found", success:false });
+    if(!request.user) return response.status(404).json(new ApiError(404, "User not found"));
 
     // Generate access token
     const accessToken = generateAccessToken(request.user);
-    if(!accessToken) return response.status(500).json({ message:"Access token generation failed", success:false });
+    if(!accessToken) return response.status(500).json(new ApiError(400, "Failed to generate access token"));
 
     // Send response
     return response.status(200)
