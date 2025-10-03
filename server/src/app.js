@@ -7,6 +7,8 @@ const { cookieParserSecret } = require("./constants");
 const errorHandler = require("./middlewares/errorHandler");
 const { Server } = require("socket.io");
 const http = require("http");
+const passport = require("passport");
+require("./service/social-auth");
 
 // Express app
 const app = express();
@@ -20,6 +22,7 @@ const io = new Server(server, { cors:corsOptions });
 // ************* MIDDLEWARES ************* //
 app.use(cors(corsOptions));
 app.use(cookieParse(cookieParserSecret));
+app.use(passport.initialize());
 app.use(express.urlencoded({ extended:true, limit:"100kb" }));
 app.use(express.json({ limit:"100kb" }));
 app.use("/public", express.static(path.resolve("public")));
