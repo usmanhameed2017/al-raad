@@ -1,7 +1,8 @@
 const { signup, accountActivation, login, logout, fetchUsers, editUser, deleteUser, 
-fetchSingleUser, adminLogin, createUser, } = require("../controllers/user");
+fetchSingleUser, adminLogin, createUser, googleLogin, } = require("../controllers/user");
 const { authentication, authorization } = require("../middlewares/auth");
 const csrfProtection = require("../middlewares/csrfToken");
+const passport = require("passport");
 
 // Router instance
 const userRouter = require("express").Router();
@@ -17,6 +18,10 @@ userRouter.route("/login").post(csrfProtection, login);
 
 // Admin login
 userRouter.route("/admin/login").post(csrfProtection, adminLogin);
+
+// Login as google
+userRouter.route('/auth/google').get(passport.authenticate('google', { scope:['profile', 'email'], prompt:"select_account" }));
+userRouter.route('/auth/google/callback').get(passport.authenticate('google', { session: false }), googleLogin);
 
 // Create user (Created by admin)
 userRouter.route("/create").post(csrfProtection, authentication, authorization(["Admin"]), createUser)
