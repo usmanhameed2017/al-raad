@@ -50,13 +50,16 @@
 
 .title {
   font-size: 4.2rem;
-  line-height: 1.1;
   font-weight: 800;
   text-transform: uppercase;
+  letter-spacing: 1px;
   background: linear-gradient(90deg, #ffffff, #00e0ff, #0099ff);
+  background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  text-shadow: 0 0 25px rgba(0, 255, 255, 0.3);
+  text-shadow: 0 0 30px rgba(0, 255, 255, 0.35);
+  position: relative;
+  z-index: 2;
 }
 
 .subtitle {
@@ -208,19 +211,4 @@
     transform: translate(-52%, -48%) scale(1.25);
     opacity: 0.6;
   }
-}
-
-/* Title (kept above glow) */
-.title {
-  font-size: 4.2rem;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  background: linear-gradient(90deg, #ffffff, #00e0ff, #0099ff);
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  text-shadow: 0 0 30px rgba(0, 255, 255, 0.35);
-  position: relative;
-  z-index: 2; /* ensures text above glowLight */
 }
