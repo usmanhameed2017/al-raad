@@ -1,31 +1,88 @@
-import styles from './style.module.css';
-import Button from '../Button';
+import { motion } from "framer-motion";
+import styles from "./style.module.css";
+import Button from "../Button";
 
 function Hero({ type, src, heading, paragrapgh, enableButton, buttonText }) 
 {
     return (
-        <div className={styles.heroContainer}>
-            {/* Background video */}
-            {type === "video" && (
-                <video className={styles.videoBackground} src={src} autoPlay muted loop playsInline></video>
+        <section className={styles.hero}>
+            {/* Background */}
+            {type === "video" ? (
+                <video
+                className={styles.bgVideo}
+                src={src}
+                autoPlay
+                loop
+                muted
+                playsInline
+                ></video>
+            ) : (
+                <img className={styles.bgImage} src={src} alt="Hero Background" />
             )}
 
-            {/* Background image */}
-            {type === "image" && (
-                <img className={styles.imageBackground} src={src} alt="Hero Background" />
-            )}
+            {/* Overlay */}
+            <div className={styles.overlay}></div>
 
-            {/* Foreground Content */}
-            <div className={styles.content}>
-                <h1> { heading } </h1>
-                <p> { paragrapgh }</p>
-                
-                {
-                    enableButton && (
-                    <Button> { buttonText } </Button>
+            {/* Hero Inner */}
+            <div className={styles.inner}>
+                {/* Left Side */}
+                <motion.div
+                className={styles.textBlock}
+                initial={{ x: -60, opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                transition={{ duration: 1.2, ease: "easeOut" }}>
+                <div className={styles.glowWrap}>
+                    <div className={styles.glowLight}></div>
+                    <h1 className={styles.title}>{heading}</h1>
+                </div>
+
+                {/* Paragrapgh */}
+                <p className={styles.subtitle}>{paragrapgh}</p>
+
+                {enableButton && (
+                    <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.7 }}
+                    >
+                    <Button className={styles.cta}>{buttonText}</Button>
+                    </motion.div>
                 )}
+                </motion.div>
+
+                {/* Right Side Horizontal Cards */}
+                <motion.div
+                className={styles.cardContainer}
+                initial={{ opacity: 0, x: 60 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.8, duration: 1 }}
+                >
+                <div className={`${styles.floatingCard} ${styles.cardAyah}`}>
+                    <h3>🌙 Daily Ayah</h3>
+                    <p>
+                    “Indeed, this Qur'an guides to that which is most suitable and
+                    gives good tidings to the believers.” (17:9)
+                    </p>
+                </div>
+
+                <div className={`${styles.floatingCard} ${styles.cardBooks}`}>
+                    <h3>📚 Islamic Books</h3>
+                    <p>
+                    Explore authentic books of Hadith, Fiqh, Tafseer and Islamic
+                    studies — all at one place.
+                    </p>
+                </div>
+
+                <div className={`${styles.floatingCard} ${styles.cardAudio}`}>
+                    <h3>🎧 Audio Lectures</h3>
+                    <p>
+                    Listen to lectures, sermons, and Quran recitations to enrich your
+                    spiritual journey.
+                    </p>
+                </div>
+                </motion.div>
             </div>
-        </div>
+        </section>
     );
 }
 
