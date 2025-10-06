@@ -148,7 +148,8 @@ function AuthProvider({ children })
         {
             setUser(null);
             setLoggedIn(false);
-            localStorage.removeItem("user"); 
+            localStorage.removeItem("user");
+            if(error.message === "Too many requests, please try again later") return showError(error.message); // Rate limit
             return error;
         }
         finally
