@@ -1,6 +1,7 @@
 const { generateCsrfToken, verifyAccessToken } = require("../controllers/auth");
 const { authentication } = require("../middlewares/auth");
 const csrfProtection = require("../middlewares/csrfToken");
+const limitRequest = require("../middlewares/rateLimit");
 
 // Router instance
 const authRouter = require("express").Router();
@@ -9,6 +10,6 @@ const authRouter = require("express").Router();
 authRouter.route("/generateCsrfToken").get(csrfProtection, generateCsrfToken);
 
 // Verify access token
-authRouter.route("/verifyAccessToken").get(authentication, verifyAccessToken);
+authRouter.route("/verifyAccessToken").get(limitRequest({}), authentication, verifyAccessToken);
 
 module.exports = authRouter;
