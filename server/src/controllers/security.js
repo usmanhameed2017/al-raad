@@ -20,7 +20,7 @@ const forgotPassword = async (request, response) => {
         if(!user) throw new ApiError(404, "User not found associated with this email address");
 
         // Generate verification code & expiry time
-        const { code:resetCode, expiresAt:resetCodeExpiresAt } = generateCode(15);
+        const { code:resetCode, expiresAt:resetCodeExpiresAt } = await generateCode();
 
         // Hash the reset code before saving into database
         const hashedCode = await bcrypt.hash(resetCode, 10);
