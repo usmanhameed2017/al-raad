@@ -164,6 +164,14 @@ Added a limit selection feature, so data is dynamically fetched from the API bas
 
 Used debounce technique for search inputs to reduce unnecessary API calls and ensure optimized performance.
 
+📅 6th October, 2025
+
+Today, I successfully added a custom and reusable **rate limiting middleware** to secure and protect API requests from abuse and potential DDoS attacks.
+
+Integrated Google Login functionality and replaced my personal Gmail credentials with Al-Ra’ad’s official Gmail and app password for enhanced security and professionalism.
+
+Additionally, created a reusable Google Login button component to maintain consistency and scalability across the project.
+
 ---
 
 ### ⚙ Setup Installation
