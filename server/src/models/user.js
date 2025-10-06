@@ -6,7 +6,8 @@ const bcrypt = require("bcrypt");
 const userSchema = new Schema({
     gid:{
         type:String,
-        trim:true
+        trim:true,
+        unique:true
     },
     name:{
         type:String,
