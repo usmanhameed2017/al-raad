@@ -9,7 +9,7 @@ import styles from "./style.module.css";
 import { useState } from "react";
 import Loader from "../../../components/Loader";
 import Input from "../../../components/InputFields";
-import { backendURL } from "../../../constants";
+import GoogleLoginButton from "../../../components/GoogleLoginButton";
 
 function Login() 
 {
@@ -145,15 +145,9 @@ function Login()
                                     <Button type="submit" className="w-100" disabled={savingChanges === true}>Signin</Button>
                                 </div>
                                 <hr />
+
                                 {/* Google Login Button */}
-                                <div className="text-center mt-2">
-                                    <a href={`${backendURL}/api/v1/user/auth/google`} className={styles["google-btn"]}>
-                                        <div className={styles["google-icon-wrapper"]}>
-                                            <img className={styles["google-icon"]} src="https://developers.google.com/identity/images/g-logo.png" alt="Google sign-in"/>
-                                        </div>
-                                        <p className={styles["btn-text"]}><b>Sign in with Google</b></p>
-                                    </a>
-                                </div>                                                                
+                                <GoogleLoginButton />                                    
                             </FormBS>
                         </motion.div>
                     )}
