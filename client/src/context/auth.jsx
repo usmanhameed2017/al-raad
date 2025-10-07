@@ -135,11 +135,11 @@ function AuthProvider({ children })
         }
     },[]);    
 
-    // Verify Access Token
-    const verifyAccessToken = useCallback(async () => {
+    // Verify authentication
+    const isAuthenticated = useCallback(async () => {
         try 
         {
-            const response = await api.get("/auth/verifyAccessToken", undefined, undefined, false);
+            const response = await api.get("/auth/isAuthenticated", undefined, undefined, false);
             setUser(response.data); // Plain user object
             setLoggedIn(response.success);
             localStorage.setItem("user", JSON.stringify(response.data));             
@@ -159,7 +159,7 @@ function AuthProvider({ children })
     },[]);
 
     useEffect(() => {
-        verifyAccessToken();
+        isAuthenticated();
         generateCsrfToken();
         setLoadingFunction(setLoading);
         setSavingFunction(setSavingChanges);
