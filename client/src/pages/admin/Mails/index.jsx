@@ -8,7 +8,7 @@ import ModalBS from '../../../components/Modal';
 import FormBS from '../../../components/Form';
 import * as Yup from "yup";
 import styles from "../PanelStyling/style.module.css";
-import { sweetAlert } from '../../../utils/sweetAlert2';
+import sweetAlert from '../../../utils/sweetAlert2';
 import Loader from '../../../components/Loader';
 import { useNavigate } from 'react-router-dom';
 import Input from '../../../components/InputFields';
@@ -63,7 +63,7 @@ function Mails()
 
     // Delete
     const drop = useCallback(async (_id) => {
-        sweetAlert("Are you sure?", "This action will permanently delete the record.", "confirm", "Yes, delete it!", null, async () => {
+        sweetAlert.confirm({ fn:async () => {
             try 
             {
                 await api.delete(`/mail/${_id}`);
@@ -72,7 +72,7 @@ function Mails()
             {
                 return error;
             } 
-        })
+        } });
     },[]);
 
     // Columns

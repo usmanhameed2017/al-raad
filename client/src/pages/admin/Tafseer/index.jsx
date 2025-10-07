@@ -9,7 +9,7 @@ import ModalBS from '../../../components/Modal';
 import FormBS from '../../../components/Form';
 import * as Yup from "yup";
 import styles from "../PanelStyling/style.module.css";
-import { sweetAlert } from '../../../utils/sweetAlert2';
+import sweetAlert from '../../../utils/sweetAlert2';
 import Loader from '../../../components/Loader';
 import { surahList } from '../../../constants';
 import { getTime } from '../../../utils/getTime';
@@ -92,7 +92,7 @@ function Tafseer()
 
     // Delete
     const drop = useCallback(async (_id) => {
-        sweetAlert("Are you sure?", "This action will permanently delete the record.", "confirm", "Yes, delete it!", null, async () => {
+        sweetAlert.confirm({ fn:async () => {
             try 
             {
                 await api.delete(`/tafseer/${_id}`);
@@ -101,7 +101,7 @@ function Tafseer()
             {
                 return error;
             } 
-        })
+        } });
     },[]);
 
     // Columns

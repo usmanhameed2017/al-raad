@@ -9,7 +9,6 @@ import ModalBS from '../../../components/Modal';
 import FormBS from '../../../components/Form';
 import * as Yup from "yup";
 import styles from "../PanelStyling/style.module.css";
-import { sweetAlert } from '../../../utils/sweetAlert2';
 import Loader from '../../../components/Loader';
 import { surahList } from '../../../constants';
 import { generateOptimizedUrl } from '../../../utils/cloudinary';
@@ -17,6 +16,7 @@ import Input from '../../../components/InputFields';
 import useSocket from '../../../hooks/useSocket';
 import { addRealTime, deleteRealTime, updateRealTime } from '../../../utils/realTimeHelpers';
 import api from '../../../service/axios';
+import sweetAlert from '../../../utils/sweetAlert2';
 
 function Audios() 
 {
@@ -92,7 +92,7 @@ function Audios()
 
     // Delete
     const drop = useCallback(async (_id) => {
-        sweetAlert("Are you sure?", "This action will permanently delete the record.", "confirm", "Yes, delete it!", null, async () => {
+        sweetAlert.confirm({ fn:async () => {
             try 
             {
                 await api.delete(`/audio/${_id}`);
@@ -101,7 +101,7 @@ function Audios()
             {
                 return error;
             } 
-        })
+        } });
     },[]);
 
     // Columns

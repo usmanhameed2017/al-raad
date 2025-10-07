@@ -1,42 +1,48 @@
 import swal from "sweetalert2";
 import "./style.css";
 
-export const sweetAlert = (title, text, mode = "success", confirmButtonText = "OK", cancelButtonText = "Cancel", fn) => {
+// Sweet Alert Blueprint
+class SweetAlert
+{
     // Success
-    if(mode === "success")
-    {
+    success = ({ title = "Success", text, confirmButtonText = "OK", cancelButtonText = "Cancel", timer = 2000 }) => {
         return (
             swal.fire({
-                title: title,
-                text: text,
-                icon: "success",
+                title:title,
+                text:text,
+                icon:"success",
                 showCloseButton:true,
-                showCancelButton: true,
-                confirmButtonText: confirmButtonText || "OK",
-                cancelButtonText: cancelButtonText || "Cancel",
-                allowOutsideClick:false
-            })            
+                showCancelButton:true,
+                confirmButtonText:confirmButtonText,
+                cancelButtonText:cancelButtonText,
+                allowOutsideClick:false,
+                timer:timer
+            })     
         );
-    }
+    };
 
     // Confirm
-    if(mode === "confirm")
-    {
+    confirm = ({ title = "Are you sure?", text = "This action will permanently delete the record.", confirmButtonText = "Yes!", cancelButtonText = "No", timer = 10000, fn }) => {
         return(
             swal.fire({
-                title: title,
-                text: text,
-                icon: "question",
+                title:title,
+                text:text,
+                icon:"question",
                 showCloseButton:true,
-                showCancelButton: true,
-                confirmButtonText: confirmButtonText || "Yes",
-                cancelButtonText: cancelButtonText || "Cancel",
-                allowOutsideClick:false
+                showCancelButton:true,
+                confirmButtonText:confirmButtonText,
+                cancelButtonText:cancelButtonText,
+                allowOutsideClick:false,
+                timer:timer
             })
             .then(async (result) => {
                 if(result.isConfirmed) await fn();
             })
         );
-    }
+    };
+}
 
-};
+// Instance
+const sweetAlert = new SweetAlert();
+
+export default sweetAlert;
