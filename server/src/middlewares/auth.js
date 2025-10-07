@@ -1,12 +1,12 @@
+const jwt = require("../service/auth-token");
 const ApiError = require("../utils/ApiError");
-const { verifyAccessToken } = require("../utils/auth");
 
 // Verify authentication
 const authentication = (request, response, next) => {
     const token = request.signedCookies?.accessToken || request.headers?.["authorization"]?.split(" ")?.[1] || null;
     if(!token) throw new ApiError(401, "Login required!");
 
-    const user = verifyAccessToken(token);
+    const user = jwt.verifyAccessToken(token);
     if(!user) throw new ApiError(401, "Unauthenticated! Invalid access token");
 
     request.user = user || null;

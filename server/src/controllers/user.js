@@ -5,10 +5,10 @@ const ApiResponse = require("../utils/ApiResponse");
 const { isValidObjectId } = require("mongoose");
 const fs = require("fs");
 const path = require("path");
-const { generateAccessToken } = require("../utils/auth");
 const { cookieOptions } = require("../config");
 const generateCode = require("../utils/generateCode");
 const bcrypt = require("bcrypt");
+const jwt = require("../service/auth-token");
 
 // User signup
 const signup = async (request, response) => {
@@ -136,17 +136,17 @@ const login = async (request, response) => {
     if(!isMatched) throw new ApiError(400, "Incorrect password");
 
     // Check status
-    if(user?.status === "Pending") throw new ApiError(400, "Your account approval is in process. We'll notify you via email once it's activated");
-    if(user?.status === "Banned") throw new ApiError(400, "Your account has been banned and cannot be accessed.");    
+    if(user.status === "Pending") throw new ApiError(400, "Your account approval is in process. We'll notify you via email once it's activated");
+    if(user.status === "Banned") throw new ApiError(400, "Your account has been banned and cannot be accessed.");    
 
     // Generate access token
-    const accessToken = generateAccessToken(user);
+    const accessToken = jwt.generateAccessToken(user);
     if(!accessToken) throw new ApiError(400, "Failed to generate access token");
 
     try 
     {
         // Get user specific details
-        const userData = await User.findById(user?._id)
+        const userData = await User.findById(user._id)
         .select("-password -status -activationCode -activationCodeExpiresAt -resetCode -resetCodeExpiresAt -status -ip");
         if(!userData) throw new ApiError(400, "Invalid user ID");
 
@@ -181,7 +181,7 @@ const adminLogin = async (request, response) => {
     if(user?.status === "Banned") throw new ApiError(400, "Your account has been banned and cannot be accessed.");    
 
     // Generate access token
-    const accessToken = generateAccessToken(user);
+    const accessToken = jwt.generateAccessToken(user);
     if(!accessToken) throw new ApiError(400, "Failed to generate access token");
 
     try 
@@ -206,7 +206,7 @@ const googleLogin = async (request, response) => {
     if(!request.user) return response.status(404).json(new ApiError(404, "User not found"));
 
     // Generate access token
-    const accessToken = generateAccessToken(request.user);
+    const accessToken = jwt.generateAccessToken(request.user);
     if(!accessToken) return response.status(500).json(new ApiError(400, "Failed to generate access token"));
 
     // Send response
@@ -326,7 +326,7 @@ const editUser = async (request, response) => {
         if(!request.params?.id) 
         {
             // Generate new access token
-            const accessToken = generateAccessToken(user);
+            const accessToken = jwt.generateAccessToken(user);
             if(!accessToken) throw new ApiError(400, "Failed to generate new access token");  
             request.io.emit("UserUpdated", userData);
             return response.status(200)
