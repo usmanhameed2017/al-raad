@@ -36,10 +36,10 @@ function ForgotPassword()
     });
 
     // Handler function
-    const formHandler = useCallback(async (values, action) => {
+    const formHandler = useCallback(async (payload, action) => {
         try 
         {
-            const response = await api.post(`/security/forgotPassword`, values);
+            const response = await api.post({ url:`/security/forgotPassword`, payload });
             const { _id } = response.data;
             action.resetForm();
             navigate("/security/verifyResetCode", { state:{ _id, redirectToVerifyResetCode:true } });

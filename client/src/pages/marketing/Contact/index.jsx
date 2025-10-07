@@ -37,7 +37,7 @@ function Contact()
     const sendEmail = useCallback(async (payload, action) => {
         try
         {
-            await api.post("/mail", payload);
+            await api.post({ url:"/mail", payload });
             action.resetForm();
         }
         catch(error)

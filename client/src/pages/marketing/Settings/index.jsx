@@ -17,7 +17,7 @@ function Settings()
 
     // Fetch user data on page load
     useEffect(() => {
-        api.get(`/user/me`)
+        api.get({ url:`/user/me` })
         .then(response => setUser(response.data))
         .catch(() => setUser({}));
     },[]);    
@@ -82,7 +82,7 @@ function Settings()
                         if(user?.password) payload.password = user.password;
                         try
                         {
-                            const response = await api.put(`/user/me/edit`, payload);
+                            const response = await api.put({ url:`/user/me/edit`, payload });
                             localStorage.setItem("user", JSON.stringify(response.data));
                             setUser(response.data);
 

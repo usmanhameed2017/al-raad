@@ -24,7 +24,7 @@ function ViewMail()
 
     // Fetch book on page load
     useEffect(() => {
-        api.get(`/mail/${id}`)
+        api.get({ url:`/mail/${id}` })
         .then(response => setMail(response.data))
         .catch(() => {
             setMail({});

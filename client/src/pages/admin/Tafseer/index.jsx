@@ -49,7 +49,7 @@ function Tafseer()
     
     // Fetch data on page load and on search
     useEffect(() => {
-        api.get(`/tafseer?page=${currentPage}&limit=${limit}&search=${debouncedSearch}`)
+        api.get({ url:`/tafseer?page=${currentPage}&limit=${limit}&search=${debouncedSearch}` })
         .then(response => setData(response.data))
         .catch(error => console.log(error.message));
     }, [currentPage, limit, debouncedSearch]);
@@ -75,12 +75,12 @@ function Tafseer()
             if(formType === "create")
             {
                 delete payload?._id;
-                await api.post(`/tafseer`, payload);
+                await api.post({ url:`/tafseer`, payload });
                 action.resetForm();
             }
             else
             {
-                await api.put(`/tafseer/${payload?._id}`, payload);
+                await api.put({ url:`/tafseer/${payload?._id}`, payload });
             }
             setShowModal(false);
         }
@@ -95,7 +95,7 @@ function Tafseer()
         sweetAlert.confirm({ fn:async () => {
             try 
             {
-                await api.delete(`/tafseer/${_id}`);
+                await api.delete({ url:`/tafseer/${_id}` });
             } 
             catch (error) 
             {

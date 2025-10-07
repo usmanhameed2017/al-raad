@@ -49,7 +49,7 @@ function Audios()
     
     // Fetch data on page load and on search
     useEffect(() => {
-        api.get(`/audio?page=${currentPage}&limit=${limit}&search=${debouncedSearch}`)
+        api.get({ url:`/audio?page=${currentPage}&limit=${limit}&search=${debouncedSearch}` })
         .then(response => setData(response.data))
         .catch(error => console.log(error.message));
     }, [currentPage, limit, debouncedSearch]);
@@ -75,12 +75,12 @@ function Audios()
             if(formType === "create")
             {
                 delete payload?._id;
-                await api.post("/audio", payload, true);
+                await api.post({ url:"/audio", payload, fileAttachment:true });
                 action.resetForm();
             }
             else
             {
-                await api.put(`/audio/${payload?._id}`, payload, true);
+                await api.put({ url:`/audio/${payload?._id}`, payload, fileAttachment:true });
             }
             setShowModal(false);
         }
@@ -95,7 +95,7 @@ function Audios()
         sweetAlert.confirm({ fn:async () => {
             try 
             {
-                await api.delete(`/audio/${_id}`);
+                await api.delete({ url: `/audio/${_id}` });
             } 
             catch (error) 
             {

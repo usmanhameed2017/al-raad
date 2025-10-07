@@ -50,7 +50,7 @@ function Audios()
 
     // Fetch audio on page load
     useEffect(() => {
-        api.get(`/audio?page=${currentPage}&limit=${6}&search=${debouncedSearch}`, false)
+        api.get({ url:`/audio?page=${currentPage}&limit=${6}&search=${debouncedSearch}`, activateLoader:false })
         .then(response => setData(response.data))
         .catch(() => setData({ docs:[] }));
     }, [currentPage, debouncedSearch]);

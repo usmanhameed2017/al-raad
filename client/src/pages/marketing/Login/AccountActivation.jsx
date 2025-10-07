@@ -34,7 +34,7 @@ function AccountActivation()
     const accountActivation = useCallback(async (payload, action) => {
         try
         {
-            await api.patch(`/user/account/activation`, payload);
+            await api.patch({ url:`/user/account/activation`, payload });
             action.resetForm();
             navigate("/login");
         }

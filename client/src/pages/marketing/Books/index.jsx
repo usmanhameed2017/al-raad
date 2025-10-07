@@ -50,7 +50,7 @@ function Books()
 
     // Fetch book on page load
     useEffect(() => {
-        api.get(`/book?page=${currentPage}&limit=${6}&search=${debouncedSearch}`, false)
+        api.get({ url:`/book?page=${currentPage}&limit=${6}&search=${debouncedSearch}`, activateLoader:false })
         .then(response => setData(response.data))
         .catch(() => setData({ docs:[] }));
     }, [currentPage, debouncedSearch]);

@@ -47,7 +47,7 @@ function Books()
     
     // Fetch data on page load and on search
     useEffect(() => {
-        api.get(`/book?page=${currentPage}&limit=${limit}&search=${debouncedSearch}`)
+        api.get({ url:`/book?page=${currentPage}&limit=${limit}&search=${debouncedSearch}` })
         .then(response => setData(response.data))
         .catch(error => console.log(error.message));
     }, [currentPage, limit, debouncedSearch]);
@@ -73,12 +73,12 @@ function Books()
             if(formType === "create")
             {
                 delete payload?._id;
-                await api.post("/book", payload, true);
+                await api.post({ url:"/book", payload, fileAttachment:true });
                 action.resetForm();
             }
             else
             {
-                await api.put(`/book/${payload?._id}`, payload, true);
+                await api.put({ url:`/book/${payload?._id}`, payload, fileAttachment:true });
             }
             setShowModal(false);
         }
@@ -93,7 +93,7 @@ function Books()
         sweetAlert.confirm({ fn:async () => {
             try 
             {
-                await api.delete(`/book/${_id}`);
+                await api.delete({ url:`/book/${_id}` });
             } 
             catch (error) 
             {

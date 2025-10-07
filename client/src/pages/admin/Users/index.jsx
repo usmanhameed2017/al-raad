@@ -47,7 +47,7 @@ function Users()
     
     // Fetch data on page load and on search
     useEffect(() => {
-        api.get(`/user?page=${currentPage}&limit=${limit}&search=${debouncedSearch}`)
+        api.get({ url: `/user?page=${currentPage}&limit=${limit}&search=${debouncedSearch}` })
         .then(response => setData(response.data))
         .catch(error => console.log(error.message));
     }, [currentPage, limit, debouncedSearch]);
@@ -71,7 +71,7 @@ function Users()
         sweetAlert.confirm({ fn:async () => {
             try 
             {
-                await api.delete(`/user/${_id}`);
+                await api.delete({ url:`/user/${_id}` });
             } 
             catch (error) 
             {
@@ -206,27 +206,27 @@ function Users()
             modalTitle={ formType === "create" ? `ADD NEW USER` : `EDIT USER` }>
                 {/* Form */}
                 <FormBS initialValues={initialValues} validationSchema={validationSchema}
-                handlerFunction={ async (values, action) => {
+                handlerFunction={ async (payload, action) => {
                     try
                     {
                         if(formType === "create")
                         {
-                            delete values?._id;
-                            await api.post(`/user/create`, values);
+                            delete payload?._id;
+                            await api.post({ url:`/user/create`, payload });
                             action.resetForm();
                         }
                         else
                         {
                             // Initialize payload without password
                             let payload = {
-                                name: values?.name,
-                                username: values?.username,
-                                email: values?.email,
-                                role: values?.role
+                                name: payload?.name,
+                                username: payload?.username,
+                                email: payload?.email,
+                                role: payload?.role
                             };
 
-                            if(values?.password) payload.password = values?.password;
-                            await api.put(`/user/${values?._id}`, payload);
+                            if(payload?.password) payload.password = payload?.password;
+                            await api.put({ url:`/user/${payload?._id}`, payload });
                         }
                         setShowModal(false);
                     }

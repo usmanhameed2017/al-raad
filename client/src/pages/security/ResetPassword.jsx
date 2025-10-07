@@ -40,10 +40,10 @@ function ResetPassword()
     });
 
     // Handler function
-    const formHandler = useCallback(async (values, action) => {
+    const formHandler = useCallback(async (payload, action) => {
         try 
         {
-            await api.patch(`/security/resetPassword`, values);
+            await api.patch({ url:`/security/resetPassword`, payload });
             action.resetForm();
             navigate("/login", { replace:true });
         } 

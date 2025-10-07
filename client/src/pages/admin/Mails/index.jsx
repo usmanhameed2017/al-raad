@@ -49,7 +49,7 @@ function Mails()
     
     // Fetch data on page load and on search
     useEffect(() => {
-        api.get(`/mail?page=${currentPage}&limit=${limit}&search=${debouncedSearch}`)
+        api.get({ url:`/mail?page=${currentPage}&limit=${limit}&search=${debouncedSearch}` })
         .then(response => setData(response.data))
         .catch(error => console.log(error.message));
     }, [currentPage, limit, debouncedSearch]);
@@ -66,7 +66,7 @@ function Mails()
         sweetAlert.confirm({ fn:async () => {
             try 
             {
-                await api.delete(`/mail/${_id}`);
+                await api.delete({ url:`/mail/${_id}` });
             } 
             catch (error) 
             {
@@ -122,7 +122,7 @@ function Mails()
     const replyToUser = useCallback(async (payload, action) => {
         try
         {
-            await api.post(`/mail/replyToUser`, payload);
+            await api.post({ url:`/mail/replyToUser`, payload });
             action.resetForm();
             setShowModal(false);
         }

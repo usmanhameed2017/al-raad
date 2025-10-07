@@ -35,7 +35,7 @@ function ViewBook()
 
     // Fetch book on page load
     useEffect(() => {
-        api.get(`/book/${id}`)
+        api.get({ url:`/book/${id}` })
         .then(response => setBook(response.data))
         .catch(() => {
             setBook({});

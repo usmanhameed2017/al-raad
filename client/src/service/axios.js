@@ -40,7 +40,7 @@ client.interceptors.response.use((response) => {
 class ApiRequest
 {
     // Get request
-    async get(url, activateLoader = true, enableSuccessMessage = false, enableErrorMessage = true) 
+    async get({ url, activateLoader = true, enableSuccessMessage = false, enableErrorMessage = true }) 
     {
         if(activateLoader) startLoading();
         try 
@@ -61,7 +61,7 @@ class ApiRequest
     };
 
     // Post request
-    async post(url, payload, fileAttachment = false, activateLoader = true, enableSuccessMessage = true, enableErrorMessage = true)
+    async post({ url, payload, fileAttachment = false, activateLoader = true, enableSuccessMessage = true, enableErrorMessage = true })
     {
         if(activateLoader) startSaving();
         try 
@@ -84,7 +84,7 @@ class ApiRequest
     }; 
     
     // Put request
-    async put(url, payload, fileAttachment = false, activateLoader = true, enableSuccessMessage = true, enableErrorMessage = true) 
+    async put({ url, payload, fileAttachment = false, activateLoader = true, enableSuccessMessage = true, enableErrorMessage = true }) 
     {
         if(activateLoader) startSaving();
         try 
@@ -107,7 +107,7 @@ class ApiRequest
     };
     
     // Patch request
-    async patch(url, payload, fileAttachment = false, activateLoader = true, enableSuccessMessage = true, enableErrorMessage = true) 
+    async patch({ url, payload, fileAttachment = false, activateLoader = true, enableSuccessMessage = true, enableErrorMessage = true }) 
     {
         if(activateLoader) startSaving();
         try 
@@ -130,7 +130,7 @@ class ApiRequest
     };
     
     // Delete request
-    async delete(url, activateLoader = true, enableSuccessMessage = true, enableErrorMessage = true)
+    async delete({ url, activateLoader = true, enableSuccessMessage = true, enableErrorMessage = true })
     {
         if(activateLoader) startSaving();
         try 

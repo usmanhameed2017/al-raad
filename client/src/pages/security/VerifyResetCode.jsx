@@ -36,10 +36,10 @@ function VerifyResetCode()
     });
 
     // Handler function
-    const formHandler = useCallback(async (values, action) => {
+    const formHandler = useCallback(async (payload, action) => {
         try 
         {
-            await api.patch(`/security/verifyResetCode`, values);
+            await api.patch({ url:`/security/verifyResetCode`, payload });
             action.resetForm();
             navigate("/security/resetPassword", { state:{ _id, redirectToVerifyResetPassword:true } });
         } 

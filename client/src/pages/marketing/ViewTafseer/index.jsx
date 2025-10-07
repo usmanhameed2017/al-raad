@@ -35,7 +35,7 @@ function ViewTafseer()
 
     // Fetch tafseer on page load
     useEffect(() => {
-        api.get(`/tafseer/${id}`)
+        api.get({ url:`/tafseer/${id}` })
         .then(response => setTafseer(response.data))
         .catch(() => {
             setTafseer({});

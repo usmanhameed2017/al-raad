@@ -24,7 +24,7 @@ function AuthProvider({ children })
     const generateCsrfToken = useCallback(async () => {
         try
         {
-            const response = await api.get("/auth/generateCsrfToken");
+            const response = await api.get({ url:"/auth/generateCsrfToken" });
             getCsrfToken(response.data);
         } 
         catch(error) 
@@ -40,7 +40,7 @@ function AuthProvider({ children })
 
         try 
         {
-            const response = await api.post("/user/signup", user);
+            const response = await api.post({ url:"/user/signup", payload:user });
             const { _id } = response.data;
             action.resetForm();
             navigate("/account/activation", { state:{ redirectionFromSignup:true, _id } });
@@ -62,7 +62,7 @@ function AuthProvider({ children })
 
         try
         {
-            const response = await api.post("/user/login", user);
+            const response = await api.post({ url:"/user/login", payload:user });
             setUser(response.data);
             setLoggedIn(response.success);
             localStorage.setItem("user", JSON.stringify(response.data));
@@ -86,7 +86,7 @@ function AuthProvider({ children })
 
         try
         {
-            const response = await api.post("/user/admin/login", user);
+            const response = await api.post({ url:"/user/admin/login", payload:user });
             setUser(response.data);
             setLoggedIn(response.success);
             localStorage.setItem("user", JSON.stringify(response.data));
@@ -107,7 +107,7 @@ function AuthProvider({ children })
     const userLogout = useCallback(async () => {
         try 
         {
-            await api.get("/user/logout");
+            await api.get({ url:"/user/logout" });
             setUser(null);
             setLoggedIn(false);
             localStorage.removeItem("user");
@@ -123,7 +123,7 @@ function AuthProvider({ children })
     const adminLogout = useCallback(async () => {
         try 
         {
-            await api.get("/user/logout");
+            await api.get({ url:"/user/logout" });
             setUser(null);
             setLoggedIn(false);
             localStorage.removeItem("user");
@@ -139,7 +139,7 @@ function AuthProvider({ children })
     const isAuthenticated = useCallback(async () => {
         try 
         {
-            const response = await api.get("/auth/isAuthenticated", undefined, undefined, false);
+            const response = await api.get({ url:"/auth/isAuthenticated", enableErrorMessage:false });
             setUser(response.data); // Plain user object
             setLoggedIn(response.success);
             localStorage.setItem("user", JSON.stringify(response.data));             
