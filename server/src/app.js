@@ -10,6 +10,8 @@ const http = require("http");
 const passport = require("passport");
 require("./service/social-auth");
 const compression = require("compression");
+const { createAdapter } = require("@socket.io/redis-adapter");
+const Redis = require("ioredis");
 
 // Express app
 const app = express();
@@ -17,24 +19,53 @@ const app = express();
 // Create HTTP Server
 const server = http.createServer(app);
 
-// Binding with socket server
-const io = new Server(server, { cors:corsOptions });
+// Socket.IO setup
+const io = new Server(server, { cors: corsOptions });
+
+// ************* REDIS ADAPTER (using ioredis) ************* //
+// Redis config
+const pubClient = new Redis({
+    host: process.env.REDIS_HOST,
+    port: process.env.REDIS_PORT,
+    username: process.env.REDIS_USERNAME,
+    password: process.env.REDIS_PASSWORD,
+    retryStrategy: (times) => Math.min(times * 50, 2000)
+});
+
+// Sub client
+const subClient = pubClient.duplicate();
+
+// Adapter connection
+(async () => {
+    try 
+    {
+        if(pubClient.status !== "ready" && pubClient.status !== "connecting") await pubClient.connect();
+        if(subClient.status !== "ready" && subClient.status !== "connecting") await subClient.connect();
+        io.adapter(createAdapter(pubClient, subClient));
+        console.log("Socket.IO Redis adapter connected successfully.");
+    } 
+    catch(error) 
+    {
+        console.error("Redis adapter connection failed:", error.message);
+    }
+})();
 
 // ************* MIDDLEWARES ************* //
 app.use(cors(corsOptions));
 app.use(cookieParse(cookieParserSecret));
 app.use(passport.initialize());
-app.use(express.urlencoded({ extended:true, limit:"100kb" }));
-app.use(express.json({ limit:"100kb" }));
+app.use(express.urlencoded({ extended: true, limit: "100kb" }));
+app.use(express.json({ limit: "100kb" }));
 app.use("/public", express.static(path.resolve("public")));
 app.use(compression());
+
+// Make io available to all routes
 app.use((request, response, next) => {
     request.io = io;
     next();
 });
 
 // ************* ROUTES ************* //
-// Imports
 const userRouter = require("./routes/user");
 const tafseerRouter = require("./routes/tafseer");
 const bookRouter = require("./routes/book");
@@ -43,7 +74,6 @@ const mailRouter = require("./routes/mails");
 const securityRouter = require("./routes/security");
 const authRouter = require("./routes/auth");
 
-// Registered routes
 app.use("/api/v1/user", userRouter);
 app.use("/api/v1/tafseer", tafseerRouter);
 app.use("/api/v1/book", bookRouter);
