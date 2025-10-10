@@ -172,6 +172,12 @@ Integrated Google Login functionality and replaced my personal Gmail credentials
 
 Additionally, created a reusable Google Login button component to maintain consistency and scalability across the project.
 
+📅 10th October, 2025
+
+Today, I successfully integrated **ioredis** and **@socket.io/redis-adapter** to scale my Socket.IO server to a **production-level** setup.
+
+Implemented Redis **Pub/Sub** architecture, ensuring that all worker processes remain perfectly synchronized across multiple instances. This enables seamless real-time communication between users connected to different workers, significantly improving scalability, reliability, and overall system performance.
+
 ---
 
 ### ⚙ Setup Installation
