@@ -1,6 +1,6 @@
 import styles from './style.module.css';
 import { motion } from 'framer-motion';
-import { FaBookOpen, FaBookReader, FaVideo, FaUsers, FaLightbulb, FaEnvelope } from 'react-icons/fa';
+import { FaBookOpen, FaBookReader, FaPlayCircle, FaUsers, FaLightbulb, FaEnvelope } from 'react-icons/fa';
 import { Row, Col } from 'react-bootstrap';
 
 function About() 
@@ -22,11 +22,11 @@ function About()
       All resources are free to read or download as pdf.`,
     },
     {
-      icon: <FaVideo size={30} />,
-      title: "Video Lectures",
-      text: `Our video section includes lectures from renowned scholars, detailed tafseer series, and educational sessions on various Islamic topics.
+      icon: <FaPlayCircle size={30} />,
+      title: "Audio Lectures",
+      text: `Listen to inspiring and educational audio lectures by renowned scholars, covering topics such as Tafseer, Hadith, Fiqh, and Islamic lifestyle.
       <br>
-      All videos are verified and free from bid'ah or misinformation.`,
+      All audios are carefully verified to ensure authenticity and reliability.`,
     },
     {
       icon: <FaLightbulb size={30} />,
