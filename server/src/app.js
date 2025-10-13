@@ -11,7 +11,7 @@ const compression = require("compression");
 const http = require("http");
 const { Server } = require("socket.io");
 const { createAdapter } = require("@socket.io/redis-adapter");
-const Redis = require("ioredis");
+const connectToRedis = require("./redis/connection");
 
 // Initialization
 function createApp()
@@ -23,18 +23,8 @@ function createApp()
     const server = http.createServer(app);
 
     // ************* SCALE-UP SOCKET.IO USING REDIS ADAPTER ************* //
-    // Redis config
-    const pubClient = new Redis({
-        host: process.env.REDIS_HOST,
-        port: process.env.REDIS_PORT,
-        username: process.env.REDIS_USERNAME,
-        password: process.env.REDIS_PASSWORD,
-        retryStrategy: (times) => Math.min(times * 50, 2000)
-    });
-
-    // Sub client
-    const subClient = pubClient.duplicate();
-
+    const { pubClient, subClient } = connectToRedis();
+    
     // Initialize Socket.IO
     const io = new Server(server, { cors:corsOptions, adapter:createAdapter(pubClient, subClient) });
 
@@ -51,10 +41,6 @@ function createApp()
     app.use((request, response, next) => {
         request.io = io;
         next();
-    });
-
-    io.on("connection", (socket) => {
-        console.log(`${socket.id} handled by ${process.pid}`);
     });
 
     // ************* ROUTES ************* //

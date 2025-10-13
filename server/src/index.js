@@ -1,6 +1,6 @@
 require("dotenv").config();
 const connectDB = require("./database/connection");
-const { port } = require("./constants");
+const { port, isProduction } = require("./constants");
 const cluster = require("cluster");
 const os = require("os");
 const { setupMaster, setupWorker } = require("@socket.io/sticky");
@@ -10,14 +10,14 @@ const createApp = require("./app");
 const totalCPUS = os.cpus().length;
 
 // Clusterization
-if(cluster.isPrimary) 
+if(isProduction && cluster.isPrimary)
 {
     console.log(`Primary process ${process.pid} is running`);
     console.log(`Spawning ${totalCPUS} worker processes...`);
 
-    // Attach sticky session master handler
+    // Attach sticky session master handler in production environemnt
     const { server } = createApp();
-    setupMaster(server, { loadBalancingMethod: "ip" }); // Sticky session based on IP
+    setupMaster(server, { loadBalancingMethod: "header", headerName: "x-forwarded-for" });
 
     // Spawn workers
     for(let i = 0; i < totalCPUS; i++) cluster.fork();
@@ -33,9 +33,9 @@ else
     // Worker setup
     connectDB()
     .then(() => {
-        // Attach sticky worker handler
+        // Attach sticky worker handler in production environemnt
         const { server, io } = createApp();
-        setupWorker(io);
+        if(isProduction) setupWorker(io);
         server.on("error", (error) => console.log(`Express app failed to listen! ${error}`));
         server.listen(port, () => console.log(`Server running on port:${port} | PID: ${process.pid}`));
     })
