@@ -27,6 +27,9 @@ const googleClientId = process.env.GOOGLE_CLIENT_ID;
 const googleClientSecret = process.env.GOOGLE_CLIENT_SECRET;
 const googleCallbackUrl = process.env.GOOGLE_CALLBACK_URL;
 
+// Flag For Node Environment
+const isProduction = process.env.NODE_ENV === "production";  
+
 module.exports = { 
     port, 
     origin, 
@@ -42,5 +45,6 @@ module.exports = {
     gmailAppPassword,
     googleClientId,
     googleClientSecret,
-    googleCallbackUrl
+    googleCallbackUrl,
+    isProduction
 };
