@@ -5,6 +5,7 @@ const { isValidObjectId } = require("mongoose");
 const sendEmail = require("../service/mailer");
 const fs = require("fs");
 const path = require("path");
+const { gmail } = require("../constants");
 
 // Send mail
 const sendMail = async (request, response) => {
@@ -28,7 +29,7 @@ const sendMail = async (request, response) => {
         .replaceAll('{{message}}', mail?.message);
 
         // Send mail
-        const result = await sendEmail("usmanhameed1790@gmail.com", `📬 Contact us - ${mail?.subject}`, filledHtml);      
+        const result = await sendEmail(gmail, `📬 Contact us - ${mail?.subject}`, filledHtml);      
         if(!result) throw new ApiError(500, "Unable to send email");
 
         request.io.emit("EmailSend", mail);
