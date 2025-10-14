@@ -1,9 +1,9 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import ReactDataTable from '../../../components/DataTable';
 import Button from '../../../components/Button';
 import { useAuth } from '../../../context/auth';
 import Animation from '../../../components/Animation';
-import { FaDownload, FaEdit, FaTrash, FaPlus } from 'react-icons/fa';
+import { FaDownload, FaEdit, FaTrash, FaPlus, FaCloudUploadAlt } from 'react-icons/fa';
 import { Row, Col } from 'react-bootstrap';
 import ModalBS from '../../../components/Modal';
 import FormBS from '../../../components/Form';
@@ -30,6 +30,9 @@ function Books()
 
     // Global state loader
     const { savingChanges } = useAuth();
+
+    // Reference
+    const uploadReference = useRef();
 
     // Listen for real time updates
     useSocket("BookAdded", useCallback(addRealTime(setData), [setData]));
@@ -159,11 +162,16 @@ function Books()
         // PDF
         pdf:Yup.mixed()
         .nullable()
+        .test('required', 'PDF is required', (file) => formType === "create" ? !!file : true)
         .test('type', "Invalid file format! Only PDF is allowed", (file) => {
-            return !file || allowedFileTypes.includes(file?.type);
+            return formType === "create" 
+            ? file && allowedFileTypes.includes(file?.type)
+            : !file || allowedFileTypes.includes(file?.type);
         })
         .test('size', "PDF size must not be larger than 9MB", (file) => {
-            return !file || file?.size <= 9000000;
+            return formType === "create" 
+            ? file && file?.size <= 9000000
+            : !file || file?.size <= 9000000;
         })
     });  
 
@@ -214,10 +222,18 @@ function Books()
 
                     {/* PDF */}
                     <div className="form-group mb-2">
-                        <label htmlFor="pdf" className={styles.label}> Upload PDF </label>
-                        <Input type="file" name="pdf" className={`${styles.input} form-control`}
-                        accept='application/pdf' required={formType==="create"} />
+                       {/* Upload Button */}
+                        <div className='d-flex align-items-center'>
+                            <button type="button" className='file-upload-button' onClick={() => uploadReference.current.click()}> 
+                                <FaCloudUploadAlt size={30} /> Upload PDF
+                            </button>
+                        </div>
+
+                        {/* Hidden Field */}
+                        <Input ref={uploadReference} type="file" name="pdf" className={`${styles.input} form-control d-none`}
+                        accept='application/pdf' />
                     </div> 
+                    <hr />
 
                     {/* Buttons */}
                     <div className="form-group mt-3 d-flex align-items-center gap-2">

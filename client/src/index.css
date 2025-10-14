@@ -155,3 +155,22 @@ select {
 select:focus {
   box-shadow: 0px 2px 7px #00bcd4;
 }
+
+.file-upload-button {
+  padding: 0.7rem 1.9rem;
+  margin-top: 7px;
+  background-color: #00bcd4; 
+  color: #ffffff;
+  border: none;
+  border-radius: 30px;
+  font-weight: bold;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  height: 55px;
+  width: 100%;
+}
+
+.file-upload-button:hover {
+  background-color: #00bcd4; /* Cyan highlight on hover */
+  box-shadow: 0px 6px 15px #00bcd4;
+}
