@@ -130,7 +130,7 @@ function Users()
         email: Yup.string()
         .strict(true)
         .lowercase("Email must contain lowercase letters")
-        .min(6, "Email must be at least 6 characters long")
+        .min(10, "Email must be at least 10 characters long")
         .max(30, "Email must not be longer than 30 characters")
         .email("Invalid email")
         .required("Email is required"),
