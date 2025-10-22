@@ -6,6 +6,7 @@ const fs = require("fs");
 const path = require("path");
 const generateCode = require("../utils/generateCode");
 const bcrypt = require("bcrypt");
+const { webLogo } = require("../constants");
 
 // Security Step-01 (Forgot Password)
 const forgotPassword = async (request, response) => {
@@ -35,6 +36,7 @@ const forgotPassword = async (request, response) => {
 
         // Replace placeholders
         const filledHtml = html
+        .replace('{{webLogo}}', webLogo)
         .replace('{{name}}', user?.name || "User")
         .replace('{{resetCode}}', resetCode);
 
