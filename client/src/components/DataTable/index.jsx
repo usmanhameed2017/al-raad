@@ -5,23 +5,37 @@ import { useAuth } from "../../context/auth";
 import Animation from "../Animation";
 import Loader from "../Loader";
 
-function ReactDataTable({ title, columns, data, setCurrentPage, search, setSearch, limit, setLimit }) 
+function ReactDataTable({ title, columns, docs, totalDocs, setCurrentPage, search, setSearch, limit, setLimit }) 
 {
     // Data table theme
     createTheme("alRaad", {
         text: { primary: "#e5e7eb", secondary: "#cbd5e1" },
-        background: { default: "#0e0f16" },
-        context: { background: "#00bcd4", text: "#0e0f16" },
-        divider: { default: "#00bbd481" },
+        background: { default: "#070911ff" },
+        context: { background: "#00bcd4", text: "#070911ff" },
+        divider: { default: "#070911ff" },
         action: { button: "#00bcd4", hover: "#00bcd4", disabled: "rgba(255,255,255,0.3)" },
-    }, "dark"); 
+    }, "dark");   
 
     // Custom datatable style
     const customStyles = {
+        headCells: {
+            style: {
+                fontSize: "16px",
+                fontWeight: "700",
+                color: "#ffffff",
+                backgroundColor: "#070911ff",
+                paddingTop:"20px",
+                paddingBottom:"20px",
+            },
+        },        
         cells: {
-            style: { paddingTop: "12px", paddingBottom: "12px" }
+            style: { paddingTop: "8px", paddingBottom: "8px" }
+        },
+        rows: {
+            style: { backgroundColor: "#070911ff", borderRadius:"2px" }, 
+            stripedStyle: { backgroundColor: "#141729ff" },
         }
-    };
+    };    
 
     // Extract global state loader
     const { loading } = useAuth();
@@ -46,17 +60,17 @@ function ReactDataTable({ title, columns, data, setCurrentPage, search, setSearc
                     <Animation type="3d">
                         <div className={styles.dataTableContainer}>
                             <DataTable
-                            title={title}
+                            title={ <div className={styles.tableTitle}> {title}</div> }
                             theme="alRaad"
                             customStyles={customStyles}
                             columns={columns}
-                            data={data?.docs}
+                            data={docs}
                             pagination
                             paginationServer
                             paginationPerPage={limit}
                             paginationRowsPerPageOptions={[10, 25, 50, 100]}
-                            paginationTotalRows={data?.totalDocs || 0}
-                            paginationDefaultPage={data?.page || 1}
+                            paginationTotalRows={totalDocs}
+                            paginationDefaultPage={1}
                             onChangePage={ (page) => setCurrentPage(page) }
                             onChangeRowsPerPage={ (rows) => setLimit(rows) }
                             // progressPending={loading === true} 
