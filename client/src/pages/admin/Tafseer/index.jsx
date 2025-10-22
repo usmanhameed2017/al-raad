@@ -68,6 +68,11 @@ function Tafseer()
         setShowModal(true);
     },[]);
 
+    // Handle close modal
+    const handleCloseModal = useCallback(() => {
+        setShowModal(false);
+    },[]);    
+
     // Add & Edit
     const handleSubmit = useCallback(async (payload, action) => {
         try
@@ -187,7 +192,7 @@ function Tafseer()
             </Row>
 
             {/* Modal */}
-            <ModalBS showModal={showModal} setShowModal={setShowModal} 
+            <ModalBS showModal={showModal} handleCloseModal={handleCloseModal}
             modalTitle={ formType === "create" ? `ADD NEW TAFSEER` : `EDIT TAFSEER` }>
                 {/* Form */}
                 <FormBS initialValues={initialValues} validationSchema={validationSchema}

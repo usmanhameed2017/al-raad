@@ -66,6 +66,11 @@ function Users()
         setShowModal(true);
     },[]);
 
+    // Handle close modal
+    const handleCloseModal = useCallback(() => {
+        setShowModal(false);
+    },[]);    
+
     // Delete
     const drop = useCallback(async (_id) => {
         sweetAlert.confirm({ fn:async () => {
@@ -202,7 +207,7 @@ function Users()
             </Row>                      
 
             {/* Modal */}
-            <ModalBS showModal={showModal} setShowModal={setShowModal}  modalSize='md'
+            <ModalBS showModal={showModal} handleCloseModal={handleCloseModal}  modalSize='md'
             modalTitle={ formType === "create" ? `ADD NEW USER` : `EDIT USER` }>
                 {/* Form */}
                 <FormBS initialValues={initialValues} validationSchema={validationSchema}

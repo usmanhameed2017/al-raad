@@ -27,6 +27,7 @@ function Books()
     const [showModal, setShowModal] = useState(false);
     const [editFormValues, setEditFormValues] = useState(null);
     const [formType, setFormType] = useState("");
+    const [uploadProgress, setUploadProgress] = useState(0);
 
     // Global state loader
     const { savingChanges } = useAuth();
@@ -68,6 +69,11 @@ function Books()
         setEditFormValues({ ...data, pdf: "" }); // Keep pdf empty initially
         setShowModal(true);
     },[]); 
+
+    // Handle close modal
+    const handleCloseModal = useCallback(() => {
+        setShowModal(false);
+    },[]);    
     
     // Add & Edit
     const handleSubmit = useCallback(async (payload, action) => {
@@ -75,14 +81,19 @@ function Books()
         {
             if(formType === "create")
             {
+                // Exclude id
                 delete payload?._id;
-                await api.post({ url:"/book", payload, fileAttachment:true });
+
+                // Post request
+                await api.post({ url:"/book", payload, fileAttachment:true, activateLoader:false, onProgress:(percent) => setUploadProgress(percent) });
                 action.resetForm();
             }
             else
             {
+                // Put request
                 await api.put({ url:`/book/${payload?._id}`, payload, fileAttachment:true });
             }
+            setUploadProgress(0);
             setShowModal(false);
         }
         catch(error)
@@ -204,7 +215,7 @@ function Books()
         </Row> 
 
             {/* Modal */}
-            <ModalBS showModal={showModal} setShowModal={setShowModal} 
+            <ModalBS showModal={showModal} handleCloseModal={handleCloseModal}
             modalTitle={ formType === "create" ? "ADD NEW BOOK" : "EDIT BOOK" }>
                 {/* Form */}
                 <FormBS initialValues={initialValues} validationSchema={validationSchema} handlerFunction={handleSubmit}>
@@ -228,6 +239,11 @@ function Books()
                                 <FaCloudUploadAlt size={30} /> Upload PDF
                             </button>
                         </div>
+
+                        {/* Progress Bar */}
+                        {/* <div className='mt-2'>
+                            {uploadProgress}% <progress value={uploadProgress} max={100}>  </progress>
+                        </div> */}
 
                         {/* Hidden Field */}
                         <Input ref={uploadReference} type="file" name="pdf" className={`${styles.input} form-control d-none`}

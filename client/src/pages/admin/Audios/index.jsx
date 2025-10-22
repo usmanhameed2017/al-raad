@@ -68,6 +68,11 @@ function Audios()
         setShowModal(true);
     },[]);
 
+    // Handle close modal
+    const handleCloseModal = useCallback(() => {
+        setShowModal(false);
+    },[]);
+
     // Add & Edit
     const handleSubmit = useCallback(async (payload, action) => {
         try
@@ -196,7 +201,7 @@ function Audios()
             </Row>
 
             {/* Modal */}
-            <ModalBS showModal={showModal} setShowModal={setShowModal} 
+            <ModalBS showModal={showModal} handleCloseModal={handleCloseModal} 
             modalTitle={ formType === "create" ? "ADD NEW AUDIO" : "EDIT AUDIO" }>
                 {/* Form */}
                 <FormBS initialValues={initialValues} validationSchema={validationSchema} handlerFunction={handleSubmit}>

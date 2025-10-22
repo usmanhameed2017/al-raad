@@ -36,7 +36,12 @@ function Mails()
 
     // Listen for real time updates
     useSocket("EmailSend", useCallback(addRealTime(setData), [setData]));
-    useSocket("EmailDeleted", useCallback(deleteRealTime(setData, setCurrentPage), [setData]));   
+    useSocket("EmailDeleted", useCallback(deleteRealTime(setData, setCurrentPage), [setData]));  
+    
+    // Handle close modal
+    const handleCloseModal = useCallback(() => {
+        setShowModal(false);
+    },[]);   
     
     // Debounce technique
     useEffect(() => {
@@ -150,7 +155,7 @@ function Mails()
             </Row>          
 
             {/* Modal */}
-            <ModalBS showModal={showModal} setShowModal={setShowModal} modalTitle={`REPLY TO MAIL`} modalSize='lg'>
+            <ModalBS showModal={showModal} handleCloseModal={handleCloseModal} modalTitle={`REPLY TO MAIL`} modalSize='lg'>
                 {/* Form */}
                 <FormBS initialValues={initialValues} validationSchema={validationSchema} handlerFunction={replyToUser}>
 
