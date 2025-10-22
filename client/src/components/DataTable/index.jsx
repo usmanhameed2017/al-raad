@@ -49,10 +49,7 @@ function ReactDataTable({ title, columns, docs, totalDocs, setCurrentPage, searc
                     value={search} onChange={ (e) => setSearch(e.target.value) } />
                 </Col>
             </Row>
-
-            {/* Loader */}
-            { loading && ( <div style={{ marginTop:"100px" }}> <Loader size='big' text="Loading" /> </div> ) }
-
+            
             {/* Data Table */}
             <Row className="mt-3">
                 <Col>
