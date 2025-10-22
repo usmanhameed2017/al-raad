@@ -60,9 +60,9 @@ function Users()
     },[]);
 
     // Launch modal for edit
-    const edit = useCallback((data) => {
+    const edit = useCallback((payload) => {
         setFormType("edit")
-        setEditFormValues(data);
+        setEditFormValues(payload);
         setShowModal(true);
     },[]);
 
@@ -197,12 +197,13 @@ function Users()
                     <ReactDataTable 
                     title={`Users`} 
                     columns={columns} 
-                    data={data} 
-                    setCurrentPage={setCurrentPage}
+                    docs={data.docs} 
+                    totalDocs={data.totalDocs}
+                    limit={limit}
+                    setLimit={setLimit}
                     search={search}
                     setSearch={setSearch}
-                    limit={limit}
-                    setLimit={setLimit} />
+                    setCurrentPage={setCurrentPage} />
                 </Col>
             </Row>                      
 

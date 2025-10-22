@@ -183,31 +183,32 @@ function Books()
 
     return (
         <>
-        {/* Modal Launcher Button */}
-        <Row className='mb-3'>
-            <Col>
-                <Animation type="button">
-                    <div className='float-end'> 
-                        <Button onClick={launchModal}> <FaPlus /> Add New </Button> 
-                    </div>
-                </Animation>
-            </Col>
-        </Row>
-        
-        {/* Data Table */}
-        <Row>
-            <Col>
-                <ReactDataTable 
-                title={`Books`} 
-                columns={columns} 
-                data={data} 
-                setCurrentPage={setCurrentPage}
-                search={search}
-                setSearch={setSearch}
-                limit={limit}
-                setLimit={setLimit} />
-            </Col>
-        </Row> 
+            {/* Modal Launcher Button */}
+            <Row className='mb-3'>
+                <Col>
+                    <Animation type="button">
+                        <div className='float-end'> 
+                            <Button onClick={launchModal}> <FaPlus /> Add New </Button> 
+                        </div>
+                    </Animation>
+                </Col>
+            </Row>
+            
+            {/* Data Table */}
+            <Row>
+                <Col>
+                    <ReactDataTable 
+                    title={`Books`} 
+                    columns={columns} 
+                    docs={data.docs} 
+                    totalDocs={data.totalDocs}
+                    limit={limit}
+                    setLimit={setLimit}
+                    search={search}
+                    setSearch={setSearch}
+                    setCurrentPage={setCurrentPage} />
+                </Col>
+            </Row> 
 
             {/* Modal */}
             <ModalBS showModal={showModal} handleCloseModal={handleCloseModal}

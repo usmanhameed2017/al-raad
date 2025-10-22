@@ -189,14 +189,15 @@ function Audios()
             <Row>
                 <Col>
                     <ReactDataTable 
-                    title={`Lectures`} 
+                    title={`Audios`} 
                     columns={columns} 
-                    data={data} 
-                    setCurrentPage={setCurrentPage}
+                    docs={data.docs} 
+                    totalDocs={data.totalDocs}
+                    limit={limit}
+                    setLimit={setLimit}
                     search={search}
                     setSearch={setSearch}
-                    limit={limit}
-                    setLimit={setLimit} />
+                    setCurrentPage={setCurrentPage} />
                 </Col>
             </Row>
 
