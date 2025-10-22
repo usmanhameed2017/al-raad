@@ -233,21 +233,8 @@ function Books()
 
                     {/* PDF */}
                     <div className="form-group mb-2">
-                       {/* Upload Button */}
-                        <div className='d-flex align-items-center'>
-                            <button type="button" className='file-upload-button' onClick={() => uploadReference.current.click()}> 
-                                <FaCloudUploadAlt size={30} /> Upload PDF
-                            </button>
-                        </div>
-
-                        {/* Progress Bar */}
-                        {/* <div className='mt-2'>
-                            {uploadProgress}% <progress value={uploadProgress} max={100}>  </progress>
-                        </div> */}
-
-                        {/* Hidden Field */}
-                        <Input ref={uploadReference} type="file" name="pdf" className={`${styles.input} form-control d-none`}
-                        accept='application/pdf' />
+                        <label htmlFor="pdf" className={styles.label}> PDF </label>
+                        <Input type="file" name="pdf" className={`${styles.input} form-control`} accept='application/pdf' />
                     </div> 
                     <hr />
 
