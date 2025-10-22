@@ -1,5 +1,4 @@
-import { FaSync } from 'react-icons/fa';
-import styles from './style.module.css';
+import PulseLoader from "react-spinners/PulseLoader";
 
 function Loader({ size = "small", text }) 
 {
@@ -7,8 +6,8 @@ function Loader({ size = "small", text })
     if(size.trim().toLowerCase() === "big")
     {
         return (
-            <h3 className='text-center fw-bold textTheme'> 
-                <FaSync className={styles.spin} size={30} /> { text } 
+            <h3 className='text-center fw-bold primary'> 
+                <PulseLoader color="#00bcd4" size={20} speedMultiplier={1.2} /> &nbsp; { text }
             </h3>
         );
     }
@@ -17,8 +16,8 @@ function Loader({ size = "small", text })
     if(size.trim().toLowerCase() === "medium")
     {
         return (
-            <h4 className='text-center fw-bold textTheme'> 
-                <FaSync className={styles.spin} size={30} /> { text } 
+            <h4 className='text-center fw-bold primary'> 
+                <PulseLoader color="#00bcd4" size={20} speedMultiplier={1.2} /> &nbsp; { text } 
             </h4>
         );
     }
@@ -27,8 +26,8 @@ function Loader({ size = "small", text })
     if(size.trim().toLowerCase() === "small")
     {
         return (
-            <h6 className='text-center fw-bold textTheme'> 
-                <FaSync className={styles.spin} size={30} /> &nbsp; { text } 
+            <h6 className='text-center fw-bold primary'> 
+                <PulseLoader color="#00bcd4" size={20} speedMultiplier={1.2} /> &nbsp; { text }
             </h6>
         );
     } 
