@@ -209,7 +209,7 @@ function Users()
 
             {/* Modal */}
             <ModalBS showModal={showModal} handleCloseModal={handleCloseModal}  modalSize='md'
-            modalTitle={ formType === "create" ? `ADD NEW USER` : `EDIT USER` }>
+            modalTitle={ formType === "create" ? `Add User` : `Edit User` }>
                 {/* Form */}
                 <FormBS initialValues={initialValues} validationSchema={validationSchema}
                 handlerFunction={ async (payload, action) => {
