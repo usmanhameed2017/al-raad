@@ -1,9 +1,9 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import ReactDataTable from '../../../components/DataTable';
 import Button from '../../../components/Button';
 import { useAuth } from '../../../context/auth';
 import Animation from '../../../components/Animation';
-import { FaDownload, FaEdit, FaTrash, FaPlus, FaCloudUploadAlt } from 'react-icons/fa';
+import { FaDownload, FaEdit, FaTrash, FaPlus } from 'react-icons/fa';
 import { Row, Col } from 'react-bootstrap';
 import ModalBS from '../../../components/Modal';
 import FormBS from '../../../components/Form';
@@ -27,13 +27,9 @@ function Books()
     const [showModal, setShowModal] = useState(false);
     const [editFormValues, setEditFormValues] = useState(null);
     const [formType, setFormType] = useState("");
-    const [uploadProgress, setUploadProgress] = useState(0);
 
     // Global state loader
     const { savingChanges } = useAuth();
-
-    // Reference
-    const uploadReference = useRef();
 
     // Listen for real time updates
     useSocket("BookAdded", useCallback(addRealTime(setData), [setData]));
@@ -85,7 +81,7 @@ function Books()
                 delete payload?._id;
 
                 // Post request
-                await api.post({ url:"/book", payload, fileAttachment:true, activateLoader:false, onProgress:(percent) => setUploadProgress(percent) });
+                await api.post({ url:"/book", payload, fileAttachment:true, activateLoader:false });
                 action.resetForm();
             }
             else
@@ -93,7 +89,6 @@ function Books()
                 // Put request
                 await api.put({ url:`/book/${payload?._id}`, payload, fileAttachment:true });
             }
-            setUploadProgress(0);
             setShowModal(false);
         }
         catch(error)
