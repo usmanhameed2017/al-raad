@@ -10,6 +10,9 @@ export const cloudinaryCloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
 // Allowed image type
 export const allowedImageTypes = ["image/png", "image/jpg", "image/jpeg", "image/webp", "image/gif"];
 
+// Logo
+export const webLogo = "/public/logo2.png";
+
 // Get user object from local storage
 export const getUser = () => {
     try 
