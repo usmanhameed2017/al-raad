@@ -194,7 +194,7 @@ function Tafseer()
 
             {/* Modal */}
             <ModalBS showModal={showModal} handleCloseModal={handleCloseModal}
-            modalTitle={ formType === "create" ? `ADD NEW TAFSEER` : `EDIT TAFSEER` }>
+            modalTitle={ formType === "create" ? `Add Tafseer` : `Edit Tafseer` }>
                 {/* Form */}
                 <FormBS initialValues={initialValues} validationSchema={validationSchema}
                 handlerFunction={handleSubmit}>

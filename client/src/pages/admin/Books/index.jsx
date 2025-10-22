@@ -212,7 +212,7 @@ function Books()
 
             {/* Modal */}
             <ModalBS showModal={showModal} handleCloseModal={handleCloseModal}
-            modalTitle={ formType === "create" ? "ADD NEW BOOK" : "EDIT BOOK" }>
+            modalTitle={ formType === "create" ? "Add Book" : "Edit Book" }>
                 {/* Form */}
                 <FormBS initialValues={initialValues} validationSchema={validationSchema} handlerFunction={handleSubmit}>
                     {/* Title */}

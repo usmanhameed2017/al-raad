@@ -189,7 +189,7 @@ function Audios()
             <Row>
                 <Col>
                     <ReactDataTable 
-                    title={`Audios`} 
+                    title={`Audio Lectures`} 
                     columns={columns} 
                     docs={data.docs} 
                     totalDocs={data.totalDocs}
@@ -203,7 +203,7 @@ function Audios()
 
             {/* Modal */}
             <ModalBS showModal={showModal} handleCloseModal={handleCloseModal} 
-            modalTitle={ formType === "create" ? "ADD NEW AUDIO" : "EDIT AUDIO" }>
+            modalTitle={ formType === "create" ? "Add Lecture" : "Edit Lecture" }>
                 {/* Form */}
                 <FormBS initialValues={initialValues} validationSchema={validationSchema} handlerFunction={handleSubmit}>
                     {/* Surah Name */}

@@ -156,7 +156,7 @@ function Mails()
             </Row>          
 
             {/* Modal */}
-            <ModalBS showModal={showModal} handleCloseModal={handleCloseModal} modalTitle={`REPLY TO MAIL`} modalSize='lg'>
+            <ModalBS showModal={showModal} handleCloseModal={handleCloseModal} modalTitle="Reply To Mail">
                 {/* Form */}
                 <FormBS initialValues={initialValues} validationSchema={validationSchema} handlerFunction={replyToUser}>
 
