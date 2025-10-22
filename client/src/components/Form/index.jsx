@@ -1,6 +1,5 @@
 import { Formik, Form } from 'formik';
 import { forwardRef, useImperativeHandle, useRef } from 'react';
-import styles from "./style.module.css";
 
 const FormBS = forwardRef(({ children, initialValues, validationSchema, handlerFunction,
     validateOnBlur = true, validateOnChange = true,  className }, ref) => {
@@ -14,7 +13,7 @@ const FormBS = forwardRef(({ children, initialValues, validationSchema, handlerF
     }));
 
     return (
-        <div className={styles.formContainer}>
+        <>
             <Formik
                 innerRef={formikRef}
                 initialValues={initialValues}
@@ -24,12 +23,12 @@ const FormBS = forwardRef(({ children, initialValues, validationSchema, handlerF
                 validateOnBlur={validateOnBlur}
                 validateOnChange={validateOnChange}>
                 {formikProps => (
-                    <Form className={className ? className : `${styles.form}`}>
+                    <Form className={className}>
                         {typeof children === "function" ? children(formikProps) : children}
                     </Form>
                 )}
             </Formik>
-        </div>
+        </>
     );
 });
 
