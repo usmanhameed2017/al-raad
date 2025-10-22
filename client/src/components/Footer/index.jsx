@@ -23,9 +23,7 @@ function Footer()
                         <ul className="list-unstyled">
                             <li> <Link to={`/`}> Home  </Link> </li>
                             <li> <Link to={`/about`}> About </Link> </li>
-                            <li> <Link to={`/blog`}> Blogs </Link> </li>
                             <li> <Link to={`/contact`}> Contact  </Link></li>
-                            <li><a href="#">Privacy Policy</a></li>
                         </ul>
                     </Col>
 
