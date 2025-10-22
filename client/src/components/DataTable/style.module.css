@@ -1,5 +1,5 @@
 .dataTableContainer {
-    background: #0e0f16;
+    background: #070911ff;
     padding: 12px;
     border-radius: 12px;
     overflow-x: auto;
@@ -19,4 +19,10 @@
     box-shadow: 0 0 5px #00bcd4;
     color: #00bcd4;
     outline: none;
+}
+
+.tableTitle {
+  font-size: 22px;
+  font-weight: 700;
+  color: #fff;
 }
