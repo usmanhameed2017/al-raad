@@ -11,7 +11,7 @@ export const cloudinaryCloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
 export const allowedImageTypes = ["image/png", "image/jpg", "image/jpeg", "image/webp", "image/gif"];
 
 // Logo
-export const webLogo = "/public/logo2.png";
+export const webLogo = "https://ik.imagekit.io/usman2017/al-raad/logo.png";
 
 // Get user object from local storage
 export const getUser = () => {
