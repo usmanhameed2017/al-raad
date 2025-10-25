@@ -1,6 +1,6 @@
 // Ports and origins
 const port = process.env.PORT || 8000;
-const origin = process.env.ORIGIN;
+const origin = "http://localhost:5173"; 
 
 // Database
 const mongoURL = process.env.MONGO_URL;
