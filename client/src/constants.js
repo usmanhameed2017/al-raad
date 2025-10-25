@@ -1,5 +1,5 @@
 // Backend URL
-export const backendURL = import.meta.env.VITE_BACKEND_URL;
+export const backendURL = "http://localhost:8000";
 
 // Axios options
 export const axiosOptions = { withCredentials:true };
