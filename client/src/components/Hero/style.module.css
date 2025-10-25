@@ -16,7 +16,7 @@
   height: 100%;
   object-fit: cover;
   z-index: -3;
-  filter: brightness(0.55) saturate(1.15);
+  filter: brightness(1.77) saturate(1.10);
 }
 
 /* Overlay */
