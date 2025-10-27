@@ -2,9 +2,8 @@ import { useState, useEffect, createContext, useContext, useCallback } from 'rea
 import { useNavigate } from 'react-router-dom';
 import { showError } from '../utils/toasterMessage';
 import { setLoadingFunction, setSavingFunction } from '../utils/loadingManager';
-import { getCsrfToken, csrfToken } from '../utils/token';
 import { connectSocket } from '../service/socket';
-import api from '../service/axios';
+import api, { initCsrfToken } from '../service/axios';
 
 // Create auth context
 const AuthContext = createContext();
@@ -20,24 +19,8 @@ function AuthProvider({ children })
     // For navigation
     const navigate = useNavigate();
 
-    // Generate CSRF Token
-    const generateCsrfToken = useCallback(async () => {
-        try
-        {
-            const response = await api.get({ url:"/auth/generateCsrfToken" });
-            getCsrfToken(response.data);
-        } 
-        catch(error) 
-        {
-            return console.log(error.message);
-        }
-    },[]);
-
     // Signup
     const userSignup = useCallback(async (user, action) => {
-        if(!csrfToken) return showError("CSRF token is missing");
-        setLoading(true);
-
         try 
         {
             const response = await api.post({ url:"/user/signup", payload:user });
@@ -49,17 +32,10 @@ function AuthProvider({ children })
         {
             return error;
         }
-        finally 
-        {
-            setLoading(false);
-        }
     },[]);
 
     // User Login
     const userLogin = useCallback(async (user, action) => {
-        if(!csrfToken) return showError("CSRF token is missing");
-        setLoading(true);
-
         try
         {
             const response = await api.post({ url:"/user/login", payload:user });
@@ -73,17 +49,10 @@ function AuthProvider({ children })
         {
             return error;
         }
-        finally
-        {
-            setLoading(false)
-        }
     },[]);
 
     // Admin Login
     const adminLogin = useCallback(async (user, action) => {
-        if(!csrfToken) return showError("CSRF token is missing");
-        setLoading(true);
-
         try
         {
             const response = await api.post({ url:"/user/admin/login", payload:user });
@@ -96,10 +65,6 @@ function AuthProvider({ children })
         catch(error)
         {
             return error;
-        }
-        finally
-        {
-            setLoading(false)
         }
     },[]);    
 
@@ -159,14 +124,14 @@ function AuthProvider({ children })
     },[]);
 
     useEffect(() => {
+        initCsrfToken();
         isAuthenticated();
-        generateCsrfToken();
         setLoadingFunction(setLoading);
         setSavingFunction(setSavingChanges);
     },[]);
 
     return(
-        <AuthContext.Provider value={{ csrfToken, userSignup, userLogin, adminLogin, userLogout, adminLogout, 
+        <AuthContext.Provider value={{ userSignup, userLogin, adminLogin, userLogout, adminLogout, 
         loading, setLoading, savingChanges, setSavingChanges, isLoggedIn, setLoggedIn, user, setUser }}>
             { children }
         </AuthContext.Provider>
