@@ -9,6 +9,7 @@ const { cookieOptions } = require("../config");
 const generateCode = require("../utils/generateCode");
 const bcrypt = require("bcrypt");
 const jwt = require("../service/auth-token");
+const { origin } = require("../constants");
 
 // User signup
 const signup = async (request, response) => {
@@ -212,7 +213,7 @@ const googleLogin = async (request, response) => {
     // Send response
     return response.status(200)
     .cookie("accessToken", accessToken, cookieOptions)
-    .redirect("http://localhost:5173");
+    .redirect(origin);
 }
 
 // Create user (Created by admin)
