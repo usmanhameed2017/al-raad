@@ -13,19 +13,6 @@ export const allowedImageTypes = ["image/png", "image/jpg", "image/jpeg", "image
 // Logo
 export const webLogo = "https://ik.imagekit.io/usman2017/al-raad/logo.png";
 
-// Get user object from local storage
-export const getUser = () => {
-    try 
-    {
-        return JSON.parse(localStorage.getItem("user")) || null;
-    } 
-    catch (error) 
-    {
-        console.log("Failed to parse user from local storage:", error.message)
-        return null;
-    }
-};
-
 // Check if array have some data
 export const isArrayHaveData = (arrayData) => {
     if(arrayData && Array.isArray(arrayData) && arrayData?.length > 0) return true;
