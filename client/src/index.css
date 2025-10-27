@@ -174,3 +174,10 @@ select:focus {
   background-color: #00bcd4; /* Cyan highlight on hover */
   box-shadow: 0px 6px 15px #00bcd4;
 }
+
+.loaderContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}

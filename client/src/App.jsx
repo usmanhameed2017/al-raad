@@ -46,7 +46,7 @@ function App()
     <>
       <AuthProvider>
         {/* Lazy Load */}
-        <Suspense fallback={<Loader text={`Loading`} size="medium" />}>
+        <Suspense fallback={ <div className="loaderContainer"> <Loader text={`Loading`} size="medium" /> </div> }>
           <Routes>
             {/* Marketing Layout */}
             <Route path="/" element={ <MarketingLayout /> } >
