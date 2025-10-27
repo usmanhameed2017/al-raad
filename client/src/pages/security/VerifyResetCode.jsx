@@ -8,6 +8,7 @@ import { useCallback } from "react";
 import { useAuth } from "../../context/auth";
 import Loader from "../../components/Loader";
 import api from "../../service/axios";
+import { webLogo } from "../../constants";
 
 function VerifyResetCode() 
 {
@@ -56,10 +57,14 @@ function VerifyResetCode()
         <div className={styles.wrapper}>
             <div className={styles.form}>
                 {/* Heading */}
-                <div className={styles.heading}> <h3> Code Verification </h3> </div>
+                <div className={styles.heading}> 
+                    <img src={webLogo} alt="Web logo" className={styles.brandLogo} />
+                </div>
 
                 {/* Sub heading */}
-                <div className={styles.subHeading}> <p> Verification Step-02 </p> </div>
+                <div className={styles.subHeading}> 
+                    <p> Code Verification </p> 
+                </div>
 
                 {/* Form */}
                 <FormBS initialValues={initialValues} validationSchema={validationSchema} handlerFunction={formHandler}>

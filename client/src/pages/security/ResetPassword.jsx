@@ -8,6 +8,7 @@ import { useCallback } from "react";
 import { useAuth } from "../../context/auth";
 import Loader from "../../components/Loader";
 import api from "../../service/axios";
+import { webLogo } from "../../constants";
 
 function ResetPassword() 
 {
@@ -60,10 +61,14 @@ function ResetPassword()
         <div className={styles.wrapper}>
             <div className={styles.form}>
                 {/* Heading */}
-                <div className={styles.heading}> <h3> Reset Password </h3> </div>
+                <div className={styles.heading}> 
+                    <img src={webLogo} alt="Web logo" className={styles.brandLogo} />
+                </div>
 
                 {/* Sub heading */}
-                <div className={styles.subHeading}> <p> Verification Step-03 </p> </div>
+                <div className={styles.subHeading}> 
+                    <p> Reset Password </p> 
+                </div>
 
                 {/* Form */}
                 <FormBS initialValues={initialValues} validationSchema={validationSchema} handlerFunction={formHandler}>

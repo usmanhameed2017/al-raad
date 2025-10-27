@@ -8,6 +8,11 @@
     filter: brightness(0.9);
 }
 
+.brandLogo {
+  width: 200px;
+  height: 130px;
+}
+
 .form {
     background: #12151d;
     backdrop-filter: blur(1px);
@@ -31,16 +36,8 @@
     display: block;
 }
 
-.heading h1 {
-    font-size: 2.7rem;
+.heading {
     text-align: center;
-    color: #00bcd4;
-}
-
-.heading h3 {
-    font-size: 2.2rem;
-    text-align: center;
-    color: #00bcd4;
 }
 
 .subHeading p {
