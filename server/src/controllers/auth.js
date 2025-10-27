@@ -1,8 +1,8 @@
 const ApiError = require("../utils/ApiError");
 const ApiResponse = require("../utils/ApiResponse");
 
-// Generate CSRF Token
-const generateCsrfToken = async (request, response) => {
+// Initialize CSRF Token
+const initCsrfToken = async (request, response) => {
     return response.status(200)
     .json(new ApiResponse(200, request.csrfToken(), "CSRF Token has been generated successfully"));
 };
@@ -13,4 +13,4 @@ const isAuthenticated = async (request, response) => {
     return response.status(200).json(new ApiResponse(200, request.user, "Authenticated"));
 };
 
-module.exports = { generateCsrfToken, isAuthenticated };
+module.exports = { initCsrfToken, isAuthenticated };
