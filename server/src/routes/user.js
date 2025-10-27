@@ -1,30 +1,29 @@
 const { signup, accountActivation, login, logout, fetchUsers, editUser, deleteUser, 
 fetchSingleUser, adminLogin, createUser, googleLogin, } = require("../controllers/user");
 const { authentication, authorization } = require("../middlewares/auth");
-const csrfProtection = require("../middlewares/csrfToken");
 const passport = require("passport");
 
 // Router instance
 const userRouter = require("express").Router();
 
 // Signup
-userRouter.route("/signup").post(csrfProtection, signup);
+userRouter.route("/signup").post(signup);
 
 // Account activation
-userRouter.route("/account/activation").patch(csrfProtection, accountActivation);
+userRouter.route("/account/activation").patch(accountActivation);
 
 // User Login
-userRouter.route("/login").post(csrfProtection, login);
+userRouter.route("/login").post(login);
 
 // Admin login
-userRouter.route("/admin/login").post(csrfProtection, adminLogin);
+userRouter.route("/admin/login").post(adminLogin);
 
 // Login as google
 userRouter.route('/auth/google').get(passport.authenticate('google', { scope:['profile', 'email'], prompt:"select_account" }));
 userRouter.route('/auth/google/callback').get(passport.authenticate('google', { session: false }), googleLogin);
 
 // Create user (Created by admin)
-userRouter.route("/create").post(csrfProtection, authentication, authorization(["Admin"]), createUser)
+userRouter.route("/create").post(authentication, authorization(["Admin"]), createUser)
 
 // Fetch all users
 userRouter.route("/").get(authentication, authorization(["Admin"]), fetchUsers);
@@ -33,7 +32,7 @@ userRouter.route("/").get(authentication, authorization(["Admin"]), fetchUsers);
 userRouter.route("/me").get(authentication, authorization(["Admin", "User"]), fetchSingleUser);
 
 // Self-modification
-userRouter.route("/me/edit").put(csrfProtection, authentication, authorization(["Admin", "User"]), editUser);
+userRouter.route("/me/edit").put(authentication, authorization(["Admin", "User"]), editUser);
 
 // Logout
 userRouter.route("/logout").get(authentication, logout);
@@ -41,7 +40,7 @@ userRouter.route("/logout").get(authentication, logout);
 // Multi operations
 userRouter.route("/:id")
 .get(authentication, authorization(["Admin"]), fetchSingleUser)           // Fetch single user
-.put(csrfProtection, authentication, authorization(["Admin"]), editUser)  // Edit user
-.delete(csrfProtection, authentication, authorization(["Admin"]), deleteUser);            // Delete user
+.put(authentication, authorization(["Admin"]), editUser)  // Edit user
+.delete(authentication, authorization(["Admin"]), deleteUser);            // Delete user
 
 module.exports = userRouter;
