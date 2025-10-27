@@ -1,5 +1,4 @@
 import PulseLoader from "react-spinners/PulseLoader";
-import styles from "./style.module.css";
 
 function Loader({ size = "small", text }) 
 {
