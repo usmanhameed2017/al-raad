@@ -2,10 +2,8 @@ import React from "react";
 import { Pagination } from "react-bootstrap";
 import "./style.css";
 
-function ServerSidePagination({ data, setCurrentPage }) 
+function ServerSidePagination({ totalPages, page, prevPage, nextPage, setCurrentPage }) 
 {
-    const { totalPages, page, prevPage, nextPage } = data || {};
-
     const renderPageNumbers = () => {
         let items = [];
 
