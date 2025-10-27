@@ -23,7 +23,7 @@ userRouter.route('/auth/google').get(passport.authenticate('google', { scope:['p
 userRouter.route('/auth/google/callback').get(passport.authenticate('google', { session: false }), googleLogin);
 
 // Create user (Created by admin)
-userRouter.route("/create").post(authentication, authorization(["Admin"]), createUser)
+userRouter.route("/create").post(authentication, authorization(["Admin"]), createUser);
 
 // Fetch all users
 userRouter.route("/").get(authentication, authorization(["Admin"]), fetchUsers);
@@ -39,8 +39,8 @@ userRouter.route("/logout").get(authentication, logout);
 
 // Multi operations
 userRouter.route("/:id")
-.get(authentication, authorization(["Admin"]), fetchSingleUser)           // Fetch single user
-.put(authentication, authorization(["Admin"]), editUser)  // Edit user
-.delete(authentication, authorization(["Admin"]), deleteUser);            // Delete user
+.get(authentication, authorization(["Admin"]), fetchSingleUser) // Fetch single user
+.put(authentication, authorization(["Admin"]), editUser)        // Edit user
+.delete(authentication, authorization(["Admin"]), deleteUser);  // Delete user
 
 module.exports = userRouter;
