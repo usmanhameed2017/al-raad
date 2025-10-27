@@ -4,6 +4,7 @@ import { showError } from '../utils/toasterMessage';
 import { setLoadingFunction, setSavingFunction } from '../utils/loadingManager';
 import { connectSocket } from '../service/socket';
 import api, { initCsrfToken } from '../service/axios';
+import { removeFromLocalStorage, setToLocalStorage } from '../utils/localStorage';
 
 // Create auth context
 const AuthContext = createContext();
@@ -41,7 +42,7 @@ function AuthProvider({ children })
             const response = await api.post({ url:"/user/login", payload:user });
             setUser(response.data);
             setLoggedIn(response.success);
-            localStorage.setItem("user", JSON.stringify(response.data));
+            setToLocalStorage("user", response.data);
             action.resetForm();
             navigate('/');
         }
@@ -58,7 +59,7 @@ function AuthProvider({ children })
             const response = await api.post({ url:"/user/admin/login", payload:user });
             setUser(response.data);
             setLoggedIn(response.success);
-            localStorage.setItem("user", JSON.stringify(response.data));
+            setToLocalStorage("user", response.data);
             action.resetForm();
             navigate('/admin');
         }
@@ -75,7 +76,7 @@ function AuthProvider({ children })
             await api.get({ url:"/user/logout" });
             setUser(null);
             setLoggedIn(false);
-            localStorage.removeItem("user");
+            removeFromLocalStorage("user");
             navigate("/", { replace:true });
         } 
         catch (error) 
@@ -91,7 +92,7 @@ function AuthProvider({ children })
             await api.get({ url:"/user/logout" });
             setUser(null);
             setLoggedIn(false);
-            localStorage.removeItem("user");
+            removeFromLocalStorage("user");
             navigate("/auth", { replace:true });
         } 
         catch (error) 
@@ -107,13 +108,13 @@ function AuthProvider({ children })
             const response = await api.get({ url:"/auth/isAuthenticated", enableErrorMessage:false });
             setUser(response.data); // Plain user object
             setLoggedIn(response.success);
-            localStorage.setItem("user", JSON.stringify(response.data));             
+            setToLocalStorage("user", response.data);
         } 
         catch(error) 
         {
             setUser(null);
             setLoggedIn(false);
-            localStorage.removeItem("user");
+            removeFromLocalStorage("user");
             if(error.message === "Too many requests, please try again later") return showError(error.message); // Rate limit
             return error;
         }
