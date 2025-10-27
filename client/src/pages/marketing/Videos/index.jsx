@@ -97,8 +97,13 @@ function Videos()
         {/* Pagination */}
         <Row>
           <Col className="d-flex justify-content-center">
-          {!loading && isArrayHaveData(data.docs) && (
-            <ServerSidePagination data={data} setCurrentPage={setCurrentPage} />                    
+          {!loading && isArrayHaveData(data?.docs) && (
+            <ServerSidePagination
+            page={data?.page}
+            prevPage={data?.prevPage} 
+            nextPage={data?.nextPage}
+            totalPages={data?.totalPages}
+            setCurrentPage={setCurrentPage} />          
           )}
           </Col>
         </Row>
