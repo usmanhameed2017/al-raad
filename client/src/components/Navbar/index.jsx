@@ -1,14 +1,14 @@
 import { Container, Navbar, Nav, NavDropdown } from "react-bootstrap";
 import { NavLink } from "react-router-dom";
 import styles from "./style.module.css";
-import { getUser } from "../../constants";
 import { useAuth } from "../../context/auth";
+import { getFromLocalStorage } from "../../utils/localStorage";
 
 function NavbarBS() 
 {
     // Auth context
     const { user, userLogout } = useAuth();
-    const userData = user || getUser();
+    const userData = user || getFromLocalStorage("user");
 
     return (
         <Navbar variant="dark" expand="lg" fixed="top" className={styles.navbar}>

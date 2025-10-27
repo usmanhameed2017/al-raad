@@ -3,17 +3,17 @@ import Animation from '../../../components/Animation';
 import Button from '../../../components/Button';
 import FormBS from '../../../components/Form';
 import * as Yup from 'yup';
-import { getUser } from '../../../constants';
 import styles from './style.module.css';
 import { useAuth } from '../../../context/auth';
 import Loader from '../../../components/Loader';
 import Input from '../../../components/InputFields';
 import api from '../../../service/axios';
+import { getFromLocalStorage } from '../../../utils/localStorage';
 
 function Settings() 
 {
     const { user, setUser, savingChanges } = useAuth();
-    const userData = user || getUser() || {};
+    const userData = user || getFromLocalStorage("user") || {};
 
     // Fetch user data on page load
     useEffect(() => {
