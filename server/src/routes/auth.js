@@ -1,4 +1,4 @@
-const { generateCsrfToken, isAuthenticated } = require("../controllers/auth");
+const { initCsrfToken, isAuthenticated } = require("../controllers/auth");
 const { authentication } = require("../middlewares/auth");
 const limitRequest = require("../middlewares/rateLimit");
 
@@ -6,7 +6,7 @@ const limitRequest = require("../middlewares/rateLimit");
 const authRouter = require("express").Router();
 
 // Generate CSRF Token
-authRouter.route("/generateCsrfToken").get(generateCsrfToken);
+authRouter.route("/csrfToken").get(initCsrfToken);
 
 // Verify access token
 authRouter.route("/isAuthenticated").get(limitRequest({}), authentication, isAuthenticated);
