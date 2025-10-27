@@ -297,7 +297,7 @@ function Users()
                     {/* Loader */}
                     {savingChanges && (
                         <div className="form-group mt-3 d-flex align-items-center">
-                            <Loader size='small' text={`Saving changes...`} />
+                            <Loader size='small' text={`Saving changes`} />
                         </div>
                     )}                     
                 </FormBS>

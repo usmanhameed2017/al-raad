@@ -181,7 +181,7 @@ function Mails()
                     {/* Loader */}
                     {savingChanges && (
                         <div className="form-group mt-3 d-flex align-items-center">
-                            <Loader size='small' text={`Sending mail...`} />
+                            <Loader size='small' text={`Sending mail`} />
                         </div>
                     )}                       
                 </FormBS>
