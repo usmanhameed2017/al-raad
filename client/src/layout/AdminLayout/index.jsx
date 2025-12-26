@@ -1,14 +1,14 @@
 import { Outlet } from "react-router-dom";
 import styles from "./style.module.css";
 import Animation from "../../components/Animation";
-import Sidebar from "@/components/Sidebar";
+import MySidebar from "../../components/MySidebar";
 
 function AdminLayout() 
 {
     return (
         <div className={styles.container}>
             {/* Sidebar */}
-            <Sidebar />
+            <MySidebar />
 
             {/* Main Content */}
             <main className={styles.main}>
