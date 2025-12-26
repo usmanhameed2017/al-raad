@@ -62,6 +62,7 @@ function createApp()
     app.use("/api/v1/audio", audioRouter);
     app.use("/api/v1/mail", mailRouter);
     app.use("/api/v1/security", securityRouter);
+    app.get("/api/v1/status", (request, response) => response.json({ ok:true }));
 
     // Error handling middleware
     app.use(errorHandler);
