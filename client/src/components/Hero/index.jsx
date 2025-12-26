@@ -6,13 +6,6 @@ import { FaBookOpen, FaBookReader, FaPlayCircle } from "react-icons/fa";
 function Hero({ type, src, heading, paragrapgh, enableButton, buttonText }) 
 {
     return (
-        <motion.div
-        initial={{ opacity: 0, y: 100, scale: 0.9, rotateX: -30 }}
-        whileInView={{ opacity: 1, y: 0, scale: 1, rotateX: 0 }}
-        transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-        viewport={{ once: false, amount: 0.3 }}
-        style={{ willChange: "transform, opacity" }}>
-        
             <section className={styles.hero}>
                 {/* Background */}
                 {type === "video" ? (
@@ -91,7 +84,6 @@ function Hero({ type, src, heading, paragrapgh, enableButton, buttonText })
                     </motion.div>
                 </div>
             </section>            
-        </motion.div>
     );
 }
 
