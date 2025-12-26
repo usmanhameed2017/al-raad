@@ -1,7 +1,7 @@
-const { origin } = require("../constants");
+const { allowedOrigins } = require("../constants");
 
 const corsOptions = {
-    origin:origin,
+    origin:allowedOrigins,
     credentials:true,
     methods:["GET", "POST", "PUT", "PATCH", "DELETE"],
     allowedHeaders:["Content-Type", "Authorization", "CSRF-Token"]

@@ -1,6 +1,8 @@
 // Ports and origins
 const port = process.env.PORT || 8000;
-const origin = "http://localhost:5173"; 
+const origin = process.env.ORIGIN;
+const localOrigin = process.env.LOCAL_ORIGIN;
+const allowedOrigins = [origin, localOrigin];
 
 // Database
 const mongoURL = process.env.MONGO_URL;
@@ -35,6 +37,8 @@ const isProduction = process.env.NODE_ENV === "production";
 module.exports = { 
     port, 
     origin, 
+    localOrigin,
+    allowedOrigins,
     mongoURL, 
     dbName, 
     accessTokenSecret, 
