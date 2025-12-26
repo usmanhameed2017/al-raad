@@ -11,7 +11,8 @@ const cookieOptions = {
     httpOnly:true,
     secure:true,
     maxAge: 1000 * 60 * 60 * 7, // 7 hours
-    signed:true
+    signed:true,
+    sameSite:"none"
 };
 
 module.exports = { corsOptions, cookieOptions };

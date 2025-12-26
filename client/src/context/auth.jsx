@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { showError } from '../utils/toasterMessage';
 import { setLoadingFunction, setSavingFunction } from '../utils/loadingManager';
 import { connectSocket } from '../service/socket';
-import api, { initCsrfToken } from '../service/axios';
+import api from '../service/axios';
 import { removeFromLocalStorage, setToLocalStorage } from '../utils/localStorage';
 
 // Create auth context
@@ -125,7 +125,6 @@ function AuthProvider({ children })
     },[]);
 
     useEffect(() => {
-        initCsrfToken();
         isAuthenticated();
         setLoadingFunction(setLoading);
         setSavingFunction(setSavingChanges);
