@@ -8,7 +8,7 @@ function Home()
         <div>
             <Hero 
             type="video" 
-            src={`/public/admin-panel-background.mp4`}
+            src={`https://ik.imagekit.io/dgeoeu47w/assets/admin-panel-background.mp4?tr=orig`}
             heading="WELCOME TO AL-RA’AD" 
             paragrapgh="Discover Tafseer, Books, and Daily Ayat"
             enableButton={true}

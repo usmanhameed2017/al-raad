@@ -48,7 +48,7 @@ function Contact()
 
     return (
         <div className={styles.contactWrapper}>
-            <img src="/public/contactus.jpg" alt="background" className={styles.bgImage} />
+            <img src="https://ik.imagekit.io/dgeoeu47w/assets/contactus.jpg" alt="background" className={styles.bgImage} />
 
             <div className={styles.overlay}>
                 <motion.div
