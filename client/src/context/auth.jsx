@@ -106,6 +106,13 @@ function AuthProvider({ children })
         try 
         {
             const response = await api.get({ url:"/auth/isAuthenticated", enableErrorMessage:false });
+            if(!response.data)
+            {
+                setUser(null);
+                setLoggedIn(false);
+                removeFromLocalStorage("user");
+                return;             
+            }            
             setUser(response.data); // Plain user object
             setLoggedIn(response.success);
             setToLocalStorage("user", response.data);
