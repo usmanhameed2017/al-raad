@@ -27,7 +27,6 @@ function TafseerHero()
             transition={{ repeat: Infinity, duration: 2 }}
             className="mt-5 text-info"
             >
-            ↓ Scroll to Explore
             </motion.div>
         </div>
         </motion.section>
