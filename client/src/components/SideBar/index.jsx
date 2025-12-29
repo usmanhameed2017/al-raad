@@ -1,6 +1,6 @@
 import { useState } from "react";
 import styles from "./style.module.css";
-import { FaTachometerAlt, FaUsers, FaCog, FaSignOutAlt, FaUserAlt, FaBook, FaBookOpen, FaPlayCircle, FaEnvelope } from "react-icons/fa";
+import { FaTachometerAlt, FaUsers, FaSignOutAlt, FaUserAlt, FaBook, FaBookOpen, FaPlayCircle, FaEnvelope } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
 import { useAuth } from "../../context/auth";
 
@@ -46,11 +46,6 @@ function Sidebar()
                 {/* Users */}
                 <NavLink to="/admin/users" className={({ isActive }) => `${styles.navItem} ${isActive ? styles.active : ""}`} title={!isOpen ? "Users" : ""}>
                     <FaUsers size={25} /> {isOpen && <span> Users </span>}
-                </NavLink>
-
-                {/* Settings */}
-                <NavLink to="/admin/settings" className={({ isActive }) => `${styles.navItem} ${isActive ? styles.active : ""}`} title={!isOpen ? "Settings" : ""}>
-                    <FaCog size={25} /> {isOpen && <span> Settings </span>}
                 </NavLink>
 
                 {/* Logout */}
