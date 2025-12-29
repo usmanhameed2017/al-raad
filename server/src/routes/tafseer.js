@@ -6,7 +6,7 @@ const tafseerRouter = require("express").Router();
 
 tafseerRouter.route("/")
 .post(authentication, authorization(["Admin"]), createTafseer) // Create tafseer
-.get(authentication, authorization(["Admin", "User"]), fetchTafseers); // Fetch all tafseers
+.get(fetchTafseers); // Fetch all tafseers
 
 tafseerRouter.route("/:id")
 .get(authentication, authorization(["Admin", "User"]), fetchSingleTafseer) // Fetch single tafseer
