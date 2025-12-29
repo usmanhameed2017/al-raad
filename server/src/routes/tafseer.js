@@ -9,7 +9,7 @@ tafseerRouter.route("/")
 .get(fetchTafseers); // Fetch all tafseers
 
 tafseerRouter.route("/:id")
-.get(authentication, authorization(["Admin", "User"]), fetchSingleTafseer) // Fetch single tafseer
+.get(fetchSingleTafseer) // Fetch single tafseer
 .put(authentication, authorization(["Admin"]), updateTafseer)      // Update tafseer
 .delete(authentication, authorization(["Admin"]), deleteTafseer);  // Delete tafseer
 
