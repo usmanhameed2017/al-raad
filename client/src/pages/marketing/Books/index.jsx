@@ -11,6 +11,7 @@ import { isArrayHaveData } from '../../../constants';
 import useSocket from '../../../hooks/useSocket';
 import { addRealTime, deleteRealTime, updateRealTime } from '../../../utils/realTimeHelpers';
 import api from '../../../service/axios';
+import BooksHero from '../../../components/BooksHero';
 
 function Books() 
 {
@@ -58,13 +59,7 @@ function Books()
     return (
         <div className={styles.bookWrapper}>
             <Animation type="heading">
-                <span>
-                    {/* Icon */}
-                    <div className="icon"> <FaBookOpen size={50} /> </div>
-                    {/* Heading */}
-                    <h2 className="heroTitle"> Books & Articles </h2>
-                    <hr className='text-secondary' />
-                </span>
+                <BooksHero />
             </Animation>
 
             {/* Search */}
