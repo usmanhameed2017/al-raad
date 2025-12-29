@@ -3,11 +3,11 @@ import { backendURL } from "../constants";
 import { startLoading, startSaving, stopLoading, stopSaving } from '../utils/loadingManager';
 import { showSuccess, showError } from '../utils/toasterMessage';
 
-
 // Create instance
 const client = axios.create({
     baseURL: `${backendURL}/api/v1`,
-    withCredentials: true
+    withCredentials: true,
+    timeout:0
 });
 
 // Request interceptor
