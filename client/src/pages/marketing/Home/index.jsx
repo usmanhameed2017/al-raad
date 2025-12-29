@@ -1,6 +1,8 @@
 import Hero from "../../../components/Hero";
 import About from "../About";
+import Books from "../Books";
 import Contact from "../Contact";
+import Tafseer from "../Tafseer";
 
 function Home() 
 {
@@ -15,6 +17,8 @@ function Home()
             buttonText="Get Started"/>
             <About />
             <Contact />
+            <Tafseer />
+            <Books />
         </div>
     );
 }
