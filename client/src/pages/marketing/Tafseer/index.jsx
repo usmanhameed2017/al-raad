@@ -62,7 +62,9 @@ function Tafseer()
         <>
             <TafseerBackground />
             <div className={styles.tafseerWrapper}>
-                <TafseerHero />
+                <Animation type="heading">
+                    <TafseerHero />
+                </Animation>
 
 
                 {/* Search */}
