@@ -31,7 +31,7 @@ async (accessToken, refreshToken, profile, done) => {
             username: username,
             role:"User",
             status:"Approved",
-            password:null
+            password:"GoogleAccount"
         });
         return done(null, createUser);
     } 

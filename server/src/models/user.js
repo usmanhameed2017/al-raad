@@ -7,12 +7,10 @@ const userSchema = new Schema({
     gid:{
         type:String,
         trim:true,
-        unique:true
     },
     name:{
         type:String,
         trim:true,
-        required:true
     },
     email:{
         type:String,
@@ -32,7 +30,6 @@ const userSchema = new Schema({
     password:{
         type:String,
         trim:true,
-        required:true
     },  
     role:{
         type:String,
