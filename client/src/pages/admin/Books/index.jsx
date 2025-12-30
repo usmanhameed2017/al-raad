@@ -174,11 +174,6 @@ function Books()
             ? file && allowedFileTypes.includes(file?.type)
             : !file || allowedFileTypes.includes(file?.type);
         })
-        .test('size', "PDF size must not be larger than 9MB", (file) => {
-            return formType === "create" 
-            ? file && file?.size <= 9000000
-            : !file || file?.size <= 9000000;
-        })
     });  
 
     return (
