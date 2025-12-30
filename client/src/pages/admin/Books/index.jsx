@@ -157,13 +157,13 @@ function Books()
         // Title
         title: Yup.string()
         .min(5, "Title must be at least 5 characters long")
-        .max(30, "Title must not be longer than 30 characters")
+        .max(150, "Title must not be longer than 150 characters")
         .required("Title is required"),
 
         // Description
         description: Yup.string()
         .min(10, "Description must be at least 10 characters long")
-        .max(500, "Description must not be longer than 500 characters"),
+        .max(999, "Description must not be longer than 999 characters"),
         
         // PDF
         pdf:Yup.mixed()
