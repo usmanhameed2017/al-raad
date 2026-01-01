@@ -16,9 +16,9 @@ function Home()
             enableButton={true}
             buttonText="Get Started"/>
             <About />
-            <Contact />
             <Tafseer />
             <Books />
+            <Contact />
         </div>
     );
 }
