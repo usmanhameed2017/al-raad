@@ -3,12 +3,11 @@ import styles from "./style.module.css";
 import { Row, Col } from 'react-bootstrap';
 import { useAuth } from "../../context/auth";
 import Animation from "../Animation";
-import Loader from "../Loader";
 
 function ReactDataTable({ title, columns, docs, totalDocs, setCurrentPage, search, setSearch, limit, setLimit }) 
 {
     // Data table theme
-    createTheme("alRaad", {
+    createTheme("Ar-Ra’d", {
         text: { primary: "#e5e7eb", secondary: "#cbd5e1" },
         background: { default: "#070911ff" },
         context: { background: "#00bcd4", text: "#070911ff" },
@@ -58,7 +57,7 @@ function ReactDataTable({ title, columns, docs, totalDocs, setCurrentPage, searc
                         <div className={styles.dataTableContainer}>
                             <DataTable
                             title={ <div className={styles.tableTitle}> {title}</div> }
-                            theme="alRaad"
+                            theme="Ar-Ra’d"
                             customStyles={customStyles}
                             columns={columns}
                             data={docs}

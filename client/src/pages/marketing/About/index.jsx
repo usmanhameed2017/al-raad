@@ -30,7 +30,7 @@ function About()
     },
     {
       icon: <FaLightbulb size={30} />,
-      title: "Why Al-Ra’ad?",
+      title: "Why Ar-Ra’d?",
       text: `- 100% Authentic Sources
             <br>- Completely Free for All
             <br>- Mobile-friendly and accessible
@@ -44,13 +44,13 @@ function About()
     {
       icon: <FaEnvelope size={30} />,
       title: "Contact Us",
-      text: `Have feedback or suggestions? <a href='/contact'>Click here</a> to help improve Al-Ra’ad.`,
+      text: `Have feedback or suggestions? <a href='/contact'>Click here</a> to help improve Ar-Ra’d.`,
     },
 ];  
   return (
     <div className={styles.aboutWrapper}>
       <motion.h1 className="heroTitle" initial={{ opacity: 0, y: -50, scale: 0.9 }}
-      animate={{ opacity: 1, y: 0, scale: 1 }} transition={{ duration: 0.8, ease: 'easeOut' }}> About Al-Ra’ad </motion.h1>
+      animate={{ opacity: 1, y: 0, scale: 1 }} transition={{ duration: 0.8, ease: 'easeOut' }}> About Ar-Ra’d </motion.h1>
       <hr className='text-secondary' />
 
       <div className={styles.sectionsContainer}>
