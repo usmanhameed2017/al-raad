@@ -1,8 +1,10 @@
+import { Suspense, lazy } from "react";
 import Hero from "../../../components/Hero";
+import Loader from "../../../components/Loader";
 import About from "../About";
-import Books from "../Books";
 import Contact from "../Contact";
-import Tafseer from "../Tafseer";
+const Tafseer = lazy(() => import("../Tafseer"));
+const Books = lazy(() => import("../Books"));
 
 function Home() 
 {
@@ -16,8 +18,15 @@ function Home()
             enableButton={true}
             buttonText="Get Started"/>
             <About />
-            <Tafseer />
-            <Books />
+
+            <Suspense fallback={ <div className="loaderContainer"> <Loader text={`Loading`} size="medium" /> </div> }>
+                <Tafseer />
+            </Suspense>
+            
+            <Suspense fallback={ <div className="loaderContainer"> <Loader text={`Loading`} size="medium" /> </div> }>
+                <Books />
+            </Suspense>
+            
             <Contact />
         </div>
     );
