@@ -11,7 +11,7 @@ function ModalBS({ children, showModal, handleCloseModal, modalTitle, modalSize 
                 {/* Modal Header */}
                 <Modal.Header closeButton className={styles.modalHeader}>
                     {/* Logo */}
-                    <img src={webLogo} alt="Website Logo" className={styles.brandLogo} />
+                    {/* <img src={webLogo} alt="Website Logo" className={styles.brandLogo} /> */}
 
                     {/* Title */}
                     <Modal.Title className="ms-auto">

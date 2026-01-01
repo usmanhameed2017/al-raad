@@ -11,7 +11,7 @@ export const cloudinaryCloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
 export const allowedImageTypes = ["image/png", "image/jpg", "image/jpeg", "image/webp", "image/gif"];
 
 // Logo
-export const webLogo = "https://ik.imagekit.io/usman2017/al-raad/logo.png";
+export const webLogo = "https://ik.imagekit.io/dgeoeu47w/assets/logo.png";
 
 // Check if array have some data
 export const isArrayHaveData = (arrayData) => {

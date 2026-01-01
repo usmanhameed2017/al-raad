@@ -7,9 +7,9 @@
 }
 
 .brandLogo {
-  width: 130px;
+  width: 180px;
   margin-bottom: 25px;
-  height: 90px;
+  height: 150px;
 }
 
 .modalHeader {
@@ -21,7 +21,6 @@
   font-weight: bold;
   color: #00bcd4;
   text-align: center;
-  margin-right: 102px;
 }
 
 .modalBody {
